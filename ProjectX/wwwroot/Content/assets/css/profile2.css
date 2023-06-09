@@ -1,0 +1,126 @@
+﻿hr {
+    margin: 0rem 0 0.75rem 0;
+}
+
+h4 {
+    margin-bottom: .5rem;
+}
+
+.addnew {
+    font-size: 25px;
+    padding-left: 5px;
+    color: var(--main-color);
+}
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+.addcontact {
+    font-family: "Nunito Sans", sans-serif;
+    color: #4b4b5a;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+.addadherent {
+    font-family: "Nunito Sans", sans-serif;
+    color: #4b4b5a;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+.note-editable {
+    max-height: 350px
+}
+
+.note-editor .note-dropzone {
+    opacity: 0 !important;
+}
+
+.note-editor .note-view {
+    display: none
+}
+
+.note-editor .note-icon-video {
+    display: none
+}
+
+
+.note-popover .popover-content > .btn-group, .panel-heading.note-toolbar > .btn-group {
+    background: #4b4b5a !important;
+    border-radius: 5px;
+}
+
+.note-image-popover, .note-link-popover, .note-table-popover {
+    display: none
+}
+
+.ssdpage .modal-open {
+    display: none;
+}
+
+.anchorspan {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+    padding: 0 5px;
+    height: 22px;
+    margin-top: 5px;
+}
+
+#uploadgopbutton {
+    display: inline;
+    width: 50px;
+    background: transparent !important;
+    border-color: transparent !important
+}
+
+
+
+#feestable {
+    border-radius: 5px;
+    display: table;
+    font-size: 12px
+}
+
+    #feestable td {
+        color: white !important;
+        text-align: center;
+    }
+
+    #feestable th {
+        background: white;
+        color: black;
+        text-align: center
+    }
+
+
+
+@media only screen and (max-width: 650px) {
+    h4  {
+        display:flex
+    }
+    h4 a,h4 span{
+        font-size: 14px !important;
+    }
+
+}
+
+
+/*#productid {
+    margin-right: 15%;
+}
+*/
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #e2e7f1;
+    border-radius: 4px;
+    height: 33px;
+}

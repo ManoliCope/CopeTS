@@ -1,0 +1,93 @@
+﻿body {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
+    background-color: #DDDDDD;
+}
+
+#wrap {
+    width: 100%;
+    margin: 0 auto; /*remove this**/
+    padding-top:10px
+}
+
+#external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    text-align: left;
+}
+
+    #external-events h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+    }
+
+.external-event { /* try to mimick the look of a real event */
+    margin: 10px 0;
+    padding: 2px 4px;
+    background: #3366CC;
+    color: #fff;
+    font-size: .85em;
+    cursor: pointer;
+}
+
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
+
+    #external-events p input {
+        margin: 0;
+        vertical-align: middle;
+    }
+
+#calendar {
+    /* 		float: right; */
+    /*padding: 0; return this
+    margin: 0;
+    width: 100%;*/
+
+    /*margin: 0 auto;*/
+    /*width: 900px;*/
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px #C3C3C3;
+}
+
+@media screen and (max-width: 790px) {
+    .fc-header td {
+        width: 110px;
+        display: unset
+    }
+    .fc-header span{
+        font-size:10px
+    }
+
+    .fc-header .fc-header-center .fc-button {
+      min-width:30px
+    }
+
+   
+    .fc-header h2 {
+        font-size: 24px
+    }
+
+    /*.fc-view-agendaDay {
+        height:500px;
+        background:red
+    }*/
+}
+
+@media screen and (min-width: 791px) {
+    .fc-header td {
+        width: 180px;
+    }
+}
+
+
+
+

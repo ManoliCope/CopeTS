@@ -1,0 +1,129 @@
+﻿@model ProjectX.Entities.bModels.AttachmentModel
+@{
+    //here to make sure adherent users only see uploaded files
+    var hide = "";
+    var permission = ViewData["permission"] as ProjectX.Entities.dbModels.User;
+    var finAttachment = Model.IdFileDirectory == 9 ? true : false;
+    @*Adherent and Finance should only see attachments*@
+if (permission != null && (permission.IdProfile > 0 || permission.group.GR_ID == 14) && finAttachment==false)
+{
+    hide = "hidden";
+}
+}
+
+
+<div class="modal fade" id="view-attach-@Model.IdFileDirectory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">@Model.FileDirectory</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="container card-0 ">
+                    <div class="card-body pt-0 ">
+                        <div class="row ">
+                            <div class="col-md-12 ">
+                                <div class="row  mb-0 @hide">
+                                    <div class="col-md-10 col p-0">
+                                        <h4 class="font-weight-bold ml-md-0 mx-auto text-center text-sm-left"> New Upload </h4>
+
+                                        @foreach (var doctype in Model.requiredDocuments)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="doctype@(doctype.IdDocumentType)" value="@doctype.IdDocumentType" onclick="triggermultipleupload(this)">
+                                                <label class="form-check-label" for="doctype@(doctype.IdDocumentType)">
+                                                    @doctype.DocumentType
+                                                </label>
+                                            </div>
+                                        }
+
+                                        <div class="form-check mt-3" style="width:200px">
+                                            <button type="button" class="btn btn-primary btn-block btnFileUpload">
+                                                <span>Select File</span>
+                                                @*<div class="smloader"></div>*@
+                                            </button>
+                                            <div id="thisloader" class="smloader hide"></div>
+
+                                            <span id="spnFilePath"></span>
+                                            <input type="file" class="file-upload" style="display: none" multiple />
+                                            <label class="uploadresponse"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row  mb-3 ">
+                                    <div class="col-md-12 p-0 ">
+                                        <h3 class="font-weight-bold ml-md-0 mx-auto text-center text-sm-left"> List of files:</h3>
+                                        @*<div class="list-group" id="file-list-tab" role="tablist">*@
+                                    <ul class="list-group scrolly file-list-tab" style="max-height:200px">
+                                        @if (Model.attahcments != null && Model.attahcments.Count > 0)
+                                        {
+                                            @foreach (var attachment in Model.attahcments)
+                                            {
+                                                hide = "";
+                                                if (attachment.IdDocumentType != 8 && finAttachment==true)
+                                                {
+                                                    hide= "hidden";
+                                                }
+                                                var @href = "";
+
+                                                //if (attachment.FileFormat != ".jpeg")
+                                                @href = "href=" + attachment.FileUrl + " ";
+
+                                                <li class="list-group-item clearfix">
+                                                    <a class="text-black-50 font-weight-bold font-size-16" idDocumenttype="@attachment.IdDocumentType" @href imgurl="@attachment.FileUrl" extension="@attachment.FileFormat" download style="display:inline"> @attachment.DocumentType  --  @attachment.FileName</a>
+                                                    <button idAttachment="@attachment.IdAttachment" class="btn btn-danger float-right font-size-11 filedelete @hide" style="border-radius:50%;width: 30px;" onclick=deletefileatt(this)><span class="glyphicon glyphicon-remove"></span> X</button>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="list-group-item clearfix disabled">
+                                                <a class="text-black-50 font-weight-bold font-size-16" href="#">No Files to display</a>
+                                            </li>
+                                        }
+                                    </ul>
+
+
+                                        @*</div>*@
+
+
+                                        @*<ul class="list-group">
+                                                <li class="list-group-item clearfix">
+                                                    userA <span class="label label-default">admin</span>
+                                                    <span class="pull-right button-group">
+                                                        <a href="/admin/userA" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                                                    </span>
+                                                </li>
+                                            </ul>*@
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="filediv" class=" col-md-6  pt-5 hidden-md" style="display:none">
+                                <div class="row justify-content-center round">
+                                    <div class="col-lg-10 col-md-12 ">
+                                        <div class="card shadow-lg card-1">
+                                            <div class="card-body inner-card">
+                                                <div class="row justify-content-center">
+                                                    <div class="text-center">
+                                                        @*<img src="/Content/assets/images/   .png" class="rounded" alt="..." style="width: 100%;">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

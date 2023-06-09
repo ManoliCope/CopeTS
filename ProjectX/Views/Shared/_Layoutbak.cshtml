@@ -1,0 +1,399 @@
+﻿
+@{
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var actionName = this.ViewContext.RouteData.Values["action"].ToString().ToLower();
+    var Username = ViewData["username"] as string;
+    //var Avayacallinfo = ViewData["Avayacallinfo"] as List<ProjectX.Entities.Models.Avaya.AvayaCallReq>;
+    //var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Project X</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    *@
+    <link rel="stylesheet" href="~/css/site.css" />
+    @if (controllerName.ToLower() == "login")
+    {
+        <link href="@Url.Content("~/Content/assets/css/login.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    }
+    else
+    {
+        <link href="~/Content/assets/css/Notifications.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="@Url.Content("~/Content/assets/images/Isa_FavIcon.png")">
+    <!-- plugins -->
+    <link href="@Url.Content("~/Content/assets/libs/flatpickr/flatpickr.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/libs/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/libs/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/libs/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/libs/datatables/select.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+
+    <!-- App css -->
+    <link href="@Url.Content("~/Content/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/css/icons.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/css/app.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/css/devStyle.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="@Url.Content("~/Content/assets/css/loader.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/Content/assets/CSS/select2.min.css" asp-append-version="true" />
+
+
+    <link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Content/assets/css/Responsepopup.css" rel="stylesheet" asp-append-version="true" />
+
+
+    <link href="~/Content/datatable/plugins/summernote/dist/summernote.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+    @if (controllerName.ToLower() == "profile")
+    {
+        <link href="~/Content/assets/css/travel.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
+        @*<script src="~/Content/assets/libs/summernote/summernote-bs4.min.js"></script>*@
+        <link rel="stylesheet" href="~/countryflags/css/intlTelInput.css" asp-append-version="true">
+    }
+
+
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "getcase")
+    {
+        <link href="~/Content/assets/css/motor.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/Content/assets/css/registercall.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+
+
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "motordeclaration")
+    {
+        <link href="~/Content/assets/css/motordeclaration.css" rel="stylesheet" />
+        <link href="~/Content/assets/css/registercall.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+    @if (controllerName.ToLower() == "medical" && actionName.ToLower() == "search")
+    {
+        <link href="~/Content/assets/css/travel.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "getcase")
+    {
+        <link href="~/Content/assets/css/travel.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+    @if (controllerName.ToLower() == "case" && (actionName.ToLower() == "getmotorcase" || actionName.ToLower() == "getpolicymotorcase"))
+    {
+        <link href="~/Content/assets/css/registercall.css" rel="stylesheet" asp-append-version="true" />
+    }
+    @if (controllerName.ToLower() == "report")
+    {
+        <link href="~/Content/assets/css/report.css" rel="stylesheet" asp-append-version="true" />
+    }
+
+
+
+
+
+    @*old doctors*@
+    @if (controllerName.ToLower() == "calendar" || controllerName.ToLower() == "allprrofiles")
+    {
+        <link href='~/Doc/css/fullcalendar.css' rel='stylesheet' asp-append-version="true" />
+        <link href='~/Doc/css/fullcalendar.print.css' rel='stylesheet' media='print' asp-append-version="true" />
+        <link href="~/Doc/css/Calendar.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" asp-append-version="true" />
+        <link href="https://cdn.datatables.net/1.10.24/css/dataTables.jqueryui.min.css" rel="stylesheet" asp-append-version="true" />*@
+    }
+
+    @*<link href="~/Doc/css/Bootstrap4.1.0.min.css" rel="stylesheet" />
+          @if (controllerName == "AllVisits")
+          {
+              <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+              <link href="https://cdn.datatables.net/1.10.24/css/dataTables.jqueryui.min.css" rel="stylesheet">
+          }
+          @if (controllerName == "Profile")
+          {
+              <link href="~/Doc/css/Profile.css" rel="stylesheet" asp-append-version="true" />
+              <link rel="stylesheet" href="~/Doc/css/select2.min.css" asp-append-version="true" />
+          }
+          <link href="~/Doc/css/navsidebar.css" rel="stylesheet" />
+        <script src="~/Doc/js/FAsolid.js"></script>
+          <script src="~/Doc/js/FAfontawesome.js"></script>
+          <link rel="stylesheet" href="~/Doc/css/site.css" asp-append-version="true" />
+          <link href="~/Doc/css/Responsepopup.css" rel="stylesheet" asp-append-version="true" />
+          <link href="~/Doc/css/fullloader.css" rel="stylesheet" asp-append-version="true" />*@
+</head>
+
+@*<body class="left-side-menu-condensed @(controllerName=="login"?"authentication-bg":"")">*@
+@*<body class="left-side-menu-condensed ">*@
+<body class="sidebar-enable ">
+    <div id="wrapper">
+        @if (controllerName == "login")
+        {
+            @RenderBody()
+        }
+
+        @if (controllerName != "login")
+        {
+            @*<partial name="~/Views/Shared/Header.cshtml" model="@Username" />*@
+            @await Component.InvokeAsync("Header");
+
+            <div id="partialscreen">
+                <div class="content-page" style="min-height:79vh">
+                    @RenderBody()
+                </div>
+            </div>
+
+            @*<partial name="~/Views/Shared/Footer.cshtml" />*@
+        }
+
+    </div>
+
+    @*<div id="cover-spin"></div>*@
+    <div id="responsemodal" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="fas fa-times"></i>
+                        @*<i class="fas fa-check" ></i>*@
+                    </div>
+                    <h4 class="modal-title w-100"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block popup-success popup-failure" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="@Url.Content("~/Content/assets/js/vendor.min.js")" asp-append-version="true"></script>
+    <!-- optional plugins -->
+    <script src="@Url.Content("~/Content/assets/libs/moment/moment.min.js")" asp-append-version="true"></script>
+    @*<script src="@Url.Content("~/Content/assets/libs/apexcharts/apexcharts.min.js")"></script>*@
+    @*<script src="@Url.Content("~/Content/assets/libs/flatpickr/flatpickr.min.js")"></script>*@
+    <!-- page js -->
+    @*<script src="@Url.Content("~/Content/assets/js/pages/dashboard.init.js")"></script>*@
+    <!-- App js -->
+    <script src="@Url.Content("~/Content/assets/js/app.min.js")" asp-append-version="true"></script>
+    @if (controllerName != "login")
+    {
+        <script src="~/js/Navigate.js" asp-append-version="true"></script>
+        <!-- Footable -->
+        <script src="@Url.Content("~/Content/datatable/plugins/footable/js/footable.all.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/Content/datatable/plugins/bootstrap-select/bootstrap-select.min.js")" type="text/javascript" asp-append-version="true"></script>
+        <!--FooTable init-->
+        <script src="@Url.Content("~/Content/datatable/footable-init.js")" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @* select2 *@
+        <script type='text/javascript' src="~/Content/MultiSelectGroup/select2.js" asp-append-version="true"></script>
+        <script type='text/javascript' src="~/Content/MultiSelectGroup/select2.optgroupSelect.js" asp-append-version="true"></script>
+
+    }
+    <script src="@Url.Content("~/Content/assets/js/devScript.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/Content/assets/js/loader.js")" asp-append-version="true"></script>
+
+
+    <script src="~/Content/assets/libs/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/Content/assets/libs/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/Content/assets/libs/datatables/dataTables.responsive.min.js" asp-append-version="true"></script>
+
+    @*<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>*@
+
+
+    <script src="~/Content/assets/js/jquery.redirect.js" asp-append-version="true"></script>
+
+    @if (controllerName.ToLower() == "profile")
+    {
+        <script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
+        <script src="~/countryflags/js/intlTelInput.js"></script>
+    }
+
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "allcasesearch")
+    {
+        <script src="~/Content/assets/js/allcases.js" asp-append-version="true"></script>
+
+    }
+    @if (controllerName.ToLower() == "motor" && actionName.ToLower() == "search")
+    {
+        <script src="~/Content/assets/js/motorsearch.js" asp-append-version="true"></script>
+    }
+
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "motorcasesearch")
+    {
+        <script src="~/Content/assets/js/motorcases.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "case" && (actionName.ToLower() == "getmotorcase" || actionName.ToLower() == "getpolicymotorcase"))
+    {
+        <script src="~/Content/assets/js/registercallmotor.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "motordeclaration")
+    {
+        <script src="~/Content/assets/js/motordeclaration.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "medical" && actionName.ToLower() == "search")
+    {
+        <script src="~/Content/assets/js/medicalsearch.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "medicalcasesearch")
+    {
+        <script src="~/Content/assets/js/medicalcases.js" asp-append-version="true"></script>
+    }
+
+    @if (controllerName.ToLower() == "registercall" && actionName.ToLower() == "index")
+    {
+        <script src="~/Content/assets/js/registercall.js" asp-append-version="true"></script>
+    }
+    @*@if (controllerName.ToLower() == "registercall" && actionName.ToLower() == "index")
+        {
+            <script src="~/Content/assets/js/registercall.js" asp-append-version="true"></script>
+        }*@
+
+    @if (controllerName.ToLower() == "travel" && actionName.ToLower() == "search")
+    {
+        <script src="~/Content/assets/js/TravelSearch.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "case" && actionName.ToLower() == "index")
+    {
+        <script src="~/Content/assets/js/cases.js" asp-append-version="true"></script>
+    }
+
+    @*@if (controllerName.ToLower() == "case" && actionName.ToLower() == "getcase")
+        {
+            <script src="~/Content/assets/js/registercall.js" asp-append-version="true"></script>
+        }*@
+
+
+    @if (controllerName.ToLower() == "case" && (actionName.ToLower() == "getpolicymedicalcase" || actionName.ToLower() == "getmedicalcase" || actionName.ToLower() == "getothercase" || actionName.ToLower() == "getglobalcase"))
+    {
+        <script src="~/Content/assets/js/registercallMedical.js" asp-append-version="true"></script>
+    }
+
+    @if (controllerName.ToLower() == "case" && (actionName.ToLower() == "getpolicycase" || actionName.ToLower() == "getcase"))
+    {
+        <script src="~/Content/assets/js/registercall.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "report")
+    {
+        <script src="~/Content/assets/js/reports.js" asp-append-version="true"></script>
+    }
+
+    @*@if (controllerName.ToLower() != "login")
+    {
+        <script src="~/Content/assets/js/notifications.js"></script>
+    }*@
+
+
+
+
+    @*old docs*@
+ 
+
+    @if (controllerName.ToLower() == "login")
+    {
+        @*<script>alert('a')</script>*@
+        <script src="~/Doc/js/Login.js" asp-append-version="true"></script>
+    }
+    @if (controllerName.ToLower() == "calendar")
+    {
+        <script src='~/Doc/js/jquery-1.10.2.js' type="text/javascript" asp-append-version="true"></script>
+        <script src='~/Doc/js/jquery-ui.custom.min.js' type="text/javascript" asp-append-version="true"></script>
+        <script src='~/Doc/js/fullcalendar.js' type="text/javascript" asp-append-version="true"></script>
+        <script src="~/Doc/js/Calendar.js" type="text/javascript" asp-append-version="true"></script>
+
+
+    }
+    @if (controllerName.ToLower() == "dprofile")
+    {
+        <script src='~/Doc/js/jquery-1.10.2.js' type="text/javascript" asp-append-version="true"></script>
+        <script src='~/Doc/js/jquery-ui.custom.min.js' type="text/javascript" asp-append-version="true"></script>
+        @*<script src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js' type="text/javascript" asp-append-version="true"></script>*@
+
+
+        @*<script src="~/js/Calendar.js" type="text/javascript" asp-append-version="true"></script>*@
+        <script src="~/Doc/js/AllPatients.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/Doc/js/Visits.js" type="text/javascript" asp-append-version="true"></script>
+
+        @* select2 *@
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/jquery.mousewheel.js" asp-append-version="true"></script>
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/select2.js" asp-append-version="true"></script>
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/select2.optgroupSelect.js" asp-append-version="true"></script>
+
+        @*<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>*@
+
+    }
+
+    @if (controllerName.ToLower() == "allprofiles")
+    {
+        @*<script src='~/Doc/js/jquery-1.10.2.js' type="text/javascript" asp-append-version="true"></script>
+        <script src='~/Doc/js/jquery-ui.custom.min.js' type="text/javascript" asp-append-version="true"></script>
+        <script src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js' type="text/javascript" asp-append-version="true"></script>*@
+
+
+        @*<script src="~/js/Calendar.js" type="text/javascript" asp-append-version="true"></script>*@
+        <script src="~/Doc/js/AllPatients.js" type="text/javascript" asp-append-version="true"></script>
+        @* select2 *@
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/jquery.mousewheel.js" asp-append-version="true"></script>
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/select2.js" asp-append-version="true"></script>
+        <script type='text/javascript' src="~/Doc/js/MultiSelectGroup/select2.optgroupSelect.js" asp-append-version="true"></script>
+    }
+
+
+    @* <script src="~/Content/assets/js/cases.js" asp-append-version="true"></script>
+        <script src="~/Content/assets/js/medicalcases.js" asp-append-version="true"></script>
+        <script src="~/Content/assets/js/motorcases.js" asp-append-version="true"></script>
+        <script src="~/Content/assets/js/motordeclaration.js" asp-append-version="true"></script>*@
+
+</body>
+
+
+
+@*<body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectX</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - ProjectX - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @RenderSection("Scripts", required: false)
+    </body>*@
+</html>

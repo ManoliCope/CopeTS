@@ -1,0 +1,155 @@
+﻿using ProjectX.Business.Jwt;
+using ProjectX.Entities.AppSettings;
+using ProjectX.Repository.UserRepository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using ProjectX.Entities.dbModels;
+using ProjectX.Entities;
+using ProjectX.Business.User;
+using ProjectX.Entities.Resources;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
+
+namespace ProjectX.Middleware.Jwt
+{
+    public class JwtMiddleware
+    {
+        private readonly CcAppSettings _appSettings;
+        private readonly RequestDelegate _next;
+        private IJwtBusiness _jwtbusiness;
+        private IUserBusiness _userBusiness;
+        private readonly ILogger<JwtMiddleware> _logger;
+
+        public JwtMiddleware(RequestDelegate next, IOptions<CcAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUserBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
+        {
+            _next = next;
+            _jwtbusiness = jwtbusiness;
+            _userBusiness = userBusiness;
+            _appSettings = appIdentitySettingsAccessor.Value;
+            _logger = logger;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            //if (!context.Request.Path.Value.Contains("ProjectX"))
+            //{
+            //    context.Request.Path = "/ProjectX" + context.Request.Path;
+            //    context.Response.Redirect(context.);
+            //}
+
+
+            string Controller = string.Empty;
+            string Action = string.Empty;
+            try
+            {
+                var routeData = context.GetRouteData();
+                Controller = routeData?.Values["controller"]?.ToString().ToLower();
+                Action = routeData?.Values["action"]?.ToString().ToLower();
+
+
+                if (!string.IsNullOrEmpty(Controller))
+                {
+                    if (Controller == "login" || Controller == "content" || Controller == "error" || Controller == "user" || Action == "display" || Action == "drawpdf")
+                    {
+                        if (Controller == "login")
+                            context.Response.Cookies.Delete("token");
+                        await _next(context);
+                    }
+                    else
+                    {
+                        string token = context.Request.Cookies["token"].ToString();
+
+                        if (string.IsNullOrEmpty(token))
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return;
+                        }
+                        else
+                        {
+                            CookieUser cookieUser = _jwtbusiness.getUserFromToken(token, _appSettings.jwt);
+                            if (cookieUser != null)
+                            {
+                                User user = _userBusiness.GetUser(new Entities.Models.User.GetUserReq
+                                {
+                                    idUser = cookieUser.UserId
+                                }).user;
+
+                                if (user != null)
+                                {
+                                    // save to cookie 
+                                    bool isPersistent = true;
+
+                                    CookieOptions options = new CookieOptions
+                                    {
+                                        Secure = false
+                                    };
+
+                                    if (isPersistent)
+                                        options.Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_appSettings.jwt.ExpiryInMinutes));
+                                    else
+                                        options.Expires = DateTime.UtcNow.AddMilliseconds(1);
+
+                                    context.Response.Cookies.Append("token", cookieUser.refreshedtoken, options);
+                                    context.Items["User"] = user;
+                                }
+                                else
+                                {
+                                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                                return;
+                            }
+                        }
+
+                        if (Controller == "avaya")
+                        {
+                            string ParmPath = context.Request.QueryString.Value;
+
+                            if (context.Request.Host.Host.Contains("localhost"))
+                                context.Response.Redirect("/Home" + ParmPath);
+                            else
+                                context.Response.Redirect("/Home" + ParmPath);
+
+                            return;
+                        }
+
+                        await _next(context);
+                    }
+                }
+                else
+                {
+                    //context.Response.Redirect(@"/login");
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                //_logger.LogError(ex, "REQUEST/RESPONSE");
+
+                if (Controller == "avaya")
+                {
+                    //_logger.LogError(Controller, "REQUEST/RESPONSE");
+                    //context.Response.Redirect(@"/error");
+                    await _next(context);
+                }
+                else
+                {
+                    context.Response.StatusCode = -1000;
+                    //return;
+                }
+
+                //context.Response.Redirect("/");
+                context.Response.Redirect("/login");
+            }
+        }
+    }
+}

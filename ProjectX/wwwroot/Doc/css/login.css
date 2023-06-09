@@ -1,0 +1,75 @@
+﻿/*body {
+    background: url('/images/backgrnd2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}*/
+
+
+@media  (max-width: 650px) {
+    body {
+        background-image: url('/images/backgrnd-mob.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+}
+
+
+@media (min-width: 651px) {
+    body {
+        background-image: url('/images/backgrnd2.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        /*background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;*/
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+
+.loader-button {
+    display: flex;
+    justify-content: center;
+    height: 50px
+}
+
+.loader {
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    animation: spin 2s linear infinite;
+}
+
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

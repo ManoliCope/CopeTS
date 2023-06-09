@@ -1,0 +1,314 @@
+﻿@model ProjectX.Entities.Models.Profile.GetProfileResp
+@{
+    var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+
+    Boolean isnew = true;
+    @*if (Model.profile.IdProfile > 0)
+        isnew = false;*@
+}
+
+<link href="~/Content/assets/css/travel.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
+<link rel="stylesheet" href="~/countryflags/css/intlTelInput.css" asp-append-version="true">
+
+
+<div class="content" pgtype="view">
+    <div class="container-fluid" style="padding:10px 0">
+        <div class="row mb-3">
+            <div class="col-md-12 ">
+                <div class="card h-100 ">
+                    <div class="card-body">
+                        <h4 class="card-title ">
+                            <i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+                            @if (!isnew)
+                            {<span>Edit </span> }
+                            else
+                            { <span>New </span>}
+
+                        </h4>
+                        <hr />
+
+                        <div class="row">
+                            <div id="divinfo" class="col-lg-12">
+                                <div class="row">
+
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="validationCustom02">Name</label>
+                                        <input type="text" class="form-control" id="prname" name="@Model.profile.IdProfile" placeholder="" value="@Model.profile.Name" required>
+
+                                        @*<input type="file" class="btn btn-info" multiple id="producer-file-upload" onchange="uploadProducerFile(this);" />*@
+
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="prtype">Type</label>
+                                        <select id="prtype" data-plugin="prtype" class="form-control" required>
+                                            <option value="" disabled> Select Type </option>
+                                            @if (filldata.loadedData.profileTypes != null)
+                                                @foreach (var ptype in filldata.loadedData.profileTypes)
+                                                {
+                                                    if (Model.profile.profileTypes.Where(x => x.IdProfileType == ptype.LK_ID).FirstOrDefault() == null)
+                                                    {
+                                                        <option value="@ptype.LK_ID"> @ptype.LK_TableField</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@ptype.LK_ID" selected> @ptype.LK_TableField</option>
+                                                    }
+                                                }
+                                        </select>
+
+
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="prcountry">Country</label>
+                                        <select id="prcountry" data-plugin="prcountry" class="form-control" required>
+                                            <option value="" disabled> Select Country </option>
+                                           @*@if (filldata.loadedData.countries != null)
+                                                @foreach (var country in filldata.loadedData.countries)
+                                                {
+                                                    if (Model.profile.countries.Where(x => x.LK_ID == country.IdCountry).FirstOrDefault() == null)
+                                                    {
+                                                        <option value="@country.IdCountry"> @country.Name </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@country.IdCountry" selected> @country.Name </option>
+                                                    }
+                                                }*@
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="validationCustom03">Phone Number</label>
+                                        @*<input type="text" class="form-control hasphone" id="prphone" value="@Model.profile.PhoneNumber">*@
+                                        <input id="prphone" class="form-control hasphone contactphone" name="prphone" type="tel" tttttt="@Model.profile.IntCode" value="@Model.profile.PhoneNumber">
+
+                                    </div>
+
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="validationCustom03">Account Number</label>
+                                        <input type="text" class="form-control hasnumber" id="pracc" value="@Model.profile.AccountNo">
+                                    </div>
+
+
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <label for="validationCustom03">Email</label>
+                                        <input type="text" class="form-control hasemail" id="premail" value="@Model.profile.Email">
+                                    </div>
+
+                                    <div class="form-group mb-3 col-lg-4" id="addCovDiv">
+                                        <label for="addCov">Additional Coverage</label>
+                                        <select id="addCov" data-plugin="addCov" class="form-control">
+                                            <option value="" disabled> Select Additional Coverage </option>
+                                       
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3 col-lg-4">
+                                        <div class="form-group mb-0">
+                                            <div class="form-check">
+                                      
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body pb-1">
+                    <div class="row">
+                        <div class="col-lg-8">
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                @if (isnew)
+                                {
+                                    <div class="col-lg-4">
+                                        <button id="confrimdeletebtn" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
+                                            <span> Delete </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
+                                            <span> Files </span>
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-8">
+                                    </div>
+                                }
+                                <div class="col-lg-4">
+                                    <button id="saveprofile" class="btn btn-primary w-100 bglocalcolor" type="submit">
+                                        @if (isnew)
+                                        {<span> Add </span>}
+                                        else
+                                        {<span> Save </span>}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLongTitle"> Delete Profile </h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true"> &times;</span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete this profile?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bglocalcolor" data-dismiss="modal"> Close </button>
+
+                <div id="thisloader" class="smloader hide">
+                </div>
+
+                <button id="profiledelete" type="button" class="btn btn-danger"> Delete </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="add-type" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"> Fees </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"> &times;</span>
+                </button>
+            </div>
+
+            <div id="divnewfees" class="modal-body">
+                <div class="row">
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">Type</label>
+                        <select id="newfeestype" data-plugin="prfeestype" class="form-control" onchange="togglefees(this)" required>
+                            <option value=""> Select Fees Type</option>
+                            @if (filldata.loadedData.feesTypes != null)
+                                @foreach (var Fees in filldata.loadedData.feesTypes)
+                                {
+                                    <option value="@Fees.LK_ID"> @Fees.LK_TableField </option>
+                                }
+                        </select>
+                    </div>
+                    <div id="divcomplexity" class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">Level</label>
+                        <select id="newfeeslevel" class="form-control">
+                            <option> </option>
+                            @if (filldata.loadedData.caseComplexities != null)
+                                @foreach (var Currency in filldata.loadedData.caseComplexities)
+                                {
+                                    <option value="@Currency.LK_ID">@Currency.LK_TableField</option>
+                                }
+                        </select>
+                    </div>
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="newfeescountry">Country</label>
+                        <select id="newfeescountry" data-plugin="newfeescountry" class="form-control" required>
+                            <option value="" disabled selected> Select Country </option>
+                         
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">Currency</label>
+                        <select id="newfeescurrency" class="form-control" required>
+                            <option value=""> Select Currency</option>
+                            
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">Amount</label>
+                        <input type="text" class="form-control hasnumber" id="newfeesamount" required>
+                    </div>
+                    <div class="form-group mb-3 col-lg-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">From</label>
+                        <input type="date" class="form-control" id="newfeesfrom" required>
+                    </div>
+                    <div class="form-group mb-3 col-lg-4">
+                        <label for="validationCustom03">To</label>
+                        <input type="date" class="form-control" id="newfeesto" required>
+                    </div>
+                    <div class="form-group mb-3 col-lg-4">
+                    </div>
+                    <div class="col-lg-12">
+                        <button id="addnewfees" class="btn btn-primary w-100 bglocalcolor" type="submit">
+                            <span> Add </span>
+                        </button>
+                        <div id="thisloader" class="smloader hide"></div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none">
+                <button type="button" class="btn bglocalcolor" data-dismiss="modal">Close</button>
+                <div id="thisloader" class="smloader hide"></div>
+                <button id="adherentimport" type="button" class="btn btn-danger">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (!isnew)
+{
+    <partial name="~/Views/partialviews/upload/partialupload.cshtml" model="@Model.profile.attachmentModel" />
+}
+
+
+@*<script src="~/countryflags/js/intlTelInput.js"></script>*@
+@*<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>*@
+
+<script>
+    //$(document).ready(function () {
+    //    $('#pdfhtmlviewer').summernote();
+    //    var table = $('#testtable').DataTable();
+
+    //});
+</script>
+
+
