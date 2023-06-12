@@ -68,18 +68,7 @@
                             <input type="text" class="form-control" id="city" name="city">
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="street">Street</label>
-                            <input type="text" class="form-control" id="street" name="street">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="building">Building</label>
-                            <input type="text" class="form-control" id="building" name="building">
-                        </div>
-                    </div>
+                   
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="telephone">Telephone *</label>
@@ -98,15 +87,15 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="superAgentId">Super-Agent *</label>
-                            <select class="select2 form-control select2-hidden-accessible" name="superAgentId" required="" id="superAgentId" onchange="fillCobsBySuperAgent()" data-select2-id="superAgentId" tabindex="-1" aria-hidden="true">
-                                <option data-select2-id="2">Select Super Agent</option>
+                            <select class=" form-control">
+                                <option data-select2-id="2">Select Super Agent (Mother Account)</option>
                                 <option value="2" data-select2-id="3">2 - 0 - Green Greens</option>
                                 <option value="3" data-select2-id="4">3 -  - Mubasher Holidays  travel</option>
                                 <option value="4" data-select2-id="5">4 -  - test iraq</option>
                                 <option value="6" data-select2-id="6">6 -  - TEST TEST</option>
                                 <option value="8" data-select2-id="7">8 - 2417 - FAST  MONDIAL</option>
                       
-                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="7337" style="width: 277px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-superAgentId-container"><span class="select2-selection__rendered" id="select2-superAgentId-container" role="textbox" aria-readonly="true" title="Select Super Agent"><span class="select2-selection__clear" title="Remove all items" data-select2-id="7338">×</span>Select Super Agent</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -123,7 +112,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="tax">Tax</label>
+                            <label class="form-control-label" for="tax">Tax (% and #)</label>
                             <input class="form-control" onclick="removeRedColor(this)" type="number" min="0" max="99" name="tax" id="tax" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
@@ -197,13 +186,7 @@
                             <input class="form-control" onclick="removeRedColor(this)" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="stampFixed">Stamp Fixed Amount</label>
-                            <input class="form-control" onclick="removeRedColor(this)" type="number" min="0" max="99" name="stampFixed" id="stampFixed" oninput="this.value = Math.abs(this.value)" value="0">
-                        </div>
-                    </div>
-
+                   
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="additionalFees">Addional Fees</label>
@@ -250,35 +233,12 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="isaPendingApproval" id="isaPendingApproval" value="">
-                                    <label class="form-control-label" for="isaPendingApproval">ISA Pending Approval</label>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-check-inline ">
-                                <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="toRound" id="toRound">
                                     <label class="form-control-label" for="toRound">Apply rounding</label>
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-check-inline ">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="issueProposalOnly" id="issueProposalOnly" value="">
-                                    <label class="form-control-label" for="issueProposalOnly">Allow Print Proposal</label>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-check-inline ">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="needsConf" id="needsConf" value="">
-                                    <label class="form-control-label" for="needsConf">Proposal Confirmation</label>
-                                </label>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
@@ -315,14 +275,6 @@
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="showNetTotal" id="showNetTotal" value="">
                                     <label class="form-control-label" for="showNetTotal">Preview Net</label>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-check-inline ">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="hideProposals" id="hideProposals" value="">
-                                    <label class="form-control-label" for="hideProposals">Hide Proposals</label>
                                 </label>
                             </div>
                         </div>

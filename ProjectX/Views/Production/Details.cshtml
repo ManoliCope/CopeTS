@@ -1,0 +1,72 @@
+﻿@model ProjectX.Entities.dbModels.COB
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>COB</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.is_family)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.is_family)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.activation_date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.activation_date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.is_active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.is_active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.is_deductible)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.is_deductible)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.sports_activities)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.sports_activities)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.additional_benefits)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.additional_benefits)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

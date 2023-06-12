@@ -1,7 +1,7 @@
 ﻿var projectname = checkurlserver();
 
 $(document).ready(function () {
-    $("#searchprofile").click(function () {
+    $("#search").click(function () {
         var data = [
             {
                 "name": "John Doe",
@@ -44,7 +44,7 @@ $(document).ready(function () {
 function drawtable(data) {
     //console.log(data)
 
-    var table = $('#profiletable').DataTable({
+    var table = $('#productiontable').DataTable({
         "data": data,
         "paging": true,
         "ordering": true,

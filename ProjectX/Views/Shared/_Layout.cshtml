@@ -96,6 +96,10 @@
     {
         <link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
     }
+    else if (controllerName == "production")
+    {
+        <link href="~/Content/assets/css/production.css" rel="stylesheet" asp-append-version="true" />
+    }
     else
     {
 
@@ -257,6 +261,10 @@
     else if (controllerName == "profile")
     {
         <script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
+    }
+     else if (controllerName == "production")
+    {
+        <script src="~/Content/assets/js/production.js" asp-append-version="true"></script>
     }
 
 </body>
