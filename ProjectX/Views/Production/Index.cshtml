@@ -1,10 +1,5 @@
 ﻿@model ProjectX.Entities.Models.General.LoadDataResp
 
-<link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
-@*<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet" asp-append-version="true" />*@
-@*<link href="~/Content/assets/libs/summernote/summernote-bs4.css" rel="stylesheet" asp-append-version="true"/>*@
-
-
 
 <div class="content">
     <!-- Start Content-->
@@ -16,87 +11,128 @@
                     </a>
                 </span>*@
             <a class="btn bglocalcolor float-right addnewbtn" href="~/production/create/">
-                <i class="fas fa-plus-circle"></i> Add
+                <i class="fas fa-plus-circle"></i> New Policy
             </a>
             <h4 class="mb-0 mt-0 float-left">Production</h4>
-
-
-
 
         </div>
     </div>
     <div class="container-fluid " style="padding:10px 0">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div id="searchform" class="card-body">
-                        <div>
-                            <div class="row mb-6">
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label>Name:</label>
-                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6 ">
-                                    <label for="sprtype">Type: </label>
-                                    <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-                                        <option selected>Select Type</option>
-                                        @foreach (var type in Model.loadedData.profileTypes)
-                                        {
-                                            <option value="@type.LK_ID"> @type.LK_TableField</option>
-                                        }
-                                    </select>
-                                </div>
 
-                                <div class="col-lg-3 mb-lg-0 mb-6 hidden">
-                                    <label for="prcountry">Country: </label>
-                                    <select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
-                                        <option disabled selected>Select Country</option>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li ><a href="#tab1default" data-toggle="tab" class="active">All</a></li>
+                                <li><a href="#tab2default" data-toggle="tab">Valid</a></li>
+                                <li><a href="#tab3default" data-toggle="tab">Pending</a></li>
+                                <li><a href="#tab3default" data-toggle="tab">Cancelled</a></li>
+                                <li><a href="#tab3default" data-toggle="tab">Expired</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active show" id="tab1default">
+                                    <div class="row tablediv">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
 
-                                    </select>
-                                </div>
+                                                    <div id="searchform">
+                                                        <div class="row mb-6">
+                                                            <div class="col-lg-3 mb-lg-0 mb-6">
+                                                                <label>Name:</label>
+                                                                <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
+                                                            </div>
+                                                            <div class="col-lg-3 mb-lg-0 mb-6 ">
+                                                                <label for="sprtype">Type: </label>
+                                                                <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
+                                                                    <option selected>Select Type</option>
+                                                                    @foreach (var type in Model.loadedData.profileTypes)
+                                                                    {
+                                                                        <option value="@type.LK_ID"> @type.LK_TableField</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-3 mb-lg-0 mb-6 hidden">
+                                                                <label for="prcountry">Country: </label>
+                                                                <select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
+                                                                    <option disabled selected>Select Country</option>
+
+                                                                </select>
+                                                            </div>
 
 
-                                <div class="col-lg-3">
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6">
-                                            <button class="btn bglocalcolor" id="search" style="width:100%">
-                                                <span>
-                                                    <i class="la la-search"></i>
-                                                    <span>Search</span>
-                                                </span>
-                                            </button>&nbsp;&nbsp;
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
-                                                <span>
-                                                    <i class="la la-close"></i>
-                                                    <span>Reset</span>
-                                                </span>
-                                            </button>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <div class="row mt-4">
+                                                                    <div class="col-sm-6">
+                                                                        <button class="btn bglocalcolor" id="search" style="width:100%">
+                                                                            <span>
+                                                                                <i class="la la-search"></i>
+                                                                                <span>Search</span>
+                                                                            </span>
+                                                                        </button>&nbsp;&nbsp;
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+                                                                            <span>
+                                                                                <i class="la la-close"></i>
+                                                                                <span>Reset</span>
+                                                                            </span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <table id="productiontable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+                                                    </table>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                                <div class="tab-pane fade" id="tab2default">Default 2</div>
+                                <div class="tab-pane fade" id="tab3default">Default 3</div>
+                                <div class="tab-pane fade" id="tab4default">Default 4</div>
+                                <div class="tab-pane fade" id="tab5default">Default 5</div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
-        </div>
 
-        <div class="row tablediv">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="productiontable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
-                        </table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+     
         <div class="modal modal-popup" id="view-policy" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
             <div class="modal-dialog  modal-full">
                 <div class="modal-content">
