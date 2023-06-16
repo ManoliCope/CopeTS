@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ProjectX.Entities.dbModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectX.Entities.dbModels
+namespace ProjectX.Entities.Models.Product
+
 {
-    public class COB
+    public class ProdResp : GlobalResponse
     {
         public int id { get; set; }
         public string title { get; set; }
@@ -15,6 +17,7 @@ namespace ProjectX.Entities.dbModels
         public float is_deductible { get; set; }
         public float sports_activities { get; set; }
         public float additional_benefits { get; set; }
+
 
     }
 }

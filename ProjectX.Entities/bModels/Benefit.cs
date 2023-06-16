@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectX.Entities.dbModels
+namespace ProjectX.Entities.bModels
 {
-    public class Plan
+    public class Benefit
     {
         public int id { get; set; }
         public string title { get; set; }

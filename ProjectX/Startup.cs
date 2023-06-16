@@ -2,7 +2,8 @@
 using Microsoft.IdentityModel.Tokens;
 using ProjectX.Business.Attachment;
 using ProjectX.Business.Caching;
-using ProjectX.Business.COB;
+using ProjectX.Business.Zone;
+using ProjectX.Business.Product;
 using ProjectX.Business.Email;
 using ProjectX.Business.General;
 using ProjectX.Business.Jwt;
@@ -11,7 +12,8 @@ using ProjectX.Business.Profile;
 using ProjectX.Business.User;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Repository.AttachmentRepository;
-using ProjectX.Repository.COBRepository;
+using ProjectX.Repository.ZoneRepository;
+using ProjectX.Repository.ProductRepository;
 using ProjectX.Repository.EmailRepository;
 using ProjectX.Repository.GeneralRepository;
 using ProjectX.Repository.NotificationsRepository;
@@ -75,8 +77,8 @@ public class Startup
         services.AddSingleton<IDatabaseCaching, DatabaseCaching>();
         services.AddSingleton<IJwtBusiness, JwtBusiness>();
 
-        services.AddSingleton<ICOBRepository, COBRepository>();
-        services.AddSingleton<ICOBBusiness, COBBusiness>();
+        services.AddSingleton<IProductRepository, ProductRepository>();
+        services.AddSingleton<IZoneBusiness, ZoneBusiness>();
 
         services.AddSingleton<IGeneralBusiness, GeneralBusiness>();
         services.AddSingleton<IGeneralRepository, GeneralRepository>();

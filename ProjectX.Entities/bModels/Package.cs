@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectX.Entities.dbModels
+namespace ProjectX.Entities.bModels
 {
     public class Package
     {

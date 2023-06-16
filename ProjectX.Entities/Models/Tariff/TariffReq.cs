@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ProjectX.Entities.dbModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectX.Entities.dbModels
+namespace ProjectX.Entities.Models.Tariff
 {
-    public class Tariff
+    public class TariffReq 
     {
         public int id { get; set; }
         public int idPackage { get; set; }
@@ -16,8 +17,5 @@ namespace ProjectX.Entities.dbModels
         public float net_premium_amount { get; set; }
         public float pa_amount { get; set; }
         public DateTime tariff_starting_date { get; set; }
-
-
-
     }
 }
