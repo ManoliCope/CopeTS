@@ -3,13 +3,17 @@
 @{
     var user = ViewData["User"] as ProjectX.Entities.dbModels.User;
     //var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
-    
+
 
     string screentype = "home";
     screentype = ViewBag.screentype;
 
     var caseid = ViewBag.caseid;
     var isBlackLited = ViewBag.isBlackListed;
+
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var actionName = this.ViewContext.RouteData.Values["action"].ToString().ToLower();
+
 }
 
 @*<div class="topnav">
@@ -84,7 +88,7 @@
         <div class="sidebar-content" >
             <nav class="menu open-current-submenu">
                 <ul >
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                         <a href="~/production/">
                                 <span class="menu-icon">
                                     <i class="fa fa-chart-line"></i>
@@ -93,7 +97,7 @@
 
                             </a>
                     </li>
-                    <li class="menu-item sub-menu">
+                    <li class="menu-item sub-menu ">
                         <a href="#">
                             <span class="menu-icon">
                                 <i class="ri-tools-line"></i>
@@ -135,7 +139,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="menu-item ">
+                    <li class="menu-item active">
                         <a href="~/Profile/">
                                 <span class="menu-icon">
                                     <i class="fa fa-users text-gray"></i>
