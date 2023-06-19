@@ -208,14 +208,14 @@ function showresponsemodal(type, msg, pagename) {
     $("body").find("#AddPatient").css("display", "none");
 
     if (type == "1") {
-        $('#responsemodal .icon-box').removeClass("popup-success popup-failure").addClass("popup-success")
-        $('#responsemodal .btn').removeClass("popup-success popup-failure").addClass("popup-success")
+        $('#responsemodal .modal-confirm').removeClass("popup-success popup-failure").addClass("popup-success")
+        //$('#responsemodal .btn').removeClass("popup-success popup-failure").addClass("popup-success")
         $('#responsemodal .icon-box i').removeClass().addClass("fas fa-check")
 
         $('#responsemodal h4').text("Success")
     } else {
-        $('#responsemodal .icon-box').removeClass("popup-success popup-failure").addClass("popup-failure")
-        $('#responsemodal .btn').removeClass("popup-success popup-failure").addClass("popup-failure")
+        $('#responsemodal .modal-confirm').removeClass("popup-success popup-failure").addClass("popup-failure")
+        //$('#responsemodal .btn').removeClass("popup-success popup-failure").addClass("popup-failure")
         $('#responsemodal .icon-box i').removeClass().addClass("fas fa-times")
 
         $('#responsemodal h4').text("Failure")

@@ -21,7 +21,7 @@ namespace ProjectX.Business.Product
         {
             ProdResp response = new ProdResp();
             response = _prodRepository.ModifyProduct(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Product");
             return response;
         }
         public List<TR_Product> GetProductlist(ProdSearchReq req)

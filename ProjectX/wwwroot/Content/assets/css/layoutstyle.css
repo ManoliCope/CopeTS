@@ -1,8 +1,8 @@
 
 :root {
-    --main-color: #4b5965;
+    --main-color: #282f35;
     --second-color: yellow;
-    --third-color: #ff8100;
+    --third-color: #a11313;
     /*--third-color: #006fff;*/
     --contentback-color: #dee0e9;
     --alternate-color: #3e3d3d70;
@@ -738,7 +738,7 @@ table td i.red {
 
 .transpback {
     /*background: rgba(192, 192, 192, 0.5) !important;*/
-    background: rgb(115 114 114 / 50%) !important;
+    background: rgb(0 0 0 / 50%) !important ;
 }
 
 .modal-backdrop.underlay {

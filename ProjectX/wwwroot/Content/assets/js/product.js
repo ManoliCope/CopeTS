@@ -152,7 +152,11 @@ function addnew() {
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
 
-            showresponsemodal(result.statusCode.code, result.statusCode.message, "Product")
+            showresponsemodal(result.statusCode.code, result.statusCode.message)
+            $("#responsemodal button").click(function () {
+                gotopage("product", "Edit",35);
+            });
+
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -191,7 +195,7 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(result.statusCode.code, result.statusCode.message, "Product")
+            showresponsemodal(1, result.statusCode.message, "Product")
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
