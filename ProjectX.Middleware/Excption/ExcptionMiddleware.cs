@@ -41,7 +41,7 @@ namespace ProjectX.Middleware.Excption
         {
             Exception _ex = null;
             string RequestPath = context.Request.Path.Value;
-            //string jsonResponse = string.Empty; /COB/
+            //string jsonResponse = string.Empty; /product/
             //Stream originBody = null;
             _user = (User)context.Items["User"];
 

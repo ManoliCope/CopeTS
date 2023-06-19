@@ -82,7 +82,7 @@ function drawpolicytable(data) {
     //age: 0
     //bK_NO: "07237"
     //benefits: null
-    //cob: "PCH"
+    //product: "PCH"
 
     var table = $('#policy').DataTable({
         "data": data,

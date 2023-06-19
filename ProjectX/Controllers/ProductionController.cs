@@ -7,6 +7,7 @@ using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
+using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Profile;
 
 namespace ProjectX.Controllers
@@ -58,8 +59,8 @@ namespace ProjectX.Controllers
             response.loadedData = new LoadDataModel();
             ViewData["filldata"] = response;
 
-            GetProfileResp ttt = new GetProfileResp();
-            ttt.profile = new Profile();
+            ProdGetResp ttt = new ProdGetResp();
+            ttt.product = new TR_Product();
             return View(ttt);
         }
 

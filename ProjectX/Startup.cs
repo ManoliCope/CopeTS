@@ -77,8 +77,11 @@ public class Startup
         services.AddSingleton<IDatabaseCaching, DatabaseCaching>();
         services.AddSingleton<IJwtBusiness, JwtBusiness>();
 
+        services.AddSingleton<IProductBusiness, ProductBusiness>();
         services.AddSingleton<IProductRepository, ProductRepository>();
+
         services.AddSingleton<IZoneBusiness, ZoneBusiness>();
+        services.AddSingleton<IZoneRepository, ZoneRepository>();
 
         services.AddSingleton<IGeneralBusiness, GeneralBusiness>();
         services.AddSingleton<IGeneralRepository, GeneralRepository>();

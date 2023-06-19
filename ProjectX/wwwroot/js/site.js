@@ -160,7 +160,7 @@ function triggerfiltertable(datatable, tablename) {
     `);
     $('#' + tablename + ' thead tr th').each(function (i) {
         var title = $(this).text();
-       // alert(title);
+        // alert(title);
         if ($('#' + tablename + ' thead tr th:eq(' + i + ')').hasClass("filter")) {
             $("#datatablefilterlist").append('<div class="row p-1"><div class="col-md-4" style="text-align: center;padding-top: 5px"><span>' + title + '</span></div><div class="col-md-8"><input type="text" name=' + i + ' class="form-control datatable-input" placeholder="Search ' + title + '" /></div></div>');
         }
@@ -189,7 +189,7 @@ function triggerfiltertable(datatable, tablename) {
 
 
 
-function showresponsemodal(type, msg) {
+function showresponsemodal(type, msg, pagename) {
 
     removeloader();
     $(".modal-backdrop").remove();
@@ -197,6 +197,13 @@ function showresponsemodal(type, msg) {
     //$('#responsemodal').modal({ backdrop: 'static', keyboard: false })
     $("body").find(".modal").modal("hide");
     $(".close").click();
+
+    if (pagename) {
+        $("#responsemodal button").click(function () {
+            gotopage(pagename, "Index");
+        });
+    }
+
 
     $("body").find("#AddPatient").css("display", "none");
 
@@ -214,12 +221,32 @@ function showresponsemodal(type, msg) {
         $('#responsemodal h4').text("Failure")
     }
 
+    $(".modal-backdrop").removeClass("underlay")
+
     $('#responsemodal p').text(msg)
     $('#responsemodal').modal('show');
 
     $(".scrollpartialscreen").scrollTop(0)
+
+
 }
 
+
+
+function showresponsemodalbyid(popupid, thisid, trindex) {
+    removeloader();
+    $(".modal-backdrop").remove();
+
+    $("body").find(".modal").modal("hide");
+    $(".close").click();
+
+    $('#' + popupid).addClass("transpback").attr("actid", thisid).attr("trindex", trindex);
+    $('#' + popupid).modal('show');
+    $("body .modal-backdrop").removeClass("show").addClass("underlay");
+
+    $(".scrollpartialscreen").scrollTop(0)
+
+}
 
 //$(".loadingthis").on(function () {
 //    $('#cover-spin').show(0)
@@ -274,6 +301,25 @@ function convertdate(thisdate) {
     return output;
 }
 
+function gotopage(PageName, action, parameter) {
+    showloader();
+    if (!action)
+        action = '';
+
+    var link;
+    if (parameter)
+        link = PageName + "/" + action + "?id=" + parameter;
+    else
+        link = PageName + "/" + action;
+
+
+    removeloader();
+    $('#partialscreen .content-page').css("display", "block")
+
+    window.location.href = "/" + link;
+
+
+}
 
 
 
@@ -618,7 +664,7 @@ function triggeravayaselect(avayacid) {
 
     var selectedcall = $("#unregisteredcalls").find("[bakcid='" + avayacid + "']").closest("p")
     var isBlackList = $(selectedcall).find(".selectnumber").attr("isBlackListed");
-    
+
     // updated to get the bakcid instead of original cid to cover special duplicate avayaid cases
     $("#notifications-bottom-right #cid").text($(selectedcall).find(".selectnumber").attr("cid"));
     $("#notifications-bottom-right #calldate").text($(selectedcall).find(".selectdate").text());
@@ -630,7 +676,7 @@ function triggeravayaselect(avayacid) {
     $("#unregisteredcalls").find(".flagselected").attr("hidden", "hidden");
     $(selectedcall).find(".flagselected").removeAttr("hidden");
 
-  
+
 
     if (isBlackList == "True") {
         $("#notifications-bottom-right-tab").addClass("blacklisted");
@@ -671,7 +717,7 @@ function setactiveavayacall(me) {
 
     $("#unregisteredcalls").find(".flagselected").attr("hidden", "hidden");
     $(me).find(".flagselected").removeAttr("hidden");
- 
+
     if (isBlackListed == "True") {
         $("#notifications-bottom-right-tab").addClass("blacklisted");
         $("#notifications-bottom-right-tab-right-title span").text("Blacklisted Call")
@@ -726,7 +772,7 @@ function cancelavayapopup() {
     //});
 
     localStorage.removeItem("cid");
-   
+
     hideavayapopup()
 }
 
