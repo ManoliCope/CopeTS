@@ -19,9 +19,9 @@ namespace ProjectX.Repository.ProductRepository
     public class ProductRepository : IProductRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public ProductRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public ProductRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
@@ -48,15 +48,15 @@ namespace ProjectX.Repository.ProductRepository
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 _db.Execute("TR_Product_CRUD", param, commandType: CommandType.StoredProcedure);
-              //  statusCode = param.Get<int>("@Status");
-               // idOut = param.Get<int>("@idOut");
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
             }
-            //resp.statusCode.code = statusCode;
-            //resp.id = idOut;
+            resp.statusCode.code = statusCode;
+            resp.id = idOut;
 
             return resp;
         }
-        public List<TR_Product> GetProductlist(ProdSearchReq req)
+        public List<TR_Product> GetProductList(ProdSearchReq req)
         {
             var resp = new List<TR_Product>();
             var param = new DynamicParameters();

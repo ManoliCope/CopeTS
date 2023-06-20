@@ -21,8 +21,8 @@ namespace ProjectX.Repository.NotificationsRepository
     public class NotificationsRepository : INotificationsRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
-        public NotificationsRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        private readonly TrAppSettings _appSettings;
+        public NotificationsRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

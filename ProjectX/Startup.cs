@@ -33,7 +33,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        CcAppSettings appSettings = _configuration.GetSection("AppSettings").Get<CcAppSettings>();
+        TrAppSettings appSettings = _configuration.GetSection("AppSettings").Get<TrAppSettings>();
 
         services.AddAuthentication(x =>
         {

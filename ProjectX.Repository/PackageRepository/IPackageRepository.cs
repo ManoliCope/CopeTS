@@ -10,6 +10,7 @@ namespace ProjectX.Repository.PackageRepository
     public interface IPackageRepository
     {
         public PackResp ModifyPackage(PackResp req);
-        public List<TR_Package> GetPackage(PackReq req);
+        public List<TR_Package> GetPackageList(PackReq req);
+        public TR_Package GetPackage(int IdPackage);
     }
 }

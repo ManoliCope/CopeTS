@@ -19,8 +19,8 @@ public class Program
         {
             //IConfiguration configuration = hostContext.Configuration;
             //services.AddSingleton(configuration);
-            //services.Configure<CcAppSettings>(configuration.GetSection("MySection"));
-            services.Configure<CcAppSettings>(hostContext.Configuration.GetSection("AppSettings"));
+            //services.Configure<TrAppSettings>(configuration.GetSection("MySection"));
+            services.Configure<TrAppSettings>(hostContext.Configuration.GetSection("AppSettings"));
 
         })
         .ConfigureWebHostDefaults(webBuilder =>

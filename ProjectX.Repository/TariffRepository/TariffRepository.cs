@@ -17,9 +17,9 @@ namespace ProjectX.Repository.TariffRepository
     public class TariffRepository : ITariffRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public TariffRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public TariffRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
@@ -47,14 +47,14 @@ namespace ProjectX.Repository.TariffRepository
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 _db.Execute("TR_Tariff_CRUD", param, commandType: CommandType.StoredProcedure);
-            //    statusCode = param.Get<int>("@Status");
-              //  idOut = param.Get<int>("@idOut");
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
             }
-           // resp.statusCode.code = statusCode;
-           // resp.id = idOut;
+            resp.statusCode.code = statusCode;
+            resp.id = idOut;
             return resp;
         }
-        public List<TR_Tariff> GetTariff(TariffReq req)
+        public List<TR_Tariff> GetTariffList(TariffReq req)
         {
             var resp = new List<TR_Tariff>();
             
@@ -83,6 +83,21 @@ namespace ProjectX.Repository.TariffRepository
             }
             return resp;
         }
+        public TR_Tariff GetTariff(int IdTariff)
+        {
+            var resp = new TR_Tariff();
+            var param = new DynamicParameters();
+            param.Add("@T_id", IdTariff);
 
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Tariff_GetbyID", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.ReadFirstOrDefault<TR_Tariff>();
+                }
+            }
+
+            return resp;
+        }
     }
 }

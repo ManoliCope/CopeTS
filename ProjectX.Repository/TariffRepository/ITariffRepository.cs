@@ -10,6 +10,7 @@ namespace ProjectX.Repository.TariffRepository
     public interface ITariffRepository
     {
         public TariffResp ModifyTariff(TariffResp req);
-        public List<TR_Tariff> GetTariff(TariffReq req);
+        public List<TR_Tariff> GetTariffList(TariffReq req);
+        public TR_Tariff GetTariff(int IdTariff);
     }
 }

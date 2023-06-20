@@ -9,7 +9,7 @@ namespace ProjectX.Business.Product
     public interface IProductBusiness
     {
         public ProdResp ModifyProduct(ProdReq req, string act,int userid);
-        public List<TR_Product> GetProductlist(ProdSearchReq req);
+        public List<TR_Product> GetProductList(ProdSearchReq req);
         public ProdResp GetProduct(int Idproduct);
 
     }

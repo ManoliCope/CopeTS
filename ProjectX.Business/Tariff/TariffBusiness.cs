@@ -19,9 +19,13 @@ namespace ProjectX.Business.Tariff
         {
             return _tariffRepository.ModifyTariff(req);
         }
-        public List<TR_Tariff> GetTariff(TariffReq req)
+        public List<TR_Tariff> GetTariffList(TariffReq req)
         {
-            return _tariffRepository.GetTariff(req);
+            return _tariffRepository.GetTariffList(req);
+        }
+        public TR_Tariff GetTariff(int IdTariff)
+        {
+            return _tariffRepository.GetTariff(IdTariff);
         }
     }
 }

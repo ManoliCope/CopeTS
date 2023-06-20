@@ -24,9 +24,9 @@ namespace ProjectX.Business.Product
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Product");
             return response;
         }
-        public List<TR_Product> GetProductlist(ProdSearchReq req)
+        public List<TR_Product> GetProductList(ProdSearchReq req)
         {
-            return _prodRepository.GetProductlist(req);
+            return _prodRepository.GetProductList(req);
         }
 
         public ProdResp GetProduct(int Idproduct)

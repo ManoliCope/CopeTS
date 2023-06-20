@@ -23,14 +23,14 @@ namespace ProjectX.Middleware.Excption
 {
     public class ExcptionMiddleware
     {
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private readonly RequestDelegate _next;
         private readonly ILogger<ExcptionMiddleware> _logger;
         private Stopwatch stopwatch;
         private string IP = string.Empty;
         public User _user;
 
-        public ExcptionMiddleware(RequestDelegate next, IOptions<CcAppSettings> appIdentitySettingsAccessor, ILogger<ExcptionMiddleware> logger)
+        public ExcptionMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, ILogger<ExcptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;

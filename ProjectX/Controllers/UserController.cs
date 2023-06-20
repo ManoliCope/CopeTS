@@ -13,10 +13,10 @@ namespace ProjectX.Controllers
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IJwtBusiness _jwtBusiness;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private User _user;
 
-        public UserController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public UserController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _appSettings = appIdentitySettingsAccessor.Value;

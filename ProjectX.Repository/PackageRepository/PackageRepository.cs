@@ -17,9 +17,9 @@ namespace ProjectX.Repository.PackageRepository
     public class PackageRepository : IPackageRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public PackageRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public PackageRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
@@ -45,14 +45,14 @@ namespace ProjectX.Repository.PackageRepository
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 _db.Execute("TR_Package_CRUD", param, commandType: CommandType.StoredProcedure);
-               // statusCode = param.Get<int>("@Status");
-                //idOut = param.Get<int>("@idOut");
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
             }
-           // resp.statusCode.code = statusCode;
-            //resp.id = idOut;
+            resp.statusCode.code = statusCode;
+            resp.id = idOut;
             return resp;
         }
-        public List<TR_Package> GetPackage(PackReq req)
+        public List<TR_Package> GetPackageList(PackReq req)
         {
             var resp = new List<TR_Package>();
 
@@ -80,6 +80,21 @@ namespace ProjectX.Repository.PackageRepository
 
             return resp;
         }
+        public TR_Package GetPackage(int IdPackage)
+        {
+            var resp = new TR_Package();
+            var param = new DynamicParameters();
+            param.Add("@P_id", IdPackage);
 
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Package_GetbyID", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.ReadFirstOrDefault<TR_Package>();
+                }
+            }
+
+            return resp;
+        }
     }
 }

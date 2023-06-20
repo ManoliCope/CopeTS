@@ -22,13 +22,13 @@ namespace ProjectX.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IProfileBusiness _profileBusiness;
         private IGeneralBusiness _generalBusiness;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private User _user;
 
         private IWebHostEnvironment _env;
 
 
-        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<CcAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _profileBusiness = profileBusiness;

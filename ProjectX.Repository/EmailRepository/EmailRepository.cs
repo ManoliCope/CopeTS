@@ -20,8 +20,8 @@ namespace ProjectX.Repository.EmailRepository
     public class EmailRepository : IEmailRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
-        public EmailRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        private readonly TrAppSettings _appSettings;
+        public EmailRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

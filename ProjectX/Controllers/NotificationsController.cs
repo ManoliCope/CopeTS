@@ -15,7 +15,7 @@ namespace ProjectX.Controllers
         private User _user;
         private INotificationsBusiness _notificationsBusiness;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public NotificationsController(IHttpContextAccessor httpContextAccessor, IOptions<CcAppSettings> appIdentitySettingsAccessor, INotificationsBusiness NotificationsBusiness /*, IGeneralBusiness generalBusiness*/)
+        public NotificationsController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, INotificationsBusiness NotificationsBusiness /*, IGeneralBusiness generalBusiness*/)
         {
             _httpContextAccessor = httpContextAccessor;
             _notificationsBusiness = NotificationsBusiness;

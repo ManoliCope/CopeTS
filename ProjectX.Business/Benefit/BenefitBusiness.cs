@@ -19,9 +19,13 @@ namespace ProjectX.Business.Benefit
         {
             return _benefitRepository.ModifyBenefit(req);
         }
-        public List<TR_Benefit> GetBenefit(BenReq req)
+        public List<TR_Benefit> GetBenefitList(BenReq req)
         {
-            return _benefitRepository.GetBenefit(req);
+            return _benefitRepository.GetBenefitList(req);
+        }
+        public TR_Benefit GetBenefit(int IdBenifit)
+        {
+            return _benefitRepository.GetBenefit(IdBenifit);
         }
     }
 }

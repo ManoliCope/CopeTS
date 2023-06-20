@@ -6,9 +6,9 @@ namespace ProjectX.Controllers
 {
     public class NavigateController : Controller
     {
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public NavigateController(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public NavigateController(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

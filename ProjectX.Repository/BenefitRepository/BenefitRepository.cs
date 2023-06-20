@@ -17,9 +17,9 @@ namespace ProjectX.Repository.BenefitRepository
     public class BenefitRepository : IBenefitRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public BenefitRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public BenefitRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
@@ -40,14 +40,14 @@ namespace ProjectX.Repository.BenefitRepository
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 _db.Execute("TR_Benefit_CRUD", param, commandType: CommandType.StoredProcedure);
-               // statusCode = param.Get<int>("@Status");
-                //idOut = param.Get<int>("@idOut");
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
             }
-           // resp.statusCode.code = statusCode;
-            //resp.id = idOut;
+            resp.statusCode.code = statusCode;
+            resp.id = idOut;
             return resp;
         }
-        public List<TR_Benefit> GetBenefit(BenReq req)
+        public List<TR_Benefit> GetBenefitList(BenReq req)
         {
             var resp = new List<TR_Benefit>();
 
@@ -71,6 +71,21 @@ namespace ProjectX.Repository.BenefitRepository
 
             return resp;
         }
+        public TR_Benefit GetBenefit(int IdBenifit)
+        {
+            var resp = new TR_Benefit();
+            var param = new DynamicParameters();
+            param.Add("@B_ID", IdBenifit);
 
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Benefit_GetbyID", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.ReadFirstOrDefault<TR_Benefit>();
+                }
+            }
+
+            return resp;
+        }
     }
 }

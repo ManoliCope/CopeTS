@@ -16,9 +16,9 @@ namespace ProjectX.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IUserBusiness _userBusiness;
         private IJwtBusiness _jwtBusiness;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public LoginController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<CcAppSettings> appIdentitySettingsAccessor, IUserBusiness userBusiness)
+        public LoginController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUserBusiness userBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _userBusiness = userBusiness;

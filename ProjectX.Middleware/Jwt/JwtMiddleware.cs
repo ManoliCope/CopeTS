@@ -18,13 +18,13 @@ namespace ProjectX.Middleware.Jwt
 {
     public class JwtMiddleware
     {
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private readonly RequestDelegate _next;
         private IJwtBusiness _jwtbusiness;
         private IUserBusiness _userBusiness;
         private readonly ILogger<JwtMiddleware> _logger;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<CcAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUserBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
+        public JwtMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUserBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
         {
             _next = next;
             _jwtbusiness = jwtbusiness;

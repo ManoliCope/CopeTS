@@ -16,9 +16,9 @@ namespace ProjectX.Business.Jwt
 {
     public class JwtBusiness : IJwtBusiness
     {
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public JwtBusiness(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public JwtBusiness(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

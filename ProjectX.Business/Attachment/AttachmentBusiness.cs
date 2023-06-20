@@ -26,13 +26,13 @@ namespace ProjectX.Business.Attachment
     public class AttachmentBusiness : IAttachmentBusiness
     {
         private IAttachmentRepository _attachmentRepository;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private IDatabaseCaching _databaseCaching;
         private IList<FileDirectory> _fileDirectories;
         private IList<AppConfig> _appConfigs;
         private readonly ILogger<AttachmentBusiness> _logger;
 
-        public AttachmentBusiness(IOptions<CcAppSettings> appIdentitySettingsAccessor, IAttachmentRepository attachmentRepository, IDatabaseCaching databaseCaching, ILogger<AttachmentBusiness> logger)
+        public AttachmentBusiness(IOptions<TrAppSettings> appIdentitySettingsAccessor, IAttachmentRepository attachmentRepository, IDatabaseCaching databaseCaching, ILogger<AttachmentBusiness> logger)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
             _attachmentRepository = attachmentRepository;

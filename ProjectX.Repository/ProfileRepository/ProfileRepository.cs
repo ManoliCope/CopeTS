@@ -20,8 +20,8 @@ namespace ProjectX.Repository.ProfileRepository
     public class ProfileRepository : IProfileRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
-        public ProfileRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        private readonly TrAppSettings _appSettings;
+        public ProfileRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

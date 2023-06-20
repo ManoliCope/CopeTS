@@ -16,9 +16,9 @@ namespace ProjectX.Repository.GeneralRepository
     public class GeneralRepository : IGeneralRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public GeneralRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public GeneralRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

@@ -26,12 +26,12 @@ namespace ProjectX.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IProductBusiness _productBusiness;
         private IGeneralBusiness _generalBusiness;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private User _user;
 
 
 
-        public ProductController(IHttpContextAccessor httpContextAccessor, IOptions<CcAppSettings> appIdentitySettingsAccessor, IProductBusiness productBusiness, IGeneralBusiness generalBusiness)
+        public ProductController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProductBusiness productBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _productBusiness = productBusiness;
@@ -58,7 +58,7 @@ namespace ProjectX.Controllers
         public ProdSearchResp Search(ProdSearchReq req)
         {
             ProdSearchResp response = new ProdSearchResp();
-            response.products = _productBusiness.GetProductlist(req);
+            response.products = _productBusiness.GetProductList(req);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;

@@ -13,10 +13,10 @@ namespace ProjectX.Controllers
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IGeneralBusiness _generalBusiness;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
         private User _user;
 
-        public TravelController(IHttpContextAccessor httpContextAccessor, IOptions<CcAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness)
+        public TravelController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _generalBusiness = generalBusiness;

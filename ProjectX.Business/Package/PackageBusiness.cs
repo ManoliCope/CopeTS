@@ -19,9 +19,13 @@ namespace ProjectX.Business.Package
         {
             return _packageRepository.ModifyPackage(req);
         }
-        public List<TR_Package> GetPackage(PackReq req)
+        public List<TR_Package> GetPackageList(PackReq req)
         {
-            return _packageRepository.GetPackage(req);
+            return _packageRepository.GetPackageList(req);
+        }
+        public TR_Package GetPackage(int IdPackage)
+        {
+            return _packageRepository.GetPackage(IdPackage);
         }
     }
 }

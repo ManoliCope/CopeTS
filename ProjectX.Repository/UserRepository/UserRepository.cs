@@ -14,9 +14,9 @@ namespace ProjectX.Repository.UserRepository
     public class UserRepository : IUserRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
+        private readonly TrAppSettings _appSettings;
 
-        public UserRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        public UserRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

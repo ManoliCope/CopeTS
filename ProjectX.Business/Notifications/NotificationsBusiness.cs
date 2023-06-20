@@ -14,7 +14,7 @@ namespace ProjectX.Business.Notifications
     public class NotificationsBusiness : INotificationsBusiness
     {
         INotificationsRepository _notificationsRepository;
-        public NotificationsBusiness(IOptions<CcAppSettings> appIdentitySettingsAccessor, INotificationsRepository notificationsRepository)
+        public NotificationsBusiness(IOptions<TrAppSettings> appIdentitySettingsAccessor, INotificationsRepository notificationsRepository)
         {
             _notificationsRepository = notificationsRepository;
         }

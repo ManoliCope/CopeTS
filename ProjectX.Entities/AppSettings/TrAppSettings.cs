@@ -2,7 +2,7 @@
 
 namespace ProjectX.Entities.AppSettings
 {
-    public class CcAppSettings
+    public class TrAppSettings
     {
         public ConnectionStrings connectionStrings { get; set; }
         public Jwt jwt { get; set; }

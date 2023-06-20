@@ -17,8 +17,8 @@ namespace ProjectX.Repository.AttachmentRepository
     public class AttachmentRepository : IAttachmentRepository
     {
         private SqlConnection _db;
-        private readonly CcAppSettings _appSettings;
-        public AttachmentRepository(IOptions<CcAppSettings> appIdentitySettingsAccessor)
+        private readonly TrAppSettings _appSettings;
+        public AttachmentRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }

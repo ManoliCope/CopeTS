@@ -9,6 +9,7 @@ namespace ProjectX.Business.Zone
     public interface IZoneBusiness
     {
         public ZoneResp ModifyZone(ZoneResp req);
-        public List<TR_Zone> GetZone(ZoneReq req);
+        public List<TR_Zone> GetZoneList(ZoneReq req);
+        public TR_Zone GetZone(int IdZone);
     }
 }

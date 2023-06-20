@@ -19,9 +19,13 @@ namespace ProjectX.Business.Zone
         {
             return _zoneRepository.ModifyZone(req);
         }
-        public List<TR_Zone> GetZone(ZoneReq req)
+        public List<TR_Zone> GetZoneList(ZoneReq req)
         {
-            return _zoneRepository.GetZone(req);
+            return _zoneRepository.GetZoneList(req);
+        }
+        public TR_Zone GetZone(int IdZone)
+        {
+            return _zoneRepository.GetZone(IdZone); 
         }
     }
 }
