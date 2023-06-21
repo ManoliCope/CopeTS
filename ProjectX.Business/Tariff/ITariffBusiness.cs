@@ -8,8 +8,8 @@ namespace ProjectX.Business.Tariff
 {
     public interface ITariffBusiness
     {
-        public TariffResp ModifyTariff(TariffResp req);
-        public List<TR_Tariff> GetTariffList(TariffReq req);
-        public TR_Tariff GetTariff(int IdTariff);
+        public TariffResp ModifyTariff(TariffReq req, string act, int userid);
+        public List<TR_Tariff> GetTariffList(TariffSearchReq req);
+        public TariffResp GetTariff(int IdTariff);
     }
 }

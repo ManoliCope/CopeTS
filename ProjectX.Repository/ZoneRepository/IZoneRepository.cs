@@ -9,8 +9,8 @@ namespace ProjectX.Repository.ZoneRepository
 {
     public interface IZoneRepository
     {
-        public ZoneResp ModifyZone(ZoneResp req);
-        public List<TR_Zone> GetZoneList(ZoneReq req);
+        public ZoneResp ModifyZone(ZoneReq req, string act, int userid);
+        public List<TR_Zone> GetZoneList(ZoneSearchReq req);
         public TR_Zone GetZone(int IdZone);
     }
 }

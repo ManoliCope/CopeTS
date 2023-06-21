@@ -23,19 +23,20 @@ namespace ProjectX.Repository.ZoneRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public ZoneResp ModifyZone(ZoneResp req)
+        public ZoneResp ModifyZone(ZoneReq req, string act, int userid)
         {
             var resp = new ZoneResp();
             int statusCode = 0;
             int idOut = 0;
             var param = new DynamicParameters();
-            param.Add("@action", "");
+            param.Add("@action", act);
+            param.Add("@user_id", userid);
             param.Add("@Z_id", req.id);
             param.Add("@Z_Title", req.title);
             param.Add("@Z_Destination_Id", req.destinationId);
 
-            //param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-            //param.Add("@idOut", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -48,7 +49,7 @@ namespace ProjectX.Repository.ZoneRepository
             resp.id = idOut;
             return resp;
         }
-        public List<TR_Zone> GetZoneList(ZoneReq req)
+        public List<TR_Zone> GetZoneList(ZoneSearchReq req)
         {
             var resp = new List<TR_Zone>();
 

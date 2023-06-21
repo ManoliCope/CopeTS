@@ -32,6 +32,7 @@ namespace ProjectX.Repository.ProductRepository
             int idOut = 0;
             var param = new DynamicParameters();
             param.Add("@action", act);
+            param.Add("@user_id", userid);
             param.Add("@id", req.id);
             param.Add("@title", req.title);
             param.Add("@description", req.description);
@@ -41,8 +42,8 @@ namespace ProjectX.Repository.ProductRepository
             param.Add("@pr_sports_activities", req.sports_activities);
             param.Add("@pr_additional_benefits", req.additional_benefits);
             param.Add("@pr_is_deductible", req.is_deductible);
-            //param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-            //param.Add("@idOut", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))

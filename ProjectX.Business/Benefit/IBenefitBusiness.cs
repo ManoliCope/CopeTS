@@ -8,8 +8,8 @@ namespace ProjectX.Business.Benefit
 {
     public interface IBenefitBusiness
     {
-        public BenResp ModifyBenefit(BenResp req);
-        public List<TR_Benefit> GetBenefitList(BenReq req);
-        public TR_Benefit GetBenefit(int IdBenifit);
+        public BenResp ModifyBenefit(BenReq req, string act, int userid);
+        public List<TR_Benefit> GetBenefitList(BenSearchReq req);
+        public BenResp GetBenefit(int IdBenifit);
     }
 }

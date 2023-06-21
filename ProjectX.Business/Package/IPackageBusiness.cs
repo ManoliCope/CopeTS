@@ -8,8 +8,8 @@ namespace ProjectX.Business.Package
 {
     public interface IPackageBusiness
     {
-        public PackResp ModifyPackage(PackResp req);
-        public List<TR_Package> GetPackageList(PackReq req);
-        public TR_Package GetPackage(int IdPackage);
+        public PackResp ModifyPackage(PackReq req, string act, int userid);
+        public List<TR_Package> GetPackageList(PackSearchReq req);
+        public PackResp GetPackage(int IdPackage);
     }
 }

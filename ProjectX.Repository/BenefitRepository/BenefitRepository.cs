@@ -23,18 +23,19 @@ namespace ProjectX.Repository.BenefitRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public BenResp ModifyBenefit(BenResp req)
+        public BenResp ModifyBenefit(BenReq req, string act, int userid)
         {
             var resp = new BenResp();
             int statusCode = 0;
             int idOut = 0;
             var param = new DynamicParameters();
-            param.Add("@action", "");
+            param.Add("@action", act);
+            param.Add("@user_id", userid);
             param.Add("@B_Id", req.id);
             param.Add("@B_Title", req.title);
             param.Add("@B_Limit", req.limit);
-            //param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-            //param.Add("@idOut", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -47,7 +48,7 @@ namespace ProjectX.Repository.BenefitRepository
             resp.id = idOut;
             return resp;
         }
-        public List<TR_Benefit> GetBenefitList(BenReq req)
+        public List<TR_Benefit> GetBenefitList(BenSearchReq req)
         {
             var resp = new List<TR_Benefit>();
 
