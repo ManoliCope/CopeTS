@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ProjectX.Business.Attachment;
 using ProjectX.Business.Caching;
@@ -22,6 +23,8 @@ using ProjectX.Repository.UserRepository;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProjectX.Extension.Jwt;
+using ProjectX.Extension.Excption;
+
 public class Startup
 {
     private readonly IConfiguration _configuration;
@@ -129,7 +132,11 @@ public class Startup
         app.UseStaticFiles();
         app.UseCookiePolicy();
 
-       app.UseJwtMiddleware();
+
+        app.UseJwtMiddleware();
+        app.UseExcptionMiddleware();
+
+
 
         app.UseEndpoints(endpoints =>
         {

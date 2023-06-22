@@ -1,9 +1,8 @@
-﻿@model ProjectX.Entities.Models.Profile.GetProfileResp
+﻿@model ProjectX.Entities.Models.Product.ProdGetResp
 @{
     var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
     Boolean isnew = true;
- 
 }
 
 <link rel="stylesheet" href="~/countryflags/css/intlTelInput.css" asp-append-version="true">
@@ -687,7 +686,7 @@
 
                                     <div class="form-group mb-3 col-lg-4">
                                         <label for="validationCustom02">Name</label>
-                                        <input type="text" class="form-control" id="prname" name="@Model.profile.IdProfile" placeholder="" value="@Model.profile.Name" required>
+                                        <input type="text" class="form-control" id="prname" placeholder=""  required>
 
                                         @*<input type="file" class="btn btn-info" multiple id="producer-file-upload" onchange="uploadProducerFile(this);" />*@
 
@@ -696,7 +695,7 @@
                                         <label for="prtype">Type</label>
                                         <select id="prtype" data-plugin="prtype" class="form-control" required>
                                             <option value="" disabled> Select Type </option>
-                                            @if (filldata.loadedData.profileTypes != null)
+                                            @*@if (filldata.loadedData.profileTypes != null)
                                                 @foreach (var ptype in filldata.loadedData.profileTypes)
                                                 {
                                                     if (Model.profile.profileTypes.Where(x => x.IdProfileType == ptype.LK_ID).FirstOrDefault() == null)
@@ -707,7 +706,7 @@
                                                     {
                                                         <option value="@ptype.LK_ID" selected> @ptype.LK_TableField</option>
                                                     }
-                                                }
+                                                }*@
                                         </select>
 
 
@@ -733,19 +732,19 @@
                                     <div class="form-group mb-3 col-lg-4">
                                         <label for="validationCustom03">Phone Number</label>
                                         @*<input type="text" class="form-control hasphone" id="prphone" value="@Model.profile.PhoneNumber">*@
-                                        <input id="prphone" class="form-control hasphone contactphone" name="prphone" type="tel" tttttt="@Model.profile.IntCode" value="@Model.profile.PhoneNumber">
+                                        <input id="prphone" class="form-control hasphone contactphone" name="prphone" type="tel" >
 
                                     </div>
 
                                     <div class="form-group mb-3 col-lg-4">
                                         <label for="validationCustom03">Account Number</label>
-                                        <input type="text" class="form-control hasnumber" id="pracc" value="@Model.profile.AccountNo">
+                                        <input type="text" class="form-control hasnumber" id="pracc">
                                     </div>
 
 
                                     <div class="form-group mb-3 col-lg-4">
                                         <label for="validationCustom03">Email</label>
-                                        <input type="text" class="form-control hasemail" id="premail" value="@Model.profile.Email">
+                                        <input type="text" class="form-control hasemail" id="premail" >
                                     </div>
 
                                     <div class="form-group mb-3 col-lg-4" id="addCovDiv">
@@ -947,10 +946,10 @@
 
 
 
-@if (!isnew)
+@*@if (!isnew)
 {
     <partial name="~/Views/partialviews/upload/partialupload.cshtml" model="@Model.profile.attachmentModel" />
-}
+}*@
 
 
 @*<script src="~/countryflags/js/intlTelInput.js"></script>*@

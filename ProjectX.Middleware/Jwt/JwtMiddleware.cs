@@ -131,21 +131,11 @@ namespace ProjectX.Middleware.Jwt
                     return;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //_logger.LogError(ex, "REQUEST/RESPONSE");
 
-                if (Controller == "avaya")
-                {
-                    //_logger.LogError(Controller, "REQUEST/RESPONSE");
-                    //context.Response.Redirect(@"/error");
-                    await _next(context);
-                }
-                else
-                {
-                    context.Response.StatusCode = -1000;
-                    //return;
-                }
+                context.Response.StatusCode = -1000;
 
                 //context.Response.Redirect("/");
                 context.Response.Redirect("/login");
