@@ -9,8 +9,8 @@ namespace ProjectX.Repository.PackageRepository
 {
     public interface IPackageRepository
     {
-        public PackResp ModifyPackage(PackResp req);
-        public List<TR_Package> GetPackageList(PackReq req);
+        public PackResp ModifyPackage(PackReq req, string act, int userid);
+        public List<TR_Package> GetPackageList(PackSearchReq req);
         public TR_Package GetPackage(int IdPackage);
     }
 }

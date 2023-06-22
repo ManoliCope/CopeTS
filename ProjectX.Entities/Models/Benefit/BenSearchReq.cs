@@ -9,7 +9,10 @@ namespace ProjectX.Entities.Models.Benefit
     public class BenSearchReq : GlobalResponse
     {
         public int id { get; set; }
-        
+        public string title { get; set; }
+        public float limit { get; set; }
+
+
 
 
     }

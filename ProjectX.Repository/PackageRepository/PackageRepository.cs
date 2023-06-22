@@ -23,13 +23,14 @@ namespace ProjectX.Repository.PackageRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public PackResp ModifyPackage(PackResp req)
+        public PackResp ModifyPackage(PackReq req, string act, int userid)
         {
             var resp = new PackResp();
             int statusCode = 0;
             int idOut = 0;
             var param = new DynamicParameters();
-            param.Add("@action", "");
+            param.Add("@action", act);
+            param.Add("@user_id", userid);
             param.Add("@id", req.id);
             param.Add("@P_Name", req.name);
             param.Add("@PR_Id", req.cobId);
@@ -38,8 +39,8 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@P_Adult_No", req.adult_no);
             param.Add("@P_Children_No", req.children_no);
             param.Add("@P_PA_Included", req.pa_included);
-            //param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-            //param.Add("@idOut", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -52,7 +53,7 @@ namespace ProjectX.Repository.PackageRepository
             resp.id = idOut;
             return resp;
         }
-        public List<TR_Package> GetPackageList(PackReq req)
+        public List<TR_Package> GetPackageList(PackSearchReq req)
         {
             var resp = new List<TR_Package>();
 

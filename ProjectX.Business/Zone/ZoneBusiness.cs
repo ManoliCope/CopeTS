@@ -1,5 +1,7 @@
-﻿using ProjectX.Entities.dbModels;
+﻿using ProjectX.Entities;
+using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Zone;
+using ProjectX.Entities.Resources;
 using ProjectX.Repository.ZoneRepository;
 using System;
 using System.Collections.Generic;
@@ -15,17 +17,28 @@ namespace ProjectX.Business.Zone
         {
             _zoneRepository = zoneRepository;
         }
-        public ZoneResp ModifyZone(ZoneResp req)
+        public ZoneResp ModifyZone(ZoneReq req, string act, int userid)
         {
-            return _zoneRepository.ModifyZone(req);
+            ZoneResp response = new ZoneResp();
+            response = _zoneRepository.ModifyZone(req, act, userid);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Zone");
+            return response;
+
         }
-        public List<TR_Zone> GetZoneList(ZoneReq req)
+        public List<TR_Zone> GetZoneList(ZoneSearchReq req)
         {
             return _zoneRepository.GetZoneList(req);
         }
-        public TR_Zone GetZone(int IdZone)
+        public ZoneResp GetZone(int IdZone)
         {
-            return _zoneRepository.GetZone(IdZone); 
+           
+            TR_Zone repores = _zoneRepository.GetZone(IdZone);
+            ZoneResp resp = new ZoneResp();
+            resp.id = repores.Z_Id;
+            resp.title = repores.Z_Title;
+            resp.destinationId = repores.Z_Destination_Id;
+
+            return resp;
         }
     }
 }

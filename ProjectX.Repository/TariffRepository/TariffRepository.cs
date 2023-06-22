@@ -23,13 +23,14 @@ namespace ProjectX.Repository.TariffRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public TariffResp ModifyTariff(TariffResp req)
+        public TariffResp ModifyTariff(TariffReq req, string act, int userid)
         {
             var resp = new TariffResp();
             int statusCode = 0;
             int idOut = 0;
             var param = new DynamicParameters();
-            param.Add("@action", "");
+            param.Add("@action", act);
+            param.Add("@user_id", userid);
             param.Add("@T_Id", req.id);
             param.Add("@P_Id", req.idPackage);
             param.Add("@T_Start_Age", req.start_age);
@@ -39,9 +40,8 @@ namespace ProjectX.Repository.TariffRepository
             param.Add("@T_Net_Premium_Amount", req.net_premium_amount);
             param.Add("@T_PA_Amount", req.pa_amount);
             param.Add("@T_Tariff_Starting_Date", req.tariff_starting_date);
-
-           // param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-           // param.Add("@idOut", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -54,7 +54,7 @@ namespace ProjectX.Repository.TariffRepository
             resp.id = idOut;
             return resp;
         }
-        public List<TR_Tariff> GetTariffList(TariffReq req)
+        public List<TR_Tariff> GetTariffList(TariffSearchReq req)
         {
             var resp = new List<TR_Tariff>();
             

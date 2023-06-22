@@ -9,8 +9,8 @@ namespace ProjectX.Repository.BenefitRepository
 {
     public interface IBenefitRepository
     {
-        public BenResp ModifyBenefit(BenResp req);
-        public List<TR_Benefit> GetBenefitList(BenReq req);
-        public TR_Benefit GetBenefit(int Idproduct);
+        public BenResp ModifyBenefit(BenReq req, string act, int userid);
+        public List<TR_Benefit> GetBenefitList(BenSearchReq req);
+        public TR_Benefit GetBenefit(int IdBenifit);
     }
 }

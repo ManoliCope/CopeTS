@@ -4,7 +4,8 @@ using ProjectX.Repository.BenefitRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using ProjectX.Entities.Resources;
+using ProjectX.Entities;
 namespace ProjectX.Business.Benefit
 {
     public class BenefitBusiness : IBenefitBusiness
@@ -15,17 +16,27 @@ namespace ProjectX.Business.Benefit
         {
             _benefitRepository = benefitRepository;
         }
-        public BenResp ModifyBenefit(BenResp req)
+        public BenResp ModifyBenefit(BenReq req, string act, int userid)
         {
-            return _benefitRepository.ModifyBenefit(req);
+            BenResp response = new BenResp();
+            response = _benefitRepository.ModifyBenefit(req, act, userid);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Benefit");
+            return response;
+           
         }
-        public List<TR_Benefit> GetBenefitList(BenReq req)
+        public List<TR_Benefit> GetBenefitList(BenSearchReq req)
         {
             return _benefitRepository.GetBenefitList(req);
         }
-        public TR_Benefit GetBenefit(int IdBenifit)
+        public BenResp GetBenefit(int IdBenifit)
         {
-            return _benefitRepository.GetBenefit(IdBenifit);
+            TR_Benefit repores = _benefitRepository.GetBenefit(IdBenifit);
+            BenResp resp = new BenResp();
+            resp.id = repores.B_Id;
+            resp.title = repores.B_Title;
+            resp.limit= repores.B_Limit;
+
+            return resp;
         }
     }
 }
