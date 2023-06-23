@@ -87,16 +87,23 @@ function Search() {
     showloader("load")
 
 
+
     var filter = {
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Retrieve multiple values for destinationId and destination
+    $("#destinationId option:selected").each(function () {
+        filter.destinationId.push($(this).val());
+    });
+
+    $("#destination option:selected").each(function () {
+        filter.destination.push($(this).val());
+    });
+
+
 
 
     $.ajax({
@@ -130,16 +137,35 @@ function addnew() {
     }
 
     showloader("load")
+   
     var zneReq = {
+        "id": $("#id").val(),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Populate the destinationId array
+    $(".destinationId").each(function () {
+        zneReq.destinationId.push($(this).val());
+    });
+
+    // Populate the destination array
+    $(".destination").each(function () {
+        zneReq.destination.push($(this).val());
+    });
+
+    // Convert the date to ISO format
+    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
+    zneReq.tariff_starting_date = tariff_starting_date;
+
+    // Convert the numeric fields to appropriate types
+    zneReq.id = parseInt(zneReq.id);
+    zneReq.destinationId = zneReq.destinationId.map(function (value) {
+        return parseInt(value);
+    });
+
+
 
     $.ajax({
         type: 'post',
@@ -173,17 +199,33 @@ function edit() {
     }
 
     showloader("load")
+
     var zneReq = {
-        "id": $("#title").attr("mid"),
+        "id": $("#id").val(),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Populate the destinationId array
+    $(".destinationId").each(function () {
+        zneReq.destinationId.push($(this).val());
+    });
+
+    // Populate the destination array
+    $(".destination").each(function () {
+        zneReq.destination.push($(this).val());
+    });
+
+    // Convert the date to ISO format
+    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
+    zneReq.tariff_starting_date = tariff_starting_date;
+
+    // Convert the numeric fields to appropriate types
+    zneReq.id = parseInt(zneReq.id);
+    zneReq.destinationId = zneReq.destinationId.map(function (value) {
+        return parseInt(value);
+    });
 
     $.ajax({
         type: 'post',

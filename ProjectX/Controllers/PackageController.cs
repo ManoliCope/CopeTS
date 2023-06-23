@@ -3,40 +3,41 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ProjectX.Business.General;
+using ProjectX.Business.Package;
 using ProjectX.Business.Profile;
+using ProjectX.Entities;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
-using ProjectX.Entities.Models.Product;
+using ProjectX.Entities.Models.Package;
 using ProjectX.Entities.Models.Profile;
+using ProjectX.Entities.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace ProjectX.Controllers
 {
     public class PackageController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IProfileBusiness _profileBusiness;
+        private IPackageBusiness _productBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
-        private IWebHostEnvironment _env;
 
 
-        public PackageController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public PackageController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IPackageBusiness productBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
-            _profileBusiness = profileBusiness;
+            _productBusiness = productBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
-            _env = env;
-
         }
 
 
@@ -49,82 +50,86 @@ namespace ProjectX.Controllers
                 loadProfileTypes = true,
                 loadDocumentTypes = true
             });
+
+
             return View(response);
         }
 
-        // GET: CobController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        public PackSearchResp Search(PackSearchReq req)
         {
-            return View();
+            PackSearchResp response = new PackSearchResp();
+            response.package = _productBusiness.GetPackageList(req);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+
+            return response;
         }
 
-        // GET: CobController/Create
+
         public ActionResult Create()
         {
             LoadDataResp response = new LoadDataResp();
             response.loadedData = new LoadDataModel();
             ViewData["filldata"] = response;
 
-            ProdGetResp ttt = new ProdGetResp();
-            ttt.product = new TR_Product();
+            PackGetResp ttt = new PackGetResp();
+            ttt.package = new TR_Package();
             return View(ttt);
         }
 
-        // POST: CobController/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public PackResp CreatePackage(PackReq req)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            PackResp response = new PackResp();
+            //if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
+            //{
+            //    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+            //    return response;
+            //}
+
+            return _productBusiness.ModifyPackage(req, "Create", _user.UserId);
         }
 
-        // GET: CobController/Edit/5
+
         public ActionResult Edit(int id)
         {
-            return View();
+            PackResp response = new PackResp();
+            response = _productBusiness.GetPackage(id);
+
+            return View("details", response);
         }
 
-        // POST: CobController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public PackResp EditPackage(PackReq req)
         {
-            try
+            PackResp response = new PackResp();
+            if (req.id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
-            catch
-            {
-                return View();
-            }
+
+            //if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
+            //{
+            //    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+            //    return response;
+            //}
+
+
+            return _productBusiness.ModifyPackage(req, "Update", _user.UserId);
         }
 
-        // GET: CobController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CobController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public PackResp DeletePackage(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            PackReq req = new PackReq();
+            req.id = id;
+            DateTime thisDay = DateTime.Today;
+
+            //req.activation_date = thisDay;
+            PackResp response = new PackResp();
+            return _productBusiness.ModifyPackage(req, "Delete", _user.UserId);
         }
     }
 }

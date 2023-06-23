@@ -1,35 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ProjectX.Business.General;
+using ProjectX.Business.Benefit;
 using ProjectX.Business.Profile;
+using ProjectX.Entities;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
+using ProjectX.Entities.Models.Benefit;
 using ProjectX.Entities.Models.Profile;
+using ProjectX.Entities.Resources;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Utilities;
 
 namespace ProjectX.Controllers
 {
     public class BenefitController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IProfileBusiness _profileBusiness;
+        private IBenefitBusiness _productBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
-        private IWebHostEnvironment _env;
 
 
-        public BenefitController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public BenefitController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IBenefitBusiness productBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
-            _profileBusiness = profileBusiness;
+            _productBusiness = productBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
-            _env = env;
-
         }
 
 
@@ -42,82 +50,86 @@ namespace ProjectX.Controllers
                 loadProfileTypes = true,
                 loadDocumentTypes = true
             });
+
+
             return View(response);
         }
 
-        // GET: CobController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        public BenSearchResp Search(BenSearchReq req)
         {
-            return View();
+            BenSearchResp response = new BenSearchResp();
+            response.benefit = _productBusiness.GetBenefitList(req);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+
+            return response;
         }
 
-        // GET: CobController/Create
+
         public ActionResult Create()
         {
             LoadDataResp response = new LoadDataResp();
             response.loadedData = new LoadDataModel();
             ViewData["filldata"] = response;
 
-            GetProfileResp ttt = new GetProfileResp();
-            ttt.profile = new Profile();
+            BenGetResp ttt = new BenGetResp();
+            ttt.benefit = new TR_Benefit();
             return View(ttt);
         }
 
-        // POST: CobController/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public BenResp CreateBenefit(BenReq req)
         {
-            try
+            BenResp response = new BenResp();
+            if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
             {
-                return RedirectToAction(nameof(Index));
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
-            catch
-            {
-                return View();
-            }
+
+            return _productBusiness.ModifyBenefit(req, "Create", _user.UserId);
         }
 
-        // GET: CobController/Edit/5
+
         public ActionResult Edit(int id)
         {
-            return View();
+            BenResp response = new BenResp();
+            response = _productBusiness.GetBenefit(id);
+
+            return View("details", response);
         }
 
-        // POST: CobController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public BenResp EditBenefit(BenReq req)
         {
-            try
+            BenResp response = new BenResp();
+            if (req.id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
-            catch
+
+            if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
             {
-                return View();
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
+
+
+            return _productBusiness.ModifyBenefit(req, "Update", _user.UserId);
         }
 
-        // GET: CobController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CobController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public BenResp DeleteBenefit(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            BenReq req = new BenReq();
+            req.id = id;
+            DateTime thisDay = DateTime.Today;
+
+            //req.date = thisDay;
+            BenResp response = new BenResp();
+            return _productBusiness.ModifyBenefit(req, "Delete", _user.UserId);
         }
     }
 }

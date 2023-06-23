@@ -13,7 +13,7 @@
             <a class="btn bglocalcolor float-right addnewbtn" href="~/package/create/">
                 <i class="fas fa-plus-circle"></i> Add
             </a>
-            <h4 class="mb-0 mt-0 float-left">package</h4>
+            <h4 class="mb-0 mt-0 float-left">Package</h4>
 
 
 
@@ -28,28 +28,37 @@
                         <div>
                             <div class="row mb-6">
                                 <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label>Name:</label>
-                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
+                                    <label for="id">ID:</label>
+                                    <input id="id" type="text" class="form-control datatable-input id" placeholder="Enter ID" data-col-index="0">
                                 </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6 ">
-                                    <label for="sprtype">Type: </label>
-                                    <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-                                        <option selected>Select Type</option>
-                                        @foreach (var type in Model.loadedData.profileTypes)
-                                        {
-                                            <option value="@type.LK_ID"> @type.LK_TableField</option>
-                                        }
-                                    </select>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="name">Name:</label>
+                                    <input id="name" type="text" class="form-control datatable-input name" placeholder="Enter Name" data-col-index="1">
                                 </div>
-
-                                <div class="col-lg-3 mb-lg-0 mb-6 hidden">
-                                    <label for="prcountry">Country: </label>
-                                    <select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
-                                        <option disabled selected>Select Country</option>
-
-                                    </select>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="cobId">Country of Birth ID:</label>
+                                    <input id="cobId" type="text" class="form-control datatable-input cobId" placeholder="Enter Country of Birth ID" data-col-index="2">
                                 </div>
-
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="zoneId">Zone ID:</label>
+                                    <input id="zoneId" type="text" class="form-control datatable-input zoneId" placeholder="Enter Zone ID" data-col-index="3">
+                                </div>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="remove_deductable">Remove Deductible:</label>
+                                    <input id="remove_deductable" type="text" class="form-control datatable-input remove_deductable" placeholder="Enter Remove Deductible" data-col-index="4">
+                                </div>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="adult_no">Adult Number:</label>
+                                    <input id="adult_no" type="text" class="form-control datatable-input adult_no" placeholder="Enter Adult Number" data-col-index="5">
+                                </div>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="children_no">Children Number:</label>
+                                    <input id="children_no" type="text" class="form-control datatable-input children_no" placeholder="Enter Children Number" data-col-index="6">
+                                </div>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="pa_included">PA Included:</label>
+                                    <input id="pa_included" type="checkbox" class="form-control datatable-input pa_included" data-col-index="7">
+                                </div>
 
                                 <div class="col-lg-3">
                                 </div>

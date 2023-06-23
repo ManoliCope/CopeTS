@@ -19,44 +19,22 @@
                             <div id="divinfo" class="col-lg-12">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" name="title" required="">
+                                        <label for="Z_Id">Z_Id</label>
+                                        <input type="number" class="form-control" id="Z_Id" name="Z_Id">
                                     </div>
+
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="description">Description</label>
-                                        <input type="text" class="form-control" id="description" name="description">
+                                        <label for="Z_Title">Z_Title</label>
+                                        <input type="text" class="form-control" id="Z_Title" name="Z_Title" required="">
                                     </div>
+
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="activation_date">Activation Date</label>
-                                        <input type="date" class="form-control" id="activation_date" name="activation_date" required="">
+                                        <label for="Z_Destination_Id">Z_Destination_Id</label>
+                                        <select class="form-control" id="Z_Destination_Id" name="Z_Destination_Id" multiple>
+                                                <option  selected>item</option>
+                                        </select>
                                     </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="is_deductible">Deductible</label>
-                                        <input type="number" class="form-control" id="is_deductible" name="is_deductible" step="0.01">
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="sports_activities">Sports Activities</label>
-                                        <input type="number" class="form-control" id="sports_activities" name="sports_activities" step="0.01">
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="additional_benefits">Additional Benefits</label>
-                                        <input type="number" class="form-control" id="additional_benefits" name="additional_benefits" step="0.01">
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <div class="form-group mb-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="is_family" autocomplete="off">
-                                                <label class="form-check-label" for="is_family">
-                                                    Is Family
-                                                </label>
-                                                <br>
-                                                <input class="form-check-input" type="checkbox" id="is_active" autocomplete="off">
-                                                <label class="form-check-label" for="is_active">
-                                                    Is Active
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

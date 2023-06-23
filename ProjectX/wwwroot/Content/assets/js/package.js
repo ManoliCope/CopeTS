@@ -88,15 +88,15 @@ function Search() {
 
 
     var filter = {
-        "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "id": $("#id").val(),
+        "name": $("#name").val(),
+        "cobId": $("#cobId").val(),
+        "zoneId": $("#zoneId").val(),
+        "remove_deductable": $("#remove_deductable").val(),
+        "adult_no": $("#adult_no").val(),
+        "children_no": $("#children_no").val(),
+        "pa_included": $("#pa_included").prop('checked')
+    };
 
 
     $.ajax({
@@ -131,15 +131,20 @@ function addnew() {
 
     showloader("load")
     var pkgReq = {
-        "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "id": $("#id").val(),
+        "name": $("#name").val(),
+        "cob": $("#cob").val(),
+        "cobId": $("#cobId").val(),
+        "plan": $("#plan").val(),
+        "planId": $("#planId").val(),
+        "zone": $("#zone").val(),
+        "zoneId": $("#zoneId").val(),
+        "remove_deductable": $("#remove_deductable").val(),
+        "adult_no": $("#adult_no").val(),
+        "children_no": $("#children_no").val(),
+        "pa_included": $("#pa_included").prop('checked')
+    };
+
 
     $.ajax({
         type: 'post',
@@ -174,16 +179,19 @@ function edit() {
 
     showloader("load")
     var pkgReq = {
-        "id": $("#title").attr("mid"),
-        "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "id": $("#id").val(),
+        "name": $("#name").val(),
+        "cob": $("#cob").val(),
+        "cobId": $("#cobId").val(),
+        "plan": $("#plan").val(),
+        "planId": $("#planId").val(),
+        "zone": $("#zone").val(),
+        "zoneId": $("#zoneId").val(),
+        "remove_deductable": $("#remove_deductable").val(),
+        "adult_no": $("#adult_no").val(),
+        "children_no": $("#children_no").val(),
+        "pa_included": $("#pa_included").prop('checked')
+    };
 
     $.ajax({
         type: 'post',

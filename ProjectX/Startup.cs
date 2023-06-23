@@ -24,6 +24,12 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProjectX.Extension.Jwt;
 using ProjectX.Extension.Excption;
+using ProjectX.Business.Benefit;
+using ProjectX.Repository.BenefitRepository;
+using ProjectX.Business.Package;
+using ProjectX.Repository.PackageRepository;
+using ProjectX.Repository.TariffRepository;
+using ProjectX.Business.Tariff;
 
 public class Startup
 {
@@ -80,8 +86,18 @@ public class Startup
         services.AddSingleton<IDatabaseCaching, DatabaseCaching>();
         services.AddSingleton<IJwtBusiness, JwtBusiness>();
 
+
+        services.AddSingleton<IBenefitBusiness, BenefitBusiness>();
+        services.AddSingleton<IBenefitRepository, BenefitRepository>();
+
+        services.AddSingleton<IPackageBusiness, PackageBusiness>();
+        services.AddSingleton<IPackageRepository, PackageRepository>();
+
         services.AddSingleton<IProductBusiness, ProductBusiness>();
         services.AddSingleton<IProductRepository, ProductRepository>();
+
+        services.AddSingleton<ITariffBusiness, TariffBusiness>();
+        services.AddSingleton<ITariffRepository, TariffRepository>();
 
         services.AddSingleton<IZoneBusiness, ZoneBusiness>();
         services.AddSingleton<IZoneRepository, ZoneRepository>();
