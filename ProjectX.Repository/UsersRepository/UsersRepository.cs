@@ -166,5 +166,37 @@ namespace ProjectX.Repository.UsersRepository
 
             return resp;
         }
+        public ResetPass resetPass(ResetPass res)
+        {
+
+            int statusCode = 0;
+            int idOut = 0;
+            string statusMessage = "";
+            var resp = new ResetPass();
+            var param = new DynamicParameters();
+            param.Add("@user_Id", res.userId);
+            param.Add("@oldPass", res.oldPass);
+            param.Add("@newPass", res.newPass);
+            param.Add("@conPass", res.conPass);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@StatusMessage", statusCode, dbType: DbType.String, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+
+
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                    _db.Execute("TR_Users_ResetPass", param, commandType: CommandType.StoredProcedure);
+                    statusCode = param.Get<int>("@Status");
+                    statusMessage = param.Get<string>("@StatusMessage");
+                    idOut = param.Get<int>("@Returned_ID");
+                
+            }
+            resp.statusCode.code = statusCode;
+            resp.statusCode.message = statusMessage;
+            resp.userId = idOut;
+            return resp;
+
+        }
     }
 }

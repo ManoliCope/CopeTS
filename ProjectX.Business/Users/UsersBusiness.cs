@@ -12,6 +12,7 @@ namespace ProjectX.Business.Users
     {
         IUsersRepository _usersRepository;
 
+
         public UsersBusiness(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
@@ -37,6 +38,9 @@ namespace ProjectX.Business.Users
             //resp.limit= repores.B_Limit;
 
             return resp;
+        }
+        public ResetPass resetPass(ResetPass res) { 
+        return _usersRepository.resetPass(res);
         }
     }
 }

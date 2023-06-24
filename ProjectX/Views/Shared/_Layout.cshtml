@@ -71,6 +71,10 @@
     @if (controllerName == "product")
     {
         <link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
+    } 
+    @if (controllerName == "users")
+    {
+        <link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
     }
     else if (controllerName == "plan")
     {
@@ -151,7 +155,7 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user-edit"></i> Edit Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="~/Users/ResetPass/">
                                     <i class="fas fa-key"></i> Change Password
                                 </a>
                                 <a class="dropdown-item" href="~/">
@@ -237,6 +241,10 @@
     @if (controllerName == "product")
     {
         <script src="~/Content/assets/js/product.js" asp-append-version="true"></script>
+    }
+     @if (controllerName == "users")
+    {
+        <script src="~/Content/assets/js/users.js" asp-append-version="true"></script>
     }
     else if (controllerName == "plan")
     {

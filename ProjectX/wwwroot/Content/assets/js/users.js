@@ -44,7 +44,7 @@ $(document).ready(function () {
 function drawtable(data) {
     //console.log(data)
 
-    var table = $('#productiontable').DataTable({
+    var table = $('#userstable').DataTable({
         "data": data,
         "paging": true,
         "ordering": true,
@@ -55,10 +55,10 @@ function drawtable(data) {
             { "title": "Type", "className": "text-center filter", "orderable": true, "data": "allProfileTypes" },
             { "title": "Phone Number", "className": "text-center filter", "orderable": true, "data": "phoneNumber" },
             {
-                'data': 'idProfile',
+                'data': 'idUsers',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" profid="` + full.idProfile + `"  class="text-black-50" onclick="gotoprofile(this)"><i class="fas fa-book"/></a>`;
+                    return `<a  href="#" title="Edit" userid="` + full.idUsers + `"  class="text-black-50" onclick="gotouser(this)"><i class="fas fa-book"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             }
@@ -67,7 +67,7 @@ function drawtable(data) {
         fixedHeader: true
     });
 
-    triggerfiltertable(table, "profile")
+    triggerfiltertable(table, "users")
 }
 
 
@@ -78,13 +78,13 @@ function Search() {
     showloader("load")
 
     var filter = {
-        profileName: $("#prname").val().trim(),
-        idProfileType: $("#sprtype").val(),
+        userName: $("#prname").val().trim(),
+        idUserType: $("#sprtype").val(),
     }
 
     $.ajax({
         type: 'POST',
-        url: projectname + "/Profile/Search",
+        url: projectname + "/Users/Search",
         data: { req: filter },
         success: function (result) {
             removeloader();
@@ -92,7 +92,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.profiles);
+                drawtable(result.users);
             }
 
         },
@@ -106,4 +106,44 @@ function Search() {
             //alert("fail");
         }
     });
+}
+
+function resetpassword() {
+    var oldPass = $("#old-password").val();
+    var newPass = $("#new-password").val();
+    var conPass = $("#confirm-password").val();
+    var res = {};
+    res = {
+        "oldPass": "sss",
+        "newPass": "sss",
+        "conPass": "sss"    }
+    //res["oldPass"] = oldPass;
+    //res["newPass"] = newPass;
+    //res["conPass"] = conPass;
+    console.log(res);
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Users/ResetPassword",
+        data:  res ,
+        success: function (result) {
+            removeloader();
+
+            if (result.statusCode.code != 1)
+                showresponsemodal("error", result.statusCode.message)
+            else {
+                drawtable(result.users);
+            }
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            //alert("Error:" + failure);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("fail");
+        }
+    });
+
 }
