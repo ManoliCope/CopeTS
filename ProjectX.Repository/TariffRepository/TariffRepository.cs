@@ -67,7 +67,7 @@ namespace ProjectX.Repository.TariffRepository
             param.Add("@T_Price_Amount", req.price_amount);
             param.Add("@T_Net_Premium_Amount", req.net_premium_amount);
             param.Add("@T_PA_Amount", req.pa_amount);
-            param.Add("@T_Tariff_Starting_Date", req.tariff_starting_date);
+         //   param.Add("@T_Tariff_Starting_Date", req.tariff_starting_date);
 
 
 

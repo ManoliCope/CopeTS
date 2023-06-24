@@ -38,12 +38,20 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
+            { "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "idPackage" },
+            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "package" },
+            { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "start_age" },
+            { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "end_age" },
+            { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "number_of_days" },
+            { "title": "Price Amount", "className": "text-center filter", "orderable": true, "data": "price_amount" },
+            { "title": "Net Premium Amount", "className": "text-center filter", "orderable": true, "data": "net_premium_amount" },
+            { "title": "PA Amount", "className": "text-center filter", "orderable": true, "data": "pa_amount" },
             {
-                "title": "Activation Date", "className": "text-center filter", "orderable": true, "data": "pR_Activation_Date",
+                "title": "Tariff Starting Date",
+                "className": "text-center filter",
+                "orderable": true,
+                "data": "tariff_starting_date",
                 "render": function (data, type, row) {
                     if (type === "display" || type === "filter") {
                         var date = new Date(data);
@@ -52,24 +60,18 @@ function drawtable(data) {
                     return data;
                 }
             },
-            { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
-            //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
-            //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" tariffid="` + full.pR_Id + `"  class="text-black-50" onclick="gototariff(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" tariffid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
-
+                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -97,7 +99,7 @@ function Search() {
         "price_amount": $("#price_amount").val(),
         "net_premium_amount": $("#net_premium_amount").val(),
         "pa_amount": $("#pa_amount").val(),
-        "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
+        //"tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
 
 
@@ -107,7 +109,7 @@ function Search() {
         data: { req: filter },
         success: function (result) {
             removeloader();
-
+            console.log(result)
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
@@ -178,7 +180,7 @@ function edit() {
 
     showloader("load")
     var tariffReq = {
-        "id": $("#id").val(),
+        "id": $("#divinfo").attr("mid"),
         "idPackage": $("#idPackage").val(),
         "package": $("#package").val(),
         "start_age": $("#start_age").val(),

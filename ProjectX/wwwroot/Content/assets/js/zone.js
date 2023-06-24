@@ -38,38 +38,38 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "title" },
             {
-                "title": "Activation Date", "className": "text-center filter", "orderable": true, "data": "pR_Activation_Date",
-                "render": function (data, type, row) {
-                    if (type === "display" || type === "filter") {
-                        var date = new Date(data);
-                        return date.toLocaleDateString();
-                    }
-                    return data;
+                "title": "Destination ID",
+                "className": "text-center filter",
+                "orderable": true,
+                "data": "destinationId",
+                "render": function (data) {
+                    return data.join(", ");
                 }
             },
-            { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
-            //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
-            //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "title": "Destination",
+                "className": "text-center filter",
+                "orderable": true,
+                "data": "destination",
+                "render": function (data) {
+                    return data.join(", ");
+                }
+            },
+            {
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" zneid="` + full.pR_Id + `"  class="text-black-50" onclick="gotozne(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" zneid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
-
+                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -201,7 +201,7 @@ function edit() {
     showloader("load")
 
     var zneReq = {
-        "id": $("#id").val(),
+        "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
         "destinationId": [],
         "destination": []
