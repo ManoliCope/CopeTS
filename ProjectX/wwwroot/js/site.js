@@ -188,7 +188,13 @@ function triggerfiltertable(datatable, tablename) {
 }
 
 
+function triggerresonseclick(PageName, action, parameter) {
 
+    $("#responsemodal button").click(function () {
+        gotopage(PageName, action, parameter);
+    });
+
+}
 function showresponsemodal(type, msg, pagename) {
 
     removeloader();

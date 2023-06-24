@@ -52,7 +52,7 @@ function drawtable(data) {
                 "data": 'id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a href="#" title="Delete" benid="` + full.b_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.b_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
+                    return `<a href="#" title="Delete" benid="` + full.b_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.b_Id})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -122,16 +122,11 @@ function addnew() {
         url: projectname + "/benefit/Createbenefit",
         data: { req: benReq },
         success: function (result) {
-
-            removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
-            $("#responsemodal button").click(function () {
-                gotopage("benefit", "Edit", result.id);
-            });
-
+            triggerresonseclick("benefit", "Edit", result.id)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -162,11 +157,10 @@ function edit() {
         url: projectname + "/benefit/Editbenefit",
         data: { req: benReq },
         success: function (result) {
-
-            removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
             showresponsemodal(1, result.statusCode.message, "benefit")
+            triggerresonseclick("benefit", "Edit", result.id)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -183,7 +177,6 @@ function deleteben(me) {
     }
     togglebtnloader(me)
     var thisid = $(me).closest("#confirm-email-approval").attr("actid")
-    var rowindex = $(me).closest("#confirm-email-approval").attr("trindex")
 
     $.ajax({
         type: 'post',
@@ -194,8 +187,7 @@ function deleteben(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#benefittable').length > 0) {
-                    var myTable = $('#benefittable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid,"benefittable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
@@ -220,4 +212,13 @@ function gotoben(me) {
     window.location.href = "/benefit/edit/" + $(me).attr("benid");
     removeloader();
     return
+}
+
+function deletedatatablerowbyid(idToDelete, tablename) {
+    var table = $('#' + tablename).DataTable();
+    var rowToDelete = table.rows().eq(0).filter(function (rowIdx) {
+        return table.cell(rowIdx, 0).data() === idToDelete;
+    });
+
+    table.row(rowToDelete).remove().draw();
 }

@@ -124,7 +124,8 @@ function resetpassword() {
     $.ajax({
         type: 'POST',
         url: projectname + "/Users/ResetPassword",
-        data:  res ,
+        data: { res: res },
+        //data: res ,
         success: function (result) {
             removeloader();
 
