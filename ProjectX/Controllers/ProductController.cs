@@ -51,7 +51,7 @@ namespace ProjectX.Controllers
                 loadDocumentTypes = true
             });
 
-            throw new Exception("This is an example error.");
+           //throw new Exception("This is an example error.");
 
             return View(response);
         }
