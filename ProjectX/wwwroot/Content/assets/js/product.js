@@ -147,14 +147,14 @@ function addnew() {
         url: projectname + "/Product/CreateProduct",
         data: { req: prodReq },
         success: function (result) {
-
+            console.log(result)
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("product", "Edit",35);
+                gotopage("product", "Edit",result.id);
             });
 
         },
@@ -174,7 +174,7 @@ function edit() {
 
     showloader("load")
     var prodReq = {
-        "id": $("#title").attr("mid"),
+        "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
         "description": $("#description").val(),
         "activation_date": $("#activation_date").val(),

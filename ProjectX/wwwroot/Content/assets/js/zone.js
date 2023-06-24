@@ -38,38 +38,38 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "title" },
             {
-                "title": "Activation Date", "className": "text-center filter", "orderable": true, "data": "pR_Activation_Date",
-                "render": function (data, type, row) {
-                    if (type === "display" || type === "filter") {
-                        var date = new Date(data);
-                        return date.toLocaleDateString();
-                    }
-                    return data;
+                "title": "Destination ID",
+                "className": "text-center filter",
+                "orderable": true,
+                "data": "destinationId",
+                "render": function (data) {
+                    return data.join(", ");
                 }
             },
-            { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
-            //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
-            //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "title": "Destination",
+                "className": "text-center filter",
+                "orderable": true,
+                "data": "destination",
+                "render": function (data) {
+                    return data.join(", ");
+                }
+            },
+            {
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" zneid="` + full.pR_Id + `"  class="text-black-50" onclick="gotozne(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" zneid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
-
+                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -87,16 +87,23 @@ function Search() {
     showloader("load")
 
 
+
     var filter = {
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Retrieve multiple values for destinationId and destination
+    $("#destinationId option:selected").each(function () {
+        filter.destinationId.push($(this).val());
+    });
+
+    $("#destination option:selected").each(function () {
+        filter.destination.push($(this).val());
+    });
+
+
 
 
     $.ajax({
@@ -130,16 +137,35 @@ function addnew() {
     }
 
     showloader("load")
+   
     var zneReq = {
+        "id": $("#id").val(),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Populate the destinationId array
+    $(".destinationId").each(function () {
+        zneReq.destinationId.push($(this).val());
+    });
+
+    // Populate the destination array
+    $(".destination").each(function () {
+        zneReq.destination.push($(this).val());
+    });
+
+    // Convert the date to ISO format
+    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
+    zneReq.tariff_starting_date = tariff_starting_date;
+
+    // Convert the numeric fields to appropriate types
+    zneReq.id = parseInt(zneReq.id);
+    zneReq.destinationId = zneReq.destinationId.map(function (value) {
+        return parseInt(value);
+    });
+
+
 
     $.ajax({
         type: 'post',
@@ -173,17 +199,33 @@ function edit() {
     }
 
     showloader("load")
+
     var zneReq = {
-        "id": $("#title").attr("mid"),
+        "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "destinationId": [],
+        "destination": []
+    };
+
+    // Populate the destinationId array
+    $(".destinationId").each(function () {
+        zneReq.destinationId.push($(this).val());
+    });
+
+    // Populate the destination array
+    $(".destination").each(function () {
+        zneReq.destination.push($(this).val());
+    });
+
+    // Convert the date to ISO format
+    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
+    zneReq.tariff_starting_date = tariff_starting_date;
+
+    // Convert the numeric fields to appropriate types
+    zneReq.id = parseInt(zneReq.id);
+    zneReq.destinationId = zneReq.destinationId.map(function (value) {
+        return parseInt(value);
+    });
 
     $.ajax({
         type: 'post',

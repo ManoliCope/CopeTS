@@ -27,6 +27,8 @@ namespace ProjectX.Repository.GeneralRepository
         {
 
             LoadDataModel resp = new LoadDataModel();
+
+            return resp;
             var param = new DynamicParameters();
             param.Add("@loadCaseStatuses", loadDataModelSetup.loadCaseStatuses);
             param.Add("@loadTravelCaseTypes", loadDataModelSetup.loadTravelCaseTypes);

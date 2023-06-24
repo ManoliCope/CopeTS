@@ -58,7 +58,7 @@ namespace ProjectX.Repository.PackageRepository
             var resp = new List<TR_Package>();
 
             var param = new DynamicParameters();
-            param.Add("@id", req.id);
+            //param.Add("@id", req.id);
             param.Add("@P_Name", req.name);
             param.Add("@PR_Id", req.cobId);
             param.Add("@P_ZoneID", req.zoneId);

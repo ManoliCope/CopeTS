@@ -13,7 +13,7 @@
             <a class="btn bglocalcolor float-right addnewbtn" href="~/product/create/">
                 <i class="fas fa-plus-circle"></i> Add
             </a>
-            <h4 class="mb-0 mt-0 float-left">Product</h4>
+            <h4 class="mb-0 mt-0 float-left">Products</h4>
 
 
 
@@ -26,55 +26,71 @@
                 <div class="card">
                     <div id="searchform" class="card-body">
                         <div>
-                            <div class="row mb-6">
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label>Name:</label>
-                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6 ">
-                                    <label for="sprtype">Type: </label>
-                                    <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-                                        <option selected>Select Type</option>
-                                        @foreach (var type in Model.loadedData.profileTypes)
-                                        {
-                                            <option value="@type.LK_ID"> @type.LK_TableField</option>
-                                        }
-                                    </select>
-                                </div>
+							<div class="row mb-6">
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="id">ID:</label>
+									<input id="id" type="text" class="form-control datatable-input" placeholder="Enter ID" data-col-index="0">
+								</div>
 
-                                <div class="col-lg-3 mb-lg-0 mb-6 hidden">
-                                    <label for="prcountry">Country: </label>
-                                    <select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
-                                        <option disabled selected>Select Country</option>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="title">Title:</label>
+									<input id="title" type="text" class="form-control datatable-input" placeholder="Enter Title" data-col-index="1">
+								</div>
 
-                                    </select>
-                                </div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="description">Description:</label>
+									<input id="description" type="text" class="form-control datatable-input" placeholder="Enter Description" data-col-index="2">
+								</div>
 
 
-                                <div class="col-lg-3">
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6">
-                                            <button class="btn bglocalcolor" id="search" style="width:100%">
-                                                <span>
-                                                    <i class="la la-search"></i>
-                                                    <span>Search</span>
-                                                </span>
-                                            </button>&nbsp;&nbsp;
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
-                                                <span>
-                                                    <i class="la la-close"></i>
-                                                    <span>Reset</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="is_deductible">Is Deductible:</label>
+									<input id="is_deductible" type="number" step="0.01" class="form-control datatable-input" placeholder="Enter Deductible" data-col-index="5">
+								</div>
+
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="sports_activities">Sports Activities:</label>
+									<input id="sports_activities" type="number" step="0.01" class="form-control datatable-input" placeholder="Enter Sports Activities" data-col-index="6">
+								</div>
+
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="additional_benefits">Additional Benefits:</label>
+									<input id="additional_benefits" type="number" step="0.01" class="form-control datatable-input" placeholder="Enter Additional Benefits" data-col-index="7">
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6 mt-2">
+									<div class="form-check">
+										<input id="is_family" type="checkbox" class="form-check-input datatable-input" data-col-index="3">
+										<label class="form-check-label" for="is_family">Is Family</label>
+										<br />
+										<input id="is_active" type="checkbox" class="form-check-input datatable-input" data-col-index="4">
+										<label class="form-check-label" for="is_active">Is Active</label>
+									</div>
+								</div>
+
+
+								<div class="col-lg-3">
+									<div class="row mt-4">
+										<div class="col-sm-6">
+											<button class="btn bglocalcolor" id="search" style="width:100%">
+												<span>
+													<i class="la la-search"></i>
+													<span>Search</span>
+												</span>
+											</button>&nbsp;&nbsp;
+										</div>
+										<div class="col-sm-6">
+											<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+												<span>
+													<i class="la la-close"></i>
+													<span>Reset</span>
+												</span>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
                         </div>
                     </div>
                 </div>

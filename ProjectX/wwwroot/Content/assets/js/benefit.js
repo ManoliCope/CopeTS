@@ -21,10 +21,10 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
-        deleteprod(this);
+        deleteben(this);
     });
 });
 
@@ -38,43 +38,26 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "b_Id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "b_Title" },
+            { "title": "Limit", "className": "text-center filter", "orderable": true, "data": "b_Limit" },
             {
-                "title": "Activation Date", "className": "text-center filter", "orderable": true, "data": "pR_Activation_Date",
-                "render": function (data, type, row) {
-                    if (type === "display" || type === "filter") {
-                        var date = new Date(data);
-                        return date.toLocaleDateString();
-                    }
-                    return data;
-                }
-            },
-            { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
-            //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
-            //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
-            {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="gotoprod(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" benid="` + full.b_Id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'PR_Id',
-                className: "dt-center editor-edit",
+                "data": 'id',
+                "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
-
+                    return `<a href="#" title="Delete" benid="` + full.b_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.b_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
-        orderCellsTop: true,
-        fixedHeader: true
+        "orderCellsTop": true,
+        "fixedHeader": true
     });
 
     triggerfiltertable(table, "profile")
@@ -86,18 +69,11 @@ function Search() {
     }
     showloader("load")
 
-
     var filter = {
+        "id": $("#id").val(),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
-
+        "limit": isNaN(parseFloat($("#limit").val())) ? $("#limit").val() : parseFloat($("#limit").val())
+    };
 
     $.ajax({
         type: 'POST',
@@ -105,11 +81,11 @@ function Search() {
         data: { req: filter },
         success: function (result) {
             removeloader();
-
+            console.log(result)
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.benefits);
+                drawtable(result.benefit);
             }
         },
         failure: function (data, success, failure) {
@@ -130,22 +106,21 @@ function addnew() {
     }
 
     showloader("load")
-    var prodReq = {
+
+
+    var benReq = {
+        "id": $("#id").val(),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "limit": parseFloat($("#limit").val())
+    };
+
+
 
     $.ajax({
         type: 'post',
         dataType: 'json',
         url: projectname + "/benefit/Createbenefit",
-        data: { req: prodReq },
+        data: { req: benReq },
         success: function (result) {
 
             removeloader();
@@ -154,7 +129,7 @@ function addnew() {
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("benefit", "Edit", 35);
+                gotopage("benefit", "Edit", result.id);
             });
 
         },
@@ -173,23 +148,19 @@ function edit() {
     }
 
     showloader("load")
-    var prodReq = {
-        "id": $("#title").attr("mid"),
+
+    var benReq = {
+        "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
-    }
+        "limit": parseFloat($("#limit").val())
+    };
+
 
     $.ajax({
         type: 'post',
         dataType: 'json',
         url: projectname + "/benefit/Editbenefit",
-        data: { req: prodReq },
+        data: { req: benReq },
         success: function (result) {
 
             removeloader();
@@ -206,7 +177,7 @@ function edit() {
     });
 }
 
-function deleteprod(me) {
+function deleteben(me) {
     if (validateForm(".container-fluid")) {
         return;
     }
@@ -244,9 +215,9 @@ function deleteprod(me) {
         }
     });
 }
-function gotoprod(me) {
+function gotoben(me) {
     showloader("load")
-    window.location.href = "/benefit/edit/" + $(me).attr("prodid");
+    window.location.href = "/benefit/edit/" + $(me).attr("benid");
     removeloader();
     return
 }

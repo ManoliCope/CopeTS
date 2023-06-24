@@ -13,7 +13,7 @@
             <a class="btn bglocalcolor float-right addnewbtn" href="~/zone/create/">
                 <i class="fas fa-plus-circle"></i> Add
             </a>
-            <h4 class="mb-0 mt-0 float-left">zone</h4>
+            <h4 class="mb-0 mt-0 float-left">Zones</h4>
 
 
 
@@ -28,30 +28,25 @@
                         <div>
                             <div class="row mb-6">
                                 <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label>Name:</label>
-                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
+                                    <label for="id">ID:</label>
+                                    <input id="id" type="text" class="form-control datatable-input id" placeholder="Enter ID" data-col-index="0">
                                 </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6 ">
-                                    <label for="sprtype">Type: </label>
-                                    <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-                                        <option selected>Select Type</option>
-                                        @foreach (var type in Model.loadedData.profileTypes)
-                                        {
-                                            <option value="@type.LK_ID"> @type.LK_TableField</option>
-                                        }
-                                    </select>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="title">Title:</label>
+                                    <input id="title" type="text" class="form-control datatable-input title" placeholder="Enter Title" data-col-index="1">
                                 </div>
-
-                                <div class="col-lg-3 mb-lg-0 mb-6 hidden">
-                                    <label for="prcountry">Country: </label>
-                                    <select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
-                                        <option disabled selected>Select Country</option>
-
-                                    </select>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="destinationId">Destination ID:</label>
+                                    <input id="destinationId" type="text" class="form-control datatable-input destinationId" placeholder="Enter Destination ID" data-col-index="2">
+                                </div>
+                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                    <label for="destination">Destination:</label>
+                                    <input id="destination" type="text" class="form-control datatable-input destination" placeholder="Enter Destination" data-col-index="3">
                                 </div>
 
 
-                                <div class="col-lg-3">
+
+                                <div class="col-lg-9">
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="row mt-4">
