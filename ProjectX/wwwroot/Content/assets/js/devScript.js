@@ -48,7 +48,7 @@ function LogintoCMS() {
                             var cid = url.searchParams.get("cid");
                             var caseid = url.searchParams.get("csid");
 
-                            window.location.href = "/product";
+                            window.location.href = "/zone";
 
                             //if (cid)
                             //    window.location.href = "/Home?cid=" + cid;

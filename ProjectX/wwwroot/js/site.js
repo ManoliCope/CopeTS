@@ -42,9 +42,14 @@
 
 //}
 
+function triggerselectedmenu() {
+    var menuholder = $('.sidebar-content').find(".active").parent().closest(".sub-menu")
+    if (menuholder.length > 0)
+        menuholder.find('a').first()[0].click()
 
+}
 
-
+triggerselectedmenu()
 
 
 function showloader(inside) {
