@@ -38,38 +38,20 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
-            { "title": "Name", "className": "text-center filter", "orderable": true, "data": "name" },
-            { "title": "COB", "className": "text-center filter", "orderable": true, "data": "cob" },
-            { "title": "COB ID", "className": "text-center filter", "orderable": true, "data": "cobId" },
-            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "plan" },
-            { "title": "Plan ID", "className": "text-center filter", "orderable": true, "data": "planId" },
-            { "title": "Zone", "className": "text-center filter", "orderable": true, "data": "zone" },
-            { "title": "Zone ID", "className": "text-center filter", "orderable": true, "data": "zoneId" },
-            { "title": "Remove Deductible", "className": "text-center filter", "orderable": true, "data": "remove_deductable" },
-            { "title": "Adult No.", "className": "text-center filter", "orderable": true, "data": "adult_no" },
-            { "title": "Children No.", "className": "text-center filter", "orderable": true, "data": "children_no" },
+            { "title": "P_Id", "className": "column-id text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "P_Name", "className": "column-name text-center filter", "orderable": true, "data": "p_Name" },
+            { "title": "PR_Id", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Id" },
+            { "title": "P_ZoneID", "className": "column-cob-id text-center filter", "orderable": true, "data": "p_ZoneID" },
+            { "title": "P_Remove_deductable", "className": "column-remove-deductible text-center filter", "orderable": true, "data": "p_Remove_deductable" },
+            { "title": "P_Adult_No", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
+            { "title": "P_Children_No", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
             {
-                "title": "PA Included",
-                "className": "text-center filter",
+                "title": "p_PA_Included",
+                "className": "column-pa-included text-center filter",
                 "orderable": true,
-                "data": "pa_included",
+                "data": "p_PA_Included",
                 "render": function (data) {
                     return data ? "Yes" : "No";
-                }
-            },
-            {
-                "data": 'id',
-                "className": "dt-center editor-edit",
-                "render": function (data, type, full) {
-                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
-                }
-            },
-            {
-                "data": 'id',
-                "className": "dt-center editor-edit",
-                "render": function (data, type, full, meta) {
-                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -86,16 +68,15 @@ function Search() {
     }
     showloader("load")
 
-
     var filter = {
-        "id": $("#id").val(),
-        "name": $("#name").val(),
-        "cobId": $("#cobId").val(),
-        "zoneId": $("#zoneId").val(),
-        "remove_deductable": $("#remove_deductable").val(),
-        "adult_no": $("#adult_no").val(),
-        "children_no": $("#children_no").val(),
-        "pa_included": $("#pa_included").prop('checked')
+        "P_Id": $("#P_Id").val(),
+        "P_Name": $("#P_Name").val(),
+        "PR_Id": $("#PR_Id").val(),
+        "P_ZoneID": $("#P_ZoneID").val(),
+        "P_Remove_deductable": $("#P_Remove_deductable").val(),
+        "P_Adult_No": $("#P_Adult_No").val(),
+        "P_Children_No": $("#P_Children_No").val(),
+        "P_PA_Included": $("#P_PA_Included").prop('checked')
     };
 
 
@@ -109,7 +90,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.packages);
+                drawtable(result.package);
             }
         },
         failure: function (data, success, failure) {
@@ -130,20 +111,18 @@ function addnew() {
     }
 
     showloader("load")
+
     var pkgReq = {
-        "id": $("#id").val(),
-        "name": $("#name").val(),
-        "cob": $("#cob").val(),
-        "cobId": $("#cobId").val(),
-        "plan": $("#plan").val(),
-        "planId": $("#planId").val(),
-        "zone": $("#zone").val(),
-        "zoneId": $("#zoneId").val(),
-        "remove_deductable": $("#remove_deductable").val(),
-        "adult_no": $("#adult_no").val(),
-        "children_no": $("#children_no").val(),
-        "pa_included": $("#pa_included").prop('checked')
+        "P_Id": $("#P_Id").val(),
+        "P_Name": $("#P_Name").val(),
+        "PR_Id": $("#PR_Id").val(),
+        "P_ZoneID": $("#P_ZoneID").val(),
+        "P_Remove_deductable": $("#P_Remove_deductable").val(),
+        "P_Adult_No": $("#P_Adult_No").val(),
+        "P_Children_No": $("#P_Children_No").val(),
+        "P_PA_Included": $("#P_PA_Included").prop('checked')
     };
+
 
 
     $.ajax({

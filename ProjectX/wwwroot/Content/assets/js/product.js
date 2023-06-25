@@ -30,7 +30,6 @@ $(document).ready(function () {
 
 function drawtable(data) {
     console.log(data)
-
     var table = $('#producttable').DataTable({
         "data": data,
         "paging": true,

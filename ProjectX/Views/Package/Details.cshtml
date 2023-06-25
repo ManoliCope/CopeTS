@@ -19,72 +19,47 @@
 
 						<div class="row">
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label for="id">ID</label>
-                                        <input type="number" class="form-control" id="id" name="id" value="@Model.id" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="@Model.name" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cob">COB</label>
-                                        <input type="text" class="form-control" id="cob" name="cob" value="@Model.cob" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cobId">COB ID</label>
-                                        <input type="number" class="form-control" id="cobId" name="cobId" value="@Model.cobId" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="plan">Plan</label>
-                                        <input type="text" class="form-control" id="plan" name="plan" value="@Model.plan" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="planId">Plan ID</label>
-                                        <input type="number" class="form-control" id="planId" name="planId" value="@Model.planId" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="zone">Zone</label>
-                                        <input type="text" class="form-control" id="zone" name="zone" value="@Model.zone" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="zoneId">Zone ID</label>
-                                        <input type="number" class="form-control" id="zoneId" name="zoneId" value="@Model.zoneId" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="remove_deductable">Remove Deductible</label>
-                                        <input type="number" class="form-control" id="remove_deductable" name="remove_deductable" value="@Model.remove_deductable" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="adult_no">Adult Count</label>
-                                        <input type="number" class="form-control" id="adult_no" name="adult_no" value="@Model.adult_no" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="children_no">Children Count</label>
-                                        <input type="number" class="form-control" id="children_no" name="children_no" value="@Model.children_no" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="pa_included" name="pa_included" @(Model.pa_included ? "checked" : "")>
-                                            <label class="form-check-label" for="pa_included">
-                                                PA Included
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                </div>
+								<div class="row">
+									<div class="form-group mb-3 col-lg-4">
+										<label for="title">Title</label>
+										<input type="text" class="form-control" id="title" name="title" required="" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="description">Description</label>
+										<input type="text" class="form-control" id="description" name="description" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="activation_date">Activation Date</label>
+										<input type="date" class="form-control" id="activation_date" name="activation_date" required="" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="is_deductible">Deductible</label>
+										<input type="number" class="form-control" id="is_deductible" name="is_deductible" step="0.01" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="sports_activities">Sports Activities</label>
+										<input type="number" class="form-control" id="sports_activities" name="sports_activities" step="0.01" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="additional_benefits">Additional Benefits</label>
+										<input type="number" class="form-control" id="additional_benefits" name="additional_benefits" step="0.01" >
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<div class="form-group mb-0">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" id="is_family" autocomplete="off" >
+												<label class="form-check-label" for="is_family">
+													Is Family
+												</label>
+												<br>
+												<input class="form-check-input" type="checkbox" id="is_active" autocomplete="off" >
+												<label class="form-check-label" for="is_active">
+													Is Active
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
