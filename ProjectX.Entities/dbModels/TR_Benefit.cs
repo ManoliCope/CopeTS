@@ -8,7 +8,7 @@ namespace ProjectX.Entities.dbModels
     {
         public int B_Id { get; set; }
         public string B_Title { get; set; }
-        public float B_Limit { get; set; }
+        public double B_Limit { get; set; }
 
     }
 }

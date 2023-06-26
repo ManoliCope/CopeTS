@@ -20,16 +20,16 @@ namespace ProjectX.Entities.Models.Users
         public int? Super_Agent_Id { get; set; }
         public string Contact_Person { get; set; }
         public int? Insured_Number { get; set; }
-        public float? Tax { get; set; }
+        public double? Tax { get; set; }
         public int? Tax_Type { get; set; }
         public int? Currency { get; set; }
         public int? Rounding_Rule { get; set; }
-        public float? Unique_Tax { get; set; }
-        public float? Unique_Admin_Tax { get; set; }
-        public float? Commission { get; set; }
-        public float? Stamp { get; set; }
-        public float? Additional_Fees { get; set; }
-        public float? VAT { get; set; }
+        public double? Unique_Tax { get; set; }
+        public double? Unique_Admin_Tax { get; set; }
+        public double? Commission { get; set; }
+        public double? Stamp { get; set; }
+        public double? Additional_Fees { get; set; }
+        public double? VAT { get; set; }
         public bool? For_Syria { get; set; }
         public bool? Show_Commission { get; set; }
         public bool? Fixed_Additional_Fees { get; set; }

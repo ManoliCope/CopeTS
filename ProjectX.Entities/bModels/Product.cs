@@ -12,9 +12,9 @@ namespace ProjectX.Entities.bModels
         public bool is_family { get; set; }
         public DateTime activation_date { get; set; }
         public bool is_active { get; set; }
-        public float is_deductible { get; set; }
-        public float sports_activities { get; set; }
-        public float additional_benefits { get; set; }
+        public double is_deductible { get; set; }
+        public double sports_activities { get; set; }
+        public double additional_benefits { get; set; }
 
     }
 }

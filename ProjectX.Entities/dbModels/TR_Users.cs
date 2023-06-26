@@ -21,16 +21,16 @@ namespace ProjectX.Entities.dbModels
         public int? U_Super_Agent_Id { get; set; }
         public string U_Contact_Person { get; set; }
         public int? U_Insured_Number { get; set; }
-        public float? U_Tax { get; set; }
+        public double? U_Tax { get; set; }
         public int? U_Tax_Type { get; set; }
         public int? U_Currency { get; set; }
         public int? U_Rounding_Rule { get; set; }
-        public float? U_Unique_Tax { get; set; }
-        public float? U_Unique_Admin_Tax { get; set; }
-        public float? U_Commission { get; set; }
-        public float? U_Stamp { get; set; }
-        public float? U_Additional_Fees { get; set; }
-        public float? U_VAT { get; set; }
+        public double? U_Unique_Tax { get; set; }
+        public double? U_Unique_Admin_Tax { get; set; }
+        public double? U_Commission { get; set; }
+        public double? U_Stamp { get; set; }
+        public double? U_Additional_Fees { get; set; }
+        public double? U_VAT { get; set; }
         public bool? U_For_Syria { get; set; }
         public bool? U_Show_Commission { get; set; }
         public bool? U_Fixed_Additional_Fees { get; set; }

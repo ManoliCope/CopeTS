@@ -33,7 +33,6 @@ namespace ProjectX.Repository.ZoneRepository
             param.Add("@user_id", userid);
             param.Add("@Z_id", req.id);
             param.Add("@Z_Title", req.title);
-            param.Add("@Z_Destination_Id", req.destinationId);
 
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
@@ -57,7 +56,6 @@ namespace ProjectX.Repository.ZoneRepository
 
             param.Add("@Z_id", req.id);
             param.Add("@Z_Title", req.title);
-            param.Add("@Z_Destination_Id", req.destinationId);
 
 
 
@@ -66,7 +64,15 @@ namespace ProjectX.Repository.ZoneRepository
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Zone_Get", param, commandType: CommandType.StoredProcedure))
                 {
                      resp = result.Read<TR_Zone>().ToList(); 
-
+                    var dest= result.Read<TR_ZoneDestination>().ToList();
+                    if(resp.Any() && dest.Any())
+                    {
+                        foreach (var res in resp)
+                        {
+                            res.Z_Destination_Id = dest.Where(a => a.Z_Id == res.Z_Id).Select(a => a.D_Id).ToList();
+                        }
+                    }
+                   
                 }
                
             }
@@ -83,6 +89,7 @@ namespace ProjectX.Repository.ZoneRepository
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Zone_GetbyID", param, commandType: CommandType.StoredProcedure))
                 {
                     resp = result.ReadFirstOrDefault<TR_Zone>();
+                    resp.Z_Destination_Id = result.Read<int>().ToList();
                 }
             }
 

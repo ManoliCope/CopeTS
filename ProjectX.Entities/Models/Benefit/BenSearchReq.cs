@@ -10,7 +10,7 @@ namespace ProjectX.Entities.Models.Benefit
     {
         public int id { get; set; }
         public string title { get; set; }
-        public float limit { get; set; }
+        public double limit { get; set; }
 
 
 

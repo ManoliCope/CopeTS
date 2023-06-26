@@ -31,14 +31,14 @@ namespace ProjectX.Repository.PackageRepository
             var param = new DynamicParameters();
             param.Add("@action", act);
             param.Add("@user_id", userid);
-            param.Add("@id", req.id);
-            param.Add("@P_Name", req.name);
-            param.Add("@PR_Id", req.cobId);
-            param.Add("@P_ZoneID", req.zoneId);
-            param.Add("@P_Remove_deductable", req.remove_deductable);
-            param.Add("@P_Adult_No", req.adult_no);
-            param.Add("@P_Children_No", req.children_no);
-            param.Add("@P_PA_Included", req.pa_included);
+            param.Add("@P_Id", req.Id);
+            param.Add("@P_Name", req.Name);
+            param.Add("@PR_Id", req.ProductId);
+            param.Add("@P_ZoneID", req.ZoneID);
+            param.Add("@P_Remove_deductable", req.Remove_deductable);
+            param.Add("@P_Adult_No", req.Adult_No);
+            param.Add("@P_Children_No", req.Children_No);
+            param.Add("@P_PA_Included", req.PA_Included);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -50,7 +50,7 @@ namespace ProjectX.Repository.PackageRepository
                 idOut = param.Get<int>("@Returned_ID");
             }
             resp.statusCode.code = statusCode;
-            resp.id = idOut;
+            resp.Id = idOut;
             return resp;
         }
         public List<TR_Package> GetPackageList(PackSearchReq req)
@@ -58,14 +58,15 @@ namespace ProjectX.Repository.PackageRepository
             var resp = new List<TR_Package>();
 
             var param = new DynamicParameters();
-            //param.Add("@id", req.id);
-            param.Add("@P_Name", req.name);
-            param.Add("@PR_Id", req.cobId);
-            param.Add("@P_ZoneID", req.zoneId);
-            param.Add("@P_Remove_deductable", req.remove_deductable);
-            param.Add("@P_Adult_No", req.adult_no);
-            param.Add("@P_Children_No", req.children_no);
-            param.Add("@P_PA_Included", req.pa_included);
+            param.Add("@P_Id", req.Id);
+            param.Add("@P_Name", req.Name);
+            param.Add("@PR_Id", req.ProductId);
+
+            param.Add("@P_ZoneID", req.ZoneID);
+            param.Add("@P_Remove_deductable", req.Remove_deductable);
+            param.Add("@P_Adult_No", req.Adult_No);
+            param.Add("@P_Children_No", req.Children_No);
+            param.Add("@P_PA_Included", req.PA_Included);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))

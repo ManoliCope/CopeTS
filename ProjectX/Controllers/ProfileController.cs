@@ -166,27 +166,27 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            if (!ValueChecker.IsNullValue(req.Email) && !EmailManager.IsValidEmail(req.Email))
-            {
-                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidEmail);
-                return response;
-            }
+            //if (!ValueChecker.IsNullValue(req.Email) && !EmailManager.IsValidEmail(req.Email))
+            //{
+            //    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidEmail);
+            //    return response;
+            //}
 
-            if (!string.IsNullOrEmpty(req.Phone))
-            {
-                PhoneNumberDetails profilePhone = PhoneNumberManager.CheckPhoneNumber(req.IntCode, req.Phone);
+            //if (!string.IsNullOrEmpty(req.Phone))
+            //{
+            //    PhoneNumberDetails profilePhone = PhoneNumberManager.CheckPhoneNumber(req.IntCode, req.Phone);
 
-                if (!profilePhone.IsValid)
-                {
-                    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidPhoneNo);
-                    return response;
-                }
-                else
-                {
-                    req.IntCode = profilePhone.CC;
-                    req.Phone = profilePhone.IntNum;
-                }
-            }
+            //    if (!profilePhone.IsValid)
+            //    {
+            //        response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidPhoneNo);
+            //        return response;
+            //    }
+            //    else
+            //    {
+            //        req.IntCode = profilePhone.CC;
+            //        req.Phone = profilePhone.IntNum;
+            //    }
+            //}
 
 
 
