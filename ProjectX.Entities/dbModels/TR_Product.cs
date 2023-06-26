@@ -12,8 +12,8 @@ namespace ProjectX.Entities.dbModels
         public bool PR_Is_Family { get; set; }
         public DateTime PR_Activation_Date { get; set; }
         public bool PR_Is_Active { get; set; }
-        public float PR_Is_Deductible { get; set; }
-        public float PR_Sports_Activities { get; set; }
-        public float PR_Additional_Benefits { get; set; }
+        public double PR_Is_Deductible { get; set; }
+        public double PR_Sports_Activities { get; set; }
+        public double PR_Additional_Benefits { get; set; }
     }
 }

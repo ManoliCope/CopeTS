@@ -21,7 +21,7 @@ namespace ProjectX.Business.Package
         {
             PackResp response = new PackResp();
             response = _packageRepository.ModifyPackage(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Package");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Package");
             return response;
         }
         public List<TR_Package> GetPackageList(PackSearchReq req)
@@ -32,13 +32,13 @@ namespace ProjectX.Business.Package
         {
             TR_Package repores = _packageRepository.GetPackage(IdPackage);
             PackResp resp = new PackResp();
-            resp.id = repores.P_Id;
-            resp.name = repores.P_Name;
-            resp.zoneId = repores.P_ZoneID;
-            resp.remove_deductable = repores.P_Remove_deductable;
-            resp.adult_no = repores.P_Adult_No;
-            resp.children_no = repores.P_Children_No;
-            resp.pa_included = repores.P_PA_Included;
+            resp.Id = repores.P_Id;
+            resp.Name = repores.P_Name;
+            resp.ZoneID = repores.P_ZoneID;
+            resp.Remove_deductable = repores.P_Remove_deductable;
+            resp.Adult_No = repores.P_Adult_No;
+            resp.Children_No = repores.P_Children_No;
+            resp.PA_Included = repores.P_PA_Included;
             return resp;
            
         }

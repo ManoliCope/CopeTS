@@ -60,7 +60,7 @@ namespace ProjectX.Controllers
         {
             PackSearchResp response = new PackSearchResp();
             response.package = _productBusiness.GetPackageList(req);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
         }
@@ -104,7 +104,7 @@ namespace ProjectX.Controllers
         public PackResp EditPackage(PackReq req)
         {
             PackResp response = new PackResp();
-            if (req.id == 0)
+            if (req.Id == 0)
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
                 return response;
@@ -124,7 +124,7 @@ namespace ProjectX.Controllers
         public PackResp DeletePackage(int id)
         {
             PackReq req = new PackReq();
-            req.id = id;
+            req.Id = id;
             DateTime thisDay = DateTime.Today;
 
             //req.activation_date = thisDay;

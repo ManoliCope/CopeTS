@@ -163,10 +163,10 @@ namespace ProjectX.Repository.ProfileRepository
             }
 
 
-            dtCountries = ObjectConvertor.ListToDataTable<TR_IntegerID>(countries);
-            dtProfileTypes = ObjectConvertor.ListToDataTable<TR_IntegerID>(profileTypes);
-            dtAdditionalCoverage = ObjectConvertor.ListToDataTable<TR_IntegerID>(additionalCoverage);
-            dtCaseSetup = ObjectConvertor.ListToDataTable<TR_ProfileCaseSetup>(caseSetup);
+            //dtCountries = ObjectConvertor.ListToDataTable<TR_IntegerID>(countries);
+            //dtProfileTypes = ObjectConvertor.ListToDataTable<TR_IntegerID>(profileTypes);
+            //dtAdditionalCoverage = ObjectConvertor.ListToDataTable<TR_IntegerID>(additionalCoverage);
+            //dtCaseSetup = ObjectConvertor.ListToDataTable<TR_ProfileCaseSetup>(caseSetup);
 
             var param = new DynamicParameters();
             param.Add("@IdProfile", req.IdProfile);

@@ -8,16 +8,13 @@ namespace ProjectX.Entities.Models.Package
 {
     public class PackSearchReq : GlobalResponse
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public int cobId { get; set; }
-        public int zoneId { get; set; }
-        public int remove_deductable { get; set; }
-        public int adult_no { get; set; }
-        public int children_no { get; set; }
-        public bool pa_included { get; set; }
-        
-
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ProductId { get; set; }
+        public int ZoneID { get; set; }
+        public int Remove_deductable { get; set; }
+        public int Adult_No { get; set; }
+        public int Children_No { get; set; }
+        public bool PA_Included { get; set; }
     }
 }
