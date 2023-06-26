@@ -222,8 +222,7 @@ function deleteprod(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#producttable').length > 0) {
-                    var myTable = $('#producttable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid,"pR_Id", "producttable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
@@ -233,6 +232,21 @@ function deleteprod(me) {
             }
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
+
+
+            //if (result.statusCode.code == 1) {
+            //    if ($('#producttable').length > 0) {
+            //        var myTable = $('#producttable').DataTable();
+            //        myTable.row(rowindex).remove().draw();
+            //        removebtnloader(me);
+            //        showresponsemodal(result.statusCode.code, result.statusCode.message)
+            //    }
+            //    else
+            //        showresponsemodal(result.statusCode.code, result.statusCode.message, "Product")
+
+            //}
+            //else
+            //    showresponsemodal(result.statusCode.code, result.statusCode.message)
 
         },
         failure: function (data, success, failure) {
@@ -249,3 +263,4 @@ function gotoprod(me) {
     removeloader();
     return
 }
+
