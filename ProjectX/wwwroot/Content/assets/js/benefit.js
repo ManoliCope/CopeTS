@@ -159,8 +159,8 @@ function edit() {
         success: function (result) {
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "benefit")
-            triggerresonseclick("benefit", "Edit", result.id)
+            showresponsemodal(1, result.statusCode.message)
+            //triggerresonseclick("benefit", "Edit", result.id)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")

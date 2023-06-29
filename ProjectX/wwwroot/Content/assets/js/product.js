@@ -194,8 +194,8 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "Product")
-            triggerresonseclick("Product", "Edit", result.id)
+            showresponsemodal(1, result.statusCode.message)
+            //triggerresonseclick("Product", "Edit", result.id)
 
         },
         failure: function (data, success, failure) {

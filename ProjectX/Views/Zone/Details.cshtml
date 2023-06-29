@@ -21,29 +21,19 @@
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
                                 <div class="row">
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="id">id</label>
-                                        <input type="number" class="form-control" id="id" name="id" value="@Model.id">
+                                        <label for="Z_Id">id</label>
+                                        <input type="number" class="form-control" id="Z_Id" name="Z_Id" value="@Model.id">
                                     </div>
 
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" name="title" required="" value="@Model.title">
+                                        <label for="Z_Title">Title</label>
+                                        <input type="text" class="form-control" id="Z_Title" name="Z_Title" required="" value="@Model.title">
                                     </div>
 
                                     <div class="form-group mb-3 col-lg-4">
-                                        <label for="destinationId">Destination ID</label>
-                                        <select class="form-control" id="destinationId" name="destinationId" multiple>
+                                        <label for="Z_Destination_Id">Destination</label>
+                                        <select class="form-control" id="Z_Destination_Id" name="Z_Destination_Id" multiple>
                                             @foreach (var item in Model.destinationId)
-                                            {
-                                                <option value="@item" selected>@item</option>			
-                                            }
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="destination">Destination</label>
-                                        <select class="form-control" id="destination" name="destination" multiple>
-                                            @foreach (var item in Model.destination)
                                             {
                                                 <option value="@item" selected>@item</option>
                                             }

@@ -30,7 +30,6 @@ $(document).ready(function () {
 
 function drawtable(data) {
     console.log(data)
-
     var table = $('#zonetable').DataTable({
         "data": data,
         "paging": true,
@@ -38,38 +37,39 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "title" },
-            {
-                "title": "Destination ID",
-                "className": "text-center filter",
-                "orderable": true,
-                "data": "destinationId",
-                "render": function (data) {
-                    return data.join(", ");
-                }
-            },
-            {
-                "title": "Destination",
-                "className": "text-center filter",
-                "orderable": true,
-                "data": "destination",
-                "render": function (data) {
-                    return data.join(", ");
-                }
-            },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "z_Id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "z_Title" },
+            //{
+            //    "title": "Destination ID",
+            //    "className": "text-center filter",
+            //    "orderable": true,
+            //    "data": "z_Destination_Id",
+            //    "render": function (data, type, row) {
+            //        console.log(data)
+            //        return data.join(", ");
+            //    }
+            //},
+            //{
+            //    "title": "Destination",
+            //    "className": "text-center filter",
+            //    "orderable": true,
+            //    "data": "Destination",
+            //    "render": function (data) {
+            //        return data.join(", ");
+            //    }
+            //},
             {
                 "data": 'id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" zneid="` + full.z_Id + `" class="text-black-50" onclick="gotozne(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
                 "data": 'id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
+                    return `<a href="#" title="Delete" zneid="` + full.z_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.z_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -116,7 +116,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.zones);
+                drawtable(result.zone);
             }
         },
         failure: function (data, success, failure) {
@@ -137,35 +137,17 @@ function addnew() {
     }
 
     showloader("load")
-   
+
     var zneReq = {
         "id": $("#id").val(),
-        "title": $("#title").val(),
-        "destinationId": [],
-        "destination": []
+        "title": $("#Z_Title").val(),
+        "destinationId": []
     };
-
-    // Populate the destinationId array
-    $(".destinationId").each(function () {
-        zneReq.destinationId.push($(this).val());
+    var selectedValues = $.map($('#Z_Destination_Id').val(), function (value) {
+        return parseInt(value, 10);
     });
 
-    // Populate the destination array
-    $(".destination").each(function () {
-        zneReq.destination.push($(this).val());
-    });
-
-    // Convert the date to ISO format
-    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
-    zneReq.tariff_starting_date = tariff_starting_date;
-
-    // Convert the numeric fields to appropriate types
-    zneReq.id = parseInt(zneReq.id);
-    zneReq.destinationId = zneReq.destinationId.map(function (value) {
-        return parseInt(value);
-    });
-
-
+    zneReq.destinationId = selectedValues;
 
     $.ajax({
         type: 'post',
@@ -173,7 +155,6 @@ function addnew() {
         url: projectname + "/zone/Createzone",
         data: { req: zneReq },
         success: function (result) {
-
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
@@ -201,31 +182,17 @@ function edit() {
     showloader("load")
 
     var zneReq = {
-        "id": $("#divinfo").attr("mid"),
-        "title": $("#title").val(),
-        "destinationId": [],
-        "destination": []
+        "id": $("#Z_Id").val(),
+        "title": $("#Z_Title").val(),
+        "destinationId": []
     };
-
-    // Populate the destinationId array
-    $(".destinationId").each(function () {
-        zneReq.destinationId.push($(this).val());
+    var selectedValues = $.map($('#Z_Destination_Id').val(), function (value) {
+        return parseInt(value, 10);
     });
 
-    // Populate the destination array
-    $(".destination").each(function () {
-        zneReq.destination.push($(this).val());
-    });
+    zneReq.destinationId = selectedValues;
 
-    // Convert the date to ISO format
-    var tariff_starting_date = new Date($("#tariff_starting_date").val()).toISOString();
-    zneReq.tariff_starting_date = tariff_starting_date;
 
-    // Convert the numeric fields to appropriate types
-    zneReq.id = parseInt(zneReq.id);
-    zneReq.destinationId = zneReq.destinationId.map(function (value) {
-        return parseInt(value);
-    });
 
     $.ajax({
         type: 'post',
@@ -237,7 +204,7 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "zone")
+            showresponsemodal(1, result.statusCode.message)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
