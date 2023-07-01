@@ -769,3 +769,7 @@ table td i.red {
 table td {
     white-space: pre !important;
 }
+
+.menu-item a{
+    cursor:  pointer !important;
+}

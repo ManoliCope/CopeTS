@@ -24,7 +24,7 @@ namespace ProjectX.Controllers
     public class PackageController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IPackageBusiness _productBusiness;
+        private IPackageBusiness _packageBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
@@ -34,7 +34,7 @@ namespace ProjectX.Controllers
         public PackageController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IPackageBusiness productBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
-            _productBusiness = productBusiness;
+            _packageBusiness = productBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
@@ -59,7 +59,7 @@ namespace ProjectX.Controllers
         public PackSearchResp Search(PackSearchReq req)
         {
             PackSearchResp response = new PackSearchResp();
-            response.package = _productBusiness.GetPackageList(req);
+            response.package = _packageBusiness.GetPackageList(req);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -82,20 +82,21 @@ namespace ProjectX.Controllers
         public PackResp CreatePackage(PackReq req)
         {
             PackResp response = new PackResp();
+            
             //if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
             //{
             //    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
             //    return response;
             //}
 
-            return _productBusiness.ModifyPackage(req, "Create", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Create", _user.UserId);
         }
 
 
         public ActionResult Edit(int id)
         {
             PackResp response = new PackResp();
-            response = _productBusiness.GetPackage(id);
+            response = _packageBusiness.GetPackage(id);
 
             return View("details", response);
         }
@@ -117,7 +118,7 @@ namespace ProjectX.Controllers
             //}
 
 
-            return _productBusiness.ModifyPackage(req, "Update", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Update", _user.UserId);
         }
 
         [HttpPost]
@@ -129,7 +130,7 @@ namespace ProjectX.Controllers
 
             //req.activation_date = thisDay;
             PackResp response = new PackResp();
-            return _productBusiness.ModifyPackage(req, "Delete", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Delete", _user.UserId);
         }
     }
 }

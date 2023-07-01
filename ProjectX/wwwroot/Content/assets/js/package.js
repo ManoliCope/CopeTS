@@ -38,20 +38,36 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "P_Id", "className": "column-id text-center filter", "orderable": true, "data": "p_Id" },
-            { "title": "P_Name", "className": "column-name text-center filter", "orderable": true, "data": "p_Name" },
-            { "title": "PR_Id", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "P_ZoneID", "className": "column-cob-id text-center filter", "orderable": true, "data": "p_ZoneID" },
-            { "title": "P_Remove_deductable", "className": "column-remove-deductible text-center filter", "orderable": true, "data": "p_Remove_deductable" },
-            { "title": "P_Adult_No", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
-            { "title": "P_Children_No", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
+            { "title": "ID", "className": "column-name text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "Name", "className": "column-name text-center filter", "orderable": true, "data": "p_Name" },
+            { "title": "Product Id", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Id" },
+            { "title": "Zone ID", "className": "column-cob-id text-center filter", "orderable": true, "data": "p_ZoneID" },
+            { "title": "Remove Deductible", "className": "column-remove-deductible text-center filter", "orderable": true, "data": "p_Remove_deductable" },
+            { "title": "Adult Number", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
+            { "title": "Children Number", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
             {
-                "title": "p_PA_Included",
+                "title": "PA Included",
                 "className": "column-pa-included text-center filter",
                 "orderable": true,
                 "data": "p_PA_Included",
                 "render": function (data) {
                     return data ? "Yes" : "No";
+                }
+            },
+            {
+                'data': 'p_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    return `<a  href="#" title="Edit" pkgid="` + full.p_Id + `"  class="text-black-50" onclick="gotopkg(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                }
+            },
+            {
+                'data': 'p_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full, meta) {
+                    return `<a  href="#" title="Delete" pkgid="` + full.p_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.p_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+
+
                 }
             }
         ],
@@ -69,14 +85,14 @@ function Search() {
     showloader("load")
 
     var filter = {
-        "P_Id": $("#P_Id").val(),
-        "P_Name": $("#P_Name").val(),
-        "PR_Id": $("#PR_Id").val(),
-        "P_ZoneID": $("#P_ZoneID").val(),
-        "P_Remove_deductable": $("#P_Remove_deductable").val(),
-        "P_Adult_No": $("#P_Adult_No").val(),
-        "P_Children_No": $("#P_Children_No").val(),
-        "P_PA_Included": $("#P_PA_Included").prop('checked')
+        "Id": $("#Id").val(),
+        "Name": $("#Name").val(),
+        "ProductId": $("#ProductId").val(),
+        "ZoneID": $("#ZoneID").val(),
+        "Remove_deductable": $("#Remove_deductable").val(),
+        "Adult_No": $("#Adult_No").val(),
+        "Children_No": $("#Children_No").val(),
+        "PA_Included": $("#PA_Included").prop('checked')
     };
 
 
@@ -113,17 +129,14 @@ function addnew() {
     showloader("load")
 
     var pkgReq = {
-        "P_Id": $("#P_Id").val(),
-        "P_Name": $("#P_Name").val(),
-        "PR_Id": $("#PR_Id").val(),
-        "P_ZoneID": $("#P_ZoneID").val(),
-        "P_Remove_deductable": $("#P_Remove_deductable").val(),
-        "P_Adult_No": $("#P_Adult_No").val(),
-        "P_Children_No": $("#P_Children_No").val(),
-        "P_PA_Included": $("#P_PA_Included").prop('checked')
+        Name: $("#name").val(),
+        ProductId: $("#product_id").val(),
+        ZoneID: $("#zone_id").val(),
+        Remove_deductable: $("#remove_deductible").val(),
+        Adult_No: $("#adult_no").val(),
+        Children_No: $("#children_no").val(),
+        PA_Included: $("#pa_included").prop('checked')
     };
-
-
 
     $.ajax({
         type: 'post',
@@ -138,7 +151,7 @@ function addnew() {
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("package", "Edit", 35);
+                gotopage("package", "Edit",result.id);
             });
 
         },
@@ -159,17 +172,13 @@ function edit() {
     showloader("load")
     var pkgReq = {
         "id": $("#divinfo").attr("mid"),
-        "name": $("#name").val(),
-        "cob": $("#cob").val(),
-        "cobId": $("#cobId").val(),
-        "plan": $("#plan").val(),
-        "planId": $("#planId").val(),
-        "zone": $("#zone").val(),
-        "zoneId": $("#zoneId").val(),
-        "remove_deductable": $("#remove_deductable").val(),
-        "adult_no": $("#adult_no").val(),
-        "children_no": $("#children_no").val(),
-        "pa_included": $("#pa_included").prop('checked')
+        Name: $("#name").val(),
+        ProductId: $("#product_id").val(),
+        ZoneID: $("#zone_id").val(),
+        Remove_deductable: $("#remove_deductible").val(),
+        Adult_No: $("#adult_no").val(),
+        Children_No: $("#children_no").val(),
+        PA_Included: $("#pa_included").prop('checked')
     };
 
     $.ajax({
@@ -182,7 +191,9 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "package")
+
+            showresponsemodal(1, result.statusCode.message)
+            //showresponsemodal(1, result.statusCode.message, "package")
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")

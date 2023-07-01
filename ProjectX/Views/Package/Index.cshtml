@@ -23,70 +23,83 @@
     <div class="container-fluid " style="padding:10px 0">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
-                    <div id="searchform" class="card-body">
-                        <div>
-                            <div class="row mb-6">
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="id">ID:</label>
-                                    <input id="id" type="text" class="form-control datatable-input id" placeholder="Enter ID" data-col-index="0">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="name">Name:</label>
-                                    <input id="name" type="text" class="form-control datatable-input name" placeholder="Enter Name" data-col-index="1">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="cobId">Country of Birth ID:</label>
-                                    <input id="cobId" type="text" class="form-control datatable-input cobId" placeholder="Enter Country of Birth ID" data-col-index="2">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="zoneId">Zone ID:</label>
-                                    <input id="zoneId" type="text" class="form-control datatable-input zoneId" placeholder="Enter Zone ID" data-col-index="3">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="remove_deductable">Remove Deductible:</label>
-                                    <input id="remove_deductable" type="text" class="form-control datatable-input remove_deductable" placeholder="Enter Remove Deductible" data-col-index="4">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="adult_no">Adult Number:</label>
-                                    <input id="adult_no" type="text" class="form-control datatable-input adult_no" placeholder="Enter Adult Number" data-col-index="5">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="children_no">Children Number:</label>
-                                    <input id="children_no" type="text" class="form-control datatable-input children_no" placeholder="Enter Children Number" data-col-index="6">
-                                </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="pa_included">PA Included:</label>
-                                    <input id="pa_included" type="checkbox" class="form-control datatable-input pa_included" data-col-index="7">
-                                </div>
+				<div class="card">
+					<div id="searchform" class="card-body">
+						<div>
+							<div class="row mb-6">
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="Id">ID:</label>
+									<input id="Id" type="text" class="form-control datatable-input" placeholder="Enter ID" data-col-index="0">
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="Name">Name:</label>
+									<input id="Name" type="text" class="form-control datatable-input" placeholder="Enter Name" data-col-index="1">
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="ProductId">Product:</label>
+									<select id="ProductId" class="form-control datatable-input">
+										<option value="">Select Product</option>
+										<!-- Add options for Product ID dropdown -->
+										<option value="1">Product 1</option>
+										<option value="2">Product 2</option>
+										<option value="3">Product 3</option>
+									</select>
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="ZoneID">Zone:</label>
+									<select id="ZoneID" class="form-control datatable-input">
+										<option value="">Select Zone</option>
+										<!-- Add options for Zone ID dropdown -->
+										<option value="1">Zone 1</option>
+										<option value="2">Zone 2</option>
+										<option value="3">Zone 3</option>
+									</select>
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="Remove_deductable">Remove Deductible:</label>
+									<input id="Remove_deductable" type="text" class="form-control datatable-input" placeholder="Enter Remove Deductible" data-col-index="4">
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="Adult_No">Adult Number:</label>
+									<input id="Adult_No" type="text" class="form-control datatable-input" placeholder="Enter Adult Number" data-col-index="5">
+								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="Children_No">Children Number:</label>
+									<input id="Children_No" type="text" class="form-control datatable-input" placeholder="Enter Children Number" data-col-index="6">
+								</div>
+								@*<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="PA_Included">PA Included:</label>
+									<input id="PA_Included" type="checkbox" class="form-control datatable-input" data-col-index="7">
+								</div>*@
 
-                                <div class="col-lg-9">
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6">
-                                            <button class="btn bglocalcolor" id="search" style="width:100%">
-                                                <span>
-                                                    <i class="la la-search"></i>
-                                                    <span>Search</span>
-                                                </span>
-                                            </button>&nbsp;&nbsp;
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
-                                                <span>
-                                                    <i class="la la-close"></i>
-                                                    <span>Reset</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+								@*<div class="col-lg-9">
+								</div>*@
+								<div class="col-lg-3">
+									<div class="row mt-4">
+										<div class="col-sm-6">
+											<button class="btn bglocalcolor" id="search" style="width:100%">
+												<span>
+													<i class="la la-search"></i>
+													<span>Search</span>
+												</span>
+											</button>&nbsp;&nbsp;
+										</div>
+										<div class="col-sm-6">
+											<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+												<span>
+													<i class="la la-close"></i>
+													<span>Reset</span>
+												</span>
+											</button>
+										</div>
+									</div>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+							</div>
+						</div>
+					</div>
+
+				</div>
             </div>
         </div>
 
