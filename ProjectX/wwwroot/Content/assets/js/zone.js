@@ -21,7 +21,7 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
         deletezne(this);
@@ -89,19 +89,19 @@ function Search() {
 
 
     var filter = {
+        "id": $("#id").val(),
         "title": $("#title").val(),
         "destinationId": [],
         "destination": []
     };
 
-    // Retrieve multiple values for destinationId and destination
-    $("#destinationId option:selected").each(function () {
-        filter.destinationId.push($(this).val());
-    });
+    //$("#destinationId option:selected").each(function () {
+    //    filter.destinationId.push($(this).val());
+    //});
 
-    $("#destination option:selected").each(function () {
-        filter.destination.push($(this).val());
-    });
+    //$("#destination option:selected").each(function () {
+    //    filter.destination.push($(this).val());
+    //});
 
 
 

@@ -21,7 +21,7 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
         deleteprod(this);

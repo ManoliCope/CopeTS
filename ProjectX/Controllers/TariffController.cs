@@ -24,17 +24,17 @@ namespace ProjectX.Controllers
     public class TariffController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private ITariffBusiness _productBusiness;
+        private ITariffBusiness _tariffBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
 
 
-        public TariffController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, ITariffBusiness productBusiness, IGeneralBusiness generalBusiness)
+        public TariffController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, ITariffBusiness tariffBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
-            _productBusiness = productBusiness;
+            _tariffBusiness = tariffBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
@@ -51,7 +51,7 @@ namespace ProjectX.Controllers
                 loadDocumentTypes = true
             });
 
-          //  throw new Exception("This is an example error.");
+            //  throw new Exception("This is an example error.");
 
             return View(response);
         }
@@ -60,7 +60,7 @@ namespace ProjectX.Controllers
         public TariffSearchResp Search(TariffSearchReq req)
         {
             TariffSearchResp response = new TariffSearchResp();
-            response.tariff = _productBusiness.GetTariffList(req);
+            response.tariff = _tariffBusiness.GetTariffList(req);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -89,14 +89,14 @@ namespace ProjectX.Controllers
             //    return response;
             //}
 
-            return _productBusiness.ModifyTariff(req, "Create", _user.UserId);
+            return _tariffBusiness.ModifyTariff(req, "Create", _user.UserId);
         }
 
 
         public ActionResult Edit(int id)
         {
             TariffResp response = new TariffResp();
-            response = _productBusiness.GetTariff(id);
+            response = _tariffBusiness.GetTariff(id);
 
             return View("details", response);
         }
@@ -118,7 +118,7 @@ namespace ProjectX.Controllers
             //}
 
 
-            return _productBusiness.ModifyTariff(req, "Update", _user.UserId);
+            return _tariffBusiness.ModifyTariff(req, "Update", _user.UserId);
         }
 
         [HttpPost]
@@ -126,11 +126,9 @@ namespace ProjectX.Controllers
         {
             TariffReq req = new TariffReq();
             req.id = id;
-            DateTime thisDay = DateTime.Today;
-
-            //req.activation_date = thisDay;
+            req.tariff_starting_date = DateTime.Today;
             TariffResp response = new TariffResp();
-            return _productBusiness.ModifyTariff(req, "Delete", _user.UserId);
+            return _tariffBusiness.ModifyTariff(req, "Delete", _user.UserId);
         }
     }
 }

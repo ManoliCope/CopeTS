@@ -21,7 +21,7 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
         deletetariff(this);
@@ -38,20 +38,20 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "id" },
-            { "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "idPackage" },
-            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "package" },
-            { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "start_age" },
-            { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "end_age" },
-            { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "number_of_days" },
-            { "title": "Price Amount", "className": "text-center filter", "orderable": true, "data": "price_amount" },
-            { "title": "Net Premium Amount", "className": "text-center filter", "orderable": true, "data": "net_premium_amount" },
-            { "title": "PA Amount", "className": "text-center filter", "orderable": true, "data": "pa_amount" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "t_Id" },
+            //{ "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "t_Start_Age" },
+            { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "t_End_Age" },
+            { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "t_Number_Of_Days" },
+            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "t_Price_Amount" },
+            //{ "title": "Net Premium Amount", "className": "text-center filter", "orderable": true, "data": "t_Net_Premium_Amount" },
+            //{ "title": "PA Amount", "className": "text-center filter", "orderable": true, "data": "t_PA_Amount" },
             {
-                "title": "Tariff Starting Date",
+                "title": "Starting Date",
                 "className": "text-center filter",
                 "orderable": true,
-                "data": "tariff_starting_date",
+                "data": "t_Tariff_Starting_Date",
                 "render": function (data, type, row) {
                     if (type === "display" || type === "filter") {
                         var date = new Date(data);
@@ -61,17 +61,17 @@ function drawtable(data) {
                 }
             },
             {
-                "data": 'id',
+                "data": 't_Id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a href="#" title="Edit" benid="` + full.id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a href="#" title="Edit" tarid="` + full.t_Id + `" class="text-black-50" onclick="gototariff(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                "data": 'id',
+                "data": 't_Id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a href="#" title="Delete" benid="` + full.id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.id},${meta.row})"><i class="fas fa-times red"></i></a>`;
+                    return `<a href="#" title="Delete" tarid="` + full.t_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.t_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],
@@ -113,7 +113,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.tariffs);
+                drawtable(result.tariff);
             }
         },
         failure: function (data, success, failure) {
@@ -137,7 +137,6 @@ function addnew() {
 
     var tariffReq = {
         "idPackage": $("#idPackage").val(),
-        "package": $("#package").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
         "number_of_days": $("#number_of_days").val(),
@@ -146,7 +145,6 @@ function addnew() {
         "pa_amount": $("#pa_amount").val(),
         "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
-
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -159,9 +157,9 @@ function addnew() {
             //    gotopage("Profile", "Index");
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
-            $("#responsemodal button").click(function () {
-                gotopage("tariff", "Edit", 35);
-            });
+            //$("#responsemodal button").click(function () {
+            //    gotopage("tariff", "Edit", result.id);
+            //});
 
         },
         failure: function (data, success, failure) {
@@ -203,7 +201,7 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "Tariff")
+            showresponsemodal(1, result.statusCode.message)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -254,7 +252,8 @@ function deletetariff(me) {
 }
 function gototariff(me) {
     showloader("load")
-    window.location.href = "/tariff/edit/" + $(me).attr("tariffid");
+
+    window.location.href = "/tariff/edit/" + $(me).attr("tarid");
     removeloader();
     return
 }
