@@ -1,6 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Product.ProdGetResp
 @{
-    var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+    //var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
     Boolean isnew = true;
 }
@@ -871,22 +871,22 @@
                         <label for="validationCustom03">Type</label>
                         <select id="newfeestype" data-plugin="prfeestype" class="form-control" onchange="togglefees(this)" required>
                             <option value=""> Select Fees Type</option>
-                            @if (filldata.loadedData.feesTypes != null)
+                            @*@if (filldata.loadedData.feesTypes != null)
                                 @foreach (var Fees in filldata.loadedData.feesTypes)
                                 {
                                     <option value="@Fees.LK_ID"> @Fees.LK_TableField </option>
-                                }
+                                }*@
                         </select>
                     </div>
                     <div id="divcomplexity" class="form-group mb-3 col-lg-4">
                         <label for="validationCustom03">Level</label>
                         <select id="newfeeslevel" class="form-control">
                             <option> </option>
-                            @if (filldata.loadedData.caseComplexities != null)
+                           @* @if (filldata.loadedData.caseComplexities != null)
                                 @foreach (var Currency in filldata.loadedData.caseComplexities)
                                 {
                                     <option value="@Currency.LK_ID">@Currency.LK_TableField</option>
-                                }
+                                }*@
                         </select>
                     </div>
                     <div class="form-group mb-3 col-lg-4">

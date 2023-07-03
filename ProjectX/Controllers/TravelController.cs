@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadCustomerTypes = true
+                //loadCustomerTypes = true
             });
             return View(response);
         }

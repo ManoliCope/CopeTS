@@ -39,9 +39,9 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadCountries = true,
-                loadProfileTypes = true,
-                loadDocumentTypes = true
+                //loadCountries = true,
+                //loadProfileTypes = true,
+                //loadDocumentTypes = true
             });
             return View(response);
         }
