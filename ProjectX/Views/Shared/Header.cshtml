@@ -17,14 +17,14 @@
 }
 
 @*<div class="topnav">
-        <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+        <a id="btn-toggle"  class="sidebar-toggler break-point-sm">
             <i class="ri-menu-line ri-xl"></i>
         </a>
 
         <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
 
             <li id="avayalist" class="dropdown notification-list" data-toggle="tooltip" data-placement="left">
-                <a id="btnavaya" class="nav-link " title="Avaya Call" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" onclick="showavayapopup()" aria-expanded="false">
+                <a id="btnavaya" class="nav-link " title="Avaya Call" data-toggle="dropdown"  role="button" aria-haspopup="false" onclick="showavayapopup()" aria-expanded="false">
                     <i class="fas fas fa-phone "></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-lg" style="">
@@ -88,17 +88,17 @@
         <div class="sidebar-content">
             <nav class="menu open-current-submenu">
                 <ul>
-                    <li class="menu-item @(controllerName == "production" ? "active" : "") "">
-                        <a href="~/production/">
-                            <span class="menu-icon">
-                                <i class="fa fa-chart-line"></i>
-                            </span>
-                            <span class="menu-title">Production</span>
+					<li class="menu-item @(controllerName == "production" ? "active" : "")">
+						<a href="~/production/">
+								<span class="menu-icon">
+									<i class="fa fa-chart-line"></i>
+								</span>
+								<span class="menu-title">Production</span>
 
-                        </a>
-                    </li>
+							</a>
+					</li>
                     <li class="menu-item sub-menu">
-                        <a href="#">
+                        <a>
                             <span class="menu-icon">
                                 <i class="ri-tools-line"></i>
                             </span>
@@ -111,11 +111,11 @@
                                         <span class="menu-title">Products</span>
                                     </a>
                                 </li>
-                                <li class="menu-item @(controllerName == "plan" ? "active" : "")">
+                                @*<li class="menu-item @(controllerName == "plan" ? "active" : "")">
                                     <a href="~/plan/">
                                         <span class="menu-title">Plans</span>
                                     </a>
-                                </li>
+                                </li>*@
                                 <li class="menu-item @(controllerName == "zone" ? "active" : "")">
                                     <a href="~/zone/">
                                         <span class="menu-title">Zones</span>
@@ -148,17 +148,17 @@
                         </a>
 
                     </li>
-                    <li class="menu-item @(controllerName == "clients" ? "active" : "")">
-                        <a href="#">
+                    @*<li class="menu-item @(controllerName == "clients" ? "active" : "")">
+                        <a >
                             <span class="menu-icon">
                                 <i class="ri-user-2-fill"></i>
                             </span>
                             <span class="menu-title">Clients</span>
                         </a>
 
-                    </li>
+                    </li>*@
                     <li class="menu-item @(controllerName == "reports" ? "active" : "")">
-                        <a href="#">
+                        <a >
                             <span class="menu-icon">
                                 <i class="ri-bar-chart-2-fill"></i>
                             </span>
@@ -167,7 +167,7 @@
 
                     </li>
                     <li class="menu-item @(controllerName == "policies" ? "active" : "")">
-                        <a href="#">
+                        <a >
                             <span class="menu-icon">
                                 <i class="fa fa-file"></i>
                             </span>
@@ -230,7 +230,7 @@
 <!--<ul>-->
 <!-- <li class="menu-header"><span> GENERAL </span></li> -->
 <!--<li class="menu-item sub-menu">
-    <a href="#">
+    <a >
         <span class="menu-icon">
             <i class="ri-vip-diamond-fill"></i>
         </span>
@@ -242,56 +242,56 @@
     <div class="sub-menu-list" data-popper-placement="left" data-popper-escaped="" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 172px, 0px); display: none;">
         <ul>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Grid</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Layout</span>
                 </a>
             </li>
             <li class="menu-item sub-menu">
-                <a href="#">
+                <a >
                     <span class="menu-title">Forms</span>
                 </a>
                 <div class="sub-menu-list">
                     <ul>
                         <li class="menu-item">
-                            <a href="#">
+                            <a >
                                 <span class="menu-title">Input</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#">
+                            <a >
                                 <span class="menu-title">Select</span>
                             </a>
                         </li>
                         <li class="menu-item sub-menu">
-                            <a href="#">
+                            <a >
                                 <span class="menu-title">More</span>
                             </a>
                             <div class="sub-menu-list">
                                 <ul>
                                     <li class="menu-item">
-                                        <a href="#">
+                                        <a >
                                             <span class="menu-title">CheckBox</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#">
+                                        <a >
                                             <span class="menu-title">Radio</span>
                                         </a>
                                     </li>
                                     <li class="menu-item sub-menu">
-                                        <a href="#">
+                                        <a >
                                             <span class="menu-title">Want more ?</span>
                                             <span class="menu-suffix">🤔</span>
                                         </a>
                                         <div class="sub-menu-list">
                                             <ul>
                                                 <li class="menu-item">
-                                                    <a href="#">
+                                                    <a >
                                                         <span class="menu-prefix">🎉</span>
                                                         <span class="menu-title">You made it </span>
                                                     </a>
@@ -309,7 +309,7 @@
     </div>
 </li>
 <li class="menu-item sub-menu">
-    <a href="#">
+    <a >
         <span class="menu-icon">
             <i class="ri-bar-chart-2-fill"></i>
         </span>
@@ -318,17 +318,17 @@
     <div class="sub-menu-list" data-popper-placement="left" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 221.6px, 0px); box-sizing: border-box; display: none;" data-popper-escaped="">
         <ul>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Pie chart</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Line chart</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Bar chart</span>
                 </a>
             </li>
@@ -336,7 +336,7 @@
     </div>
 </li>
 <li class="menu-item sub-menu">
-    <a href="#">
+    <a >
         <span class="menu-icon">
             <i class="ri-shopping-cart-fill"></i>
         </span>
@@ -345,17 +345,17 @@
     <div class="sub-menu-list" data-popper-placement="left" data-popper-escaped="" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 272px, 0px); display: none;">
         <ul>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Products</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Orders</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">credit card</span>
                 </a>
             </li>
@@ -363,7 +363,7 @@
     </div>
 </li>
 <li class="menu-item sub-menu">
-    <a href="#">
+    <a >
         <span class="menu-icon">
             <i class="ri-global-fill"></i>
         </span>
@@ -372,12 +372,12 @@
     <div class="sub-menu-list" data-popper-placement="left" data-popper-escaped="" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 321.6px, 0px); display: none;">
         <ul>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Google maps</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Open street map</span>
                 </a>
             </li>
@@ -385,7 +385,7 @@
     </div>
 </li>
 <li class="menu-item sub-menu">
-    <a href="#">
+    <a >
         <span class="menu-icon">
             <i class="ri-paint-brush-fill"></i>
         </span>
@@ -394,12 +394,12 @@
     <div class="sub-menu-list" data-popper-placement="left" data-popper-escaped="" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 372px, 0px); display: none;">
         <ul>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Dark</span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#">
+                <a >
                     <span class="menu-title">Light</span>
                 </a>
             </li>
@@ -408,7 +408,7 @@
 </li>-->
 <!-- <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li> -->
 <!-- <li class="menu-item"> -->
-<!-- <a href="#"> -->
+<!-- <a > -->
 <!-- <span class="menu-icon"> -->
 <!-- <i class="ri-book-2-fill"></i> -->
 <!-- </span> -->
@@ -419,7 +419,7 @@
 <!-- </a> -->
 <!-- </li> -->
 <!-- <li class="menu-item"> -->
-<!-- <a href="#"> -->
+<!-- <a > -->
 <!-- <span class="menu-icon"> -->
 <!-- <i class="ri-calendar-fill"></i> -->
 <!-- </span> -->
@@ -427,7 +427,7 @@
 <!-- </a> -->
 <!-- </li> -->
 <!-- <li class="menu-item">
-  <a href="#">
+  <a >
     <span class="menu-icon">
       <i class="ri-service-fill"></i>
     </span>

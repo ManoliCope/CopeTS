@@ -18,114 +18,58 @@
 						<div class="row">
 							<div id="divinfo" class="col-lg-12">
 								<div class="row">
-									<div class="form-group col-lg-4">
-										<label for="id">ID</label>
-										<input type="number" class="form-control" id="id" name="id" required>
-									</div>
-
-									<div class="form-group col-lg-4">
+									<div class="form-group mb-3 col-lg-4">
 										<label for="name">Name</label>
 										<input type="text" class="form-control" id="name" name="name" required>
 									</div>
 
-									<div class="form-group col-lg-4">
-										<label for="cob">COB</label>
-										<input type="text" class="form-control" id="cob" name="cob" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="cobId">COB ID</label>
-										<input type="number" class="form-control" id="cobId" name="cobId" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="plan">Plan</label>
-										<input type="text" class="form-control" id="plan" name="plan" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="planId">Plan ID</label>
-										<input type="number" class="form-control" id="planId" name="planId" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="zone">Zone</label>
-										<input type="text" class="form-control" id="zone" name="zone" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="zoneId">Zone ID</label>
-										<input type="number" class="form-control" id="zoneId" name="zoneId" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="remove_deductable">Remove Deductible</label>
-										<input type="number" class="form-control" id="remove_deductable" name="remove_deductable" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="adult_no">Adult Count</label>
-										<input type="number" class="form-control" id="adult_no" name="adult_no" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<label for="children_no">Children Count</label>
-										<input type="number" class="form-control" id="children_no" name="children_no" required>
-									</div>
-
-									<div class="form-group col-lg-4">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" id="pa_included" name="pa_included">
-											<label class="form-check-label" for="pa_included">
-												PA Included
-											</label>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div id="divinfo" class="col-lg-12">
-								<div class="row">
 									<div class="form-group mb-3 col-lg-4">
-										<label for="title">Title</label>
-										<input type="text" class="form-control" id="title" name="title" required="" >
+										<label for="product_id">Product</label>
+										<select class="form-control" id="product_id" name="product_id" required>
+											<option value="1">Product A</option>
+											<option value="2">Product B</option>
+											<option value="3">Product C</option>
+										</select>
 									</div>
+
 									<div class="form-group mb-3 col-lg-4">
-										<label for="description">Description</label>
-										<input type="text" class="form-control" id="description" name="description" >
+										<label for="zone_id">Zone</label>
+										<select class="form-control" id="zone_id" name="zone_id" required>
+											<option value="1">Zone 1</option>
+											<option value="2">Zone 2</option>
+											<option value="3">Zone 3</option>
+										</select>
 									</div>
+
 									<div class="form-group mb-3 col-lg-4">
-										<label for="activation_date">Activation Date</label>
-										<input type="date" class="form-control" id="activation_date" name="activation_date" required="" >
+										<label for="remove_deductible">Remove Deductible</label>
+										<input type="number" class="form-control" id="remove_deductible" name="remove_deductible">
 									</div>
+
 									<div class="form-group mb-3 col-lg-4">
-										<label for="is_deductible">Deductible</label>
-										<input type="number" class="form-control" id="is_deductible" name="is_deductible" step="0.01" >
+										<label for="adult_no">Adult No</label>
+										<input type="number" class="form-control" id="adult_no" name="adult_no">
 									</div>
+
 									<div class="form-group mb-3 col-lg-4">
-										<label for="sports_activities">Sports Activities</label>
-										<input type="number" class="form-control" id="sports_activities" name="sports_activities" step="0.01" >
+										<label for="children_no">Children No</label>
+										<input type="number" class="form-control" id="children_no" name="children_no">
 									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="additional_benefits">Additional Benefits</label>
-										<input type="number" class="form-control" id="additional_benefits" name="additional_benefits" step="0.01" >
-									</div>
+
 									<div class="form-group mb-3 col-lg-4">
 										<div class="form-group mb-0">
 											<div class="form-check">
-												<input class="form-check-input" type="checkbox" id="is_family" autocomplete="off" >
-												<label class="form-check-label" for="is_family">
-													Is Family
-												</label>
-												<br>
-												<input class="form-check-input" type="checkbox" id="is_active" autocomplete="off" >
-												<label class="form-check-label" for="is_active">
-													Is Active
+												<input class="form-check-input" type="checkbox" id="pa_included" autocomplete="off">
+												<label class="form-check-label" for="pa_included">
+													PA Included
 												</label>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+
+							
 						</div>
                     </div>
                 </div>

@@ -28,13 +28,15 @@
                         <div>
                             <div class="row mb-6">
                                 <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="idPackage">Package ID:</label>
-                                    <input id="idPackage" type="text" class="form-control datatable-input idPackage" placeholder="Enter Package ID" data-col-index="0">
+                                    <label for="idPackage">Package:</label>
+                                    <select class="form-control" id="idPackage" name="idPackage" required>
+                                        <option value="0">Select Package</option>
+                                        <option value="1">Package 1</option>
+                                        <option value="2">Package 2</option>
+                                        <option value="3">Package 3</option>
+                                    </select>
                                 </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="package">Package:</label>
-                                    <input id="package" type="text" class="form-control datatable-input package" placeholder="Enter Package" data-col-index="1">
-                                </div>
+                             
                                 <div class="col-lg-3 mb-lg-0 mb-6">
                                     <label for="start_age">Start Age:</label>
                                     <input id="start_age" type="text" class="form-control datatable-input start_age" placeholder="Enter Start Age" data-col-index="2">
@@ -48,20 +50,20 @@
                                     <input id="number_of_days" type="text" class="form-control datatable-input number_of_days" placeholder="Enter Number of Days" data-col-index="4">
                                 </div>
                                 <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label for="price_amount">Price Amount:</label>
+                                    <label for="price_amount">Amount:</label>
                                     <input id="price_amount" type="text" class="form-control datatable-input price_amount" placeholder="Enter Price Amount" data-col-index="5">
                                 </div>
-                                <div class="col-lg-3 mb-lg-0 mb-6">
+                                @*<div class="col-lg-3 mb-lg-0 mb-6">
                                     <label for="net_premium_amount">Net Premium Amount:</label>
                                     <input id="net_premium_amount" type="text" class="form-control datatable-input net_premium_amount" placeholder="Enter Net Premium Amount" data-col-index="6">
                                 </div>
                                 <div class="col-lg-3 mb-lg-0 mb-6">
                                     <label for="pa_amount">PA Amount:</label>
                                     <input id="pa_amount" type="text" class="form-control datatable-input pa_amount" placeholder="Enter PA Amount" data-col-index="7">
-                                </div>
+                                </div>*@
 
 
-                                <div class="col-lg-9">
+                                <div class="col-lg-6">
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="row mt-4">

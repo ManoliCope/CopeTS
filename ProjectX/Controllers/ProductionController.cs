@@ -15,17 +15,17 @@ namespace ProjectX.Controllers
     public class ProductionController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IProfileBusiness _profileBusiness;
+        private IProfileBusiness _productionBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
         private IWebHostEnvironment _env;
 
-        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
-            _profileBusiness = profileBusiness;
+            _productionBusiness = productionBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];

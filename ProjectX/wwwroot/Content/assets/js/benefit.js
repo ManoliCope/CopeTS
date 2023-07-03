@@ -159,8 +159,8 @@ function edit() {
         success: function (result) {
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "benefit")
-            triggerresonseclick("benefit", "Edit", result.id)
+            showresponsemodal(1, result.statusCode.message)
+            //triggerresonseclick("benefit", "Edit", result.id)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -187,7 +187,7 @@ function deleteben(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#benefittable').length > 0) {
-                    deletedatatablerowbyid(thisid,"benefittable")
+                    deletedatatablerowbyid(thisid, "b_Id","benefittable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
@@ -214,11 +214,3 @@ function gotoben(me) {
     return
 }
 
-function deletedatatablerowbyid(idToDelete, tablename) {
-    var table = $('#' + tablename).DataTable();
-    var rowToDelete = table.rows().eq(0).filter(function (rowIdx) {
-        return table.cell(rowIdx, 0).data() === idToDelete;
-    });
-
-    table.row(rowToDelete).remove().draw();
-}

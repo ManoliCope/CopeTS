@@ -24,17 +24,17 @@ namespace ProjectX.Controllers
     public class BenefitController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IBenefitBusiness _productBusiness;
+        private IBenefitBusiness _benefitBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
 
 
-        public BenefitController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IBenefitBusiness productBusiness, IGeneralBusiness generalBusiness)
+        public BenefitController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IBenefitBusiness benefitBusiness, IGeneralBusiness generalBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
-            _productBusiness = productBusiness;
+            _benefitBusiness = benefitBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
@@ -59,7 +59,7 @@ namespace ProjectX.Controllers
         public BenSearchResp Search(BenSearchReq req)
         {
             BenSearchResp response = new BenSearchResp();
-            response.benefit = _productBusiness.GetBenefitList(req);
+            response.benefit = _benefitBusiness.GetBenefitList(req);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -88,14 +88,14 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _productBusiness.ModifyBenefit(req, "Create", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Create", _user.UserId);
         }
 
 
         public ActionResult Edit(int id)
         {
             BenResp response = new BenResp();
-            response = _productBusiness.GetBenefit(id);
+            response = _benefitBusiness.GetBenefit(id);
 
             return View("details", response);
         }
@@ -117,7 +117,7 @@ namespace ProjectX.Controllers
             }
 
 
-            return _productBusiness.ModifyBenefit(req, "Update", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Update", _user.UserId);
         }
 
         [HttpPost]
@@ -129,7 +129,7 @@ namespace ProjectX.Controllers
 
             //req.date = thisDay;
             BenResp response = new BenResp();
-            return _productBusiness.ModifyBenefit(req, "Delete", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Delete", _user.UserId);
         }
     }
 }

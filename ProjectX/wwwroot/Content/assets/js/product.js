@@ -21,7 +21,7 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
         deleteprod(this);
@@ -194,7 +194,9 @@ function edit() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "Product")
+            showresponsemodal(1, result.statusCode.message)
+            //triggerresonseclick("Product", "Edit", result.id)
+
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -222,8 +224,7 @@ function deleteprod(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#producttable').length > 0) {
-                    var myTable = $('#producttable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid,"pR_Id", "producttable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
@@ -233,6 +234,21 @@ function deleteprod(me) {
             }
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
+
+
+            //if (result.statusCode.code == 1) {
+            //    if ($('#producttable').length > 0) {
+            //        var myTable = $('#producttable').DataTable();
+            //        myTable.row(rowindex).remove().draw();
+            //        removebtnloader(me);
+            //        showresponsemodal(result.statusCode.code, result.statusCode.message)
+            //    }
+            //    else
+            //        showresponsemodal(result.statusCode.code, result.statusCode.message, "Product")
+
+            //}
+            //else
+            //    showresponsemodal(result.statusCode.code, result.statusCode.message)
 
         },
         failure: function (data, success, failure) {
@@ -249,3 +265,4 @@ function gotoprod(me) {
     removeloader();
     return
 }
+

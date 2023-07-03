@@ -41,7 +41,37 @@
 //    showavayapopup();
 
 //}
+function deletedatatablerowbyid(idToDelete, conditionFieldName, tablename) {
+    //table.rows().eq(0).each(function (index) {
+    //    var row = table.row(index);
+    //    var rowData = row.data();
 
+    //    // Check the condition using the specified field name and value
+    //    if (rowData[conditionFieldName] === conditionID) {
+    //        row.remove().draw();
+    //        return false; // Exit the loop once the row is deleted
+    //    }
+    //});
+
+
+
+    var table = $('#' + tablename).DataTable();
+    var row = table.row(function (index, data, node) {
+        return data[conditionFieldName] == idToDelete;
+    });
+    row.remove().draw();
+
+
+    //var table = $('#' + tablename).DataTable();
+    //var rowToDelete = table.rows().eq(0).filter(function (rowIdx) {
+    //    return table.cell(rowIdx, 0).data() == idToDelete;
+    //});
+    //console.log(rowToDelete.data())
+    //table.row(rowToDelete).remove().draw();
+
+
+
+}
 function triggerselectedmenu() {
     var menuholder = $('.sidebar-content').find(".active").parent().closest(".sub-menu")
     if (menuholder.length > 0)

@@ -23,6 +23,7 @@ function LogintoCMS() {
     }
 
 
+
     if (valid == true) {
         $("#loginbutton").removeClass("show");
         $("#loginbutton").addClass("hide");
@@ -48,7 +49,7 @@ function LogintoCMS() {
                             var cid = url.searchParams.get("cid");
                             var caseid = url.searchParams.get("csid");
 
-                            window.location.href = "/zone";
+                            window.location.href = "/production";
 
                             //if (cid)
                             //    window.location.href = "/Home?cid=" + cid;
@@ -68,9 +69,15 @@ function LogintoCMS() {
                             $("#loginloader").addClass("hide");
                         }
                     }
-                    else
-                        showresponsemodal(0, "Error")
-                   
+                    else {
+                        $("#incorrectCredMsg").removeClass("hide");
+                        $("#incorrectCredMsg").addClass("show");
+                        $("#loginbutton").removeClass("hide");
+                        $("#loginbutton").addClass("show");
+                        $("#loginloader").removeClass("show");
+                        $("#loginloader").addClass("hide");
+                    }
+
                 }, 1000);
             }
         });
@@ -155,7 +162,7 @@ function crudRegisterCall(PolId, user) {
     $.ajax({
         cache: false,
         type: "POST",
-        url: projectname +"RegisterCall/CRUDForm",
+        url: projectname + "RegisterCall/CRUDForm",
         data: JSON.stringify(call),
         contentType: "application/json; charset=utf-8",
         dataType: "json",

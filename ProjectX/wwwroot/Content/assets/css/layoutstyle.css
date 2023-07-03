@@ -764,3 +764,12 @@ table td i.red {
 .addnewbtn {
     height: 26px !important
 }
+
+
+table td {
+    white-space: pre !important;
+}
+
+.menu-item a{
+    cursor:  pointer !important;
+}
