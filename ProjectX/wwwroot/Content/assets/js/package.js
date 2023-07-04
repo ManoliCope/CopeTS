@@ -40,11 +40,11 @@ function drawtable(data) {
         "columns": [
             { "title": "ID", "className": "column-name text-center filter", "orderable": true, "data": "p_Id" },
             { "title": "Name", "className": "column-name text-center filter", "orderable": true, "data": "p_Name" },
-            { "title": "Product Id", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Zone ID", "className": "column-cob-id text-center filter", "orderable": true, "data": "p_ZoneID" },
+            { "title": "Product", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Id" },
+            { "title": "Zone", "className": "column-cob-id text-center filter", "orderable": true, "data": "p_ZoneID" },
             { "title": "Remove Deductible", "className": "column-remove-deductible text-center filter", "orderable": true, "data": "p_Remove_deductable" },
-            { "title": "Adult Number", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
-            { "title": "Children Number", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
+            //{ "title": "Adult Number", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
+            //{ "title": "Children Number", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
             {
                 "title": "PA Included",
                 "className": "column-pa-included text-center filter",

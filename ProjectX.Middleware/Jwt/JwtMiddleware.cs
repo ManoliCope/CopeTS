@@ -53,7 +53,7 @@ namespace ProjectX.Middleware.Jwt
 
                 if (!string.IsNullOrEmpty(Controller))
                 {
-                    if (Controller == "login" || Controller == "content" || Controller == "error" || Controller == "user" || Action == "display" || Action == "drawpdf")
+                    if (Controller == "login" || Controller == "content" || Controller == "errorf" || Controller == "user" || Action == "display" || Action == "drawpdf")
                     {
                         if (Controller == "login")
                             context.Response.Cookies.Delete("token");

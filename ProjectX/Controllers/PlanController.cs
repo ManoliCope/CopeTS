@@ -1,26 +1,23 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ProjectX.Business.General;
-using ProjectX.Business.Profile;
+using ProjectX.Business.Plan;
+using ProjectX.Entities;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
-using ProjectX.Entities.Models.Product;
-using ProjectX.Entities.Models.Profile;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ProjectX.Entities.Models.Plan;
+using ProjectX.Entities.Resources;
+
 
 namespace ProjectX.Controllers
 {
     public class PlanController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IProfileBusiness _profileBusiness;
+        private IPlanBusiness _planBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
@@ -28,17 +25,16 @@ namespace ProjectX.Controllers
         private IWebHostEnvironment _env;
 
 
-        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness profileBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor,  IGeneralBusiness generalBusiness, IPlanBusiness planBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
-            _profileBusiness = profileBusiness;
+            _planBusiness = planBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
 
         }
-
 
         // GET: CobController
         public ActionResult Index()
@@ -49,82 +45,83 @@ namespace ProjectX.Controllers
                 //loadProfileTypes = true,
                 //loadDocumentTypes = true
             });
+
+
             return View(response);
         }
 
-        // GET: CobController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        public PlanSearchResp Search(PlanSearchReq req)
         {
-            return View();
+            PlanSearchResp response = new PlanSearchResp();
+            response.plan = _planBusiness.GetPlanList(req);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+
+            return response;
         }
 
-        // GET: CobController/Create
+
         public ActionResult Create()
         {
             LoadDataResp response = new LoadDataResp();
             response.loadedData = new LoadDataModel();
             ViewData["filldata"] = response;
 
-            ProdGetResp ttt = new ProdGetResp();
-            ttt.product = new TR_Product();
+            PlanGetResp ttt = new PlanGetResp();
+            ttt.plan = new TR_Plan();
             return View(ttt);
         }
 
-        // POST: CobController/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public PlanResp CreatePlan(PlanReq req)
         {
-            try
+            PlanResp response = new PlanResp();
+            if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
             {
-                return RedirectToAction(nameof(Index));
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
-            catch
-            {
-                return View();
-            }
+
+            return _planBusiness.ModifyPlan(req, "Create", _user.UserId);
         }
 
-        // GET: CobController/Edit/5
+
         public ActionResult Edit(int id)
         {
-            return View();
+            PlanResp response = new PlanResp();
+            response = _planBusiness.GetPlan(id);
+
+            return View("details", response);
         }
 
-        // POST: CobController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public PlanResp EditPlan(PlanReq req)
         {
-            try
+            PlanResp response = new PlanResp();
+            if (req.id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
-            catch
+
+            if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
             {
-                return View();
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+                return response;
             }
+
+
+            return _planBusiness.ModifyPlan(req, "Update", _user.UserId);
         }
 
-        // GET: CobController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CobController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public PlanResp DeletePlan(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            PlanReq req = new PlanReq();
+            req.id = id;
+
+            return _planBusiness.ModifyPlan(req, "Delete", _user.UserId);
         }
     }
 }

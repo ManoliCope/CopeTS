@@ -773,3 +773,7 @@ table td {
 .menu-item a{
     cursor:  pointer !important;
 }
+
+table td a{
+    cursor: pointer !important;
+}

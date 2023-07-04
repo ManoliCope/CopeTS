@@ -64,14 +64,14 @@ function drawtable(data) {
                 "data": 't_Id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a href="#" title="Edit" tarid="` + full.t_Id + `" class="text-black-50" onclick="gototariff(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a title="Edit" tarid="` + full.t_Id + `" class="text-black-50" onclick="gototariff(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
                 "data": 't_Id',
                 "className": "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a href="#" title="Delete" tarid="` + full.t_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.t_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
+                    return `<a title="Delete" tarid="` + full.t_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.t_Id},${meta.row})"><i class="fas fa-times red"></i></a>`;
                 }
             }
         ],

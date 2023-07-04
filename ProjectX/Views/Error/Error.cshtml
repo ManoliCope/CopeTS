@@ -1,24 +1,13 @@
-﻿@{ 
-    Layout = null;
-}
+﻿
+<style>
+    .errorbg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* Preserve aspet ratio */
+        min-width: 100%;
+        min-height: 100%;
+    }
+</style>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <style>
-        .errorbg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            /* Preserve aspet ratio */
-            min-width: 100%;
-            min-height: 100%;
-        }
-    </style>
-</head>
-<body>
-    <b>
-        <img class="errorbg" src="~/Content/assets/images/server-down1.png" />
-    </b>
-</body>
-</html>
+<img class="errorbg" src="~/Content/assets/images/server-down1.png" />
