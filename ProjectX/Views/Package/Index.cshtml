@@ -1,4 +1,4 @@
-﻿@*@model ProjectX.Entities.Models.General.LoadDataResp*@
+﻿@model ProjectX.Entities.Models.General.LoadDataResp
 
 
 <div class="content">
@@ -14,9 +14,6 @@
                 <i class="fas fa-plus-circle"></i> Add
             </a>
             <h4 class="mb-0 mt-0 float-left">Packages</h4>
-
-
-
 
         </div>
     </div>
@@ -39,20 +36,20 @@
 									<label for="ProductId">Product:</label>
 									<select id="ProductId" class="form-control datatable-input">
 										<option value="">Select Product</option>
-										<!-- Add options for Product ID dropdown -->
-										<option value="1">Product 1</option>
-										<option value="2">Product 2</option>
-										<option value="3">Product 3</option>
+										@foreach (var thislist in Model.loadedData.products)
+										{
+											<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+										}
 									</select>
 								</div>
 								<div class="col-lg-3 mb-lg-0 mb-6">
 									<label for="ZoneID">Zone:</label>
 									<select id="ZoneID" class="form-control datatable-input">
 										<option value="">Select Zone</option>
-										<!-- Add options for Zone ID dropdown -->
-										<option value="1">Zone 1</option>
-										<option value="2">Zone 2</option>
-										<option value="3">Zone 3</option>
+										@foreach (var thislist in Model.loadedData.zones)
+										{
+											<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+										}
 									</select>
 								</div>
 								<div class="col-lg-3 mb-lg-0 mb-6">

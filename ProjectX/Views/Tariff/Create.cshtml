@@ -1,6 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Tariff.TariffGetResp
 @{
-    //var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+    var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
 
@@ -17,65 +17,78 @@
                         <hr />
                         <div class="row">
                             <div id="divinfo" class="col-lg-12">
-                                <div class="row">
-                                    <!-- id -->
-                                    <!--<div class="form-group mb-3 col-lg-4">
-                                        <label for="id">id</label>
-                                        <input type="number" class="form-control" id="id" name="id">
-                                    </div>-->
+								<div class="row">
+									<!-- id -->
+									<!--<div class="form-group mb-3 col-lg-4">
+		<label for="id">id</label>
+		<input type="number" class="form-control" id="id" name="id">
+	</div>-->
+									<!-- idPackage -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="idPackage">Package</label>
+										<select class="form-control" id="idPackage" name="idPackage" required>
+											<option >Select Package</option>
+											@foreach (var thislist in filldata.loadedData.packages)
+											{
+												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											}
+										</select>
+									</div>
 
-                                    <!-- idPackage -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="idPackage">Package</label>
-                                        <select class="form-control" id="idPackage" name="idPackage" required>
-												<option value="1">Package 1</option>
-												<option value="2">Package 2</option>
-												<option value="3">Package 3</option>
-                                        </select>
-                                    </div>
+									<!-- idPlan -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="idPlan">Plan</label>
+										<select class="form-control" id="idPlan" name="idPlan" required>
+											<option>Select Plan</option>
+											@foreach (var thislist in filldata.loadedData.plans)
+											{
+												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											}
+										</select>
+									</div>
 
-                                    <!-- start_age -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="start_age">Start Age</label>
-                                        <input type="number" class="form-control" id="start_age" name="start_age" required value="1">
-                                    </div>
+									<!-- start_age -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="start_age">Start Age</label>
+										<input type="number" class="form-control" id="start_age" name="start_age" required value="1">
+									</div>
 
-                                    <!-- end_age -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="end_age">End Age</label>
-                                        <input type="number" class="form-control" id="end_age" name="end_age" required value="1">
-                                    </div>
+									<!-- end_age -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="end_age">End Age</label>
+										<input type="number" class="form-control" id="end_age" name="end_age" required value="1">
+									</div>
 
-                                    <!-- number_of_days -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="number_of_days">Number of days</label>
-                                        <input type="number" class="form-control" id="number_of_days" name="number_of_days" required value="1">
-                                    </div>
+									<!-- number_of_days -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="number_of_days">Number of days</label>
+										<input type="number" class="form-control" id="number_of_days" name="number_of_days" required value="1">
+									</div>
 
-                                    <!-- price_amount -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="price_amount">Amount</label>
-                                        <input type="number" class="form-control" id="price_amount" name="price_amount" step="0.01" required value="1">
-                                    </div>
+									<!-- price_amount -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="price_amount">Amount</label>
+										<input type="number" class="form-control" id="price_amount" name="price_amount" step="0.01" required value="1">
+									</div>
 
-                                    <!-- net_premium_amount -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="net_premium_amount">Net Premium Amount</label>
-                                        <input type="number" class="form-control" id="net_premium_amount" name="net_premium_amount" step="0.01" value="1"> 
-                                    </div>
+									<!-- net_premium_amount -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="net_premium_amount">Net Premium Amount</label>
+										<input type="number" class="form-control" id="net_premium_amount" name="net_premium_amount" step="0.01" value="1">
+									</div>
 
-                                    <!-- pa_amount -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="pa_amount">PA Amount</label>
-                                        <input type="number" class="form-control" id="pa_amount" name="pa_amount" step="0.01" value="1">
-                                    </div>
+									<!-- pa_amount -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="pa_amount">PA Amount</label>
+										<input type="number" class="form-control" id="pa_amount" name="pa_amount" step="0.01" value="1">
+									</div>
 
-                                    <!-- tariff_starting_date -->
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="tariff_starting_date">Starting Date</label>
-                                        <input type="date" class="form-control" id="tariff_starting_date" name="tariff_starting_date" required >
-                                    </div>
-                                </div>
+									<!-- tariff_starting_date -->
+									<div class="form-group mb-3 col-lg-4">
+										<label for="tariff_starting_date">Starting Date</label>
+										<input type="date" class="form-control" id="tariff_starting_date" name="tariff_starting_date" required>
+									</div>
+								</div>
                             </div>
                         </div>
                     </div>

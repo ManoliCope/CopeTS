@@ -25,7 +25,7 @@ namespace ProjectX.Controllers
         private IWebHostEnvironment _env;
 
 
-        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor,  IGeneralBusiness generalBusiness, IPlanBusiness planBusiness, IWebHostEnvironment env)
+        public PlanController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IPlanBusiness planBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _planBusiness = planBusiness;

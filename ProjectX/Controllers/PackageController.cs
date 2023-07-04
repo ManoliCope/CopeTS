@@ -46,9 +46,8 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+                loadZones= true,
+                loadProducts = true
             });
 
 
@@ -68,13 +67,16 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
-            ViewData["filldata"] = response;
+            PackGetResp response = new PackGetResp();
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadZones = true,
+                loadProducts = true
+            });
 
-            PackGetResp ttt = new PackGetResp();
-            ttt.package = new TR_Package();
-            return View(ttt);
+            response.package = new TR_Package();
+            response.loadedData = load.loadedData;
+            return View(response);
         }
 
 
@@ -95,6 +97,14 @@ namespace ProjectX.Controllers
 
         public ActionResult Edit(int id)
         {
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadZones = true,
+                loadProducts = true
+            });
+
+            ViewData["filldata"] = load;
+
             PackResp response = new PackResp();
             response = _packageBusiness.GetPackage(id);
 

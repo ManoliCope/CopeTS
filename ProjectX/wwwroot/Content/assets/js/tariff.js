@@ -41,6 +41,7 @@ function drawtable(data) {
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "t_Id" },
             //{ "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "p_Id" },
             { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "p_Id" },
             { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "t_Start_Age" },
             { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "t_End_Age" },
             { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "t_Number_Of_Days" },
@@ -92,6 +93,7 @@ function Search() {
     var filter = {
         "id": $("#id").val(),
         "idPackage": $("#idPackage").val(),
+        "idPlan": $("#idPlan").val(),
         "package": $("#package").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
@@ -137,6 +139,7 @@ function addnew() {
 
     var tariffReq = {
         "idPackage": $("#idPackage").val(),
+        "idPlan": $("#idPlan").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
         "number_of_days": $("#number_of_days").val(),
@@ -157,9 +160,9 @@ function addnew() {
             //    gotopage("Profile", "Index");
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
-            //$("#responsemodal button").click(function () {
-            //    gotopage("tariff", "Edit", result.id);
-            //});
+            $("#responsemodal button").click(function () {
+                gotopage("tariff", "Edit", result.id);
+            });
 
         },
         failure: function (data, success, failure) {
@@ -180,6 +183,7 @@ function edit() {
     var tariffReq = {
         "id": $("#divinfo").attr("mid"),
         "idPackage": $("#idPackage").val(),
+        "idPlan": $("#idPlan").val(),
         "package": $("#package").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),

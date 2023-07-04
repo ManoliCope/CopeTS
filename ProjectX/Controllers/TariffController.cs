@@ -46,9 +46,8 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+                loadPackages = true,
+                loadPlans = true,
             });
 
             //  throw new Exception("This is an example error.");
@@ -69,13 +68,16 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
-            ViewData["filldata"] = response;
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadPlans = true,
+            });
+            ViewData["filldata"] = load;
 
-            TariffGetResp ttt = new TariffGetResp();
-            ttt.tariff = new TR_Tariff();
-            return View(ttt);
+            TariffGetResp response = new TariffGetResp();
+            response.tariff = new TR_Tariff();
+            return View(response);
         }
 
 
@@ -95,6 +97,13 @@ namespace ProjectX.Controllers
 
         public ActionResult Edit(int id)
         {
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadPlans = true,
+            });
+            ViewData["filldata"] = load;
+
             TariffResp response = new TariffResp();
             response = _tariffBusiness.GetTariff(id);
 

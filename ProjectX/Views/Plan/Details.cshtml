@@ -1,4 +1,4 @@
-﻿@model ProjectX.Entities.Models.Product.ProdResp
+﻿@model ProjectX.Entities.Models.Plan.PlanResp
 @{
 	//var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
@@ -13,57 +13,22 @@
 					<div class="card-body">
 						<h4 class="card-title ">
 							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-							<span>Edit </span>
+							<span>Edit Plan </span>
 						</h4>
 						<hr />
 
 						<div class="row">
-							<div id="divinfo" class="col-lg-12">
-								<div class="row">
+							<div id="divinfo" class="col-lg-12" mid="@Model.id">
+									<div class="row">
 
-									<div class="form-group mb-3 col-lg-4">
-										<label for="title">Title</label>
-										<input type="text" class="form-control" id="title" mid="@Model.id" name="title" required="" value="@Model.title">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="description">Description</label>
-										<input type="text" class="form-control" id="description" name="description" value="@Model.description">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="activation_date">Activation Date</label>
-										<input type="date" class="form-control" id="activation_date" name="activation_date" required="" value="@Model.activation_date.ToString("yyyy-MM-dd")">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="is_deductible">Deductible</label>
-										<input type="number" class="form-control" id="is_deductible" name="is_deductible" step="0.01" value="@Model.is_deductible">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="sports_activities">Sports Activities</label>
-										<input type="number" class="form-control" id="sports_activities" name="sports_activities" step="0.01" value="@Model.sports_activities">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<label for="additional_benefits">Additional Benefits</label>
-										<input type="number" class="form-control" id="additional_benefits" name="additional_benefits" step="0.01" value="@Model.additional_benefits">
-									</div>
-									<div class="form-group mb-3 col-lg-4">
-										<div class="form-group mb-0">
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" id="is_family" autocomplete="off" @(Model.is_family ? "checked" : "" )>
-												<label class="form-check-label" for="is_family">
-													Is Family
-												</label>
-												<br>
-												<input class="form-check-input" type="checkbox" id="is_active" autocomplete="off" @(Model.is_active ? "checked" : "" )>
-												<label class="form-check-label" for="is_active">
-													Is Active
-												</label>
-											</div>
+										<div class="form-group mb-3 col-lg-4">
+											<label for="title">Title</label>
+											<input type="text" class="form-control" id="title" mid="@Model.id" name="title" required="" value="@Model.title">
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

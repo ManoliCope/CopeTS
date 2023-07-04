@@ -44,9 +44,7 @@ namespace ProjectX.Controllers
                 loadDestinations = true,
                 loadPlans = true,
                 loadTariffs = true
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+               
             }) ;
             return View(response);
         }

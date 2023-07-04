@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
+
 namespace ProjectX.Business.Plan
 {
     public class PlanBusiness : IPlanBusiness

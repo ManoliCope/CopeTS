@@ -52,8 +52,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.plans = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadPackages)
                         resp.packages = result.Read<LookUpp>().ToList();
-                    if (loadDataModelSetup.loadTariffs)
-                        resp.tariffs = result.Read<LookUpp>().ToList();
+                    //if (loadDataModelSetup.loadTariffs)
+                    //    resp.tariffs = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadUsers)
                         resp.users = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadZones)

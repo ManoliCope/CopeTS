@@ -1,6 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Package.PackResp
 @{
-	//var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
 }
 
@@ -34,18 +34,34 @@
 									<div class="form-group mb-3 col-lg-4">
 										<label for="product_id">Product</label>
 										<select class="form-control" id="product_id" name="product_id">
-											<option value="1">Product A</option>
-											<option value="2">Product B</option>
-											<option value="3">Product C</option>
+											@foreach (var thislist in filldata.loadedData.products)
+											{
+												@if (thislist.LK_ID == Model.ProductId)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+											}
 										</select>
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="zone_id">Zone</label>
 										<select class="form-control" id="zone_id" name="zone_id">
-											<option value="1">Zone 1</option>
-											<option value="2">Zone 2</option>
-											<option value="3">Zone 3</option>
+											@foreach (var thislist in filldata.loadedData.zones)
+											{
+												@if (thislist.LK_ID == Model.ZoneID)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+											}
 										</select>
 									</div>
 

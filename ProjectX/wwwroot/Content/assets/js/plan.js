@@ -21,16 +21,15 @@ $(document).ready(function () {
         edit();
     });
     $("#btndelete").click(function () {
-        showresponsemodalbyid('confirm-email-approval', $("#title").attr("mid"))
+        showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
-        deletepln(this);
+        deleteplan(this);
     });
 });
 
 function drawtable(data) {
     console.log(data)
-
     var table = $('#plantable').DataTable({
         "data": data,
         "paging": true,
@@ -38,36 +37,21 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pL_Id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pL_Title" },
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
             {
-                "title": "Activation Date", "className": "text-center filter", "orderable": true, "data": "pR_Activation_Date",
-                "render": function (data, type, row) {
-                    if (type === "display" || type === "filter") {
-                        var date = new Date(data);
-                        return date.toLocaleDateString();
-                    }
-                    return data;
-                }
-            },
-            { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
-            //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
-            //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
-            {
-                'data': 'PR_Id',
+                'data': 'pL_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" plnid="` + full.pR_Id + `"  class="text-black-50" onclick="gotopln(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a title="Edit" planid="` + full.pL_Id + `"  class="text-black-50" onclick="gotoplan(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'PR_Id',
+                'data': 'pL_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" plnid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+                    return `<a  title="Delete" planid="` + full.pL_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pL_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
 
                 }
@@ -89,19 +73,12 @@ function Search() {
 
     var filter = {
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
     }
 
 
     $.ajax({
         type: 'POST',
-        url: projectname + "/plan/Search",
+        url: projectname + "/Plan/Search",
         data: { req: filter },
         success: function (result) {
             removeloader();
@@ -109,7 +86,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.plans);
+                drawtable(result.plan);
             }
         },
         failure: function (data, success, failure) {
@@ -130,31 +107,24 @@ function addnew() {
     }
 
     showloader("load")
-    var plnReq = {
+    var planReq = {
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
     }
 
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/plan/Createplan",
-        data: { req: plnReq },
+        url: projectname + "/Plan/CreatePlan",
+        data: { req: planReq },
         success: function (result) {
-
+            console.log(result)
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("plan", "Edit", 35);
+                gotopage("plan", "Edit", result.id);
             });
 
         },
@@ -173,29 +143,19 @@ function edit() {
     }
 
     showloader("load")
-    var plnReq = {
-        "id": $("#title").attr("mid"),
+    var planReq = {
+        "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
-        "description": $("#description").val(),
-        "activation_date": $("#activation_date").val(),
-        "is_deductible": $("#is_deductible").val(),
-        "sports_activities": $("#sports_activities").val(),
-        "additional_benefits": $("#additional_benefits").val(),
-        "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
     }
 
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/plan/Editplan",
-        data: { req: plnReq },
+        url: projectname + "/Plan/EditPlan",
+        data: { req: planReq },
         success: function (result) {
-
             removeloader();
-            //if (result.statusCode.code == 1 && profile.IdProfile == "0")
-            //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message, "plan")
+            showresponsemodal(1, result.statusCode.message)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -206,7 +166,7 @@ function edit() {
     });
 }
 
-function deletepln(me) {
+function deleteplan(me) {
     if (validateForm(".container-fluid")) {
         return;
     }
@@ -217,23 +177,23 @@ function deletepln(me) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/plan/Deleteplan",
+        url: projectname + "/Plan/DeletePlan",
         data: { id: thisid },
         success: function (result) {
 
             if (result.statusCode.code == 1) {
                 if ($('#plantable').length > 0) {
-                    var myTable = $('#plantable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid, "pL_Id", "plantable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
                 else
-                    showresponsemodal(result.statusCode.code, result.statusCode.message, "plan")
+                    showresponsemodal(result.statusCode.code, result.statusCode.message, "Plan")
 
             }
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
+
 
         },
         failure: function (data, success, failure) {
@@ -244,9 +204,10 @@ function deletepln(me) {
         }
     });
 }
-function gotopln(me) {
+function gotoplan(me) {
     showloader("load")
-    window.location.href = "/plan/edit/" + $(me).attr("plnid");
+    window.location.href = "/plan/edit/" + $(me).attr("planid");
     removeloader();
     return
 }
+
