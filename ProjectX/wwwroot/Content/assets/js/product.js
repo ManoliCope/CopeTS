@@ -59,14 +59,14 @@ function drawtable(data) {
                 'data': 'PR_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="gotoprod(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a title="Edit" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="gotoprod(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
                 'data': 'PR_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+                    return `<a  title="Delete" prodid="` + full.pR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
 
                 }

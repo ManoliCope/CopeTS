@@ -30,7 +30,6 @@ namespace ProjectX.Controllers
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (User)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
-
         }
 
 
@@ -39,10 +38,16 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
+                loadPackages = true,
+                loadBenefits = true,
+                loadProducts = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true
                 //loadCountries = true,
                 //loadProfileTypes = true,
                 //loadDocumentTypes = true
-            });
+            }) ;
             return View(response);
         }
 
