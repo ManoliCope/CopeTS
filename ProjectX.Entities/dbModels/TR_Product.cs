@@ -15,5 +15,10 @@ namespace ProjectX.Entities.dbModels
         public double PR_Is_Deductible { get; set; }
         public double PR_Sports_Activities { get; set; }
         public double PR_Additional_Benefits { get; set; }
+        public bool PR_Is_Individual { get; set; }
+        public bool PR_Is_Group { get; set; }
+        public int PR_Deductible_Format { get; set; }
+        public int PR_Sports_Activity_Format { get; set; }
+        public int PR_Additional_Benefits_Format { get; set; }
     }
 }

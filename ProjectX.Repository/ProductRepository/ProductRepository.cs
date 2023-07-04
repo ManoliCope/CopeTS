@@ -42,6 +42,12 @@ namespace ProjectX.Repository.ProductRepository
             param.Add("@pr_sports_activities", req.sports_activities);
             param.Add("@pr_additional_benefits", req.additional_benefits);
             param.Add("@pr_is_deductible", req.is_deductible);
+
+            param.Add("@pr_is_individual", req.Is_Individual);
+            param.Add("@pr_is_group", req.Is_Group);
+            param.Add("@pr_deductible_format", req.Deductible_Format);
+            param.Add("@pr_sports_activity_format", req.Sports_Activity_Format);
+            param.Add("@pr_additional_benefits_format", req.Additional_Benefits_Format);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -68,6 +74,12 @@ namespace ProjectX.Repository.ProductRepository
             param.Add("@pr_is_active", req.is_active);
             param.Add("@pr_sports_activities", req.sports_activities);
             param.Add("@pr_additional_benefits", req.additional_benefits);
+
+            param.Add("@pr_is_individual", req.Is_Individual);
+            param.Add("@pr_is_group", req.Is_Group);
+            param.Add("@pr_deductible_format", req.Deductible_Format);
+            param.Add("@pr_sports_activity_format", req.Sports_Activity_Format);
+            param.Add("@pr_additional_benefits_format", req.Additional_Benefits_Format);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

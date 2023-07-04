@@ -16,6 +16,11 @@ namespace ProjectX.Entities.Models.Product
         public double is_deductible { get; set; }
         public double sports_activities { get; set; }
         public double additional_benefits { get; set; }
+        public bool Is_Individual { get; set; }
+        public bool Is_Group { get; set; }
+        public int Deductible_Format { get; set; }
+        public int Sports_Activity_Format { get; set; }
+        public int Additional_Benefits_Format { get; set; }
 
 
     }

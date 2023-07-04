@@ -9,6 +9,8 @@ namespace ProjectX.Entities.dbModels
         public int B_Id { get; set; }
         public string B_Title { get; set; }
         public double B_Limit { get; set; }
+        public int P_Id { get; set; }
+        public bool B_Is_Plus { get; set; }
 
     }
 }

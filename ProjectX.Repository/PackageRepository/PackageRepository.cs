@@ -39,6 +39,9 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@P_Adult_No", req.Adult_No);
             param.Add("@P_Children_No", req.Children_No);
             param.Add("@P_PA_Included", req.PA_Included);
+            param.Add("@P_Adult_Max_Age", req.Adult_Max_Age);
+            param.Add("@P_Child_Max_Age", req.Child_Max_Age);
+            param.Add("@P_Special_Case", req.Special_Case);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -61,12 +64,14 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@P_Id", req.Id);
             param.Add("@P_Name", req.Name);
             param.Add("@PR_Id", req.ProductId);
-
             param.Add("@P_ZoneID", req.ZoneID);
             param.Add("@P_Remove_deductable", req.Remove_deductable);
             param.Add("@P_Adult_No", req.Adult_No);
             param.Add("@P_Children_No", req.Children_No);
             param.Add("@P_PA_Included", req.PA_Included);
+            param.Add("@P_Adult_Max_Age", req.Adult_Max_Age);
+            param.Add("@P_Child_Max_Age", req.Child_Max_Age);
+            param.Add("@P_Special_Case", req.Special_Case);
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))

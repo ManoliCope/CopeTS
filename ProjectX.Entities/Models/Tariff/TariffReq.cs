@@ -17,5 +17,8 @@ namespace ProjectX.Entities.Models.Tariff
         public double net_premium_amount { get; set; }
         public double pa_amount { get; set; }
         public DateTime tariff_starting_date { get; set; }
+        public double Override_Amount { get; set; }
+        public int planId { get; set; }
+
     }
 }

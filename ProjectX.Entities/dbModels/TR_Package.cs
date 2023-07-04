@@ -14,6 +14,9 @@ namespace ProjectX.Entities.dbModels
         public int P_Adult_No { get; set; }
         public int P_Children_No { get; set; }
         public bool P_PA_Included { get; set; }
+        public int P_Adult_Max_Age { get; set; }
+        public int P_Child_Max_Age { get; set; }
+        public bool P_Special_Case { get; set; }
 
     }
 }

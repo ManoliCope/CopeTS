@@ -15,6 +15,7 @@ namespace ProjectX.Entities.dbModels
         public double T_Net_Premium_Amount { get; set; }
         public double T_PA_Amount { get; set; }
         public DateTime T_Tariff_Starting_Date { get; set; }
-
+        public double T_Override_Amount { get; set; }
+        public int PL_Id { get; set; }
     }
 }

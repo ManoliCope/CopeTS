@@ -34,6 +34,8 @@ namespace ProjectX.Repository.BenefitRepository
             param.Add("@B_Id", req.id);
             param.Add("@B_Title", req.title);
             param.Add("@B_Limit", req.limit);
+            param.Add("@P_Id", req.packageId);
+            param.Add("@B_Is_Plus", req.is_Plus);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -57,6 +59,8 @@ namespace ProjectX.Repository.BenefitRepository
             param.Add("@B_Id", req.id);
             param.Add("@B_Title", req.title);
             param.Add("@B_Limit", req.limit);
+            param.Add("@P_Id", req.packageId);
+            param.Add("@B_Is_Plus", req.is_Plus);
 
 
 
