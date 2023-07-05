@@ -47,7 +47,7 @@
 											<option>Select Plan</option>
 											@foreach (var thislist in filldata.loadedData.plans)
 											{
-												@if (thislist.LK_ID == Model.idPackage)
+												@if (thislist.LK_ID == Model.planId)
 												{
 													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
 												}
@@ -90,7 +90,10 @@
 										<label for="pa_amount">PA Amount</label>
 										<input type="number" class="form-control" id="pa_amount" name="pa_amount" step="0.01" value="@Model.pa_amount">
 									</div>
-
+									<div class="form-group mb-3 col-lg-4">
+										<label for="Override_Amount">Override Amount</label>
+										<input type="number" class="form-control" id="Override_Amount" name="Override_Amount" step="0.01" value="@Model.Override_Amount">
+									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="tariff_starting_date">Starting Date</label>
 										<input type="date" class="form-control" id="tariff_starting_date" name="tariff_starting_date" value="@Model.tariff_starting_date.ToString("yyyy-MM-dd")">

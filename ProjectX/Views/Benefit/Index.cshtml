@@ -35,8 +35,16 @@
 									<label for="limit">Limit:</label>
 									<input id="limit" type="number" step="0.01" class="form-control datatable-input" placeholder="Enter Limit" data-col-index="2">
 								</div>
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label for="packageId">Package:</label>
+									<select class="form-control isselect2" id="packageId" name="packageId" required>
+										<option>Select Package</option>
+										@foreach (var thislist in Model.loadedData.packages)
+										{
+											<option value="@thislist.LK_ID">@thislist.LK_ID -- @thislist.LK_TableField</option>
+										}
 
-								<div class="col-lg-3">
+									</select>
 								</div>
 								<div class="col-lg-3">
 									<div class="row mt-4">

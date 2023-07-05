@@ -41,7 +41,7 @@ function drawtable(data) {
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "t_Id" },
             //{ "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "p_Id" },
             { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Id" },
-            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "p_Id" },
+            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "pL_Id" },
             { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "t_Start_Age" },
             { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "t_End_Age" },
             { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "t_Number_Of_Days" },
@@ -139,13 +139,14 @@ function addnew() {
 
     var tariffReq = {
         "idPackage": $("#idPackage").val(),
-        "idPlan": $("#idPlan").val(),
+        "planId": $("#idPlan").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
         "number_of_days": $("#number_of_days").val(),
         "price_amount": $("#price_amount").val(),
         "net_premium_amount": $("#net_premium_amount").val(),
         "pa_amount": $("#pa_amount").val(),
+        "Override_Amount": $("#Override_Amount").val(),
         "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
     $.ajax({
@@ -183,7 +184,7 @@ function edit() {
     var tariffReq = {
         "id": $("#divinfo").attr("mid"),
         "idPackage": $("#idPackage").val(),
-        "idPlan": $("#idPlan").val(),
+        "planid": $("#idPlan").val(),
         "package": $("#package").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
@@ -191,6 +192,7 @@ function edit() {
         "price_amount": $("#price_amount").val(),
         "net_premium_amount": $("#net_premium_amount").val(),
         "pa_amount": $("#pa_amount").val(),
+        "Override_Amount": $("#Override_Amount").val(),
         "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
 

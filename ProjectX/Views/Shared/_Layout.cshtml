@@ -1,288 +1,292 @@
 ﻿@{
-    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString().ToLower();
-    var actionName = this.ViewContext.RouteData.Values["action"].ToString().ToLower();
-    //var Avayacallinfo = ViewData["Avayacallinfo"] as List<ProjectX.Entities.Models.Avaya.AvayaCallReq>;
-    //var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
+	var controllerName = this.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+	var actionName = this.ViewContext.RouteData.Values["action"].ToString().ToLower();
+	//var Avayacallinfo = ViewData["Avayacallinfo"] as List<ProjectX.Entities.Models.Avaya.AvayaCallReq>;
+	//var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
 
-    string test = "";
+	string test = "";
 }
 
 
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="shortcut icon" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="shortcut icon" />
 
-    <!-- <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png"> -->
-    <!-- <meta name="apple-mobile-web-app-title" content="CodePen"> -->
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico"> -->
-    <!-- <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111"> -->
-
-
-    <title>Project X</title>
-    <!-- <link rel="canonical" href="https://codepen.io/azouaoui-med/pen/wpBadb"> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"> -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/css-pro-layout@1.1.0/dist/css/css-pro-layout.css"> -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"> -->
+	<!-- <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png"> -->
+	<!-- <meta name="apple-mobile-web-app-title" content="CodePen"> -->
+	<!-- <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico"> -->
+	<!-- <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111"> -->
 
 
-    <link href="@Url.Content("~/Content/assets/libs/flatpickr/flatpickr.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/libs/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/libs/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/libs/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/libs/datatables/select.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-
-    <!-- App css -->
-    <link href="@Url.Content("~/Content/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/css/icons.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/css/app.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/css/devStyle.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-    <link href="@Url.Content("~/Content/assets/css/loader.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
-
-    <link rel="stylesheet" href="~/Content/assets/CSS/select2.min.css" asp-append-version="true" />
+	<title>Project X</title>
+	<!-- <link rel="canonical" href="https://codepen.io/azouaoui-med/pen/wpBadb"> -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"> -->
+	<!-- <link rel="stylesheet" href="https://unpkg.com/css-pro-layout@1.1.0/dist/css/css-pro-layout.css"> -->
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"> -->
 
 
-    <link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/Content/assets/css/Responsepopup.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/Content/assets/css/layoutstyle.css" rel="stylesheet" />
+	<link href="@Url.Content("~/Content/assets/libs/flatpickr/flatpickr.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/libs/datatables/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/libs/datatables/responsive.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/libs/datatables/buttons.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/libs/datatables/select.bootstrap4.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+
+	<!-- App css -->
+	<link href="@Url.Content("~/Content/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/css/icons.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/css/app.min.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/css/devStyle.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+	<link href="@Url.Content("~/Content/assets/css/loader.css")" rel="stylesheet" type="text/css" asp-append-version="true" />
+
+	<link rel="stylesheet" href="~/Content/assets/CSS/select2.min.css" asp-append-version="true" />
 
 
-    @if (controllerName == "login")
-    {
-        @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">*@
-        <link href="~/Content/assets/css/login.css" rel="stylesheet" />
-    }
-    else
-    {
-        <link rel="stylesheet" href="~/Content/layout/sidebar/fonts/remixicon.css">
-        <link rel="stylesheet" href="~/Content/layout/sidebar/css-pro-layout.css">
-        <link rel="stylesheet" href="~/Content/layout/sidebar/fonts/googleapis.css">
-        <link rel="stylesheet" href="~/Content/layout/sidebar/fonts/googleapis.css">
-        <script>
-            window.console = window.console || function (t) { };
-        </script>
-    }
+	<link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />
+	<link href="~/Content/assets/css/Responsepopup.css" rel="stylesheet" asp-append-version="true" />
+	<link href="~/Content/assets/css/layoutstyle.css" rel="stylesheet" />
+
+
+	@if (controllerName == "login")
+	{
+		@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">*@
+		<link href="~/Content/assets/css/login.css" rel="stylesheet" />
+	}
+	else
+	{
+		<link rel="stylesheet" href="~/Content/layout/sidebar/fonts/remixicon.css">
+		<link rel="stylesheet" href="~/Content/layout/sidebar/css-pro-layout.css">
+		<link rel="stylesheet" href="~/Content/layout/sidebar/fonts/googleapis.css">
+		<link rel="stylesheet" href="~/Content/layout/sidebar/fonts/googleapis.css">
+		<script>
+			window.console = window.console || function (t) { };
+		</script>
+	}
 
 
 
-    @if (controllerName == "product")
-    {
-        <link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
-    }
-    @if (controllerName == "users")
-    {
-        <link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "plan")
-    {
-        <link href="~/Content/assets/css/plan.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "zone")
-    {
-        <link href="~/Content/assets/css/zone.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "package")
-    {
-        <link href="~/Content/assets/css/package.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "tariff")
-    {
-        <link href="~/Content/assets/css/tariff.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "benefit")
-    {
-        <link href="~/Content/assets/css/benefit.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "profile")
-    {
-        <link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else if (controllerName == "production")
-    {
-        <link href="~/Content/assets/css/production.css" rel="stylesheet" asp-append-version="true" />
-    }
-    else
-    {
+	@if (controllerName == "product")
+	{
+		<link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
+	}
+	@if (controllerName == "users")
+	{
+		<link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "plan")
+	{
+		<link href="~/Content/assets/css/plan.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "zone")
+	{
+		<link href="~/Content/assets/css/zone.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "package")
+	{
+		<link href="~/Content/assets/css/package.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "tariff")
+	{
+		<link href="~/Content/assets/css/tariff.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "benefit")
+	{
+		<link href="~/Content/assets/css/benefit.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "profile")
+	{
+		<link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "production")
+	{
+		<link href="~/Content/assets/css/production.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else
+	{
 
-    }
+	}
 
-    <style>
-    </style>
+	<style>
+	</style>
 </head>
 
 <body translate="no">
-    @if (controllerName == "login")
-    {
-        @RenderBody()
-    }
-    else
-    {
-        <div class="layout has-sidebar fixed-sidebar fixed-header">
+	@if (controllerName == "login")
+	{
+		@RenderBody()
+	}
+	else
+	{
+		<div class="layout has-sidebar fixed-sidebar fixed-header">
 
-            @await Component.InvokeAsync("Header")
-            <div id="overlay" class="overlay"></div>
-            <div class="layout">
-                @*<div class="breadcrumbcontainer">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Cob</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Search</li>
-                        </ol>
-                    </div>*@
+			@await Component.InvokeAsync("Header")
+			<div id="overlay" class="overlay"></div>
+			<div class="layout">
+				@*<div class="breadcrumbcontainer">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a href="#">Cob</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Search</li>
+						</ol>
+					</div>*@
 
-                <div class="top-nav">
+				<div class="top-nav">
 
-                    <ul class="nav-list">
-                        <li>
-                            <B style="color:red">test 1</B>
-                        </li>
-                        <li>
-                            <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
-                                <i class="ri-menu-line ri-xl"></i>
-                            </a>
+					<ul class="nav-list">
+						<li>
+							<B style="color:red">test 1</B>
+						</li>
+						<li>
+							<a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+								<i class="ri-menu-line ri-xl"></i>
+							</a>
 
-                        </li>
-                        <li id="avayalist" class="dropdown notification-list" data-toggle="tooltip" data-placement="left">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fas fa-user "></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-md " style="">
-                                <div class="dropdown-header"><h5> My Username</h5> </div>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user-edit"></i> Edit Profile
-                                </a>
-                                <a class="dropdown-item" href="~/Users/ResetPass/">
-                                    <i class="fas fa-key"></i> Change Password
-                                </a>
-                                <a class="dropdown-item" href="~/">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+						</li>
+						<li id="avayalist" class="dropdown notification-list" data-toggle="tooltip" data-placement="left">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fas fa-user "></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-md " style="">
+								<div class="dropdown-header"><h5> My Username</h5> </div>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-user-edit"></i> Edit Profile
+								</a>
+								<a class="dropdown-item" href="~/Users/ResetPass/">
+									<i class="fas fa-key"></i> Change Password
+								</a>
+								<a class="dropdown-item" href="~/">
+									<i class="fas fa-sign-out-alt"></i> Logout
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
 
-                <main class="content p-0">
-                    <div>
-                        @*@await Component.InvokeAsync("Header");*@
-                        <div id="partialscreen" style="margin-top:55px">
-                            <div style="min-height:79vh">
-                                <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
-                                    <i class="ri-menu-line ri-xl"></i>test
-                                </a>
+				<main class="content p-0">
+					<div>
+						@*@await Component.InvokeAsync("Header");*@
+						<div id="partialscreen" style="margin-top:55px">
+							<div style="min-height:79vh">
+								<a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+									<i class="ri-menu-line ri-xl"></i>test
+								</a>
 
-                                @RenderBody()
-                            </div>
-                        </div>
-                    </div>
-                    <div hidden>
-                        <h2>Features</h2>
-                        <ul>
-                            <li>Fully responsive</li>
-                            <li>Collapsable sidebar</li>
-                            <li>Multi level menu</li>
-                            <li>RTL support</li>
-                            <li>Customizable</li>
-                        </ul>
-                    </div>
-                    <div hidden>
-                        <h2>Resources</h2>
-                        <ul>
-                            <li>
-                                aabbcc
-                            </li>
+								@RenderBody()
+							</div>
+						</div>
+					</div>
+					<div hidden>
+						<h2>Features</h2>
+						<ul>
+							<li>Fully responsive</li>
+							<li>Collapsable sidebar</li>
+							<li>Multi level menu</li>
+							<li>RTL support</li>
+							<li>Customizable</li>
+						</ul>
+					</div>
+					<div hidden>
+						<h2>Resources</h2>
+						<ul>
+							<li>
+								aabbcc
+							</li>
 
-                        </ul>
-                    </div>
-                </main>
-                <div class="overlay"></div>
-            </div>
-        </div>
-    }
-
-
-    @if (controllerName.ToLower() == "login")
-    {
-        <script src="@Url.Content("~/Content/assets/js/devScript.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/Content/assets/js/loader.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/Content/assets/js/vendor.min.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/Content/assets/libs/moment/moment.min.js")" asp-append-version="true"></script>
-
-        <script src="~/Content/assets/libs/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
-        <script src="~/Content/assets/libs/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
-        <script src="~/Content/assets/libs/datatables/dataTables.responsive.min.js" asp-append-version="true"></script>
-
-        @*<script>alert('a')</script>*@
-        <script src="~/Doc/js/Login.js" asp-append-version="true"></script>
-    }
-    else if (controllerName != "login")
-    {
-        <script src="~/Content/layout/sidebar/layoutjs/stopExecutionOnTimeout.js"></script>
-        <script src="~/Content/layout/sidebar/layoutjs/popperjscore2.js"></script>
-        <script id="rendered-js" src="~/Content/layout/sidebar/layoutjs/render-js.js"></script>
+						</ul>
+					</div>
+				</main>
+				<div class="overlay"></div>
+			</div>
+		</div>
+	}
 
 
+	@if (controllerName.ToLower() == "login")
+	{
+		<script src="@Url.Content("~/Content/assets/js/devScript.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/Content/assets/js/loader.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/Content/assets/js/vendor.min.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/Content/assets/libs/moment/moment.min.js")" asp-append-version="true"></script>
 
-        <script src="@Url.Content("~/Content/assets/js/vendor.min.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/Content/assets/libs/moment/moment.min.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/Content/assets/js/app.min.js")" asp-append-version="true"></script>
-        <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+		<script src="~/Content/assets/libs/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/libs/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/libs/datatables/dataTables.responsive.min.js" asp-append-version="true"></script>
 
-        <script src="~/Content/assets/libs/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
-        <script src="~/Content/assets/libs/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
-        <script src="~/Content/assets/libs/datatables/dataTables.responsive.min.js" asp-append-version="true"></script>
-    }
-
-
-    @if (controllerName == "product")
-    {
-        <script src="~/Content/assets/js/product.js" asp-append-version="true"></script>
-    }
-     @if (controllerName == "users")
-    {
-        <script src="~/Content/assets/js/users.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "plan")
-    {
-        <script src="~/Content/assets/js/plan.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "zone")
-    {
-        <script src="~/Content/assets/js/zone.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "package")
-    {
-        <script src="~/Content/assets/js/package.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "tariff")
-    {
-        <script src="~/Content/assets/js/tariff.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "benefit")
-    {
-        <script src="~/Content/assets/js/benefit.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "profile")
-    {
-        <script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
-    }
-    else if (controllerName == "production")
-    {
-        <script src="~/Content/assets/js/production.js" asp-append-version="true"></script>
-    }
+		@*<script>alert('a')</script>*@
+		<script src="~/Doc/js/Login.js" asp-append-version="true"></script>
+	}
+	else if (controllerName != "login")
+	{
+		<script src="~/Content/layout/sidebar/layoutjs/stopExecutionOnTimeout.js"></script>
+		<script src="~/Content/layout/sidebar/layoutjs/popperjscore2.js"></script>
+		<script id="rendered-js" src="~/Content/layout/sidebar/layoutjs/render-js.js"></script>
 
 
-    <div id="responsemodal" class="modal fade popup-success popup-failure" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header">
-                  
-                    <h4 class="modal-title w-100"></h4>
-                </div>
+
+		<script src="@Url.Content("~/Content/assets/js/vendor.min.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/Content/assets/libs/moment/moment.min.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/Content/assets/js/app.min.js")" asp-append-version="true"></script>
+		<script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+
+		<script type='text/javascript' src="~/Content/MultiSelectGroup/select2.js" asp-append-version="true"></script>
+		<script type='text/javascript' src="~/Content/MultiSelectGroup/select2.optgroupSelect.js" asp-append-version="true"></script>
+
+
+		<script src="~/Content/assets/libs/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/libs/datatables/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/libs/datatables/dataTables.responsive.min.js" asp-append-version="true"></script>
+	}
+
+
+	@if (controllerName == "product")
+	{
+		<script src="~/Content/assets/js/product.js" asp-append-version="true"></script>
+	}
+	@if (controllerName == "users")
+	{
+		<script src="~/Content/assets/js/users.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "plan")
+	{
+		<script src="~/Content/assets/js/plan.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "zone")
+	{
+		<script src="~/Content/assets/js/zone.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "package")
+	{
+		<script src="~/Content/assets/js/package.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "tariff")
+	{
+		<script src="~/Content/assets/js/tariff.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "benefit")
+	{
+		<script src="~/Content/assets/js/benefit.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "profile")
+	{
+		<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "production")
+	{
+		<script src="~/Content/assets/js/production.js" asp-append-version="true"></script>
+	}
+
+
+	<div id="responsemodal" class="modal fade popup-success popup-failure" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title w-100"></h4>
+				</div>
 				<div class="modal-body">
 					<p class="text-center"></p>
 
@@ -290,12 +294,12 @@
 						<i class="fas fa-times"></i>
 					</div>
 				</div>
-                <div class="modal-footer">
-                    <button class="btn btn-success btn-block " data-dismiss="modal">Continue</button>
-                </div>
-            </div>
-        </div>
-    </div>
+				<div class="modal-footer">
+					<button class="btn btn-success btn-block " data-dismiss="modal">Continue</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

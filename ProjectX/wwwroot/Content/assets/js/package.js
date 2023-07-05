@@ -13,6 +13,12 @@ $(document).ready(function () {
         var divname = $(this).closest(".card-body").attr("id")
         resetAllValues(divname);
         resetdatatable("#packagetable");
+
+
+        var dropdown = $('.select2-hidden-accessible');
+        dropdown.val(null).trigger('change');
+
+
     });
     $("#create").click(function () {
         addnew();
@@ -26,6 +32,11 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deletepkg(this);
     });
+
+    $(".isselect2").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
 });
 
 function drawtable(data) {
@@ -134,9 +145,13 @@ function addnew() {
         ZoneID: $("#zone_id").val(),
         Remove_deductable: $("#remove_deductible").val(),
         Adult_No: $("#adult_no").val(),
+        Adult_Max_Age: $("#adult_max_age").val(),
         Children_No: $("#children_no").val(),
-        PA_Included: $("#pa_included").prop('checked')
+        Child_Max_Age: $("#child_max_age").val(),
+        PA_Included: $("#pa_included").prop('checked'),
+        Special_Case: $("#special_case").prop('checked'),
     };
+
 
     $.ajax({
         type: 'post',
@@ -151,7 +166,7 @@ function addnew() {
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("package", "Edit",result.id);
+                gotopage("package", "Edit", result.id);
             });
 
         },
@@ -177,8 +192,11 @@ function edit() {
         ZoneID: $("#zone_id").val(),
         Remove_deductable: $("#remove_deductible").val(),
         Adult_No: $("#adult_no").val(),
+        Adult_Max_Age: $("#adult_max_age").val(),
         Children_No: $("#children_no").val(),
-        PA_Included: $("#pa_included").prop('checked')
+        Child_Max_Age: $("#child_max_age").val(),
+        PA_Included: $("#pa_included").prop('checked'),
+        Special_Case: $("#special_case").prop('checked'),
     };
 
     $.ajax({

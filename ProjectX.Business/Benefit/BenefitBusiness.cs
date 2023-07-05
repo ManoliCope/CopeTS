@@ -35,6 +35,8 @@ namespace ProjectX.Business.Benefit
             resp.id = repores.B_Id;
             resp.title = repores.B_Title;
             resp.limit= repores.B_Limit;
+            resp.is_Plus= repores.B_Is_Plus;
+            resp.packageId= repores.P_Id;
 
             return resp;
         }

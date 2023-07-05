@@ -46,9 +46,7 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-            //    loadCountries = true,
-            //    loadProfileTypes = true,
-            //    loadDocumentTypes = true
+                loadPackages = true,
             });
 
 
@@ -68,9 +66,13 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
-            ViewData["filldata"] = response;
+
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+            });
+
+            ViewData["filldata"] = load;
 
             BenGetResp ttt = new BenGetResp();
             ttt.benefit = new TR_Benefit();
@@ -96,6 +98,15 @@ namespace ProjectX.Controllers
         {
             BenResp response = new BenResp();
             response = _benefitBusiness.GetBenefit(id);
+
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+            });
+
+            ViewData["filldata"] = load;
+
+
 
             return View("details", response);
         }

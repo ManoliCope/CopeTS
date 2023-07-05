@@ -42,6 +42,8 @@ namespace ProjectX.Business.Tariff
             resp.net_premium_amount = repores.T_Net_Premium_Amount;
             resp.pa_amount = repores.T_PA_Amount;
             resp.tariff_starting_date = repores.T_Tariff_Starting_Date;
+            resp.Override_Amount = repores.T_Override_Amount;
+            resp.planId = repores.PL_Id;
 
             return resp;
            

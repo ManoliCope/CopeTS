@@ -39,6 +39,11 @@ namespace ProjectX.Business.Package
             resp.Adult_No = repores.P_Adult_No;
             resp.Children_No = repores.P_Children_No;
             resp.PA_Included = repores.P_PA_Included;
+
+            resp.Child_Max_Age = repores.P_Child_Max_Age;
+            resp.Adult_Max_Age = repores.P_Adult_Max_Age;
+            resp.Special_Case = repores.P_Special_Case;
+
             return resp;
            
         }

@@ -777,3 +777,30 @@ table td {
 table td a{
     cursor: pointer !important;
 }
+
+
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #e2e7f1;
+    border-radius: 4px;
+    height: 34px;
+}
+
+/*.select2-container {
+    background-color: #fff !important;
+    border: 1px solid #e2e7f1 !important;
+    border-radius: 4px !important;
+    height: 33px !important;
+}
+*/
+
+.select2-borderred {
+    border: 1px solid red;
+    border-radius: 5px
+}
+
+.select2-selection__choice {
+    background: #22478e !important;
+    border-color: #22478e !important;
+}

@@ -26,6 +26,12 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deleteben(this);
     });
+
+
+    $("#packageId").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
 });
 
 function drawtable(data) {
@@ -40,6 +46,7 @@ function drawtable(data) {
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "b_Id" },
             { "title": "Title", "className": "text-center filter", "orderable": true, "data": "b_Title" },
+            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Id" },
             { "title": "Limit", "className": "text-center filter", "orderable": true, "data": "b_Limit" },
             {
                 "data": 'id',
@@ -72,6 +79,7 @@ function Search() {
     var filter = {
         "id": $("#id").val(),
         "title": $("#title").val(),
+        "packageId": $("#packageId").val(),
         "limit": isNaN(parseFloat($("#limit").val())) ? $("#limit").val() : parseFloat($("#limit").val())
     };
 
@@ -111,7 +119,9 @@ function addnew() {
     var benReq = {
         "id": $("#id").val(),
         "title": $("#title").val(),
-        "limit": parseFloat($("#limit").val())
+        "packageId": $("#packageId").val(),
+        "is_Plus": $("#is_Plus").prop('checked'),
+        "limit": parseFloat($("#limit").val()),
     };
 
 
@@ -147,6 +157,8 @@ function edit() {
     var benReq = {
         "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
+        "packageId": $("#packageId").val(),
+        "is_Plus": $("#is_Plus").prop('checked'),
         "limit": parseFloat($("#limit").val())
     };
 
