@@ -6,6 +6,7 @@ using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
+using ProjectX.Entities.bModels;
 
 namespace ProjectX.Business.Product
 {
@@ -42,6 +43,14 @@ namespace ProjectX.Business.Product
             resp.is_deductible = repores.PR_Is_Deductible;
             resp.sports_activities = repores.PR_Sports_Activities;
             resp.additional_benefits = repores.PR_Additional_Benefits;
+            resp.Is_Individual = repores.PR_Is_Individual;
+
+            resp.Is_Individual = repores.PR_Is_Individual;
+            resp.Is_Group = repores.PR_Is_Group;
+
+            resp.Additional_Benefits_Format = repores.PR_Additional_Benefits_Format;
+            resp.Deductible_Format = repores.PR_Deductible_Format;
+            resp.Sports_Activity_Format = repores.PR_Sports_Activity_Format;
 
             return resp;
         }
