@@ -13,6 +13,8 @@ $(document).ready(function () {
         var divname = $(this).closest(".card-body").attr("id")
         resetAllValues(divname);
         resetdatatable("#benefittable");
+        var dropdown = $('.select2-hidden-accessible');
+        dropdown.val(null).trigger('change');
     });
     $("#create").click(function () {
         addnew();

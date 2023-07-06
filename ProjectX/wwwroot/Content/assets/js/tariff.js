@@ -93,7 +93,7 @@ function Search() {
     var filter = {
         "id": $("#id").val(),
         "idPackage": $("#idPackage").val(),
-        "idPlan": $("#idPlan").val(),
+        "planId": $("#idPlan").val(),
         "package": $("#package").val(),
         "start_age": $("#start_age").val(),
         "end_age": $("#end_age").val(),
