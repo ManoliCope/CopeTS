@@ -26,7 +26,32 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deletezne(this);
     });
+    triggerdesitnationlist()
+
 });
+
+function triggerdesitnationlist() {
+    // Add click event handler to expandable arrows
+    $('ul.tree-list > li.expandable > span.arrow').click(function () {
+        $(this).parent('li').toggleClass('collapsed');
+        $(this).siblings('ul').slideToggle();
+    });
+
+    // Prevent click event propagation for deeper levels
+    $('ul.tree-list > li > ul > li').click(function (e) {
+        e.stopPropagation();
+    });
+
+    // Handle parent checkbox click event
+    $('input.parent-checkbox').click(function (e) {
+        var isChecked = $(this).prop('checked');
+        $(this).closest('li').find('input[type="checkbox"]').prop('checked', isChecked);
+    });
+
+
+}
+
+
 
 function drawtable(data) {
     console.log(data)

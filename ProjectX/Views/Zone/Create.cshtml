@@ -3,7 +3,6 @@
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
-
 <div class="content" pgtype="view">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="row mb-3">
@@ -23,16 +22,41 @@
 										<label for="Z_Title">Title</label>
 										<input type="text" class="form-control" id="Z_Title" name="Z_Title" required="">
 									</div>
+									
 
-									<div class="form-group mb-3 col-lg-4">
-										<label for="Z_Destination_Id">Destination_Id</label>
-										<select class="form-control" id="Z_Destination_Id" name="Z_Destination_Id" multiple>
-											<option value="1">ABV</option>
-											<option value="2">EFH</option>
-											<option value="3">AWQ</option>
-											<option value="4">AQQ</option>
-										</select>
+
+									<div class="form-group mb-3 col-lg-12" >
+										<label for="Z_Destination_Id">Destination</label>
+										<ul class="tree-list">
+											@foreach (var continentId in filldata.loadedData.destinations.Select(x => x.D_IdContinent).Distinct())
+											{
+												var destinations = filldata.loadedData.destinations.Where(x => x.D_IdContinent == continentId).ToList();
+
+												<li class="expandable">
+													<span class="arrow"></span>
+													<label>
+														<input type="checkbox" class="parent-checkbox" id="checkbox_@continentId">
+														@destinations.First().D_Continent
+													</label>
+													<ul>
+														@foreach (var destination in destinations)
+														{
+															<li>
+																<label>
+																	<input type="checkbox" id="checkbox_@destination.D_Id" value="@destination.D_Id">
+																	@destination.D_Destination
+																</label>
+															</li>
+														}
+													</ul>
+												</li>
+											}
+										</ul>
 									</div>
+
+
+
+
 
 								</div>
 							</div>

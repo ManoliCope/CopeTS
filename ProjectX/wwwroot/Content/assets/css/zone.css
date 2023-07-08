@@ -1,1 +1,48 @@
-﻿
+﻿ul.tree-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    min-width: 250px
+}
+
+    ul.tree-list > li {
+        position: relative;
+        padding-left: 20px;
+        margin-right: 10px;
+        min-width: 150px
+    }
+
+        ul.tree-list > li > span.arrow {
+            position: absolute;
+            left: 0;
+            cursor: pointer;
+        }
+
+            ul.tree-list > li > span.arrow::before {
+                content: "\25B6"; /* Unicode for right arrow (▶) */
+            }
+
+        ul.tree-list > li.collapsed > span.arrow::before {
+            content: "\25BC"; /* Unicode for down arrow (▼) */
+        }
+
+        ul.tree-list > li > ul {
+            display: none;
+            padding-left: 20px;
+        }
+
+            ul.tree-list > li > ul > li {
+                list-style-type: none;
+            }
+
+        ul.tree-list > li > label {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+
+            ul.tree-list > li > label > input[type="checkbox"] {
+                margin-right: 5px;
+            }

@@ -136,9 +136,24 @@ function addnew() {
         "is_deductible": $("#is_deductible").val(),
         "sports_activities": $("#sports_activities").val(),
         "additional_benefits": $("#additional_benefits").val(),
+
+        "deductible_format": $("#deductible_format").val(),
+        "sports_activity_format": $("#sports_activity_format").val(),
+        "additional_benefits_format": $("#additional_benefits_format").val(),
+
+
         "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
+        "is_family": $("#is_family").prop('checked'),
+        "is_Individual": $("#is_individual").prop('checked'),
+        "is_Group": $("#is_group").prop('checked'),
     }
+
+
+
+
+
+
+
 
     $.ajax({
         type: 'post',
@@ -180,8 +195,13 @@ function edit() {
         "is_deductible": $("#is_deductible").val(),
         "sports_activities": $("#sports_activities").val(),
         "additional_benefits": $("#additional_benefits").val(),
+        "deductible_format": $("#deductible_format").val(),
+        "sports_activity_format": $("#sports_activity_format").val(),
+        "additional_benefits_format": $("#additional_benefits_format").val(),
         "is_active": $("#is_active").prop('checked'),
-        "is_family": $("#is_family").prop('checked')
+        "is_family": $("#is_family").prop('checked'),
+        "is_Individual": $("#is_individual").prop('checked'),
+        "is_Group": $("#is_group").prop('checked'),
     }
 
     $.ajax({

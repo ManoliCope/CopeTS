@@ -12,8 +12,16 @@ $(document).ready(function () {
     $(".resetdiv").click(function () {
         var divname = $(this).closest(".card-body").attr("id")
         resetAllValues(divname);
-        resetdatatable("#tarifftable");
+        resetdatatable("#benefittable");
+        var dropdown = $('.select2-hidden-accessible');
+        dropdown.val(null).trigger('change');
     });
+    $(".isselect2").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
+
+
     $("#create").click(function () {
         addnew();
     });

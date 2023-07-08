@@ -1,6 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Product.ProdResp
 @{
-	//var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
 }
 
@@ -23,7 +23,7 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="title">Title</label>
-										<input type="text" class="form-control" id="title"  name="title" required="" value="@Model.title">
+										<input type="text" class="form-control" id="title" name="title" required="" value="@Model.title">
 									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="description">Description</label>
@@ -35,17 +35,98 @@
 									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="is_deductible">Deductible</label>
-										<input type="number" class="form-control" id="is_deductible" name="is_deductible" step="0.01" value="@Model.is_deductible">
+										<div class="input-group mb-3">
+											<input type="number" class="form-control" aria-label="Text input with dropdown button" id="is_deductible" name="is_deductible" value="@Model.is_deductible">
+											<div class="input-group-prepend">
+												<select class="form-control" id="deductible_format" name="deductible_format" required>
+													<option value="0">Select Type</option>
+													@if (1 == Model.Deductible_Format)
+													{
+														<option value="1" selected> %</option>
+														<option value="2"> Fixed</option>
+													}
+													else if (2 == Model.Deductible_Format)
+													{
+														<option value="1"> %</option>
+														<option value="2" selected> Fixed</option>
+													}
+													else
+													{
+														<option value="1">%</option>
+														<option value="2">Fixed</option>
+													}
+												</select>
+											</div>
+										</div>
 									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="sports_activities">Sports Activities</label>
-										<input type="number" class="form-control" id="sports_activities" name="sports_activities" step="0.01" value="@Model.sports_activities">
+										<div class="input-group mb-3">
+											<input type="number" class="form-control" aria-label="Text input with dropdown button" id="sports_activities" name="sports_activities" value="@Model.sports_activities">
+											<div class="input-group-prepend">
+												<select class="form-control" id="sports_activity_format" name="sports_activity_format" required>
+													<option value="0">Select Type</option>
+													@if (1 == Model.Sports_Activity_Format)
+													{
+														<option value="1" selected> %</option>
+														<option value="2"> Fixed</option>
+													}
+													else if (2 == Model.Sports_Activity_Format)
+													{
+														<option value="1"> %</option>
+														<option value="2" selected> Fixed</option>
+													}
+													else
+													{
+														<option value="1">%</option>
+														<option value="2">Fixed</option>
+													}
+												</select>
+											</div>
+										</div>
 									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="additional_benefits">Additional Benefits</label>
-										<input type="number" class="form-control" id="additional_benefits" name="additional_benefits" step="0.01" value="@Model.additional_benefits">
+										<div class="input-group mb-3">
+											<input type="number" class="form-control" aria-label="Text input with dropdown button" id="additional_benefits" name="additional_benefits" value="@Model.additional_benefits">
+											<div class="input-group-prepend">
+												<select class="form-control" id="additional_benefits_format" name="additional_benefits_format" required>
+													<option value="0">Select Type</option>
+													@if (1 == Model.Additional_Benefits_Format)
+													{
+														<option value="1" selected> %</option>
+														<option value="2"> Fixed</option>
+													}
+													else if (2 == Model.Additional_Benefits_Format)
+													{
+														<option value="1"> %</option>
+														<option value="2" selected> Fixed</option>
+													}
+													else
+													{
+														<option value="1">%</option>
+														<option value="2">Fixed</option>
+													}
+												</select>
+											</div>
+										</div>
 									</div>
-									<div class="form-group mb-3 col-lg-4">
+									<div class="form-group mb-3 col-lg-2">
+										<div class="form-group mb-0">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" id="is_individual" autocomplete="off" @(Model.Is_Individual ? "checked" : "" )>
+												<label class="form-check-label" for="is_individual">
+													Is Individual
+												</label>
+												<br>
+												<input class="form-check-input" type="checkbox" id="is_group" autocomplete="off" @(Model.Is_Group ? "checked" : "" )>
+												<label class="form-check-label" for="is_group">
+													Is Group
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group mb-3 col-lg-2">
 										<div class="form-group mb-0">
 											<div class="form-check">
 												<input class="form-check-input" type="checkbox" id="is_family" autocomplete="off" @(Model.is_family ? "checked" : "" )>
@@ -60,6 +141,10 @@
 											</div>
 										</div>
 									</div>
+
+
+
+
 								</div>
 							</div>
 						</div>
@@ -103,24 +188,24 @@
 </div>
 
 <div id="confirm-email-approval" class="modal fade" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this Product?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
-                <div id="thisloader" class="smloader hide"></div>
-                <button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this Product?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 

@@ -68,8 +68,11 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+            });
             ViewData["filldata"] = response;
 
             ZoneGetResp ttt = new ZoneGetResp();

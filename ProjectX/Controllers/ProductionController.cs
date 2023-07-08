@@ -55,6 +55,30 @@ namespace ProjectX.Controllers
             return View();
         }
 
+
+        public ActionResult Test()
+        {
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadBenefits = true,
+                loadProducts = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true,
+                loadZones= true
+
+            });
+
+            ViewData["filldata"] = response;
+
+            ProdGetResp ttt = new ProdGetResp();
+            ttt.product = new TR_Product();
+            return View(ttt);
+        }
+
+
+
         // GET: ProductionController/Create
         public ActionResult Create()
         {

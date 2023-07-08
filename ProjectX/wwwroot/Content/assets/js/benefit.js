@@ -16,6 +16,11 @@ $(document).ready(function () {
         var dropdown = $('.select2-hidden-accessible');
         dropdown.val(null).trigger('change');
     });
+    $(".isselect2").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
+
     $("#create").click(function () {
         addnew();
     });
@@ -30,10 +35,7 @@ $(document).ready(function () {
     });
 
 
-    $("#packageId").select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-    })
+ 
 });
 
 function drawtable(data) {

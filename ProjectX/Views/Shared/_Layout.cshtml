@@ -109,8 +109,6 @@
 
 	}
 
-	<style>
-	</style>
 </head>
 
 <body translate="no">
@@ -145,22 +143,24 @@
 							</a>
 
 						</li>
-						<li id="avayalist" class="dropdown notification-list" data-toggle="tooltip" data-placement="left">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fas fas fa-user "></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right dropdown-md " style="">
-								<div class="dropdown-header"><h5> My Username</h5> </div>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-user-edit"></i> Edit Profile
-								</a>
-								<a class="dropdown-item" href="~/Users/ResetPass/">
-									<i class="fas fa-key"></i> Change Password
-								</a>
-								<a class="dropdown-item" href="~/">
-									<i class="fas fa-sign-out-alt"></i> Logout
-								</a>
+						<li data-placement="left">
+							<div class="btn-group">
+								<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fas fa-user " style="color:Black; font-size:20px"></i>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right dropdown-md " style="">
+									<div class="dropdown-header"><h5> My Username</h5> </div>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">
+										<i class="fas fa-user-edit"></i> Edit Profile
+									</a>
+									<a class="dropdown-item" href="~/Users/ResetPass/">
+										<i class="fas fa-key"></i> Change Password
+									</a>
+									<a class="dropdown-item" href="~/">
+										<i class="fas fa-sign-out-alt"></i> Logout
+									</a>
+								</div>
 							</div>
 						</li>
 					</ul>

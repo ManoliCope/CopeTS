@@ -39,6 +39,13 @@ $(document).ready(function () {
     });
     drawtable();
 
+
+
+    $('#destination_id').select2({
+        closeOnSelect: false
+    });
+
+    //$("#destinationtbl").DataTable()
 });
 
 function drawtable(data) {

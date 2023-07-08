@@ -23,7 +23,7 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="product_id">Product</label>
-										<select class="form-control" id="product_id" name="product_id" required>
+										<select class="form-control isselect2" id="product_id" name="product_id" required>
 											<option value="">Select Product</option>
 											@foreach (var thislist in Model.loadedData.products)
 											{
@@ -35,7 +35,7 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="zone_id">Zone</label>
-										<select class="form-control" id="zone_id" name="zone_id" required>
+										<select class="form-control isselect2" id="zone_id" name="zone_id" required>
 											<option value="">Select Zone</option>
 											@foreach (var thislist in Model.loadedData.zones)
 											{
