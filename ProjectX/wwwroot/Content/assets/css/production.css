@@ -73,3 +73,9 @@
 }
 
 
+
+
+.card.sticky-top{
+    z-index:200 !important
+}
+

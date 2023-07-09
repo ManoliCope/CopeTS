@@ -33,22 +33,22 @@
 													<div class="row">
 														<div class="col-md-4">
 															<div class="we-checkbox">
-																<input type="radio" id="typesg" name="type" value="SG" checked="">
-																<label for="typesg">Single</label>
+																<input type="radio" id="is_individual" name="type" checked="">
+																<label for="is_individual">Single</label>
 																<i class="fa fa-question-circle" title="Single"></i>
 															</div>
 														</div>
 														<div class="col-md-4 family" style="">
 															<div class="we-checkbox">
-																<input type="radio" id="typefm" name="type" value="FM">
-																<label for="typefm">Family</label>
+																<input type="radio" id="is_family" name="type">
+																<label for="is_family">Family</label>
 																<i class="fa fa-question-circle" title="Family"></i>
 															</div>
 														</div>
 														<div class="col-md-4 group" style="">
 															<div class="we-checkbox">
-																<input type="radio" id="typegr" name="type" value="GR">
-																<label for="typegr">Group</label>
+																<input type="radio" id="is_group" name="type" >
+																<label for="is_group">Group</label>
 																<i class="fa fa-question-circle" title="Group"></i>
 															</div>
 														</div>
@@ -247,7 +247,7 @@
 																<label for="destination_id">Destination(s)</label>
 																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
 																	<option value="">Select Product</option>
-																	@foreach (var thislist in filldata.loadedData.destinations)
+																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
 																		<option value="@thislist.D_Id" cid="@thislist.D_IdContinent"> @thislist.D_Destination</option>
 																	}

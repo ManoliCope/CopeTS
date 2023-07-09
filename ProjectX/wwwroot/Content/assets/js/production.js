@@ -2,44 +2,17 @@
 
 $(document).ready(function () {
     $("#search").click(function () {
-        var data = [
-            {
-                "name": "John Doe",
-                "allProfileTypes": "ProfileA",
-                "phoneNumber": "+1 555-123-4567",
-                "idProfile": 123456789
-            },
-            {
-                "name": "Jane Smith",
-                "allProfileTypes": "ProfileB",
-                "phoneNumber": "+1 555-987-6543",
-                "idProfile": 987654321
-            },
-            {
-                "name": "Alex Johnson",
-                "allProfileTypes": "ProfileC",
-                "phoneNumber": "+1 555-555-5555",
-                "idProfile": 555555555
-            },
-            {
-                "name": "Emily Davis",
-                "allProfileTypes": "ProfileA",
-                "phoneNumber": "+1 555-111-2222",
-                "idProfile": 111222333
-            },
-            {
-                "name": "Michael Brown",
-                "allProfileTypes": "ProfileB",
-                "phoneNumber": "+1 555-444-7777",
-                "idProfile": 444777888
-            }
-        ]
-        drawtable(data)
+        var data 
+            
+        drawtable()
         //Search();
     });
     drawtable();
 
-
+    $(".isselect2").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
 
     $('#destination_id').select2({
         closeOnSelect: false

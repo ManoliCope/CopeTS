@@ -35,7 +35,7 @@
 												<li class="expandable">
 													<span class="arrow"></span>
 													<label>
-														<input type="checkbox" class="parent-checkbox" id="checkbox_@continentId">
+														<input type="checkbox" class="parent-checkbox" id="checkbox_@continentId" value="0">
 														@destinations.First().D_Continent
 													</label>
 													<ul>
@@ -43,7 +43,7 @@
 														{
 															<li>
 																<label>
-																	<input type="checkbox" id="checkbox_@destination.D_Id" value="@destination.D_Id">
+																	<input type="checkbox" id="checkbox_@(continentId)_@destination.D_Id" value="@destination.D_Id" onchange="checkContinent(this, @continentId)">
 																	@destination.D_Destination
 																</label>
 															</li>

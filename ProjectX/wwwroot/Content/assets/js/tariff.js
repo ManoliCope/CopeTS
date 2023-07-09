@@ -157,6 +157,15 @@ function addnew() {
         "Override_Amount": $("#Override_Amount").val(),
         "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
+
+
+    if (isNaN(new Date(tariffReq.tariff_starting_date).getTime())) {
+        alert("Invalid date!");
+    }
+    removeloader();
+
+    return false
+
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -187,6 +196,12 @@ function edit() {
     if (validateForm(".container-fluid")) {
         return;
     }
+    var dateObj = new Date($("#tariff_starting_date").val());
+    if (isNaN(dateObj.getTime())) {
+        showresponsemodal(0, "Invalid Date")
+        return false
+    } 
+
 
     showloader("load")
     var tariffReq = {
@@ -203,7 +218,6 @@ function edit() {
         "Override_Amount": $("#Override_Amount").val(),
         "tariff_starting_date": new Date($("#tariff_starting_date").val()).toISOString()
     };
-
 
     $.ajax({
         type: 'post',

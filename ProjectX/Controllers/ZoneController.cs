@@ -97,9 +97,15 @@ namespace ProjectX.Controllers
 
         public ActionResult Edit(int id)
         {
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+            });
+            ViewData["filldata"] = load;
+
+
             ZoneResp response = new ZoneResp();
             response = _productBusiness.GetZone(id);
-
             return View("details", response);
         }
 
