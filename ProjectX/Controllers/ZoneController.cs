@@ -68,8 +68,11 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+            });
             ViewData["filldata"] = response;
 
             ZoneGetResp ttt = new ZoneGetResp();
@@ -94,9 +97,15 @@ namespace ProjectX.Controllers
 
         public ActionResult Edit(int id)
         {
+            LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+            });
+            ViewData["filldata"] = load;
+
+
             ZoneResp response = new ZoneResp();
             response = _productBusiness.GetZone(id);
-
             return View("details", response);
         }
 

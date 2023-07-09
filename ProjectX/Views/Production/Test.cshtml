@@ -1,0 +1,397 @@
+﻿@model ProjectX.Entities.Models.Product.ProdGetResp
+@{
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+}
+
+
+
+<div class="content" pgtype="view">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row" data-select2-id="20">
+			<div class="col-12">
+				<div class="page-title mt-2">
+					<h4 class="card-title ">
+						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+						<span>Create Certificate </span>
+
+					</h4>
+				</div>
+				<span class="text-warning"></span>
+			</div>
+			<div class="page-content w-100">
+				<div class="row m-0">
+					<div class="col-md-8">
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>General Information</h3>
+											<hr>
+											<div class="row">
+												<div class="col-md-6 typeradio">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="we-checkbox">
+																<input type="radio" id="is_individual" name="type" checked="">
+																<label for="is_individual">Single</label>
+																<i class="fa fa-question-circle" title="Single"></i>
+															</div>
+														</div>
+														<div class="col-md-4 family" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_family" name="type">
+																<label for="is_family">Family</label>
+																<i class="fa fa-question-circle" title="Family"></i>
+															</div>
+														</div>
+														<div class="col-md-4 group" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_group" name="type" >
+																<label for="is_group">Group</label>
+																<i class="fa fa-question-circle" title="Group"></i>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="product_id">Product</label>
+														<select class="form-control isselect2" id="product_id" name="product_id">
+															<option value="">Select Product</option>
+															@foreach (var thislist in filldata.loadedData.products)
+															{
+																<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+															}
+														</select>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="product_id">Zone</label>
+														<select class="form-control isselect2" id="product_id" name="product_id">
+															<option value="">Select Zone</option>
+															@foreach (var thislist in filldata.loadedData.zones)
+															{
+																<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+															}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+
+												<div class="col-md-8">
+													<div class="form-group">
+														<label for="notes">Notes</label>
+														<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Beneficiary</h3><hr>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="row mt-3">
+														<div class="form-group col-md-6">
+															<input id="search" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+														</div>
+														<div class="form-group col-md-6 xlsxupload" style="display: none;">
+															<a class="text-danger" style="font-size: 12px;">Sample File</a>
+															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
+														</div>
+														<div class="form-group col-md-12">
+															<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
+															<div class="row">
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="male" name="sgender" value="M" checked="checked">
+																		<label for="male">Male</label>
+																	</div>
+																</div>
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="female" name="sgender" value="F">
+																		<label for="female">Female</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-3">
+															<label>First Name <span class="text-danger">*</span></label>
+															<input type="text" class="form-control first_name" value="" name="first_name">
+														</div>
+														<div class="form-group col-md-3">
+															<label>Middle Name</label>
+															<input type="text" class="form-control middle_name" value="" name="middle_name">
+														</div>
+														<div class="form-group col-md-3 maiden-field" style="display: none;">
+															<label>Maiden Name</label>
+															<input type="text" class="form-control maiden_name" value="" name="maiden_name">
+														</div>
+														<div class="form-group col-md-3">
+															<label>Last Name <span class="text-danger">*</span></label>
+															<input type="text" class="form-control last_name" value="" name="last_name">
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-3 passport_no_form">
+															<label>Passport No. <span class="isrequired text-danger" style="display:none">*</span></label>
+															<input type="text" class="form-control passport_no" value="" name="passport_no">
+														</div>
+														<div class="form-group col-md-3">
+															<label>Date Of Birth <span class="text-danger">*</span></label>
+															<input type="text" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth">
+														</div>
+														<div class="form-group col-md-3 passport_expiry_form" style="display: none">
+															<label>Passport Expiry Date <span class="isrequired text-danger" style="display:none">*</span></label>
+															<input type="text" class="form-control datepicker passport_expiry" value="" name="passport_expiry" id="passport_expiry" extra-field-validation="">
+														</div>
+														<div class="form-group col-md-3 nationality_form" style="display: none">
+															<label>Nationality <span class="isrequired text-danger" style="display:none">*</span></label>
+															<select class="form-control select2 nationality select2-hidden-accessible" name="nationality" id="nationality" data-select2-id="nationality" tabindex="-1" aria-hidden="true" extra-field-validation="">
+																<option value="" data-select2-id="7"></option>
+																<option value="AFG"> Afghanistan</option>
+																<option value="ALB"> Albania</option>
+															</select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-nationality-container"><span class="select2-selection__rendered" id="select2-nationality-container" role="textbox" aria-readonly="true"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear"><i class="fas fa-times text-danger"></i></span></span>
+
+														</div>
+														<div class="form-group col-md-3 div-beneficiary" style="display:none;">
+															<label>&nbsp;</label>
+															<div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor:pointer;">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
+															</div>
+														</div>
+														<div class="form-group col-md-3 div-beneficiary-update" style="display:none;">
+															<label>&nbsp;</label><br>
+															<div class="btn btn-md btn-success text-left btn-ben-update" style="cursor:pointer;">
+																<i class="fa fa-check" aria-hidden="true"></i> Done
+															</div>
+															<div class="btn btn-md btn-danger text-left btn-ben-cancel" style="cursor:pointer;">
+																<i class="fa fa-times" aria-hidden="true"></i> Cancel
+															</div>
+														</div>
+														<div class="form-group col-md-3 div-riders" style="display:none;" data-bs-toggle="modal" data-bs-target="#riders">
+															<label>&nbsp;</label>
+															<div class="btn btn-md btn-warning btn-block text-left btn-riders w-100" style="cursor:pointer;">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add Riders
+															</div>
+														</div>
+														<div class="rider-plans col-12 col-md-8" style="display:none;">
+															<div class="table-responsive">
+																<table class="table table-sm table-bordered mt-3">
+																	<thead>
+																		<tr class="thead-light">
+																			<th>
+																				Name
+																				<input type="hidden" class="rider-field" name="rider" value="">
+																			</th>
+																			<th style="width: 125px;">Insured Value</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+													<div class="table-responsive">
+														<table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none">
+															<tbody>
+																<tr class="thead-light">
+																	<th>First Name</th>
+																	<th>Last Name</th>
+																	<th>Date Of Birth</th>
+																	<th>Passport No.</th>
+																	<th style="width:90px;" data-orderable="false">Actions<button type="button" class="btn btn-sm delete-beneficiaries"><i class="fas fa-trash"></i></button></th>
+																</tr>
+															</tbody>
+															<tbody class="beneficiary-list">
+															</tbody>
+														</table>
+														<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Travel</h3><hr>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-5">
+														<div class="row">
+															<div class="form-group col-md-12">
+																<label for="destination_id">Destination(s)</label>
+																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
+																	<option value="">Select Product</option>
+																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+																	{
+																		<option value="@thislist.D_Id" cid="@thislist.D_IdContinent"> @thislist.D_Destination</option>
+																	}
+																</select>
+															</div>
+															<div class="form-group col-md-6">
+																<label>From</label>
+																<input type="date" id="from" class="form-control datepickermonth" name="from" value="" data-gtm-form-interact-field-id="1">
+															</div>
+															<div class="form-group col-md-6">
+																<label>To</label>
+																<input type="date" id="to" class="form-control datepickermonth" name="to" value="" data-gtm-form-interact-field-id="2">
+															</div>
+															<div class="form-group col-md-12">
+																<label>Duration</label>
+																<input type="number" step="1" min="1" id="duration" class="form-control" name="duration" value="">
+															</div>
+															<div class="form-group col-md-12 mt-3">
+																<button type="button" class="btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-7">
+														<div class="form-group">
+															<div class="table-responsive">
+																<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3">
+																	<tbody>
+																		<tr class="thead-light">
+																			<th>Destination(s)</th>
+																			<th>From</th>
+																			<th>To</th>
+																			<th>Duration</th>
+																			<th style="width:90px;" data-orderable="false">Actions</th>
+																		</tr>
+																	</tbody>
+																	@*<tbody class="travel-list small">
+																		</tbody>*@
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-4">
+						<div class="card mt-4  sticky-top" style="top:90px;">
+							<div class="card-header text-center">
+								<h4>
+									<div class="excess float-end">
+									Quotation
+										<div class="we-checkbox pt-2">
+											<input type="hidden" name="with_excess" value="0" id="with_excess">
+											<input type="checkbox" name="box-excess" value="1" id="box-excess">
+											<label for="box-excess" style="font-size: 14px; font-weight: 400; padding-top: 5px;">
+												With Excess
+											</label>
+										</div>
+									</div>
+								</h4>
+							</div>
+							<div class="card-body result">
+								<div class="card mt-2">
+									<div class="card-body" style="font-size:13px">
+										<div>
+											<b>Destination(s) </b>
+											<span class="float-end">
+												Aruba,
+											</span>
+										</div>
+										<div>
+											<b>Inception Date </b>
+											<span class="float-end">08-07-2023  </span>
+										</div>
+										<div>
+											<b>Expiry Date</b>
+											<span class="float-end">08-07-2023  </span>
+										</div>
+										<div>
+											<b>Plan </b>
+											<span class="float-end">
+												Silver
+											</span>
+										</div>
+										<div>
+											<b>Duration </b>
+											<span class="float-end">1 Days </span>
+										</div>
+										<div>
+
+											<span class="float-end total_price" data-currency="USD"> </span>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-sm table-bordered mt-3">
+												<tbody>
+													<tr class="thead-light text-center">
+														<th>Full Name</th>
+														<th>Cons. / Cumul. Days</th>
+														<th>Base Price</th>
+														<th>Discount</th>
+														<th>Final Price </th>
+													</tr>
+												</tbody>
+												@*<tbody class="quotation-list">
+													<tr class="text-center">
+														<td>
+															SAHAR CHARARA
+														</td>
+														<td>
+															<select class="d-none cum_con_days_full">
+															</select>
+														</td>
+														<td class="base_price" data-price="11.00">14.00 USD</td>
+														<td class="discount" data-discount="0">
+															0 %
+															<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
+														</td>
+														<td>
+															<span class="final_price" data-price="11">14 USD</span>
+														</td>
+													</tr>
+												</tbody>*@
+											</table>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" name="plans_all[0]" value="510">
+								<div class="my-3" style="height: 32px;">
+									<div class="btn btn-third float-end grand_total">14.00 USD</div>
+									<div class="btn btn-third float-right mr-2">Grand Total</div>
+								</div><button type="submit" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+			</div>
+		</div>
+	</div>
+	
+</div>

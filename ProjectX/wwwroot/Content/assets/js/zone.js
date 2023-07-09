@@ -26,7 +26,51 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deletezne(this);
     });
+    triggerdesitnationlist()
 });
+
+
+function triggerme() {
+  
+}
+
+
+function triggerdesitnationlist() {
+    // Add click event handler to expandable arrows
+    $('ul.tree-list > li.expandable > span.arrow').click(function () {
+        $(this).parent('li').toggleClass('collapsed');
+        $(this).siblings('ul').slideToggle();
+    });
+
+    // Prevent click event propagation for deeper levels
+    $('ul.tree-list > li > ul > li').click(function (e) {
+        e.stopPropagation();
+    });
+
+    // Handle parent checkbox click event
+    $('input.parent-checkbox').click(function (e) {
+        var isChecked = $(this).prop('checked');
+        $(this).closest('li').find('input[type="checkbox"]').prop('checked', isChecked);
+    });
+
+
+    var continentCheckboxes = document.querySelectorAll('.parent-checkbox');
+    for (var i = 0; i < continentCheckboxes.length; i++) {
+        var continentCheckbox = continentCheckboxes[i];
+        var destinationCheckboxes = continentCheckbox.parentNode.nextElementSibling.querySelectorAll('input[type="checkbox"]');
+        var allChecked = true;
+        for (var j = 0; j < destinationCheckboxes.length; j++) {
+            if (!destinationCheckboxes[j].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+        continentCheckbox.checked = allChecked;
+    }
+
+}
+
+
 
 function drawtable(data) {
     console.log(data)
@@ -143,12 +187,13 @@ function addnew() {
         "title": $("#Z_Title").val(),
         "destinationId": []
     };
-    var selectedValues = $.map($('#Z_Destination_Id').val(), function (value) {
-        return parseInt(value, 10);
+    var selectedCheckboxes = $.map($('.tree-list input[type="checkbox"]:checked'), function (checkbox) {
+        if (checkbox.value !== '0') {
+            return checkbox.value;
+        }
     });
 
-    zneReq.destinationId = selectedValues;
-
+    zneReq.destinationId = selectedCheckboxes;
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -156,14 +201,12 @@ function addnew() {
         data: { req: zneReq },
         success: function (result) {
             removeloader();
-            //if (result.statusCode.code == 1 && profile.IdProfile == "0")
-            //    gotopage("Profile", "Index");
-
+           
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("zone", "Edit", 35);
+                if (result.statusCode.code == 1 && result.id != "0")
+                    gotopage("zone", "Edit", result.id);
             });
-
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -174,6 +217,25 @@ function addnew() {
     });
 }
 
+
+function checkContinent(checkbox, continentId) {
+    console.log(continentId)
+    var continentCheckbox = document.getElementById('checkbox_' + continentId);
+    var destinationCheckboxes = checkbox.parentNode.parentNode.parentNode.querySelectorAll('ul input[type="checkbox"]');
+
+
+    //var destinationCheckboxes = document.querySelectorAll('#checkbox_' + continentId + ' ~ ul input[type="checkbox"]');
+    var allChecked = true;
+    console.log(destinationCheckboxes.length)
+    for (var i = 0; i < destinationCheckboxes.length; i++) {
+
+        if (!destinationCheckboxes[i].checked) {
+            allChecked = false;
+            break;
+        }
+    }
+    continentCheckbox.checked = allChecked;
+}
 function edit() {
     if (validateForm(".container-fluid")) {
         return;
@@ -186,9 +248,14 @@ function edit() {
         "title": $("#Z_Title").val(),
         "destinationId": []
     };
-    var selectedValues = $.map($('#Z_Destination_Id').val(), function (value) {
-        return parseInt(value, 10);
+
+    var selectedValues = $.map($('.tree-list input[type="checkbox"]:checked'), function (checkbox) {
+        if (checkbox.value !== '0') {
+            return checkbox.value;
+        }
     });
+
+
 
     zneReq.destinationId = selectedValues;
 

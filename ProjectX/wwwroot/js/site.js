@@ -26,11 +26,6 @@
 //        return false;
 //    });
 
-//    $('#avayalist .dropdown-menu').on({
-//        "click": function (e) {
-//            e.stopPropagation();
-//        }
-//    });
 
 //    togglemenucolor()
 

@@ -7,6 +7,7 @@ using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
+using ProjectX.Entities.Models.Package;
 using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Profile;
 
@@ -54,6 +55,30 @@ namespace ProjectX.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Test()
+        {
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadBenefits = true,
+                loadProducts = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true,
+                loadZones= true
+
+            });
+
+            ViewData["filldata"] = response;
+
+            ProdGetResp ttt = new ProdGetResp();
+            ttt.product = new TR_Product();
+            return View(ttt);
+        }
+
+
 
         // GET: ProductionController/Create
         public ActionResult Create()
@@ -123,5 +148,21 @@ namespace ProjectX.Controllers
                 return View();
             }
         }
+
+
+        public List<TR_Product> GetProdutctsByType(int id) //individual,family,group
+        {
+            List<TR_Product> response = new List<TR_Product>();
+            //return _productionBusiness.getprodutctsbytype(id);
+            return response;
+        }
+
+        public List<TR_Zone> GetDestinationByZone(int ZoneId)
+        {
+            List<TR_Zone> response = new List<TR_Zone>();
+            //return _productionBusiness.getdestinationbyzone(ZoneId);
+            return response;
+        }
+
     }
 }

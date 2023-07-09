@@ -13,13 +13,13 @@ $(document).ready(function () {
         var divname = $(this).closest(".card-body").attr("id")
         resetAllValues(divname);
         resetdatatable("#packagetable");
-
-
         var dropdown = $('.select2-hidden-accessible');
         dropdown.val(null).trigger('change');
-
-
     });
+    $(".isselect2").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
     $("#create").click(function () {
         addnew();
     });
@@ -33,10 +33,7 @@ $(document).ready(function () {
         deletepkg(this);
     });
 
-    $(".isselect2").select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-    })
+   
 });
 
 function drawtable(data) {

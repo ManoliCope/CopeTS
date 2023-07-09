@@ -33,6 +33,7 @@ namespace ProjectX.Business.Package
             TR_Package repores = _packageRepository.GetPackage(IdPackage);
             PackResp resp = new PackResp();
             resp.Id = repores.P_Id;
+            resp.ProductId = repores.PR_Id;
             resp.Name = repores.P_Name;
             resp.ZoneID = repores.P_ZoneID;
             resp.Remove_deductable = repores.P_Remove_deductable;

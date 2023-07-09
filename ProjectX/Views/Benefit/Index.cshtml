@@ -37,8 +37,8 @@
 								</div>
 								<div class="col-lg-3 mb-lg-0 mb-6">
 									<label for="packageId">Package:</label>
-									<select class="form-control isselect2" id="packageId" name="packageId" required>
-										<option>Select Package</option>
+									<select class="form-control isselect2" id="packageId" name="packageId" >
+										<option value="">Select Package</option>
 										@foreach (var thislist in Model.loadedData.packages)
 										{
 											<option value="@thislist.LK_ID">@thislist.LK_ID -- @thislist.LK_TableField</option>
@@ -47,7 +47,7 @@
 									</select>
 								</div>
 								<div class="col-lg-3">
-									<div class="row mt-4">
+									<div class="row mt-4 pt-1">
 										<div class="col-sm-6">
 											<button class="btn bglocalcolor" id="search" style="width:100%">
 												<span>

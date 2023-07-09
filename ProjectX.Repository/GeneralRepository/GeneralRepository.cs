@@ -59,7 +59,7 @@ namespace ProjectX.Repository.GeneralRepository
                     if (loadDataModelSetup.loadZones)
                         resp.zones = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadDestinations)
-                        resp.destinations = result.Read<LookUpp>().ToList();
+                        resp.destinations = result.Read<Destination>().ToList();
                 }
             }
 
