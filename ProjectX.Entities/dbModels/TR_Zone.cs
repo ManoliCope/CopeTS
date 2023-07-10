@@ -9,6 +9,8 @@ namespace ProjectX.Entities.dbModels
         public int Z_Id { get; set; }
         public string Z_Title { get; set; }
         public List<int> Z_Destination_Id { get; set; }
+        public List<string> Z_Destination_Name { get; set; }
+
        
     }
 }
