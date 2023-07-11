@@ -32,6 +32,8 @@ using ProjectX.Repository.TariffRepository;
 using ProjectX.Business.Tariff;
 using ProjectX.Repository.PlanRepository;
 using ProjectX.Business.Plan;
+using ProjectX.Repository.ProductionRepository;
+using ProjectX.Business.Production;
 
 public class Startup
 {
@@ -97,6 +99,11 @@ public class Startup
 
         services.AddSingleton<IProductBusiness, ProductBusiness>();
         services.AddSingleton<IProductRepository, ProductRepository>();
+
+
+
+        services.AddSingleton<IProductionBusiness, ProductionBusiness>();
+        services.AddSingleton<IProductionRepository, ProductionRepository>();
 
         services.AddSingleton<ITariffBusiness, TariffBusiness>();
         services.AddSingleton<ITariffRepository, TariffRepository>();

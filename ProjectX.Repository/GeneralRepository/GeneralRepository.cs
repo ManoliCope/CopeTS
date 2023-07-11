@@ -27,7 +27,6 @@ namespace ProjectX.Repository.GeneralRepository
         {
 
             LoadDataModel resp = new LoadDataModel();
-
             //return resp;
             var param = new DynamicParameters();
             param.Add("@loadBenefits", loadDataModelSetup.loadBenefits);

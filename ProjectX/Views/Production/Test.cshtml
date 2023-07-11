@@ -72,8 +72,8 @@
 
 												<div class="col-md-4">
 													<div class="form-group">
-														<label for="product_id">Zone</label>
-														<select class="form-control isselect2" id="product_id" name="product_id">
+														<label for="zone_id">Zone</label>
+														<select class="form-control isselect2" id="zone_id" name="zone_id">
 															<option value="">Select Zone</option>
 															@foreach (var thislist in filldata.loadedData.zones)
 															{
@@ -241,12 +241,12 @@
 											<h3>Travel</h3><hr>
 											<div class="form-group">
 												<div class="row">
-													<div class="col-md-5">
+													<div class="col-md-4">
 														<div class="row">
 															<div class="form-group col-md-12">
 																<label for="destination_id">Destination(s)</label>
 																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
-																	<option value="">Select Product</option>
+																	@*<option value="">Select Destinations</option>*@
 																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
 																		<option value="@thislist.D_Id" cid="@thislist.D_IdContinent"> @thislist.D_Destination</option>
@@ -270,11 +270,11 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-7">
+													<div class="col-md-8">
 														<div class="form-group">
 															<div class="table-responsive">
 																<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3">
-																	<tbody>
+																	<thead>
 																		<tr class="thead-light">
 																			<th>Destination(s)</th>
 																			<th>From</th>
@@ -282,7 +282,7 @@
 																			<th>Duration</th>
 																			<th style="width:90px;" data-orderable="false">Actions</th>
 																		</tr>
-																	</tbody>
+																	</thead>
 																	@*<tbody class="travel-list small">
 																		</tbody>*@
 																</table>

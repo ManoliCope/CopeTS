@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ProjectX.Business.General;
+using ProjectX.Business.Production;
 using ProjectX.Business.Profile;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
@@ -16,14 +17,14 @@ namespace ProjectX.Controllers
     public class ProductionController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IProfileBusiness _productionBusiness;
+        private IProductionBusiness _productionBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
         private User _user;
 
         private IWebHostEnvironment _env;
 
-        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProfileBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _productionBusiness = productionBusiness;
@@ -153,16 +154,14 @@ namespace ProjectX.Controllers
         public List<TR_Product> GetProdutctsByType(int id) //individual,family,group
         {
             List<TR_Product> response = new List<TR_Product>();
-            //return _productionBusiness.getprodutctsbytype(id);
+            return _productionBusiness.GetProductsByType(id);
             return response;
         }
-
-        public List<TR_Zone> GetDestinationByZone(int ZoneId)
+        public List<TR_Destinations> GetDestinationByZone(int ZoneId)
         {
-            List<TR_Zone> response = new List<TR_Zone>();
-            //return _productionBusiness.getdestinationbyzone(ZoneId);
+            List<TR_Destinations> response = new List<TR_Destinations>();
+            return _productionBusiness.GetDestinationByZone(ZoneId);
             return response;
         }
-
     }
 }

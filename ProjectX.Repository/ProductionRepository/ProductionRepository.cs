@@ -21,6 +21,10 @@ namespace ProjectX.Repository.ProductionRepository
         private SqlConnection _db;
         private readonly TrAppSettings _appSettings;
 
+        public ProductionRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
+        {
+            _appSettings = appIdentitySettingsAccessor.Value;
+        }
         public List<TR_Product> GetProductsByType(int idType)
         {
             List<TR_Product> response = new List<TR_Product>();

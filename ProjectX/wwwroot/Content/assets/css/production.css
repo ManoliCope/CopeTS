@@ -79,3 +79,11 @@
     z-index:200 !important
 }
 
+
+#destinationtbl td, #destinationtbl th {
+    font-size: 12px
+}
+
+#destinationtbl tr td:first-child {
+    white-space: pre-line !important;
+}
