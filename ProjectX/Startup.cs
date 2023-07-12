@@ -34,6 +34,8 @@ using ProjectX.Repository.PlanRepository;
 using ProjectX.Business.Plan;
 using ProjectX.Repository.ProductionRepository;
 using ProjectX.Business.Production;
+using ProjectX.Business.Beneficiary;
+using ProjectX.Repository.BeneficiaryRepository;
 
 public class Startup
 {
@@ -131,6 +133,9 @@ public class Startup
 
         services.AddSingleton<INotificationsBusiness, NotificationsBusiness>();
         services.AddSingleton<INotificationsRepository, NotificationsRepository>();
+
+        services.AddSingleton<IBeneficiaryBusiness, BeneficiaryBusiness>();
+        services.AddSingleton<IBeneficiaryRepository, BeneficiaryRepository>();
 
         services.AddDistributedMemoryCache();
         services.AddSession();
