@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     $("#search").click(function () {
-        var data
 
         drawtable()
         //Search();
@@ -23,44 +22,156 @@ $(document).ready(function () {
 
     populateproducts();
     populatedestinations()
+    populatebeneficiary()
+    settofrom()
+
 
     $('.add-travel').click(function () {
-        var selectedDestinations = $('#destination_id option:selected').map(function () {
+        var selectedOptions = $('#destination_id option:selected');
+        var selectedDestinations = selectedOptions.map(function () {
             return $(this).text();
+        }).get();
+        var selectedDestinationIds = selectedOptions.map(function () {
+            return $(this).val();
         }).get();
 
 
         var fromDate = $('#from').val();
         var toDate = $('#to').val();
         var duration = $('#duration').val();
-        console.log(selectedDestinations)
-        console.log(fromDate)
-        console.log(toDate)
-        console.log(duration)
 
-        var destinationsString = selectedDestinations.join(', ');
-        console.log(destinationsString)
 
+        // Validate fields
+        if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+            toDate.trim() === '' || duration.trim() === '') {
+            return false; // Prevent adding the row if any field is empty
+        }
+
+        if ($.fn.DataTable.isDataTable('#destinationtbl')) {
+            $('#destinationtbl').DataTable().destroy();
+        }
 
         var table = $('#destinationtbl').DataTable({
             searching: false,   
             paging: false,     
             info: false       
         });
+        table.on('draw', function () {
+            table.column(0).nodes().each(function (cell, index) {
+                var destinations = $(cell).text().split(',').map(function (destination) {
+                    return destination.trim();
+                }).join('<br>');
 
+                $(cell).html(destinations);
+            });
+        });
+
+    
         table.row.add([
-            selectedDestinations,
+            selectedDestinationIds,
+           selectedDestinations.join(','), // Display destination text
             fromDate,
             toDate,
             duration,
-            ''
-        ]).draw(false);
+            `<i class="fa fa-trash text-danger delete-travel" aria-hidden="true"></i>`
+        ]).draw();
+
+        $('#destination_id').val('').trigger('change');
+        $('#from').val('');
+        $('#to').val('');
+        $('#duration').val('');
+
+        $('#destinationtbl').on('click', '.delete-travel', function () {
+            table.row($(this).closest('tr')).remove().draw();
+        });
+
+        var columnIndex = 0; // Adjust the index if the column position changes
+        table.column(columnIndex).visible(false);
+
+        var allRows = $('#destinationtbl').DataTable().rows().data().toArray();
+
+    });
+
+    $('input[name="sgender"]').change(function () {
+        var selectedGender = $(this).val();
+        var maidenNameField = $('.maiden-field');
+
+        if (selectedGender === 'F') {
+            maidenNameField.show(); // Show maiden name field for Female
+        } else {
+            maidenNameField.hide(); // Hide maiden name field for Male
+        }
     });
 
 });
 
+function populatebeneficiary() {
+    $('.btn-beneficiary').click(function () {
+        var firstName = $('.first_name').val();
+        var lastName = $('.last_name').val();
+        var dateOfBirth = $('.dob').val();
+        var passportNo = $('.passport_no').val();
+
+        if (firstName === '' || lastName === '' || dateOfBirth === '' ) {
+            return; 
+        }
+
+        var beneficiaryList = $('.beneficiary-list');
+        var row = '<tr>' +
+            '<td>' + firstName + '</td>' +
+            '<td>' + lastName + '</td>' +
+            '<td>' + dateOfBirth + '</td>' +
+            '<td>' + passportNo + '</td>' +
+            '<td><button type="button" class="btn btn-sm delete-beneficiary"><i class="fas fa-trash"></i></button></td>' +
+            '</tr>';
+
+        beneficiaryList.append(row);
+
+        // Clear the input fields
+        $('.first_name').val('');
+        $('.middle_name').val('');
+        $('.last_name').val('');
+        $('.dob').val('');
+        $('.passport_no').val('');
+
+        // Initialize or update the DataTable
+        var beneficiaryTable = $('#beneficiaryTable').DataTable();
+        beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
+        beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
+    });
+}
+function settofrom() {
+    $('#to, #from').change(function () {
+        var toDate = new Date($('#to').val()); 
+        var fromDate = new Date($('#from').val());
+
+        if (fromDate && toDate && fromDate <= toDate) {
+            var duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+            $('#duration').val(duration); 
+        } else {
+            $('#duration').val(''); 
+        }
+    });
+
+    $('#duration').change(function () {
+        var fromDate = new Date($('#from').val()); 
+        var duration = parseInt($(this).val()); 
+
+        if (fromDate && duration) {
+            var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+            var formattedToDate = toDate.toISOString().split('T')[0]; 
+            $('#to').val(formattedToDate);
+        } else {
+            $('#to').val(''); 
+        }
+    });
+}
 function populateproducts() {
-    $('.we-checkbox input[type="radio"]').on('change', function () {
+    $('.typeradio .we-checkbox input[type="radio"]').on('change', function () {
+
+        var addBeneficiaryButton = $('.btn-beneficiary');
+        var beneficiaryTable = $('.beneficiary-table');
+
         var type = 1
         var selectedType = $(this).attr('id');
         if (selectedType == 'is_individual')
@@ -69,6 +180,14 @@ function populateproducts() {
             type = 2
         else
             type = 3
+
+        if (selectedType === 'is_family' || selectedType === 'is_group') {
+            addBeneficiaryButton.show(); // Show Add Beneficiary button for Family or Group
+            beneficiaryTable.show(); // Show beneficiary table for Family or Group
+        } else {
+            addBeneficiaryButton.hide(); // Hide Add Beneficiary button for Single
+            beneficiaryTable.hide(); // Hide beneficiary table for Single
+        }
 
         $('#product_id').empty().append('<option value="">Select Product</option>').val('').trigger('change');
         $('#product_id').prop('disabled', true);
