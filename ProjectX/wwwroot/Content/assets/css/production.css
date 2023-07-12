@@ -84,6 +84,10 @@
     font-size: 12px
 }
 
+.beneficiary-table td, .beneficiary-table th {
+    font-size: 12px
+}
+
 #destinationtbl tr td:first-child {
     white-space: pre-line !important;
 }

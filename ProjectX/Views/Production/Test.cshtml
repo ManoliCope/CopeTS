@@ -33,7 +33,7 @@
 													<div class="row">
 														<div class="col-md-4">
 															<div class="we-checkbox">
-																<input type="radio" id="is_individual" name="type" checked="">
+																<input type="radio" id="is_individual" name="type">
 																<label for="is_individual">Single</label>
 																<i class="fa fa-question-circle" title="Single"></i>
 															</div>
@@ -47,7 +47,7 @@
 														</div>
 														<div class="col-md-4 group" style="">
 															<div class="we-checkbox">
-																<input type="radio" id="is_group" name="type" >
+																<input type="radio" id="is_group" name="type">
 																<label for="is_group">Group</label>
 																<i class="fa fa-question-circle" title="Group"></i>
 															</div>
@@ -62,10 +62,10 @@
 														<label for="product_id">Product</label>
 														<select class="form-control isselect2" id="product_id" name="product_id">
 															<option value="">Select Product</option>
-															@foreach (var thislist in filldata.loadedData.products)
-															{
-																<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-															}
+															@*@foreach (var thislist in filldata.loadedData.products)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}*@
 														</select>
 													</div>
 												</div>
@@ -157,7 +157,7 @@
 														</div>
 														<div class="form-group col-md-3">
 															<label>Date Of Birth <span class="text-danger">*</span></label>
-															<input type="text" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth">
+															<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth">
 														</div>
 														<div class="form-group col-md-3 passport_expiry_form" style="display: none">
 															<label>Passport Expiry Date <span class="isrequired text-danger" style="display:none">*</span></label>
@@ -172,9 +172,9 @@
 															</select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-nationality-container"><span class="select2-selection__rendered" id="select2-nationality-container" role="textbox" aria-readonly="true"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear"><i class="fas fa-times text-danger"></i></span></span>
 
 														</div>
-														<div class="form-group col-md-3 div-beneficiary" style="display:none;">
+														<div class="form-group col-md-3 div-beneficiary " >
 															<label>&nbsp;</label>
-															<div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor:pointer;">
+															<div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
 																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
 															</div>
 														</div>
@@ -193,7 +193,7 @@
 																<i class="fa fa-plus" aria-hidden="true"></i> Add Riders
 															</div>
 														</div>
-														<div class="rider-plans col-12 col-md-8" style="display:none;">
+														<div class="rider-plans col-12 col-md-8" hidden>
 															<div class="table-responsive">
 																<table class="table table-sm table-bordered mt-3">
 																	<thead>
@@ -211,7 +211,7 @@
 														</div>
 													</div>
 													<div class="table-responsive">
-														<table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none">
+														<table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none;">
 															<tbody>
 																<tr class="thead-light">
 																	<th>First Name</th>
@@ -241,9 +241,9 @@
 											<h3>Travel</h3><hr>
 											<div class="form-group">
 												<div class="row">
-													<div class="col-md-4">
+													<div class="col-md-12">
 														<div class="row">
-															<div class="form-group col-md-12">
+															<div class="form-group col-md-9">
 																<label for="destination_id">Destination(s)</label>
 																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
@@ -253,29 +253,32 @@
 																	}
 																</select>
 															</div>
-															<div class="form-group col-md-6">
+														</div>
+														<div class="row">
+															<div class="form-group col-md-3">
 																<label>From</label>
 																<input type="date" id="from" class="form-control datepickermonth" name="from" value="" data-gtm-form-interact-field-id="1">
 															</div>
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
 																<label>To</label>
 																<input type="date" id="to" class="form-control datepickermonth" name="to" value="" data-gtm-form-interact-field-id="2">
 															</div>
-															<div class="form-group col-md-12">
+															<div class="form-group col-md-3">
 																<label>Duration</label>
 																<input type="number" step="1" min="1" id="duration" class="form-control" name="duration" value="">
 															</div>
-															<div class="form-group col-md-12 mt-3">
-																<button type="button" class="btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
+															<div class="form-group col-md-3 mt-3 pt-1">
+																<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
 															</div>
 														</div>
 													</div>
-													<div class="col-md-8">
+													<div class="col-md-12">
 														<div class="form-group">
 															<div class="table-responsive">
-																<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3">
+																<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
 																	<thead>
 																		<tr class="thead-light">
+																			<th hidden>Destination ID</th>
 																			<th>Destination(s)</th>
 																			<th>From</th>
 																			<th>To</th>
@@ -303,7 +306,7 @@
 							<div class="card-header text-center">
 								<h4>
 									<div class="excess float-end">
-									Quotation
+										Quotation
 										<div class="we-checkbox pt-2">
 											<input type="hidden" name="with_excess" value="0" id="with_excess">
 											<input type="checkbox" name="box-excess" value="1" id="box-excess">
@@ -357,24 +360,24 @@
 													</tr>
 												</tbody>
 												@*<tbody class="quotation-list">
-													<tr class="text-center">
-														<td>
-															SAHAR CHARARA
-														</td>
-														<td>
-															<select class="d-none cum_con_days_full">
-															</select>
-														</td>
-														<td class="base_price" data-price="11.00">14.00 USD</td>
-														<td class="discount" data-discount="0">
-															0 %
-															<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
-														</td>
-														<td>
-															<span class="final_price" data-price="11">14 USD</span>
-														</td>
-													</tr>
-												</tbody>*@
+														<tr class="text-center">
+															<td>
+																SAHAR CHARARA
+															</td>
+															<td>
+																<select class="d-none cum_con_days_full">
+																</select>
+															</td>
+															<td class="base_price" data-price="11.00">14.00 USD</td>
+															<td class="discount" data-discount="0">
+																0 %
+																<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
+															</td>
+															<td>
+																<span class="final_price" data-price="11">14 USD</span>
+															</td>
+														</tr>
+													</tbody>*@
 											</table>
 										</div>
 									</div>
@@ -388,10 +391,10 @@
 						</div>
 					</div>
 				</div>
-				
+
 
 			</div>
 		</div>
 	</div>
-	
+
 </div>
