@@ -32,7 +32,7 @@ namespace ProjectX.Repository.BeneficiaryRepository
             param.Add("@action", act);
             param.Add("@user_id", userid);
             param.Add("@BE_Id", req.Id);
-            param.Add("@BE_Sex", req.Id);
+            param.Add("@BE_Sex", req.Sex);
             param.Add("@BE_FirstName", req.FirstName);
             param.Add("@BE_MiddleName", req.MiddleName);
             param.Add("@BE_LastName", req.LastName);

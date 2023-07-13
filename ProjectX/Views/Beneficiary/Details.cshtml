@@ -1,0 +1,141 @@
+﻿@model ProjectX.Entities.Models.Beneficiary.BeneficiaryResp
+@{
+//var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+
+}
+
+
+<div class="content" pgtype="view">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row mb-3">
+			<div class="col-md-12 ">
+				<div class="card h-100 ">
+					<div class="card-body">
+						<h4 class="card-title ">
+							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+							<span>Edit Beneficiary </span>
+						</h4>
+						<hr />
+
+						<div class="row">
+							<div id="divinfo" class="col-lg-12" mid="@Model.Id">
+								<div class="row">
+									<div class="form-group mb-3 col-lg-4">
+										<label for="firstName">First Name</label>
+										<input type="text" class="form-control" id="firstName" name="firstName" value="@Model.FirstName" required>
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="middleName">Middle Name</label>
+										<input type="text" class="form-control" id="middleName" name="middleName" value="@Model.MiddleName">
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="middleName">Maiden Name</label>
+										<input type="text" class="form-control" id="maidenName" name="maidenName">
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="lastName">Last Name</label>
+										<input type="text" class="form-control" id="lastName" name="lastName" value="@Model.LastName" required>
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="sex">Sex</label>
+										<select class="form-control" id="sex" name="sex" required>
+											<option value="">Select Sex</option>
+
+											@if (1 == Model.Sex)
+											{
+												<option value="1" selected>Male</option>
+												<option value="2">Female</option>
+											}
+											else if (2 == Model.Sex)
+											{
+												<option value="1">Male</option>
+												<option value="2" selected>Female</option>
+											}
+											else
+											{
+												<option value="1">Male</option>
+												<option value="2">Female</option>
+											}
+										</select>
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="passportNumber">Passport Number</label>
+										<input type="text" class="form-control" id="passportNumber" name="passportNumber" value="@Model.PassportNumber">
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="dateOfBirth">Date of Birth</label>
+										<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-body">
+					<div class="row">
+						<div class="col-lg-8">
+						</div>
+						<div class="col-lg-4">
+							<div class="row">
+								<div class="col-lg-4">
+									<button id="btndelete" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
+										<span> Delete </span>
+									</button>
+								</div>
+								<div class="col-lg-4">
+									<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
+										<span> Files </span>
+									</button>
+								</div>
+								<div class="col-lg-4">
+									<button id="edit" class="btn btn-primary w-100 bglocalcolor" type="submit">
+										<span> Save </span>
+									</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="confirm-email-approval" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this beneficiary?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
