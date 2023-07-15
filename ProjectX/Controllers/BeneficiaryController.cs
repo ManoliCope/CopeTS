@@ -122,5 +122,39 @@ namespace ProjectX.Controllers
 
             return _beneficiaryBusiness.ModifyBeneficiary(req, "Delete", _user.UserId);
         }
+
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
+        {
+            BeneficiarySearchResp resp = new BeneficiarySearchResp();
+            resp.beneficiary = GenerateRandomBeneficiaries(prefix);
+
+            return resp;
+        }
+        private List<TR_Beneficiary> GenerateRandomBeneficiaries(string prefix)
+        {
+            List<TR_Beneficiary> beneficiaries = new List<TR_Beneficiary>();
+
+            // Generate random beneficiary data
+            for (int i = 0; i < 5; i++)
+            {
+                TR_Beneficiary beneficiary = new TR_Beneficiary
+                {
+                    BE_Id = i + 1,
+                    BE_Sex = i % 2 == 0 ? 1 : 2, // Example: Alternates between 1 and 2 for sex
+                    BE_SexName = i % 2 == 0 ? "Male" : "Female", // Example: Alternates between "Male" and "Female" for sex name
+                    BE_FirstName = "FirstName" + i,
+                    BE_MiddleName = "MiddleName" + i,
+                    BE_LastName = "LastName" + i,
+                    BE_PassportNumber = "PASS" + i,
+                    BE_DOB = DateTime.Now.AddYears(-i).AddDays(i) // Example: Varies DOB based on index
+                };
+
+                beneficiaries.Add(beneficiary);
+            }
+
+            return beneficiaries;
+        }
+
+
     }
 }

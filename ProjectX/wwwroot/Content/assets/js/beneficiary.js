@@ -88,8 +88,10 @@ function Search() {
 
 
     var filter = {
-        "title": $("#title").val(),
+        "FirstName": $("#firstName").val(),
+        "LastName": $("#lastName").val(),
     }
+
 
 
     $.ajax({

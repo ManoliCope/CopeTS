@@ -91,3 +91,9 @@
 #destinationtbl tr td:first-child {
     white-space: pre-line !important;
 }
+
+#destinationtbl tr th:not(:first-child), #destinationtbl tr td:not(:first-child) {
+    text-align: center;
+}
+
+

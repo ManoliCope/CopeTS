@@ -244,7 +244,7 @@ function edit() {
     showloader("load")
 
     var zneReq = {
-        "id": $("#Z_Id").val(),
+        "id": $("#divinfo").attr("mid"),
         "title": $("#Z_Title").val(),
         "destinationId": []
     };

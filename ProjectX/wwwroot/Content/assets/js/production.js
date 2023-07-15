@@ -1,6 +1,12 @@
 ﻿var projectname = checkurlserver();
 
+
+
+
 $(document).ready(function () {
+
+
+
     $("#search").click(function () {
 
         drawtable()
@@ -24,6 +30,7 @@ $(document).ready(function () {
     populatedestinations()
     populatebeneficiary()
     settofrom()
+    searchbeneficiary()
 
 
     $('.add-travel').click(function () {
@@ -52,9 +59,9 @@ $(document).ready(function () {
         }
 
         var table = $('#destinationtbl').DataTable({
-            searching: false,   
-            paging: false,     
-            info: false       
+            searching: false,
+            paging: false,
+            info: false
         });
         table.on('draw', function () {
             table.column(0).nodes().each(function (cell, index) {
@@ -66,10 +73,10 @@ $(document).ready(function () {
             });
         });
 
-    
+
         table.row.add([
             selectedDestinationIds,
-           selectedDestinations.join(','), // Display destination text
+            selectedDestinations.join(','), // Display destination text
             fromDate,
             toDate,
             duration,
@@ -105,6 +112,97 @@ $(document).ready(function () {
 
 });
 
+function searchbeneficiary() {
+    $('#searchbeneficiary').keyup(function () {
+        var query = $(this).val();
+
+        var query = $(this).val();
+        if (query.length >= 3) {
+            searchben(query);
+        } else {
+            $('#searchDropdownContent').empty().hide();
+        }
+        //if (query !== '') {
+        //    search(query);
+        //} else {
+        //    $('#searchResults').empty();
+        //}
+    });
+    function searchben(query) {
+        $.ajax({
+            url: projectname + '/Beneficiary/SearchBeneficiaryPref',
+            method: 'GET',
+            data: { prefix: query },
+            success: function (data) {
+                console.log(data.beneficiary)
+                var dropdownContent = $('#searchDropdownContent');
+                dropdownContent.empty();
+                if (data.beneficiary.length > 0) {
+                    for (var i = 0; i < data.beneficiary.length; i++) {
+                        var item = $(`<a thisid=${data.beneficiary[i].bE_Id}>`).text(data.beneficiary[i].bE_FirstName).attr('href', '#');
+                        dropdownContent.append(item);
+                    }
+                    dropdownContent.show();
+                    $(document).on('click', '#searchDropdownContent a', function () {
+                        $('#searchbeneficiary').val("");
+
+                        var beneficiaryId = $(this).attr('thisid');
+                        var beneficiary = data.beneficiary.find(function (b) {
+                            return b.bE_Id == beneficiaryId;
+                        });
+
+                        console.log(beneficiary)
+                        if (beneficiary) {
+                            $('.thisbeneficiary .first_name').attr("thisid", beneficiary.bE_Id);
+                            $('.thisbeneficiary .first_name').val(beneficiary.bE_FirstName);
+                            $('.thisbeneficiary .middle_name').val(beneficiary.bE_MiddleName);
+                            $('.thisbeneficiary .maiden_name').val('');
+                            $('.thisbeneficiary .last_name').val(beneficiary.bE_LastName);
+                            $('.thisbeneficiary .passport_no').val(beneficiary.bE_PassportNumber);
+                            //$('.thisbeneficiary .dob').val(beneficiary.bE_DOB);
+                            var formattedDate = '';
+                            if (beneficiary.bE_DOB) {
+                                var dateObj = new Date(beneficiary.bE_DOB);
+                                formattedDate = dateObj.toISOString().split('T')[0];
+                                $('.thisbeneficiary .dob').val(formattedDate);
+                            }
+                            if (beneficiary.bE_Sex === 1) {
+                                $('#male').prop('checked', true);
+                            } else if (beneficiary.bE_Sex === 2) {
+                                $('#female').prop('checked', true);
+                            }
+
+
+                        }
+                        $('#searchDropdownContent a').off('click');
+                    });
+
+                } else {
+                    dropdownContent.hide();
+                }
+
+
+
+
+            },
+            error: function () {
+                $('#searchDropdownContent').empty().hide();
+            }
+        });
+    }
+
+    $(document).on('click', '#searchDropdownContent a', function () {
+        var selectedValue = $(this).text();
+        $('#search').val(selectedValue);
+        $('#searchDropdownContent').empty().hide();
+    });
+
+    $(document).on('click', function (event) {
+        if (!$(event.target).closest('.search-dropdown').length) {
+            $('#searchDropdownContent').empty().hide();
+        }
+    });
+}
 function populatebeneficiary() {
     $('.btn-beneficiary').click(function () {
         var firstName = $('.first_name').val();
@@ -112,8 +210,8 @@ function populatebeneficiary() {
         var dateOfBirth = $('.dob').val();
         var passportNo = $('.passport_no').val();
 
-        if (firstName === '' || lastName === '' || dateOfBirth === '' ) {
-            return; 
+        if (firstName === '' || lastName === '' || dateOfBirth === '') {
+            return;
         }
 
         var beneficiaryList = $('.beneficiary-list');
@@ -142,27 +240,27 @@ function populatebeneficiary() {
 }
 function settofrom() {
     $('#to, #from').change(function () {
-        var toDate = new Date($('#to').val()); 
+        var toDate = new Date($('#to').val());
         var fromDate = new Date($('#from').val());
 
         if (fromDate && toDate && fromDate <= toDate) {
             var duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
-            $('#duration').val(duration); 
+            $('#duration').val(duration);
         } else {
-            $('#duration').val(''); 
+            $('#duration').val('');
         }
     });
 
     $('#duration').change(function () {
-        var fromDate = new Date($('#from').val()); 
-        var duration = parseInt($(this).val()); 
+        var fromDate = new Date($('#from').val());
+        var duration = parseInt($(this).val());
 
         if (fromDate && duration) {
             var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
-            var formattedToDate = toDate.toISOString().split('T')[0]; 
+            var formattedToDate = toDate.toISOString().split('T')[0];
             $('#to').val(formattedToDate);
         } else {
-            $('#to').val(''); 
+            $('#to').val('');
         }
     });
 }

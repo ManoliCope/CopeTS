@@ -3,7 +3,33 @@
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
+<style>
 
+	.search-dropdown {
+		position: relative;
+	}
+
+	.search-dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 200px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		padding: 12px;
+		z-index: 1;
+	}
+
+		.search-dropdown-content a {
+			display: block;
+			padding: 6px 0;
+			text-decoration: none;
+			color: black;
+		}
+
+			.search-dropdown-content a:hover {
+				background-color: #f1f1f1;
+			}
+</style>
 
 <div class="content" pgtype="view">
 	<div class="container-fluid" style="padding:10px 0">
@@ -104,12 +130,17 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<h3>Beneficiary</h3><hr>
-											<div class="row">
+											<div class="row thisbeneficiary">
 												<div class="col-md-12">
 													<div class="row mt-3">
 														<div class="form-group col-md-6">
-															<input id="search" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
+														<div class="search-dropdown">
+															<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+															<div id="searchDropdownContent" class="search-dropdown-content"></div>
 														</div>
+														</div>
+
 														<div class="form-group col-md-6 xlsxupload" style="display: none;">
 															<a class="text-danger" style="font-size: 12px;">Sample File</a>
 															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
