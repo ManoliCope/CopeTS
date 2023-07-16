@@ -134,7 +134,7 @@ function searchbeneficiary() {
             method: 'GET',
             data: { prefix: query },
             success: function (data) {
-                console.log(data.beneficiary)
+                //console.log(data.beneficiary)
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
@@ -151,7 +151,7 @@ function searchbeneficiary() {
                             return b.bE_Id == beneficiaryId;
                         });
 
-                        console.log(beneficiary)
+                        //console.log(beneficiary)
                         if (beneficiary) {
                             $('.thisbeneficiary .first_name').attr("thisid", beneficiary.bE_Id);
                             $('.thisbeneficiary .first_name').val(beneficiary.bE_FirstName);
@@ -209,8 +209,16 @@ function populatebeneficiary() {
         var lastName = $('.last_name').val();
         var dateOfBirth = $('.dob').val();
         var passportNo = $('.passport_no').val();
+        var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
+        var sexValue;
+        if (selectedSexOption === 'M') {
+            sexValue = 1;
+        } else if (selectedSexOption === 'F') {
+            sexValue = 2;
+        }
 
-        if (firstName === '' || lastName === '' || dateOfBirth === '') {
+
+        if (firstName === '' || lastName === '' || dateOfBirth === '' || sexValue === '') {
             return;
         }
 
@@ -220,19 +228,18 @@ function populatebeneficiary() {
             '<td>' + lastName + '</td>' +
             '<td>' + dateOfBirth + '</td>' +
             '<td>' + passportNo + '</td>' +
-            '<td><button type="button" class="btn btn-sm delete-beneficiary"><i class="fas fa-trash"></i></button></td>' +
+            '<td>' + selectedSexOption + '</td>' +
+            '<td><button type="button" class="btn btn-sm delete-beneficiary"><i class="fas fa-trash" style="color:red"></i></button></td>' +
             '</tr>';
 
         beneficiaryList.append(row);
 
-        // Clear the input fields
         $('.first_name').val('');
         $('.middle_name').val('');
         $('.last_name').val('');
         $('.dob').val('');
         $('.passport_no').val('');
 
-        // Initialize or update the DataTable
         var beneficiaryTable = $('#beneficiaryTable').DataTable();
         beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
@@ -394,4 +401,249 @@ function Search() {
             //alert("fail");
         }
     });
+}
+
+var sendButton = document.getElementById('sendButton');
+sendButton.addEventListener('click', sendData);
+
+// Step 1: Add event listener to the button or trigger
+
+
+// Step 2: Create JavaScript objects representing the data
+function createGeneralInformationData() {
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    var generalInfoData = {
+        is_family: typeId == 'is_family',
+        Is_Individual: typeId == 'is_individual',
+        Is_Group: typeId == 'is_group',
+        productId: document.getElementById('product_id').value,
+        zoneId: document.getElementById('zone_id').value,
+        notes: document.getElementById('notes').value
+    };
+
+    return generalInfoData;
+}
+
+//function createBeneficiaryData() {
+//    // Retrieve data from the Beneficiary container
+//    var beneficiaryData = {
+//        beneficiary: document.getElementById('searchbeneficiary').value,
+//        firstName: document.querySelector('.first_name').value,
+//        middleName: document.querySelector('.middle_name').value,
+//        lastName: document.querySelector('.last_name').value,
+//        gender: document.querySelector('input[name="sgender"]:checked').value,
+//        passportNo: document.querySelector('.passport_no').value,
+//        dateOfBirth: document.getElementById('date_of_birth').value
+//        // Include additional fields as needed
+//    };
+
+//    return beneficiaryData;
+//}
+
+
+function createBeneficiaryData() {
+    var beneficiaryList = [];
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    // Check if the selected type is family or group
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryTable = $('.beneficiary-table').DataTable();
+        var beneficiaryRows = beneficiaryTable.rows().data();
+
+        // Loop through the beneficiary rows and create beneficiary objects
+        beneficiaryRows.each(function (index, row) {
+            var firstName = row[0];
+            var lastName = row[1];
+            var dateOfBirth = row[2];
+            var passportNo = row[3];
+
+            // Retrieve the selected sex option
+            var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
+
+            // Map the selected sex option to the corresponding value
+            var sexValue;
+            if (selectedSexOption === 'M') {
+                sexValue = 1; // Set the appropriate value for male
+            } else if (selectedSexOption === 'F') {
+                sexValue = 2; // Set the appropriate value for female
+            } else {
+                sexValue = 0; // Set the appropriate default value
+            }
+
+            // Create a beneficiary object
+            var beneficiaryData = {
+                Id: 0, // Set the appropriate value for the Id property
+                Sex: sexValue,
+                SexName: '', // Set the appropriate value for the SexName property
+                FirstName: firstName,
+                MiddleName: '',
+                LastName: lastName,
+                PassportNumber: passportNo,
+                DateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null
+            };
+
+            // Add the beneficiary object to the beneficiary list
+            beneficiaryList.push(beneficiaryData);
+
+        });
+    }
+    else {
+        // Retrieve the beneficiary data from individual input fields
+        var firstNameInput = document.querySelector('.first_name');
+        var middleNameInput = document.querySelector('.middle_name');
+        var lastNameInput = document.querySelector('.last_name');
+        var passportNoInput = document.querySelector('.passport_no');
+        var dateOfBirthInput = document.getElementById('date_of_birth');
+        var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
+
+        var sexValue;
+        if (selectedSexOption === 'M') {
+            sexValue = 1;
+        } else if (selectedSexOption === 'F') {
+            sexValue = 2;
+        } else {
+            sexValue = 0;
+        }
+        // Create a beneficiary object
+        var beneficiaryData = {
+            Id: 0, // Set the appropriate value for the Id property
+            Sex: sexValue, // Set the appropriate value for the Sex property
+            SexName: '', // Set the appropriate value for the SexName property
+            FirstName: firstNameInput.value,
+            MiddleName: middleNameInput.value,
+            LastName: lastNameInput.value,
+            PassportNumber: passportNoInput.value,
+            DateOfBirth: dateOfBirthInput.value ? new Date(dateOfBirthInput.value) : null
+        };
+
+        // Add the beneficiary object to the beneficiary list
+        beneficiaryList.push(beneficiaryData);
+    }
+
+    // Return the beneficiary list
+    return beneficiaryList;
+}
+
+
+function createTravelData() {
+    var travelList = [];
+
+    // Retrieve the travel data from the table
+    var travelTable = document.getElementById('destinationtbl');
+    var travelRows = travelTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    // Loop through the travel rows and create travel objects
+    for (var i = 0; i < travelRows.length; i++) {
+        var row = travelRows[i];
+        var destination = row.cells[0].textContent;
+        var from = row.cells[1].textContent;
+        var to = row.cells[2].textContent;
+        var duration = row.cells[3].textContent;
+
+        // Create a travel object
+        var travelData = {
+            Destination: destination,
+            From: from,
+            To: to,
+            Duration: duration
+        };
+
+        // Add the travel object to the travel list
+        travelList.push(travelData);
+    }
+
+    // Return the travel list
+    return travelList;
+}
+
+// Step 3: Convert objects to JSON strings
+function convertToJSON(data) {
+    return JSON.stringify(data);
+}
+
+// Step 4: Send the JSON strings to the server using AJAX call
+function sendData() {
+
+
+    console.log(getQuotationData())
+
+    return 
+    var generalInfoData = createGeneralInformationData();
+
+    var beneficiaryData = createBeneficiaryData();
+    var travelData = createTravelData();
+    console.log(travelData)
+
+    return false;
+    var generalInfoJSON = convertToJSON(generalInfoData);
+    var beneficiaryJSON = convertToJSON(beneficiaryData);
+    var travelJSON = convertToJSON(travelData);
+
+    return;
+
+    var url = 'your-endpoint-url';
+    var method = 'POST';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            // AJAX call successful
+            var response = JSON.parse(xhr.responseText);
+            // Handle the response as needed
+        }
+    };
+    xhr.send(JSON.stringify({ generalInfo: generalInfoJSON, beneficiary: beneficiaryJSON, travel: travelJSON }));
+}
+
+
+
+
+
+
+
+function getQuotationData() {
+    // Retrieve ages of beneficiaries
+    function calculateAge(dateOfBirth) {
+        var today = new Date();
+        var birthDate = new Date(dateOfBirth);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    var beneficiaryRows = document.querySelectorAll('.beneficiary-table tbody tr');
+    var ages = Array.from(beneficiaryRows).map(function (row) {
+        var dateOfBirth = row.cells[2].textContent;
+        return calculateAge(dateOfBirth);
+    });
+
+    // Retrieve selected product
+    var selectedProduct = document.getElementById('product_id').value;
+
+    // Retrieve selected zone
+    var selectedZone = document.getElementById('zone_id').value;
+
+    // Retrieve durations in the travel section
+    var travelList = createTravelData();
+    var durations = travelList.map(function (travel) {
+        return travel.Duration;
+    });
+
+    // Construct the quotation data object
+    var quotationData = {
+        Ages: ages,
+        Product: selectedProduct,
+        Zone: selectedZone,
+        Durations: durations
+    };
+
+    return quotationData;
 }

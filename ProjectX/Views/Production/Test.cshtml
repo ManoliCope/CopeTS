@@ -55,7 +55,7 @@
 											<h3>General Information</h3>
 											<hr>
 											<div class="row">
-												<div class="col-md-6 typeradio">
+												<div class="col-md-8 typeradio">
 													<div class="row">
 														<div class="col-md-4">
 															<div class="we-checkbox">
@@ -135,10 +135,10 @@
 													<div class="row mt-3">
 														<div class="form-group col-md-6">
 															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
-														<div class="search-dropdown">
-															<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
-															<div id="searchDropdownContent" class="search-dropdown-content"></div>
-														</div>
+															<div class="search-dropdown">
+																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+																<div id="searchDropdownContent" class="search-dropdown-content"></div>
+															</div>
 														</div>
 
 														<div class="form-group col-md-6 xlsxupload" style="display: none;">
@@ -203,7 +203,7 @@
 															</select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-nationality-container"><span class="select2-selection__rendered" id="select2-nationality-container" role="textbox" aria-readonly="true"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear"><i class="fas fa-times text-danger"></i></span></span>
 
 														</div>
-														<div class="form-group col-md-3 div-beneficiary " >
+														<div class="form-group col-md-3 div-beneficiary ">
 															<label>&nbsp;</label>
 															<div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
 																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
@@ -243,15 +243,16 @@
 													</div>
 													<div class="table-responsive">
 														<table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none;">
-															<tbody>
+															<thead>
 																<tr class="thead-light">
 																	<th>First Name</th>
 																	<th>Last Name</th>
 																	<th>Date Of Birth</th>
 																	<th>Passport No.</th>
-																	<th style="width:90px;" data-orderable="false">Actions<button type="button" class="btn btn-sm delete-beneficiaries"><i class="fas fa-trash"></i></button></th>
+																	<th>Sex</th>
+																	<th style="width:90px;" data-orderable="false">Actions</th>
 																</tr>
-															</tbody>
+															</thead>
 															<tbody class="beneficiary-list">
 															</tbody>
 														</table>
@@ -391,24 +392,24 @@
 													</tr>
 												</tbody>
 												@*<tbody class="quotation-list">
-														<tr class="text-center">
-															<td>
-																SAHAR CHARARA
-															</td>
-															<td>
-																<select class="d-none cum_con_days_full">
-																</select>
-															</td>
-															<td class="base_price" data-price="11.00">14.00 USD</td>
-															<td class="discount" data-discount="0">
-																0 %
-																<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
-															</td>
-															<td>
-																<span class="final_price" data-price="11">14 USD</span>
-															</td>
-														</tr>
-													</tbody>*@
+							<tr class="text-center">
+								<td>
+									SAHAR CHARARA
+								</td>
+								<td>
+									<select class="d-none cum_con_days_full">
+									</select>
+								</td>
+								<td class="base_price" data-price="11.00">14.00 USD</td>
+								<td class="discount" data-discount="0">
+									0 %
+									<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
+								</td>
+								<td>
+									<span class="final_price" data-price="11">14 USD</span>
+								</td>
+							</tr>
+						</tbody>*@
 											</table>
 										</div>
 									</div>
@@ -417,7 +418,9 @@
 								<div class="my-3" style="height: 32px;">
 									<div class="btn btn-third float-end grand_total">14.00 USD</div>
 									<div class="btn btn-third float-right mr-2">Grand Total</div>
-								</div><button type="submit" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+								</div>
+								<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+
 							</div>
 						</div>
 					</div>

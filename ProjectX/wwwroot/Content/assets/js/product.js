@@ -32,6 +32,17 @@ function drawtable(data) {
     console.log(data)
     var table = $('#producttable').DataTable({
         "data": data,
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'csv', text: 'Export',
+                exportOptions: {
+                    modifier: {
+                        search: 'none'
+                    }
+                }
+            }
+        ],
         "paging": true,
         "ordering": true,
         "filter": true,
@@ -75,6 +86,8 @@ function drawtable(data) {
         orderCellsTop: true,
         fixedHeader: true
     });
+
+    
 
     triggerfiltertable(table, "profile")
 }

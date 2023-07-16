@@ -32,6 +32,17 @@ function drawtable(data) {
     console.log(data)
     var table = $('#beneficiarytable').DataTable({
         "data": data,
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'csv', text: 'Export',
+                exportOptions: {
+                    modifier: {
+                        search: 'none'
+                    }
+                }
+            }
+        ],
         "paging": true,
         "ordering": true,
         "filter": true,

@@ -215,6 +215,11 @@ function triggerfiltertable(datatable, tablename) {
             .columns().search("")
             .draw();
     });
+
+    var buttonsContainer = datatable.buttons().container();
+    var filterElement = $('.dataTables_filter');
+
+    buttonsContainer.prependTo(filterElement).addClass('dt-buttons-left').addClass('float-left').find('button').addClass('btn btn-info'); // Adjust positioning for left side
 }
 
 
