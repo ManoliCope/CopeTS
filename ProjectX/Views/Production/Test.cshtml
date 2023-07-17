@@ -132,7 +132,7 @@
 											<h3>Beneficiary</h3><hr>
 											<div class="row thisbeneficiary">
 												<div class="col-md-12">
-													<div class="row mt-3">
+													<div class="row">
 														<div class="form-group col-md-6">
 															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
 															<div class="search-dropdown">
@@ -337,10 +337,12 @@
 						<div class="card mt-4  sticky-top" style="top:90px;">
 							<div class="card-header text-center">
 								<h4>
-									<div class="excess float-end">
-										Quotation
-										<div class="we-checkbox pt-2">
-											<input type="hidden" name="with_excess" value="0" id="with_excess">
+									<div class="excess ">
+										<span class="float-left ">
+											Quotation
+
+										</span>
+										<div class="we-checkbox float-right">
 											<input type="checkbox" name="box-excess" value="1" id="box-excess">
 											<label for="box-excess" style="font-size: 14px; font-weight: 400; padding-top: 5px;">
 												With Excess
@@ -349,86 +351,125 @@
 									</div>
 								</h4>
 							</div>
-							<div class="card-body result">
-								<div class="card mt-2">
-									<div class="card-body" style="font-size:13px">
-										<div>
-											<b>Destination(s) </b>
-											<span class="float-end">
-												Aruba,
-											</span>
-										</div>
-										<div>
-											<b>Inception Date </b>
-											<span class="float-end">08-07-2023  </span>
-										</div>
-										<div>
-											<b>Expiry Date</b>
-											<span class="float-end">08-07-2023  </span>
-										</div>
-										<div>
-											<b>Plan </b>
-											<span class="float-end">
-												Silver
-											</span>
-										</div>
-										<div>
-											<b>Duration </b>
-											<span class="float-end">1 Days </span>
-										</div>
-										<div>
+							<div class="card-body result ">
+								<div class="quotecontainer">
+									<div class="card mt-2">
+										<div class="card-body" style="font-size:13px">
+											<div>
+												<b>Destination(s) </b>
+												<span class="float-end">
+													Aruba,
+												</span>
+											</div>
+											<div>
+												<b>Inception Date </b>
+												<span class="float-end">08-07-2023  </span>
+											</div>
+											<div>
+												<b>Expiry Date</b>
+												<span class="float-end">08-07-2023  </span>
+											</div>
+											<div>
+												<b>Duration </b>
+												<span class="float-end">1 Days </span>
+											</div>
+											<div>
 
-											<span class="float-end total_price" data-currency="USD"> </span>
-										</div>
-										<div class="table-responsive">
-											<table class="table table-sm table-bordered mt-3">
-												<tbody>
-													<tr class="thead-light text-center">
-														<th>Full Name</th>
-														<th>Cons. / Cumul. Days</th>
-														<th>Base Price</th>
-														<th>Discount</th>
-														<th>Final Price </th>
-													</tr>
-												</tbody>
-												@*<tbody class="quotation-list">
-							<tr class="text-center">
-								<td>
-									SAHAR CHARARA
-								</td>
-								<td>
-									<select class="d-none cum_con_days_full">
-									</select>
-								</td>
-								<td class="base_price" data-price="11.00">14.00 USD</td>
-								<td class="discount" data-discount="0">
-									0 %
-									<input type="hidden" class="discount" name="plans_discount[0][]" value="0">
-								</td>
-								<td>
-									<span class="final_price" data-price="11">14 USD</span>
-								</td>
-							</tr>
-						</tbody>*@
-											</table>
+												<span class="float-end total_price" data-currency="USD"> </span>
+											</div>
+											<div class="table-responsive">
+												<table class="table table-sm table-bordered mt-3">
+													<thead>
+														<tr class="thead-light text-center">
+															<th>Full Name</th>
+															<th>Cons. / Cumul. Days</th>
+															<th>Base Price</th>
+															<th>Discount</th>
+															<th>Final Price </th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr class="text-center">
+															<td>Dani</td>
+															<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
+
+															<td class="base_price" data-price="11.00">14.00 USD</td>
+															<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
+															<td><span class="final_price" data-price="11">14 USD</span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
-								</div>
-								<input type="hidden" name="plans_all[0]" value="510">
-								<div class="my-3" style="height: 32px;">
-									<div class="btn btn-third float-end grand_total">14.00 USD</div>
-									<div class="btn btn-third float-right mr-2">Grand Total</div>
-								</div>
-								<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+									<div class="card mt-2">
+										<div class="card-body" style="font-size:13px">
+											<div>
+												<b>Destination(s) </b>
+												<span class="float-end">
+													Aruba,
+												</span>
+											</div>
+											<div>
+												<b>Inception Date </b>
+												<span class="float-end">08-07-2023  </span>
+											</div>
+											<div>
+												<b>Expiry Date</b>
+												<span class="float-end">08-07-2023  </span>
+											</div>
+											<div>
+												<b>Duration </b>
+												<span class="float-end">1 Days </span>
+											</div>
+											<div>
 
+												<span class="float-end total_price" data-currency="USD"> </span>
+											</div>
+											<div class="table-responsive">
+												<table class="table table-sm table-bordered mt-3">
+													<thead>
+														<tr class="thead-light text-center">
+															<th>Full Name</th>
+															<th>Cons. / Cumul. Days</th>
+															<th>Base Price</th>
+															<th>Discount</th>
+															<th>Final Price </th>
+														</tr>
+													</thead>
+													<tbody class="quotation-list">
+														<tr class="text-center">
+															<td>SAHAR </td>
+															<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
+															<td>0</td>
+															<td>0</td>
+															<td>12 USD</td>
+														</tr>
+														<tr class="text-center">
+															<td>Mussa Basma</td>
+															<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
+															<td class="base_price" data-price="11.00">14.00 USD</td>
+															<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
+															<td><span class="final_price" data-price="11">14 USD</span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="my-3" style="height: 32px;">
+										<div class="btn btn-third float-end grand_total">14.00 USD</div>
+										<div class="btn btn-third float-right mr-2">Grand Total</div>
+									</div>
+									<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+								</div>
+								<div class="loadersize"><div id="loader"></div></div>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 	</div>
-
 </div>

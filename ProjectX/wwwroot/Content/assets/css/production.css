@@ -1,6 +1,5 @@
-﻿.addnewbtn
-{
-    height:26px
+﻿.addnewbtn {
+    height: 26px
 }
 
 
@@ -13,42 +12,42 @@
     padding-top: 10px;
 }
 
-.panel.with-nav-tabs .nav-tabs {
-    border-bottom-color: #ddd;
-    margin-bottom: 0;
-    height:33px;
-}
-
-    .panel.with-nav-tabs .nav-tabs > li {
-        margin-bottom: -1px;
+    .panel.with-nav-tabs .nav-tabs {
+        border-bottom-color: #ddd;
+        margin-bottom: 0;
+        height: 33px;
     }
 
-        .panel.with-nav-tabs .nav-tabs > li > a {
-            border-radius: 0;
-            background-color: transparent;
-            color: #333;
-            margin-right: 0px;
+        .panel.with-nav-tabs .nav-tabs > li {
+            margin-bottom: -1px;
         }
 
-            .panel.with-nav-tabs .nav-tabs > li > a:hover,
-            .panel.with-nav-tabs .nav-tabs > li > a:focus {
-                background-color: #e7e7e7;
+            .panel.with-nav-tabs .nav-tabs > li > a {
+                border-radius: 0;
+                background-color: transparent;
                 color: #333;
+                margin-right: 0px;
             }
 
-        .panel.with-nav-tabs .nav-tabs > li.active > a,
-        .panel.with-nav-tabs .nav-tabs > li.active > a:hover,
-        .panel.with-nav-tabs .nav-tabs > li.active > a:focus {
-            background-color: #fff;
-            color: #333;
-            border: none;
-            border-bottom-color: transparent;
-        }
+                .panel.with-nav-tabs .nav-tabs > li > a:hover,
+                .panel.with-nav-tabs .nav-tabs > li > a:focus {
+                    background-color: #e7e7e7;
+                    color: #333;
+                }
+
+            .panel.with-nav-tabs .nav-tabs > li.active > a,
+            .panel.with-nav-tabs .nav-tabs > li.active > a:hover,
+            .panel.with-nav-tabs .nav-tabs > li.active > a:focus {
+                background-color: #fff;
+                color: #333;
+                border: none;
+                border-bottom-color: transparent;
+            }
 
 .nav-tabs li a.active {
     border-bottom: 2px solid var(--third-color) !important;
-   background: var(--third-color) !important;
-   color: white !important;
+    background: var(--third-color) !important;
+    color: white !important;
 }
 
 
@@ -61,7 +60,7 @@
 }
 
 .tab-content {
-    padding:0;
+    padding: 0;
 }
 
 
@@ -75,8 +74,8 @@
 
 
 
-.card.sticky-top{
-    z-index:200 !important
+.card.sticky-top {
+    z-index: 200 !important
 }
 
 
@@ -97,3 +96,47 @@
 }
 
 
+.result .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+
+.result table th, .result table td {
+    font-size: 13px !important;
+    width: 20px;
+    max-width: 50px;
+}
+
+    .result table td:first-child {
+        white-space: pre-line !important;
+    }
+
+.result table select {
+    min-width: 50px;
+}
+
+.quotecontainer{
+    display:none;
+}
+
+.result.load .quotecontainer {
+    display:none;
+}
+.result.load .loadersize {
+   display:block
+}
+
+.result .quotecontainer {
+    display: block;
+}
+
+.result .loadersize {
+    display: none
+}
