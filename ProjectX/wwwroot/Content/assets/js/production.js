@@ -404,7 +404,9 @@ function Search() {
 }
 
 var sendButton = document.getElementById('sendButton');
-sendButton.addEventListener('click', sendData);
+if (sendButton) {
+    sendButton.addEventListener('click', sendData);
+}
 
 // Step 1: Add event listener to the button or trigger
 
@@ -567,10 +569,16 @@ function convertToJSON(data) {
 // Step 4: Send the JSON strings to the server using AJAX call
 function sendData() {
 
+    $(".result").addClass("load")
+
+    setTimeout(function () {
+        $(".result").removeClass("load")
+    }, 2000);
+
 
     console.log(getQuotationData())
 
-    return 
+    return
     var generalInfoData = createGeneralInformationData();
 
     var beneficiaryData = createBeneficiaryData();

@@ -159,13 +159,6 @@ function addnew() {
     };
 
 
-    if (isNaN(new Date(tariffReq.tariff_starting_date).getTime())) {
-        alert("Invalid date!");
-    }
-    removeloader();
-
-    return false
-
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -200,7 +193,7 @@ function edit() {
     if (isNaN(dateObj.getTime())) {
         showresponsemodal(0, "Invalid Date")
         return false
-    } 
+    }
 
 
     showloader("load")
