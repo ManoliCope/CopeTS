@@ -14,6 +14,7 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> tariffs { get; set; }
         public List<LookUpp> users { get; set; }
         public List<LookUpp> zones { get; set; }
+        public List<LookUpp> sex { get; set; }
         public List<Destination> destinations { get; set; }
         
     }

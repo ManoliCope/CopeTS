@@ -37,7 +37,9 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadUsers", loadDataModelSetup.loadUsers);
             param.Add("@loadZones", loadDataModelSetup.loadZones);
             param.Add("@loadDestinations", loadDataModelSetup.loadDestinations);
-            
+            param.Add("@loadSexNames", loadDataModelSetup.loadSexNames);
+
+
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -59,6 +61,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.zones = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadDestinations)
                         resp.destinations = result.Read<Destination>().ToList();
+                    if (loadDataModelSetup.loadSexNames)
+                        resp.sex = result.Read<LookUpp>().ToList();
                 }
             }
 

@@ -23,7 +23,7 @@ namespace ProjectX.Repository.BenefitRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public BenResp ModifyBenefit(BenReq req, string act, int userid)
+        public  BenResp ModifyBenefit(BenReq req, string act, int userid)
         {
             var resp = new BenResp();
             int statusCode = 0;

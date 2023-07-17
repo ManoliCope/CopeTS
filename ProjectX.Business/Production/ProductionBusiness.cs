@@ -8,6 +8,7 @@ using ProjectX.Entities.Resources;
 using ProjectX.Entities;
 using ProjectX.Entities.bModels;
 using ProjectX.Repository.ProductionRepository;
+using ProjectX.Entities.Models.Production;
 
 namespace ProjectX.Business.Production
 {
@@ -26,6 +27,12 @@ namespace ProjectX.Business.Production
         public List<TR_Destinations> GetDestinationByZone(int idZone)
         {
             return _prodRepository.GetDestinationByZone(idZone);
+        }
+        public ProductionResp getProductionDetails(ProductionReq req)
+        {
+            {
+                return _prodRepository.getProductionDetails(req);
+            }
         }
     }
 }

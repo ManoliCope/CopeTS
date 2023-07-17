@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using ProjectX.Entities.Models.Product;
+using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
 
@@ -58,22 +59,26 @@ namespace ProjectX.Repository.ProductionRepository
 
             return response;
         }
-        //public List<TR_Zone> GetDestinationByZone(int idZone)
-        //{
-        //    List<TR_Zone> response = new List<TR_Zone>();
-        //    var param = new DynamicParameters();
-        //    param.Add("@zone", idZone);
+   
+        public ProductionResp getProductionDetails (ProductionReq req)
+        {
+            ProductionResp response = new ProductionResp();
+            var param = new DynamicParameters();
+            param.Add("@zone", req.Zone);
+            param.Add("@product", req.Product);
+            param.Add("@age", req.Ages);
+            param.Add("@durations", req.Durations);
 
-        //    using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
-        //    {
-        //        using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Destinations_GetbyZone", param, commandType: CommandType.StoredProcedure))
-        //        {
-        //            response = result.Read<TR_Zone>().ToList();
-        //        }
-        //    }
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_GetProductionDetails", param, commandType: CommandType.StoredProcedure))
+                {
+                    response.tariff = result.Read<TR_Tariff>().ToList();
+                    response.production = req;
+                }
+            }
 
-        //    return response;
-        //}
-
+            return response;
+        }
     }
 }
