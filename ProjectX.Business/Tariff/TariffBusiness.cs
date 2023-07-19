@@ -44,6 +44,8 @@ namespace ProjectX.Business.Tariff
             resp.tariff_starting_date = repores.T_Tariff_Starting_Date;
             resp.Override_Amount = repores.T_Override_Amount;
             resp.planId = repores.PL_Id;
+            resp.package = repores.P_Name;
+            resp.plan= repores.PL_Name;
 
             return resp;
            

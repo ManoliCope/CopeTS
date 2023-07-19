@@ -8,6 +8,7 @@ namespace ProjectX.Entities.dbModels
     {
         public int T_Id { get; set; }
         public int P_Id { get; set; }
+        public string P_Name { get; set; }
         public int T_Start_Age { get; set; }
         public int T_End_Age { get; set; }
         public int T_Number_Of_Days { get; set; }
@@ -17,5 +18,6 @@ namespace ProjectX.Entities.dbModels
         public DateTime T_Tariff_Starting_Date { get; set; }
         public double T_Override_Amount { get; set; }
         public int PL_Id { get; set; }
+        public string PL_Name { get; set; }
     }
 }

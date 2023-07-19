@@ -44,6 +44,7 @@ namespace ProjectX.Business.Package
             resp.Child_Max_Age = repores.P_Child_Max_Age;
             resp.Adult_Max_Age = repores.P_Adult_Max_Age;
             resp.Special_Case = repores.P_Special_Case;
+            resp.ProductName = repores.PR_Name;
 
             return resp;
            

@@ -10,6 +10,7 @@ namespace ProjectX.Entities.Models.Package
         public int Id { get; set; }
         public string Name { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
         public int ZoneID { get; set; }
         public int Remove_deductable { get; set; }
         public int Adult_No { get; set; }
