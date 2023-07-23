@@ -24,15 +24,17 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetProductsByType(type);
         }
+        public List<TR_Zone> GetZonesByProduct(int type)
+        {
+            return _prodRepository.GetZonesByProduct(type);
+        }
         public List<TR_Destinations> GetDestinationByZone(int idZone)
         {
             return _prodRepository.GetDestinationByZone(idZone);
         }
         public ProductionResp getProductionDetails(ProductionReq req)
         {
-            {
-                return _prodRepository.getProductionDetails(req);
-            }
+            return _prodRepository.getProductionDetails(req);
         }
     }
 }

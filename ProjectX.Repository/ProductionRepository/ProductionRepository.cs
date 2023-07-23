@@ -42,6 +42,23 @@ namespace ProjectX.Repository.ProductionRepository
             }
 
             return response;
+        }     
+        public List<TR_Zone> GetZonesByProduct(int idType)
+        {
+            List<TR_Zone> response = new List<TR_Zone>();
+            //var resp = new TR_Product();
+            var param = new DynamicParameters();
+            param.Add("@productid", idType);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Zones_GetbyProduct", param, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<TR_Zone>().ToList();
+                }
+            }
+
+            return response;
         }   
         public List<TR_Destinations> GetDestinationByZone(int idZone)
         {

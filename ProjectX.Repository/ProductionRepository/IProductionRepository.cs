@@ -11,6 +11,7 @@ namespace ProjectX.Repository.ProductionRepository
     public interface IProductionRepository
     {
         public List<TR_Product> GetProductsByType(int id);
+        public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
         public ProductionResp getProductionDetails(ProductionReq req);
 

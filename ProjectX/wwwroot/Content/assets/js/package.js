@@ -103,7 +103,7 @@ function Search() {
         "PA_Included": $("#PA_Included").prop('checked')
     };
 
-
+    console.log(filter)
     $.ajax({
         type: 'POST',
         url: projectname + "/package/Search",

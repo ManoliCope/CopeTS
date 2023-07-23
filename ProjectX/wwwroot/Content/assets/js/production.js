@@ -1,12 +1,6 @@
 ﻿var projectname = checkurlserver();
 
-
-
-
 $(document).ready(function () {
-
-
-
     $("#search").click(function () {
 
         drawtable()
@@ -26,6 +20,7 @@ $(document).ready(function () {
     //$("#destinationtbl").DataTable()
 
 
+    populatezones();
     populateproducts();
     populatedestinations()
     populatebeneficiary()
@@ -294,8 +289,13 @@ function populateproducts() {
             beneficiaryTable.hide(); // Hide beneficiary table for Single
         }
 
+        //$("#destinationtbl tbody tr").empty();
+        const table = $('#destinationtbl').DataTable();
+        table.clear().draw();
+
         $('#product_id').empty().append('<option value="">Select Product</option>').val('').trigger('change');
-        $('#product_id').prop('disabled', true);
+        $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
+        $('#product_id,#zone_id').prop('disabled', true);   
         $.ajax({
             url: projectname + '/Production/GetProdutctsByType',
             method: 'POST',
@@ -304,8 +304,36 @@ function populateproducts() {
                 $.each(response, function (index, product) {
                     $('#product_id').append('<option value="' + product.pR_Id + '">' + product.pR_Title + '</option>');
                 });
+                $('#product_id,#zone_id').prop('disabled', false);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
+}
 
-                $('#product_id').prop('disabled', false);
+
+
+function populatezones() {
+    $('#product_id').on('change', function () {
+        var selectedPr = $("#product_id").val();
+        $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
+        if (selectedPr == 0)
+            return
+
+        $('#zone_id').prop('disabled', true);
+
+        $.ajax({
+            url: projectname + '/Production/GetZonesByProduct',
+            method: 'POST',
+            data: { id: selectedPr },
+            success: function (response) {
+                $.each(response, function (index, zone) {
+                    $('#zone_id').append('<option value="' + zone.z_Id + '">' + zone.z_Title + '</option>');
+                });
+
+                $('#zone_id').prop('disabled', false);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -525,6 +553,8 @@ function createBeneficiaryData() {
         beneficiaryList.push(beneficiaryData);
     }
 
+
+    console.log(beneficiaryList)
     // Return the beneficiary list
     return beneficiaryList;
 }
@@ -533,31 +563,30 @@ function createBeneficiaryData() {
 function createTravelData() {
     var travelList = [];
 
-    // Retrieve the travel data from the table
     var travelTable = document.getElementById('destinationtbl');
-    var travelRows = travelTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-    // Loop through the travel rows and create travel objects
-    for (var i = 0; i < travelRows.length; i++) {
-        var row = travelRows[i];
-        var destination = row.cells[0].textContent;
-        var from = row.cells[1].textContent;
-        var to = row.cells[2].textContent;
-        var duration = row.cells[3].textContent;
+    var tbody = travelTable.getElementsByTagName('tbody')[0];
+    if (tbody) {
+        var travelRows = tbody.getElementsByTagName('tr');
 
-        // Create a travel object
-        var travelData = {
-            Destination: destination,
-            From: from,
-            To: to,
-            Duration: duration
-        };
+        for (var i = 0; i < travelRows.length; i++) {
+            var row = travelRows[i];
+            var destination = row.cells[0].textContent;
+            var from = row.cells[1].textContent;
+            var to = row.cells[2].textContent;
+            var duration = row.cells[3].textContent;
 
-        // Add the travel object to the travel list
-        travelList.push(travelData);
+            // Create a travel object
+            var travelData = {
+                Destination: destination,
+                From: from,
+                To: to,
+                Duration: duration
+            };
+
+            travelList.push(travelData);
+        }
     }
-
-    // Return the travel list
     return travelList;
 }
 
@@ -575,8 +604,8 @@ function sendData() {
         $(".result").removeClass("load")
     }, 2000);
 
-
-    console.log(getQuotationData())
+    getQuotationData()
+    //console.log(getQuotationData())
 
     return
     var generalInfoData = createGeneralInformationData();
@@ -627,11 +656,23 @@ function getQuotationData() {
         return age;
     }
 
-    var beneficiaryRows = document.querySelectorAll('.beneficiary-table tbody tr');
-    var ages = Array.from(beneficiaryRows).map(function (row) {
-        var dateOfBirth = row.cells[2].textContent;
-        return calculateAge(dateOfBirth);
-    });
+    var ages = [];
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryTable = $('.beneficiary-table').DataTable();
+        var beneficiaryRows = beneficiaryTable.rows().data();
+
+        beneficiaryRows.each(function (index, row) {
+            var dateOfBirth = row[2];
+            ages.push(calculateAge(dateOfBirth));
+        });
+    }
+    else {
+        var dateOfBirthInput = document.getElementById('date_of_birth').value;
+        ages.push(calculateAge(dateOfBirthInput));
+    }
 
     // Retrieve selected product
     var selectedProduct = document.getElementById('product_id').value;
@@ -653,5 +694,24 @@ function getQuotationData() {
         Durations: durations
     };
 
+
+    alert("quoting")
+
+    $.ajax({
+        url: projectname + '/Production/GetQuotation',
+        method: 'POST',
+        data: { quotereq: quotationData },
+        success: function (response) {
+           alert("quote")
+        },
+        error: function (xhr, status, error) {
+            alert('big error')
+            console.log(error);
+        }
+    });
+
+
+
+    console.log(quotationData)
     return quotationData;
 }

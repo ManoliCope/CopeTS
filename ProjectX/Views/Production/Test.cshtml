@@ -101,23 +101,22 @@
 														<label for="zone_id">Zone</label>
 														<select class="form-control isselect2" id="zone_id" name="zone_id">
 															<option value="">Select Zone</option>
-															@foreach (var thislist in filldata.loadedData.zones)
+															@*@foreach (var thislist in filldata.loadedData.zones)
 															{
 																<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-															}
+															}*@
 														</select>
 													</div>
 												</div>
 											</div>
-											<div class="row">
-
+											@*<div class="row">
 												<div class="col-md-8">
 													<div class="form-group">
 														<label for="notes">Notes</label>
 														<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
 													</div>
 												</div>
-											</div>
+											</div>*@
 										</div>
 									</div>
 								</div>
@@ -279,10 +278,10 @@
 																<label for="destination_id">Destination(s)</label>
 																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
-																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
 																		<option value="@thislist.D_Id" cid="@thislist.D_IdContinent"> @thislist.D_Destination</option>
-																	}
+																	}*@
 																</select>
 															</div>
 														</div>
