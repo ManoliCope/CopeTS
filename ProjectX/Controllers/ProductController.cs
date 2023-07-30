@@ -27,7 +27,7 @@ namespace ProjectX.Controllers
         private IProductBusiness _productBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
 
 
@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
             _productBusiness = productBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
         }
 
 
@@ -88,7 +88,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _productBusiness.ModifyProduct(req, "Create", _user.UserId);
+            return _productBusiness.ModifyProduct(req, "Create", _user.U_Id);
         }
 
 
@@ -117,7 +117,7 @@ namespace ProjectX.Controllers
             }
 
 
-            return _productBusiness.ModifyProduct(req, "Update", _user.UserId);
+            return _productBusiness.ModifyProduct(req, "Update", _user.U_Id);
         }
 
         [HttpPost]
@@ -129,7 +129,7 @@ namespace ProjectX.Controllers
 
             req.activation_date = thisDay;
             ProdResp response = new ProdResp();
-            return _productBusiness.ModifyProduct(req, "Delete", _user.UserId);
+            return _productBusiness.ModifyProduct(req, "Delete", _user.U_Id);
         }
     }
 }

@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Profile\**" />
-    <Content Remove="Views\Profile\**" />
-    <EmbeddedResource Remove="Views\Profile\**" />
-    <None Remove="Views\Profile\**" />
+    <None Include="Views\Profile\Create.cshtml" />
+    <None Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

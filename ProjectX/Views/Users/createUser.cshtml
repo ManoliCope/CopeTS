@@ -8,30 +8,30 @@
 <div class="content" pgtype="view">
     <div class="container-fluid" style="padding:10px 0">
         <div class="card-body">
-            <form class="needs-validation" novalidate="" id="addBrokerForm" autocomplete="off">
+            <form class="needs-validation" novalidate="" id="addBrokerForm" userid autocomplete="off">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="firstName">First Name *</label>
-                            <input type="text" class="form-control" id="firstName" field-name="First_Name" required value="">
+                            <input type="text" class="form-control" id="firstName" field-name="first_Name" required value="">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="middleName">Middle Name</label>
-                            <input type="text" class="form-control" id="middleName"  field-name="Middle_Name">
+                            <input type="text" class="form-control" id="middleName"  field-name="middle_Name">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="lastName">Last Name *</label>
-                            <input type="text" class="form-control" id="lastName" field-name="Last_Name" required>
+                            <input type="text" class="form-control" id="lastName" field-name="last_Name" required>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="categoryId">Category *</label>
-                            <select class="form-control" name="categoryId" id="categoryId" field-name="Category" required onchange="ChangeFormByCategoryId()">
+                            <select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
                                 <option></option>
                                 <option value="9">Insurance Company Branch</option>
                                 <option value="11">Reinsurer</option>
@@ -47,14 +47,14 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="lastName">Broker Code *</label>
-                            <input type="text" class="form-control" id="brkNumber" field-name="Broker_Code" required>
+                            <input type="text" class="form-control" id="brkNumber" field-name="broker_Code" required>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="country">Country *</label>
-                            <select class="form-control" name="countryId" id="countryId" field-name="Country" required>
+                            <select class="form-control" name="countryId" id="countryId" field-name="country" required>
                                 <option></option>
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
@@ -65,7 +65,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="city">City</label>
-                            <input type="text" class="form-control" id="city" field-name="City" name="city">
+                            <input type="text" class="form-control" id="city" field-name="city" name="city">
                         </div>
                     </div>
                    
@@ -73,21 +73,21 @@
                         <div class="form-group">
                             <label class="form-control-label" for="telephone">Telephone *</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" field-name="TelephoneCode" required maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ccode" name="ccode" value="961">
-                                <input type="text" class="form-control" field-name="Telephone" required maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="telephone" name="telephone">
+                                <input type="text" class="form-control" field-name="country_code" required maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ccode" name="ccode" value="961">
+                                <input type="text" class="form-control" field-name="telephone" required maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="telephone" name="telephone">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="email">Email *</label>
-                            <input type="email" class="form-control" field-name="Email" id="email" name="email">
+                            <input type="email" class="form-control" field-name="email" id="email" name="email">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="superAgentId">Super-Agent *</label>
-                            <select class=" form-control" field-name="Super_Agent_Id">
+                            <select class=" form-control" field-name="super_Agent_Id">
                                 <option data-select2-id="2">Select Super Agent (Mother Account)</option>
                                 <option value="2" data-select2-id="3">2 - 0 - Green Greens</option>
                                 <option value="3" data-select2-id="4">3 -  - Mubasher Holidays  travel</option>
@@ -101,25 +101,25 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="contactperson">Contact Person</label>
-                            <input type="text" class="form-control" field-name="Contact_Person" id="contactperson">
+                            <input type="text" class="form-control" field-name="contact_Person" id="contactperson">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="insno">Insured Number *</label>
-                            <input type="text" class="form-control" id="insno" field-name="Insured_Number" required>
+                            <input type="text" class="form-control" id="insno" field-name="insured_Number" required>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="tax">Tax (% and #)</label>
-                            <input class="form-control" field-name="Tax" onclick="removeRedColor(this)" type="number" min="0" max="99" name="tax" id="tax" oninput="this.value = Math.abs(this.value)" value="0">
+                            <input class="form-control" field-name="tax" onclick="removeRedColor(this)" type="number" min="0" max="99" name="tax" id="tax" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="currencyId">Currency *</label>
-                            <select class="form-control" name="currencyId" id="currencyId" field-name="Currency" required>
+                            <select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
                                 <option></option>
                                 <option value="1">1 USD 1</option>
                                 <option value="10">10 KUWAITI DINAR 0.29</option>
@@ -151,12 +151,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="roundingRule">Rounding Rule</label>
-                            <select class="form-control" name="roundingRule" id="roundingRule" field-name="Rounding_Rule" >
+                            <select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" >
                                 <option></option>
-                                <option value="U">Upper</option>
-                                <option value="D">Lower</option>
-                                <option value="T">(T)Unkown</option>
-                                <option value="N">Nearest</option>
+                                <option value="1">Upper</option>
+                                <option value="2">Lower</option>
+                                <option value="3">(T)Unkown</option>
+                                <option value="4">Nearest</option>
                             </select>
                         </div>
                     </div>
@@ -164,40 +164,40 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="uniqueTax">Unique Tax</label>
-                            <input class="form-control" onclick="removeRedColor(this)" field-name="Unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="uniqueTaxAdmin">Unique Admin Tax</label>
-                            <input class="form-control" onclick="removeRedColor(this)" field-name="Unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="commPerc">Commission %</label>
-                            <input class="form-control" onclick="removeRedColor(this)" field-name="Commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)">
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)">
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="stampPerc">Stamp %</label>
-                            <input class="form-control" onclick="removeRedColor(this)" field-name="Stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0">
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
                    
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="additionalFees">Addional Fees</label>
-                            <input class="form-control" onclick="removeRedColor(this)"  field-name="Additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="0">
+                            <input class="form-control" onclick="removeRedColor(this)"  field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="vat">VAT</label>
-                            <input class="form-control" onclick="removeRedColor(this)" field-name="VAT" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0">
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
 
@@ -209,7 +209,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="isSyria" id="isSyria" field-name="For_Syria">
+                                    <input type="checkbox" name="isSyria" id="isSyria" field-name="for_Syria">
                                     <label class="form-control-label" for="isSyria">For Syria</label>
                                 </label>
                             </div>
@@ -217,7 +217,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="showComm" id="showComm" field-name="Show_Commission" value="">
+                                    <input type="checkbox" name="showComm" id="showComm" field-name="show_Commission" value="">
                                     <label class="form-control-label" for="showComm">Show Commission</label>
                                 </label>
                             </div>
@@ -225,7 +225,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed"    field-name="Fixed_Additional_Fees" value="">
+                                    <input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed"    field-name="fixed_Additional_Fees" value="">
                                     <label class="form-control-label" for="isAdditionalFeeFixed">Fixed Additional Fees</label>
                                 </label>
                             </div>
@@ -233,7 +233,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="toRound" id="toRound"  field-name="Apply_Rounding">
+                                    <input type="checkbox" name="toRound" id="toRound"  field-name="apply_Rounding">
                                     <label class="form-control-label" for="toRound">Apply rounding</label>
                                 </label>
                             </div>
@@ -242,7 +242,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="cancellationAllowed" id="cancellationAllowed"  field-name="Allow_Cancellation" value="">
+                                    <input type="checkbox" name="cancellationAllowed" id="cancellationAllowed"  field-name="allow_Cancellation" value="">
                                     <label class="form-control-label" for="cancellationAllowed">Allow Cancellation</label>
                                 </label>
                             </div>
@@ -250,14 +250,14 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="showCertificate" id="showCertificate"  field-name="Show_Certificate" value="">
+                                    <input type="checkbox" name="showCertificate" id="showCertificate"  field-name="show_Certificate" value="">
                                     <label class="form-control-label" for="showCertificate">Show Cetificate</label>
                                 </label>
                             </div>
                         </div>                                        <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed"    field-name="Cancellation_SubAgent" value="">
+                                    <input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed"    field-name="cancellation_SubAgent" value="">
                                     <label class="form-control-label" for="subAgentCanAllowed">Cancellation for Sub-Agent</label>
                                 </label>
                             </div>
@@ -265,7 +265,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="showTotalOnly" id="showTotalOnly"  field-name="Preview_Total_Only" value="">
+                                    <input type="checkbox" name="showTotalOnly" id="showTotalOnly"  field-name="preview_Total_Only" value="">
                                     <label class="form-control-label" for="showTotalOnly">Preview Total Only</label>
                                 </label>
                             </div>
@@ -273,7 +273,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="showNetTotal" id="showNetTotal"    field-name="Preview_Net" value="">
+                                    <input type="checkbox" name="showNetTotal" id="showNetTotal"    field-name="preview_Net" value="">
                                     <label class="form-control-label" for="showNetTotal">Preview Net</label>
                                 </label>
                             </div>
@@ -281,7 +281,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="canCreateAgents" id="canCreateAgents"  field-name="Agents_Creation" value="">
+                                    <input type="checkbox" name="canCreateAgents" id="canCreateAgents"  field-name="agents_Creation" value="">
                                     <label class="form-control-label" for="canCreateAgents">Agents Creation</label>
                                 </label>
                             </div>
@@ -289,7 +289,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="userCreationApproval" id="userCreationApproval" field-name="Agents_Creation_Approval" value="">
+                                    <input type="checkbox" name="userCreationApproval" id="userCreationApproval" field-name="agents_Creation_Approval" value="">
                                     <label class="form-control-label" for="userCreationApproval">Agents Creation Approval</label>
                                 </label>
                             </div>
@@ -297,7 +297,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="viewCommAgentRpt" id="viewCommAgentRpt"    field-name="Agents_Commission_ReportView" value="">
+                                    <input type="checkbox" name="viewCommAgentRpt" id="viewCommAgentRpt"    field-name="agents_Commission_ReportView" value="">
                                     <label class="form-control-label" for="viewCommAgentRpt">Agent Commission ReportView</label>
                                 </label>
                             </div>
@@ -306,7 +306,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="viewCommSubAgentRpt" id="viewCommSubAgentRpt" field-name="SubAgents_Commission_ReportView" value="">
+                                    <input type="checkbox" name="viewCommSubAgentRpt" id="viewCommSubAgentRpt" field-name="subAgents_Commission_ReportView" value="">
                                     <label class="form-control-label" for="viewCommSubAgentRpt">SubAgent Commission ReportView</label>
                                 </label>
                             </div>
@@ -314,7 +314,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="printClientVoucher" id="printClientVoucher"    field-name="Print_Client_Voucher" value="">
+                                    <input type="checkbox" name="printClientVoucher" id="printClientVoucher"    field-name="print_Client_Voucher" value="">
                                     <label class="form-control-label" for="printClientVoucher">Print Client Voucher</label>
                                 </label>
                             </div>
@@ -322,7 +322,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="multiLanguage" id="multiLanguage"  field-name="Multi_Lang_Policy" value="">
+                                    <input type="checkbox" name="multiLanguage" id="multiLanguage"  field-name="multi_Lang_Policy" value="">
                                     <label class="form-control-label" for="multiLanguage">Multi Language Policy</label>
                                 </label>
                             </div>
@@ -330,7 +330,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="enableTaxInvoice" id="enableTaxInvoice"    field-name="Tax_Invoice" value="">
+                                    <input type="checkbox" name="enableTaxInvoice" id="enableTaxInvoice"    field-name="tax_Invoice" value="">
                                     <label class="form-control-label" for="enableTaxInvoice">Tax Invoice</label>
                                 </label>
                             </div>
@@ -338,7 +338,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="wthPremiumInfo" field-name="Hide_Premium_Info" id="wthPremiumInfo" value="">
+                                    <input type="checkbox" name="wthPremiumInfo" field-name="hide_Premium_Info" id="wthPremiumInfo" value="">
                                     <label class="form-control-label" for="wthPremiumInfo">Hide Premium Info.</label>
                                 </label>
                             </div>
@@ -346,7 +346,7 @@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="active" id="active"     field-name="Active" value="">
+                                    <input type="checkbox" name="active" id="active"     field-name="active" value="">
                                     <label class="form-control-label" for="active">Active</label>
                                 </label>
                             </div>
@@ -383,7 +383,7 @@
                 </div>
                 <div class="col-md-2 text-center">
                     <div class="form-group">
-                        <button class="btn btn-primary float-right w-100" type="button" onclick="createNewUser()">Add</button>
+                        <button class="btn btn-primary float-right w-100" type="button" onclick="saveUser()">Save</button>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@ namespace ProjectX.Entities.dbModels
         public string BE_MiddleName { get; set; }
         public string BE_LastName { get; set; }
         public string BE_PassportNumber { get; set; }
+        public string BE_MaidenName { get; set; }
         public DateTime? BE_DOB { get; set; }
     }
 

@@ -20,7 +20,7 @@ namespace ProjectX.Controllers
         private IProductionBusiness _productionBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         private IWebHostEnvironment _env;
 
@@ -30,12 +30,13 @@ namespace ProjectX.Controllers
             _productionBusiness = productionBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
         }
 
 
         // GET: ProductionController
+        [HttpGet]
         public ActionResult Index()
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup

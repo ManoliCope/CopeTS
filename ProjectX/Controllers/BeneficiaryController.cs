@@ -19,7 +19,7 @@ namespace ProjectX.Controllers
         private IBeneficiaryBusiness _beneficiaryBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         private IWebHostEnvironment _env;
 
@@ -30,7 +30,7 @@ namespace ProjectX.Controllers
             _beneficiaryBusiness = beneficiaryBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
 
         }
@@ -82,7 +82,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _beneficiaryBusiness.ModifyBeneficiary(req, "Create", _user.UserId);
+            return _beneficiaryBusiness.ModifyBeneficiary(req, "Create", _user.U_Id);
         }
 
 
@@ -111,7 +111,7 @@ namespace ProjectX.Controllers
             }
 
 
-            return _beneficiaryBusiness.ModifyBeneficiary(req, "Update", _user.UserId);
+            return _beneficiaryBusiness.ModifyBeneficiary(req, "Update", _user.U_Id);
         }
 
         [HttpPost]
@@ -120,7 +120,7 @@ namespace ProjectX.Controllers
             BeneficiaryReq req = new BeneficiaryReq();
             req.Id = id;
 
-            return _beneficiaryBusiness.ModifyBeneficiary(req, "Delete", _user.UserId);
+            return _beneficiaryBusiness.ModifyBeneficiary(req, "Delete", _user.U_Id);
         }
 
         public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)

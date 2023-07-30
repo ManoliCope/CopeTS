@@ -38,6 +38,7 @@ namespace ProjectX.Business.Beneficiary
             resp.FirstName = repores.BE_FirstName;
             resp.MiddleName = repores.BE_MiddleName;
             resp.LastName = repores.BE_LastName;
+            resp.MaidenName = repores.BE_MaidenName;
             resp.DateOfBirth = repores.BE_DOB;
             resp.PassportNumber = repores.BE_PassportNumber;
            

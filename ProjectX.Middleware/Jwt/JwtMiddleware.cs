@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities;
-using ProjectX.Business.User;
+using ProjectX.Business.Users;
 using ProjectX.Entities.Resources;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -21,10 +21,10 @@ namespace ProjectX.Middleware.Jwt
         private readonly TrAppSettings _appSettings;
         private readonly RequestDelegate _next;
         private IJwtBusiness _jwtbusiness;
-        private IUserBusiness _userBusiness;
+        private IUsersBusiness _userBusiness;
         private readonly ILogger<JwtMiddleware> _logger;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUserBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
+        public JwtMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUsersBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
         {
             _next = next;
             _jwtbusiness = jwtbusiness;
@@ -73,7 +73,7 @@ namespace ProjectX.Middleware.Jwt
                             CookieUser cookieUser = _jwtbusiness.getUserFromToken(token, _appSettings.jwt);
                             if (cookieUser != null)
                             {
-                                User user = _userBusiness.GetUser(new Entities.Models.User.GetUserReq
+                                var user = _userBusiness.GetUserAuth(new Entities.Models.Users.GetUserReq
                                 {
                                     idUser = cookieUser.UserId
                                 }).user;

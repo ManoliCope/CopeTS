@@ -28,7 +28,7 @@ namespace ProjectX.Middleware.Excption
         private readonly ILogger<ExcptionMiddleware> _logger;
         private Stopwatch stopwatch;
         private string IP = string.Empty;
-        public User _user;
+        public TR_Users _user;
 
         public ExcptionMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, ILogger<ExcptionMiddleware> logger)
         {
@@ -43,7 +43,7 @@ namespace ProjectX.Middleware.Excption
             string RequestPath = context.Request.Path.Value;
             //string jsonResponse = string.Empty; /product/
             //Stream originBody = null;
-            _user = (User)context.Items["User"];
+            _user = (TR_Users)context.Items["User"];
 
             try
             {
@@ -78,7 +78,7 @@ namespace ProjectX.Middleware.Excption
                 //    context.Request.ContentType = "application/json";
 
                 if (_user != null)
-                    MappedDiagnosticsLogicalContext.Set("Username", _user.Username);
+                    MappedDiagnosticsLogicalContext.Set("Username", _user.U_User_Name);
 
                 await _next(context);
 

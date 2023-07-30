@@ -10,13 +10,13 @@ namespace ProjectX.Controllers
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         public ErrorController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor )
         {
             _httpContextAccessor = httpContextAccessor;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
         }
 
 

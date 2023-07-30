@@ -23,6 +23,24 @@ namespace ProjectX.Repository.UsersRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
+        public TR_Users Login(string username, string password)
+        {
+            TR_Users user = new TR_Users();
+
+            var param = new DynamicParameters();
+            param.Add("@username", username);
+            param.Add("@password", password);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_users_login", param, commandType: CommandType.StoredProcedure))
+                {
+                    user = result.ReadFirstOrDefault<TR_Users>();
+                }
+            }
+            return user;
+        }
+
         public UsersResp ModifyUser(UsersReq req, string act, int userid)
         {
             var resp = new UsersResp();
@@ -38,7 +56,8 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);
-            param.Add("@U_City", req.City);
+            param.Add("@U_Country_Code", req.Country_Code);
+            param.Add("@U_City_Name", req.City);
             param.Add("@U_Telephone", req.Telephone);
             param.Add("@U_Email", req.Email);
             param.Add("@U_Super_Agent_Id", req.Super_Agent_Id);
@@ -72,6 +91,8 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
+            param.Add("@U_Parent_Id", req.Parent_Id);
+
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -85,7 +106,7 @@ namespace ProjectX.Repository.UsersRepository
                 idOut = param.Get<int>("@Returned_ID");
             }
             resp.statusCode.code = statusCode;
-            resp.Id = idOut;
+            resp.id = idOut;
             return resp;
         }
         public List<TR_Users> GetUsersList(UsersSearchReq req)
@@ -101,7 +122,8 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);
-            param.Add("@U_City", req.City);
+            param.Add("@U_Country_Code", req.Country_Code);
+            param.Add("@U_City_Name", req.City);
             param.Add("@U_Telephone", req.Telephone);
             param.Add("@U_Email", req.Email);
             param.Add("@U_Super_Agent_Id", req.Super_Agent_Id);
@@ -135,6 +157,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
+            param.Add("@U_Parent_Id", req.Parent_Id);
 
 
 
@@ -198,5 +221,27 @@ namespace ProjectX.Repository.UsersRepository
             return resp;
 
         }
+        //public User GetUserAuth(int idUser)
+        //{
+        //    TR_Users user = new TR_Users();
+
+        //    var param = new DynamicParameters();
+        //    param.Add("@IdUser", idUser);
+
+        //    using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+        //    {
+        //        using (SqlMapper.GridReader result = _db.QueryMultiple("tr_user_get", param, commandType: CommandType.StoredProcedure))
+        //        {
+        //            user = result.ReadFirstOrDefault<User>();
+        //            if (user != null)
+        //            {
+        //                user.group = result.ReadFirstOrDefault<Group>();
+        //                if (user.group != null)
+        //                    user.group.pages = result.Read<Page>().ToList();
+        //            }
+        //        }
+        //    }
+        //    return user;
+        //}
     }
 }

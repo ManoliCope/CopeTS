@@ -46,11 +46,11 @@ function LogintoCMS() {
                         if (result.statusCode.code == 1) {
                             var url_string = window.location.href
                             var url = new URL(url_string);
-                            var cid = url.searchParams.get("cid");
-                            var caseid = url.searchParams.get("csid");
-
+                            //var cid = url.searchParams.get("cid");
+                            //var caseid = url.searchParams.get("csid");
+                            //alert(url_string);
                             window.location.href = "/production";
-
+                            
                             //if (cid)
                             //    window.location.href = "/Home?cid=" + cid;
                             //else if (caseid) {
@@ -206,5 +206,6 @@ function crudRegisterCall(PolId, user) {
     });
     form.classList.add('was-validated');
 }
+
 
 

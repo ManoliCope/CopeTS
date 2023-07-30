@@ -15,14 +15,14 @@ namespace ProjectX.Controllers
     public class FileController : Controller
     {
         private IAttachmentBusiness _attachmentBusiness;
-        public User _user;
+        public TR_Users _user;
         //private readonly ILogger<FileController> _logger;
 
         public FileController(IHttpContextAccessor context, IAttachmentBusiness attachmentBusiness/*, ILogger<FileController> logger*/)
         {
             try
             {
-                _user = (User)context.HttpContext.Items["User"];
+                _user = (TR_Users)context.HttpContext.Items["User"];
             }
             catch { }
             _attachmentBusiness = attachmentBusiness;
@@ -41,7 +41,7 @@ namespace ProjectX.Controllers
             if (dt == "undefined")
                 dt = "0";
 
-            return await _attachmentBusiness.SaveFile(files, Convert.ToInt32(fd), reference, _user.UserId, Convert.ToInt32(dt));
+            return await _attachmentBusiness.SaveFile(files, Convert.ToInt32(fd), reference, _user.U_Id, Convert.ToInt32(dt));
 
         }
 

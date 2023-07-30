@@ -15,7 +15,8 @@ namespace ProjectX.Entities.Models.Users
         public string Category { get; set; }
         public long? Broker_Code { get; set; }
         public int? Country { get; set; }
-        public int? City { get; set; }
+        public int? Country_Code { get; set; }
+        public string? City { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
         public int? Super_Agent_Id { get; set; }
@@ -50,6 +51,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? Hide_Premium_Info { get; set; }
         public bool? Active { get; set; }
 
+        public int? Parent_Id { get; set; }
 
 
 

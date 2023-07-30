@@ -36,6 +36,7 @@ namespace ProjectX.Repository.BeneficiaryRepository
             param.Add("@BE_FirstName", req.FirstName);
             param.Add("@BE_MiddleName", req.MiddleName);
             param.Add("@BE_LastName", req.LastName);
+            param.Add("@BE_MaidenName", req.LastName);
             param.Add("@BE_PassportNumber", req.PassportNumber);
             param.Add("@BE_DOB", req.DateOfBirth);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
@@ -63,6 +64,7 @@ namespace ProjectX.Repository.BeneficiaryRepository
             param.Add("@BE_FirstName", req.FirstName);
             param.Add("@BE_MiddleName", req.MiddleName);
             param.Add("@BE_LastName", req.LastName);
+            param.Add("@BE_MaidenName", req.LastName);
             param.Add("@BE_PassportNumber", req.PassportNumber);
             param.Add("@BE_DOB", req.DateOfBirth);
 

@@ -15,7 +15,9 @@ namespace ProjectX.Entities.dbModels
         public string U_Category { get; set; }
         public long? U_Broker_Code { get; set; }
         public int? U_Country { get; set; }
+        public int? U_Country_Code { get; set; }
         public int? U_City { get; set; }
+        public string? U_City_Name { get; set; }
         public string U_Telephone { get; set; }
         public string U_Email { get; set; }
         public int? U_Super_Agent_Id { get; set; }
@@ -49,5 +51,9 @@ namespace ProjectX.Entities.dbModels
         public bool? U_Tax_Invoice { get; set; }
         public bool? U_Hide_Premium_Info { get; set; }
         public bool? U_Active { get; set; }
+        public int? U_Parent_Id { get; set; }
+        public string? U_Full_Name { get; set; }
+        public string? U_User_Name { get; set; }
+
     }
 }

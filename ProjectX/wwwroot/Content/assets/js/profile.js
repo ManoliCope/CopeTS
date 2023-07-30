@@ -107,3 +107,50 @@ function Search() {
         }
     });
 }
+
+function createNewUser() {
+    // Array to store all the fields
+    var user = {};
+
+    // Loop through each input, select, and textarea element inside the form
+    $('#addBrokerForm input, #addBrokerForm select, #addBrokerForm textarea').each(function () {
+        var field = $(this).attr('field-name'); // Get the field's ID
+        var value = $(this).val(); // Get the field's value
+        if ($(this).attr('type') == 'checkbox')
+            value = $(this).prop("checked");
+        if (value == null) {
+            var id = '#'+$(this).attr('id');
+            value = $(id).val();
+        }
+
+        var obj = {};
+        user[field] = value;
+       
+    });
+
+    console.log(user);
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Users/createNewUser",
+        data: { user: user },
+        success: function (result) {
+            removeloader();
+
+            if (result.statusCode.code != 1)
+                showresponsemodal("error", result.statusCode.message)
+            else {
+                drawtable(result.profiles);
+            }
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            //alert("Error:" + failure);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("fail");
+        }
+    });
+}

@@ -36,6 +36,8 @@ using ProjectX.Repository.ProductionRepository;
 using ProjectX.Business.Production;
 using ProjectX.Business.Beneficiary;
 using ProjectX.Repository.BeneficiaryRepository;
+using ProjectX.Business.Users;
+using ProjectX.Repository.UsersRepository;
 
 public class Startup
 {
@@ -115,6 +117,9 @@ public class Startup
 
         services.AddSingleton<IGeneralBusiness, GeneralBusiness>();
         services.AddSingleton<IGeneralRepository, GeneralRepository>();
+
+        services.AddSingleton<IUsersBusiness, UsersBusiness>();
+        services.AddSingleton<IUsersRepository, UsersRepository>();
 
         services.AddSingleton<IUserBusiness, UserBusiness>();
         services.AddSingleton<IUserRepository, UserRepository>();

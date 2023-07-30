@@ -5,7 +5,7 @@
     <!-- Start Content-->
     <div class="row page-title">
         <div class="col-md-12">
-            <a class="btn bglocalcolor float-right addnewbtn" href="/users/create/">
+            <a class="btn bglocalcolor float-right addnewbtn" href="/users/createUser/">
                 <i class="fas fa-plus-circle"></i> Add
             </a>
             <h4 class="mb-0 mt-0 float-left">Main</h4>
@@ -22,17 +22,10 @@
                             <div class="row mb-6">
                                 <div class="col-lg-3 mb-lg-0 mb-6">
                                     <label>Name:</label>
-                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
+                                    <input id="prname" type="text" class="form-control datatable-input" placeholder="User Name" data-col-index="0">
                                 </div>
                                 <div class="col-lg-3 mb-lg-0 mb-6 ">
-                                    <label for="sprtype">Type: </label>
-                                    <select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-                                        <option selected>Select Type</option>
-                                        @*@foreach (var type in Model.loadedData.profileTypes)
-                                        {
-                                            <option value="@type.LK_ID"> @type.LK_TableField</option>
-                                        }*@
-                                    </select>
+                               
                                 </div>
 
                                 <div class="col-lg-3 mb-lg-0 mb-6 hidden">
@@ -77,7 +70,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="profiletable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+                        <table id="userstable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
                         </table>
 
                     </div>

@@ -20,7 +20,7 @@ namespace ProjectX.Controllers
         private IPlanBusiness _planBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         private IWebHostEnvironment _env;
 
@@ -31,7 +31,7 @@ namespace ProjectX.Controllers
             _planBusiness = planBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
 
         }
@@ -83,7 +83,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _planBusiness.ModifyPlan(req, "Create", _user.UserId);
+            return _planBusiness.ModifyPlan(req, "Create", _user.U_Id);
         }
 
 
@@ -112,7 +112,7 @@ namespace ProjectX.Controllers
             }
 
 
-            return _planBusiness.ModifyPlan(req, "Update", _user.UserId);
+            return _planBusiness.ModifyPlan(req, "Update", _user.U_Id);
         }
 
         [HttpPost]
@@ -121,7 +121,7 @@ namespace ProjectX.Controllers
             PlanReq req = new PlanReq();
             req.id = id;
 
-            return _planBusiness.ModifyPlan(req, "Delete", _user.UserId);
+            return _planBusiness.ModifyPlan(req, "Delete", _user.U_Id);
         }
     }
 }

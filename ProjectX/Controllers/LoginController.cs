@@ -1,12 +1,12 @@
 ﻿using ProjectX.Business.Jwt;
 using ProjectX.Entities.AppSettings;
-using ProjectX.Business.User;
+using ProjectX.Business.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
-using ProjectX.Entities.Models.User;
+using ProjectX.Entities.Models.Users;
 using ProjectX.Entities;
 
 namespace ProjectX.Controllers
@@ -14,11 +14,11 @@ namespace ProjectX.Controllers
     public class LoginController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IUserBusiness _userBusiness;
+        private IUsersBusiness _userBusiness;
         private IJwtBusiness _jwtBusiness;
         private readonly TrAppSettings _appSettings;
 
-        public LoginController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUserBusiness userBusiness)
+        public LoginController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness userBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _userBusiness = userBusiness;
@@ -46,11 +46,12 @@ namespace ProjectX.Controllers
 
             if (response.user != null)
             {
+                response.statusCode.code = 1;
                 CookieUser user = new CookieUser
                 {
-                    UserId = response.user.UserId,
-                    UserFullName = response.user.UserFullName,
-                    Username = response.user.Username,
+                    UserId = response.user.U_Id,
+                    UserFullName = response.user.U_Full_Name,
+                    Username = response.user.U_User_Name,
                 };
 
                 CookieOptions options = new CookieOptions();

@@ -15,21 +15,21 @@ namespace ProjectX.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public User _user;
+        public TR_Users _user;
 
         public HomeController(IHttpContextAccessor context, ILogger<HomeController> logger)
         {
-            _user = (User)context.HttpContext.Items["User"];
+            _user = (TR_Users)context.HttpContext.Items["User"];
             _logger = logger;
         }
 
         public IActionResult Index(string cid, string cnum, int csid)
         {
-            string username = _user.UserFullName;
-            ViewData["username"] = username;
-            _user.group.pages = _user.group.pages.Where(x => x.GP_AllowInMenu == true).ToList();
-            ViewData["user"] = _user;
-            ViewBag.screentype = "home";
+            //string username = _user.UserFullName;
+            //ViewData["username"] = username;
+            //_user.group.pages = _user.group.pages.Where(x => x.GP_AllowInMenu == true).ToList();
+            //ViewData["user"] = _user;
+            //ViewBag.screentype = "home";
             return View();
         }
 

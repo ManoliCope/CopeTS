@@ -27,7 +27,7 @@ namespace ProjectX.Controllers
         private IBenefitBusiness _benefitBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
 
 
@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
             _benefitBusiness = benefitBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
         }
 
 
@@ -90,7 +90,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _benefitBusiness.ModifyBenefit(req, "Create", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Create", _user.U_Id);
         }
 
 
@@ -128,7 +128,7 @@ namespace ProjectX.Controllers
             }
 
 
-            return _benefitBusiness.ModifyBenefit(req, "Update", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Update", _user.U_Id);
         }
 
         [HttpPost]
@@ -140,7 +140,7 @@ namespace ProjectX.Controllers
 
             //req.date = thisDay;
             BenResp response = new BenResp();
-            return _benefitBusiness.ModifyBenefit(req, "Delete", _user.UserId);
+            return _benefitBusiness.ModifyBenefit(req, "Delete", _user.U_Id);
         }
     }
 }

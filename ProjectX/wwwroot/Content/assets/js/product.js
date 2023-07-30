@@ -1,6 +1,7 @@
 ﻿var projectname = checkurlserver();
 
 $(document).ready(function () {
+    alert('test')
     drawtable();
 
     if ($("#search").length > 0)

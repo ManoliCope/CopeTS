@@ -14,13 +14,13 @@ namespace ProjectX.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IJwtBusiness _jwtBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         public UserController(IHttpContextAccessor httpContextAccessor, IJwtBusiness jwtBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _jwtBusiness = jwtBusiness;
         }
 
@@ -29,18 +29,18 @@ namespace ProjectX.Controllers
             return View();
         }
 
-        [HttpGet]
-        public CookieUser ValidateUser()
-        {            
-            try
-            {
-                string token = _httpContextAccessor.HttpContext.Request.Headers["token"].ToString();
-                return _jwtBusiness.getUserFromToken(token, _appSettings.jwt);
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //[HttpGet]
+        //public CookieUser ValidateUser()
+        //{            
+        //    try
+        //    {
+        //        string token = _httpContextAccessor.HttpContext.Request.Headers["token"].ToString();
+        //        return _jwtBusiness.getUserFromToken(token, _appSettings.jwt);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

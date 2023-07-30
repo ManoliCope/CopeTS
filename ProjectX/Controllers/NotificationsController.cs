@@ -12,7 +12,7 @@ namespace ProjectX.Controllers
 {
     public class NotificationsController : Controller
     {
-        private User _user;
+        private TR_Users _user;
         private INotificationsBusiness _notificationsBusiness;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public NotificationsController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, INotificationsBusiness NotificationsBusiness /*, IGeneralBusiness generalBusiness*/)
@@ -21,7 +21,7 @@ namespace ProjectX.Controllers
             _notificationsBusiness = NotificationsBusiness;
             //_generalBusiness = generalBusiness;
             //_appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
         }
         public IActionResult Index()
         {
@@ -32,18 +32,18 @@ namespace ProjectX.Controllers
         [HttpPost]
         public NotifResp CreateNewNote(NotifResp req)
         {
-            req.CreatedBy = _user.UserFullName;
+            req.CreatedBy = _user.U_Full_Name;
             return _notificationsBusiness.CreateNewNote(req);
         }
         [HttpPost]
         public NotifResp DeleteNote(int Id)
         {
-            return _notificationsBusiness.DeleteNote(Id,_user.FirstName);
+            return _notificationsBusiness.DeleteNote(Id,_user.U_First_Name);
         }
         [HttpPost]
         public NotifResp UpdateNote(int Id)
         {
-             return _notificationsBusiness.UpdateNote(Id, _user.FirstName);
+             return _notificationsBusiness.UpdateNote(Id, _user.U_First_Name);
         }
         public string GetNotificationsChyron()
         {

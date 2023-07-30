@@ -27,7 +27,7 @@ namespace ProjectX.Controllers
         private IPackageBusiness _packageBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
 
 
@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
             _packageBusiness = productBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
         }
 
 
@@ -91,7 +91,7 @@ namespace ProjectX.Controllers
             //    return response;
             //}
 
-            return _packageBusiness.ModifyPackage(req, "Create", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Create", _user.U_Id);
         }
 
 
@@ -128,7 +128,7 @@ namespace ProjectX.Controllers
             //}
 
 
-            return _packageBusiness.ModifyPackage(req, "Update", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Update", _user.U_Id);
         }
 
         [HttpPost]
@@ -140,7 +140,7 @@ namespace ProjectX.Controllers
 
             //req.activation_date = thisDay;
             PackResp response = new PackResp();
-            return _packageBusiness.ModifyPackage(req, "Delete", _user.UserId);
+            return _packageBusiness.ModifyPackage(req, "Delete", _user.U_Id);
         }
     }
 }

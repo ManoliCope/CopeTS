@@ -27,7 +27,7 @@ namespace ProjectX.Controllers
         private IProfileBusiness _profileBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
-        private User _user;
+        private TR_Users _user;
 
         private IWebHostEnvironment _env;
   
@@ -38,7 +38,7 @@ namespace ProjectX.Controllers
             _profileBusiness = profileBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
-            _user = (User)httpContextAccessor.HttpContext.Items["User"];
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
 
         }
@@ -190,13 +190,13 @@ namespace ProjectX.Controllers
 
 
 
-            return _profileBusiness.saveProfile(req, _user.UserId);
+            return _profileBusiness.saveProfile(req, _user.U_Id);
         }
 
         [HttpPost]
         public GlobalResponse DeleteProfile(DeleteProfileReq req)
         {
-            return _profileBusiness.deleteProfile(req, _user.UserId);
+            return _profileBusiness.deleteProfile(req, _user.U_Id);
         }
 
 
