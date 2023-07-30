@@ -23,7 +23,7 @@ namespace ProjectX.Business.Beneficiary
             response = _beneficiaryRepository.ModifyBeneficiary(req, act, userid);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Plan");
             return response;
-           
+
         }
         public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req)
         {
@@ -40,9 +40,13 @@ namespace ProjectX.Business.Beneficiary
             resp.LastName = repores.BE_LastName;
             resp.DateOfBirth = repores.BE_DOB;
             resp.PassportNumber = repores.BE_PassportNumber;
-           
+
 
             return resp;
+        }
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
+        {
+            return _beneficiaryRepository.SearchBeneficiaryPref(prefix);
         }
     }
 }

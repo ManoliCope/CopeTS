@@ -14,6 +14,10 @@ using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
+using ProjectX.Repository.BeneficiaryRepository;
+using ProjectX.Repository.GeneralRepository;
+using System.Collections;
+using System.Reflection;
 
 namespace ProjectX.Repository.ProductionRepository
 {
@@ -21,11 +25,14 @@ namespace ProjectX.Repository.ProductionRepository
     {
         private SqlConnection _db;
         private readonly TrAppSettings _appSettings;
+        private IGeneralRepository _generalRepository;
 
-        public ProductionRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
+        public ProductionRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralRepository generalrepository)
         {
             _appSettings = appIdentitySettingsAccessor.Value;
+            _generalRepository = generalrepository;
         }
+
         public List<TR_Product> GetProductsByType(int idType)
         {
             List<TR_Product> response = new List<TR_Product>();
@@ -42,7 +49,7 @@ namespace ProjectX.Repository.ProductionRepository
             }
 
             return response;
-        }     
+        }
         public List<TR_Zone> GetZonesByProduct(int idType)
         {
             List<TR_Zone> response = new List<TR_Zone>();
@@ -50,52 +57,116 @@ namespace ProjectX.Repository.ProductionRepository
             var param = new DynamicParameters();
             param.Add("@productid", idType);
 
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            try
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Zones_GetbyProduct", param, commandType: CommandType.StoredProcedure))
+                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
                 {
-                    response = result.Read<TR_Zone>().ToList();
+                    using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Zones_GetbyProduct", param, commandType: CommandType.StoredProcedure))
+                    {
+                        response = result.Read<TR_Zone>().ToList();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately (e.g., log the error, show an error message, etc.)
+                Console.WriteLine("Error occurred while connecting to the database: " + ex.Message);
+                return null;
+            }
+
 
             return response;
-        }   
+        }
         public List<TR_Destinations> GetDestinationByZone(int idZone)
         {
             List<TR_Destinations> response = new List<TR_Destinations>();
             var param = new DynamicParameters();
             param.Add("@zone", idZone);
 
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            try
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Destinations_GetbyZone", param, commandType: CommandType.StoredProcedure))
+                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
                 {
-                    response = result.Read<TR_Destinations>().ToList();
+                    using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Destinations_GetbyZone", param, commandType: CommandType.StoredProcedure))
+                    {
+                        response = result.Read<TR_Destinations>().ToList();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately (e.g., log the error, show an error message, etc.)
+                Console.WriteLine("Error occurred while connecting to the database: " + ex.Message);
+                return null;
+            }
+
 
             return response;
         }
-   
-        public ProductionResp getProductionDetails (ProductionReq req)
+
+        public List<ProductionResp> getProductionDetails(List<ProductionReq> req)
         {
-            ProductionResp response = new ProductionResp();
-            var param = new DynamicParameters();
-            param.Add("@zone", req.Zone);
-            param.Add("@product", req.Product);
-            param.Add("@age", req.Ages);
-            param.Add("@durations", req.Durations);
-
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            List<ProductionResp> response = new List<ProductionResp>();
+            using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_GetProductionDetails", param, commandType: CommandType.StoredProcedure))
+                //var param = new DynamicParameters();
+                //param.Add("@Zone", req.Zone);
+                //param.Add("@Product", req.Product);
+                //param.Add("@Ages", _generalRepository.ToDataTable(req.Ages));
+                //param.Add("@Durations", _generalRepository.ToDataTable(req.Durations));
+
+                DataTable dataTable = ConvertToDataTable(req);
+
+                var queryParameters = new DynamicParameters(new
                 {
-                    response.tariff = result.Read<TR_Tariff>().ToList();
-                    response.production = req;
-                }
+                    //Zones = req.InsuredQuotations.Select(iq => iq.Zone).ToList(),
+                    //Products = req.InsuredQuotations.Select(iq => iq.Product).ToList(),
+                    //Ages = req.InsuredQuotations.Select(iq => iq.Ages).ToList(),
+                    //Durations = req.InsuredQuotations.Select(iq => iq.Durations).ToList(),
+                    QuoteReq = dataTable
+                });
+
+                var query = "TR_GetProductionDetails";
+
+                connection.Open();
+
+                response = connection.Query<ProductionResp>(query, queryParameters, commandType: CommandType.StoredProcedure).ToList();
             }
 
             return response;
         }
+
+        public static DataTable ConvertToDataTable<T>(IEnumerable<T> list)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Get all the public properties of the class using reflection
+            PropertyInfo[] propertyInfos = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // Create data columns for the DataTable using the property names and types
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                dataTable.Columns.Add(propertyInfo.Name, propertyInfo.PropertyType);
+            }
+
+            // Add data rows to the DataTable
+            foreach (T item in list)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                foreach (PropertyInfo propertyInfo in propertyInfos)
+                {
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item);
+                }
+
+                dataTable.Rows.Add(dataRow);
+            }
+
+            return dataTable;
+        }
+
+
+
+
     }
 }

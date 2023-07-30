@@ -32,7 +32,7 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetDestinationByZone(idZone);
         }
-        public ProductionResp getProductionDetails(ProductionReq req)
+        public List<ProductionResp> getProductionDetails(List<ProductionReq> req)
         {
             return _prodRepository.getProductionDetails(req);
         }

@@ -129,12 +129,13 @@ function searchbeneficiary() {
             method: 'GET',
             data: { prefix: query },
             success: function (data) {
-                //console.log(data.beneficiary)
+                console.log(data.beneficiary)
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
                     for (var i = 0; i < data.beneficiary.length; i++) {
-                        var item = $(`<a thisid=${data.beneficiary[i].bE_Id}>`).text(data.beneficiary[i].bE_FirstName).attr('href', '#');
+                        var bentext = data.beneficiary[i].bE_FirstName + ' ' + data.beneficiary[i].bE_MiddleName + ' ' + data.beneficiary[i].bE_LastName
+                        var item = $(`<a thisid=${data.beneficiary[i].bE_Id}>`).text(bentext).attr('href', '#');
                         dropdownContent.append(item);
                     }
                     dropdownContent.show();
@@ -268,7 +269,6 @@ function settofrom() {
 }
 function populateproducts() {
     $('.typeradio .we-checkbox input[type="radio"]').on('change', function () {
-
         var addBeneficiaryButton = $('.btn-beneficiary');
         var beneficiaryTable = $('.beneficiary-table');
 
@@ -295,7 +295,10 @@ function populateproducts() {
 
         $('#product_id').empty().append('<option value="">Select Product</option>').val('').trigger('change');
         $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
-        $('#product_id,#zone_id').prop('disabled', true);   
+        $('#product_id,#zone_id').prop('disabled', true);
+
+
+
         $.ajax({
             url: projectname + '/Production/GetProdutctsByType',
             method: 'POST',
@@ -346,6 +349,11 @@ function populatedestinations() {
     $('#zone_id').on('change', function () {
         $('#destination_id').empty();
         $('#destination_id').prop('disabled', true);
+        $('#destination_id').empty().val('').trigger('change');
+
+        if ($('#zone_id').val() == "")
+            return
+
         $.ajax({
             url: projectname + '/Production/GetDestinationByZone',
             method: 'POST',
@@ -570,6 +578,7 @@ function createTravelData() {
         var travelRows = tbody.getElementsByTagName('tr');
 
         for (var i = 0; i < travelRows.length; i++) {
+
             var row = travelRows[i];
             var destination = row.cells[0].textContent;
             var from = row.cells[1].textContent;
@@ -673,6 +682,7 @@ function getQuotationData() {
         var dateOfBirthInput = document.getElementById('date_of_birth').value;
         ages.push(calculateAge(dateOfBirthInput));
     }
+    console.log(ages)
 
     // Retrieve selected product
     var selectedProduct = document.getElementById('product_id').value;
@@ -687,22 +697,68 @@ function getQuotationData() {
     });
 
     // Construct the quotation data object
-    var quotationData = {
-        Ages: ages,
-        Product: selectedProduct,
-        Zone: selectedZone,
-        Durations: durations
-    };
+    //var quotationData = {
+    //    Ages: [10, 28],
+    //    Product: 682,
+    //    //Product: selectedProduct,
+    //    Zone: 270,
+    //    //Zone: selectedZone,
+    //    Durations: [25],
+    //};
 
 
-    alert("quoting")
+    var quotationData =
+        [
+            {
+                Insured: 1,
+                Ages: 10,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+            {
+                Insured: 2,
+                Ages: 28,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+            {
+                Insured: 3,
+                Ages: 28,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+        ]
+    //{
+    //    Ages: [10, 28],
+    //        Product: 682,
+    //            //Product: selectedProduct,
+    //            Zone: 270,
+    //                //Zone: selectedZone,
+    //                Durations: [25],
+    //};
+
 
     $.ajax({
         url: projectname + '/Production/GetQuotation',
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-           alert("quote")
+            console.log(response,'before partial')
+            loadQuotePartialView(response)
+
+
         },
         error: function (xhr, status, error) {
             alert('big error')
@@ -710,8 +766,161 @@ function getQuotationData() {
         }
     });
 
-
-
-    console.log(quotationData)
     return quotationData;
+}
+
+
+function loadQuotePartialView(response) {
+    $.ajax({
+        url: projectname + '/Production/GetPartialViewQuotation',
+        type: 'POST',
+        data: { quotereq: response },
+        success: function (data) {
+            console.log(data,'respong partial')
+            $('.quotecontainer').html(data);
+        },
+        error: function (error) {
+            console.error('Error loading partial view:', error);
+        }
+    });
+}
+
+var thival = [
+    {
+        "t_Id": 26,
+        "p_Id": 20,
+        "p_Name": null,
+        "t_Start_Age": 1,
+        "t_End_Age": 80,
+        "t_Number_Of_Days": 50,
+        "t_Price_Amount": 25,
+        "t_Net_Premium_Amount": 25,
+        "t_PA_Amount": 25,
+        "t_Tariff_Starting_Date": "2023-01-31T00:00:00",
+        "t_Override_Amount": 25,
+        "pL_Id": 301,
+        "pL_Name": null,
+        "age": 10,
+        "duration": 25,
+        "statusCode": {
+            "code": 0,
+            "message": null,
+            "idLanguage": "1"
+        }
+    },
+    {
+        "t_Id": 26,
+        "p_Id": 20,
+        "p_Name": null,
+        "t_Start_Age": 1,
+        "t_End_Age": 80,
+        "t_Number_Of_Days": 50,
+        "t_Price_Amount": 25,
+        "t_Net_Premium_Amount": 25,
+        "t_PA_Amount": 25,
+        "t_Tariff_Starting_Date": "2023-01-31T00:00:00",
+        "t_Override_Amount": 25,
+        "pL_Id": 301,
+        "pL_Name": null,
+        "age": 28,
+        "duration": 25,
+        "statusCode": {
+            "code": 0,
+            "message": null,
+            "idLanguage": "1"
+        }
+    },
+    {
+        "t_Id": 24,
+        "p_Id": 21,
+        "p_Name": null,
+        "t_Start_Age": 22,
+        "t_End_Age": 33,
+        "t_Number_Of_Days": 44,
+        "t_Price_Amount": 55,
+        "t_Net_Premium_Amount": 45,
+        "t_PA_Amount": 66,
+        "t_Tariff_Starting_Date": "2020-12-31T00:00:00",
+        "t_Override_Amount": 777777,
+        "pL_Id": 302,
+        "pL_Name": null,
+        "age": 28,
+        "duration": 25,
+        "statusCode": {
+            "code": 0,
+            "message": null,
+            "idLanguage": "1"
+        }
+    }
+]
+function populateQuotationCards() {
+    const quotecontainer = document.querySelector('.quotecontainer');
+
+    // Loop through the Response array and generate quotation cards
+    for (const quotation of thival) {
+        const card = document.createElement('div');
+        card.classList.add('card', 'mt-2');
+        card.innerHTML = `
+                    <div class="card-body" style="font-size: 13px;">
+                        <div>
+                            <b>Destination(s)</b>
+                            <span class="float-end">
+                                Aruba
+                            </span>
+                        </div>
+                        <div>
+                            <b>Inception Date</b>
+                            <span class="float-end">${quotation.t_Tariff_Starting_Date}</span>
+                        </div>
+                        <div>
+                            <b>Expiry Date</b>
+                            <span class="float-end">08-07-2023</span>
+                        </div>
+                        <div>
+                            <b>Duration</b>
+                            <span class="float-end">${quotation.duration} Days</span>
+                        </div>
+                        <div>
+                            <span class="float-end total_price" data-currency="USD"></span>
+                        </div>
+                        <table class="table table-sm table-bordered mt-3">
+                            <thead>
+                                <tr class="thead-light text-center">
+                                    <th>Full Name</th>
+                                    <th>Cons. / Cumul. Days</th>
+                                    <th>Base Price</th>
+                                    <th>Discount</th>
+                                    <th>Final Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>${calculateFullName(quotation.age)}</td>
+                                    <td>
+                                        <select class="form-control1 cum_con_days" name="plans_price[1][]">
+                                            <option value="${quotation.t_Id}" data-bprice="${quotation.t_Price_Amount}" 
+                                            data-fprice="${quotation.t_Net_Premium_Amount}" data-price0="${quotation.t_PA_Amount}" 
+                                            data-deductible="false">${quotation.p_Name}</option>
+                                        </select>
+                                    </td>
+                                    <td class="base_price" data-price="${quotation.t_Price_Amount}">
+                                        ${quotation.t_Price_Amount} USD
+                                    </td>
+                                    <td class="discount" data-discount="0">
+                                        0 %
+                                        <input type="hidden" class="discount" name="plans_discount[0][]" value="0">
+                                    </td>
+                                    <td>
+                                        <span class="final_price" data-price="${quotation.t_Net_Premium_Amount}">
+                                            ${quotation.t_Net_Premium_Amount} USD
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+        quotecontainer.appendChild(card);
+    }
 }

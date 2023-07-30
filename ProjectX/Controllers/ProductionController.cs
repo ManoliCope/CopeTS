@@ -173,9 +173,16 @@ namespace ProjectX.Controllers
 
 
         [HttpPost]
-        public ProductionResp GetQuotation(ProductionReq quotereq)
+        public List<ProductionResp> GetQuotation(List<ProductionReq> quotereq)
         {
             return _productionBusiness.getProductionDetails(quotereq);
+        }
+
+        [HttpPost]
+        public IActionResult GetPartialViewQuotation(List<ProductionResp> quotereq)
+        {
+            return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
+
         }
     }
 }

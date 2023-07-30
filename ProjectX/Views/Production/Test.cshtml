@@ -99,7 +99,7 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="zone_id">Zone</label>
-														<select class="form-control isselect2" id="zone_id" name="zone_id">
+														<select class="form-control isselect2" id="zone_id" name="zone_id" >
 															<option value="">Select Zone</option>
 															@*@foreach (var thislist in filldata.loadedData.zones)
 															{
@@ -276,7 +276,7 @@
 														<div class="row">
 															<div class="form-group col-md-9">
 																<label for="destination_id">Destination(s)</label>
-																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple>
+																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple disabled>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
@@ -352,56 +352,7 @@
 							</div>
 							<div class="card-body result ">
 								<div class="quotecontainer">
-									<div class="card mt-2">
-										<div class="card-body" style="font-size:13px">
-											<div>
-												<b>Destination(s) </b>
-												<span class="float-end">
-													Aruba,
-												</span>
-											</div>
-											<div>
-												<b>Inception Date </b>
-												<span class="float-end">08-07-2023  </span>
-											</div>
-											<div>
-												<b>Expiry Date</b>
-												<span class="float-end">08-07-2023  </span>
-											</div>
-											<div>
-												<b>Duration </b>
-												<span class="float-end">1 Days </span>
-											</div>
-											<div>
-
-												<span class="float-end total_price" data-currency="USD"> </span>
-											</div>
-											<div class="table-responsive">
-												<table class="table table-sm table-bordered mt-3">
-													<thead>
-														<tr class="thead-light text-center">
-															<th>Full Name</th>
-															<th>Cons. / Cumul. Days</th>
-															<th>Base Price</th>
-															<th>Discount</th>
-															<th>Final Price </th>
-														</tr>
-													</thead>
-
-													<tbody>
-														<tr class="text-center">
-															<td>Dani</td>
-															<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
-
-															<td class="base_price" data-price="11.00">14.00 USD</td>
-															<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
-															<td><span class="final_price" data-price="11">14 USD</span></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
+									
 									<div class="card mt-2">
 										<div class="card-body" style="font-size:13px">
 											<div>
