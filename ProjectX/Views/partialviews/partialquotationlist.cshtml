@@ -8,19 +8,19 @@
 	<div class="card-body" style="font-size:13px">
 		<div>
 			<b>Destination(s)</b>
-			<span class="float-end">@Model.First().ZoneName</span>
+			<span class="float-end dest">@Model.First().ZoneName</span>
 		</div>
 		<div>
 			<b>Inception Date</b>
-			<span class="float-end">@Model.First().TariffStartingDate</span>
+			<span class="float-end incdate">@Model.First().TariffStartingDate</span>
 		</div>
 		<div>
 			<b>Expiry Date</b>
-			<span class="float-end">@Model.First().TariffStartingDate</span>
+			<span class="float-end expdate">@Model.First().TariffStartingDate</span>
 		</div>
 		<div>
 			<b>Duration</b>
-			<span class="float-end">@Model.First().Duration Days</span>
+			<span class="float-end duration">@Model.First().Duration Days</span>
 		</div>
 		<div>
 			<span class="float-end total_price" data-currency="USD"></span>
@@ -37,22 +37,22 @@
 					</tr>
 				</thead>
 				<tbody class="quotation-list">
-					@foreach (var item in Model.Where(x=>x.RowId ==1))
+					@foreach (var item in Model.Where(x => x.RowId == 1))
 					{
 						<tr class="text-center">
 							<td>@item.Insured</td>
 
 							<td>
 								<select class="form-control cum_con_days">
-									@foreach (var thislist in Model.Where(x=>x.Insured == item.Insured))
-										{
-											<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
-												@thislist.PlanName
-											</option>
-										}
+									@foreach (var thislist in Model.Where(x => x.Insured == item.Insured))
+									{
+										<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
+											@thislist.PlanName
+										</option>
+									}
 									@*<option value="@item.Plan">
-										@item.PlanName
-									</option>*@
+											@item.PlanName
+										</option>*@
 								</select>
 							</td>
 
@@ -67,3 +67,9 @@
 		</div>
 	</div>
 </div>
+
+<div class="my-3" style="height: 32px;">
+	<div class="btn btn-third float-end grand_total">Grand Total<span class="pl-4">14.00 USD</span></div>
+	@*<div class="btn btn-third float-right mr-2">Grand Total</div>*@
+</div>
+<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>

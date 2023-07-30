@@ -1,5 +1,5 @@
 ﻿var projectname = checkurlserver();
-
+var travelinfo = {}
 $(document).ready(function () {
     $("#search").click(function () {
 
@@ -94,6 +94,18 @@ $(document).ready(function () {
 
     });
 
+    $('.trgrthis').focusout(function () {
+        sendData()
+    });
+
+    $('.thisbeneficiary :input[required]').focusout(function () {
+        sendData()
+    });
+
+
+    $('.trgrthis.isselect2').on('select2:close', function () {
+        sendData();
+    });
     $('input[name="sgender"]').change(function () {
         var selectedGender = $(this).val();
         var maidenNameField = $('.maiden-field');
@@ -168,13 +180,17 @@ function searchbeneficiary() {
                                 $('#female').prop('checked', true);
                             }
 
-
                         }
                         $('#searchDropdownContent a').off('click');
                     });
 
                 } else {
-                    dropdownContent.hide();
+                    var item = $(`<span>`).text("No Benificiary Found!");
+                    dropdownContent.append(item);
+                    dropdownContent.show();
+                    $(document).on('click', '#searchDropdownContent span', function () {
+                        dropdownContent.hide();
+                    });
                 }
 
 
@@ -236,9 +252,9 @@ function populatebeneficiary() {
         $('.dob').val('');
         $('.passport_no').val('');
 
-        var beneficiaryTable = $('#beneficiaryTable').DataTable();
-        beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
-        beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
+        //var beneficiaryTable = $('#beneficiaryTable').DataTable();
+        //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
+        //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
     });
 }
 function settofrom() {
@@ -444,6 +460,7 @@ if (sendButton) {
     sendButton.addEventListener('click', sendData);
 }
 
+
 // Step 1: Add event listener to the button or trigger
 
 
@@ -605,13 +622,61 @@ function convertToJSON(data) {
 }
 
 // Step 4: Send the JSON strings to the server using AJAX call
+function validatequatation() {
+    var inputValues = [];
+    var requiredFields = $('.trgrthis');
+    requiredFields.each(function () {
+
+        var field = $(this).val();
+        inputValues.push({ val: field }); // to return flag valid
+
+        var id = $(this).attr("id");
+
+        //if (field == undefined || field == '') {
+        //    $(this).css('border-color', 'red');
+        //    $(this).parent().find(".select2-container").addClass("select2-borderred");
+        //} else {
+        //    $(this).css('border-color', '#e2e7f1');
+        //    $(this).parent().find(".select2-container").removeClass("select2-borderred");
+        //}
+    });
+
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryTable = $('.beneficiary-table');
+        if (beneficiaryTable.find('tbody tr').length == 0) {
+            console.log('empty')
+            inputValues.push({ val: "" }); 
+        }
+        else
+            console.log('not empty')
+
+
+    } else {
+        var requiredenFields = $('.thisbeneficiary :input[required]');
+        requiredenFields.each(function () {
+            var field = $(this).val();
+            inputValues.push({ val: field }); // to return flag valid
+        });
+    }
+    console.log(inputValues)
+
+    const valid = inputValues.find(v => v.val == "");
+    console.log(valid)
+    return valid;
+}
 function sendData() {
+
+    if (validatequatation()) {
+        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+        return;
+    }
 
     $(".result").addClass("load")
 
-    setTimeout(function () {
-        $(".result").removeClass("load")
-    }, 2000);
+
 
     getQuotationData()
     //console.log(getQuotationData())
@@ -647,12 +712,44 @@ function sendData() {
 }
 
 
+function gathertravelinfo() {
+    var selectedOptions = $('#destination_id option:selected');
+    var selectedDestinations = selectedOptions.map(function () {
+        return $(this).text();
+    }).get();
+    selectedDestinations = selectedDestinations.join(', ');
 
+
+    var selectedDestinationIds = selectedOptions.map(function () {
+        return $(this).val();
+    }).get();
+
+
+    var fromDate = $('#from').val();
+    var toDate = $('#to').val();
+    var duration = $('#duration').val();
+
+
+    // Validate fields
+    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+        toDate.trim() === '' || duration.trim() === '') {
+        return false; // Prevent adding the row if any field is empty
+    }
+
+    return {
+        "from": fromDate,
+        "to": toDate,
+        "duration": duration,
+        "selectedDestinations": selectedDestinations,
+        "selectedDestinationIds": selectedDestinationIds,
+    };
+}
 
 
 
 
 function getQuotationData() {
+
     // Retrieve ages of beneficiaries
     function calculateAge(dateOfBirth) {
         var today = new Date();
@@ -684,6 +781,9 @@ function getQuotationData() {
     }
     console.log(ages)
 
+    travelinfo = gathertravelinfo();
+    console.log('this', travelinfo)
+
     // Retrieve selected product
     var selectedProduct = document.getElementById('product_id').value;
 
@@ -691,10 +791,10 @@ function getQuotationData() {
     var selectedZone = document.getElementById('zone_id').value;
 
     // Retrieve durations in the travel section
-    var travelList = createTravelData();
-    var durations = travelList.map(function (travel) {
-        return travel.Duration;
-    });
+    //var travelList = createTravelData();
+    //var durations = travelList.map(function (travel) {
+    //    return travel.Duration;
+    //});
 
     // Construct the quotation data object
     //var quotationData = {
@@ -755,13 +855,13 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            console.log(response,'before partial')
             loadQuotePartialView(response)
 
 
         },
         error: function (xhr, status, error) {
             alert('big error')
+            $(".result").removeClass("load")
             console.log(error);
         }
     });
@@ -776,151 +876,26 @@ function loadQuotePartialView(response) {
         type: 'POST',
         data: { quotereq: response },
         success: function (data) {
-            console.log(data,'respong partial')
             $('.quotecontainer').html(data);
+            $('.quotecontainer .incdate').html(travelinfo.from);
+            $('.quotecontainer .expdate').html(travelinfo.to);
+            $('.quotecontainer .duration').html(travelinfo.duration + ' days');
+            $('.quotecontainer .dest').html(travelinfo.selectedDestinations);
+
+            var sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendData);
+            }
+
+            setTimeout(function () {
+                $(".result").removeClass("load")
+            }, 2000);
+
         },
         error: function (error) {
+            $(".result").removeClass("load")
             console.error('Error loading partial view:', error);
         }
     });
 }
 
-var thival = [
-    {
-        "t_Id": 26,
-        "p_Id": 20,
-        "p_Name": null,
-        "t_Start_Age": 1,
-        "t_End_Age": 80,
-        "t_Number_Of_Days": 50,
-        "t_Price_Amount": 25,
-        "t_Net_Premium_Amount": 25,
-        "t_PA_Amount": 25,
-        "t_Tariff_Starting_Date": "2023-01-31T00:00:00",
-        "t_Override_Amount": 25,
-        "pL_Id": 301,
-        "pL_Name": null,
-        "age": 10,
-        "duration": 25,
-        "statusCode": {
-            "code": 0,
-            "message": null,
-            "idLanguage": "1"
-        }
-    },
-    {
-        "t_Id": 26,
-        "p_Id": 20,
-        "p_Name": null,
-        "t_Start_Age": 1,
-        "t_End_Age": 80,
-        "t_Number_Of_Days": 50,
-        "t_Price_Amount": 25,
-        "t_Net_Premium_Amount": 25,
-        "t_PA_Amount": 25,
-        "t_Tariff_Starting_Date": "2023-01-31T00:00:00",
-        "t_Override_Amount": 25,
-        "pL_Id": 301,
-        "pL_Name": null,
-        "age": 28,
-        "duration": 25,
-        "statusCode": {
-            "code": 0,
-            "message": null,
-            "idLanguage": "1"
-        }
-    },
-    {
-        "t_Id": 24,
-        "p_Id": 21,
-        "p_Name": null,
-        "t_Start_Age": 22,
-        "t_End_Age": 33,
-        "t_Number_Of_Days": 44,
-        "t_Price_Amount": 55,
-        "t_Net_Premium_Amount": 45,
-        "t_PA_Amount": 66,
-        "t_Tariff_Starting_Date": "2020-12-31T00:00:00",
-        "t_Override_Amount": 777777,
-        "pL_Id": 302,
-        "pL_Name": null,
-        "age": 28,
-        "duration": 25,
-        "statusCode": {
-            "code": 0,
-            "message": null,
-            "idLanguage": "1"
-        }
-    }
-]
-function populateQuotationCards() {
-    const quotecontainer = document.querySelector('.quotecontainer');
-
-    // Loop through the Response array and generate quotation cards
-    for (const quotation of thival) {
-        const card = document.createElement('div');
-        card.classList.add('card', 'mt-2');
-        card.innerHTML = `
-                    <div class="card-body" style="font-size: 13px;">
-                        <div>
-                            <b>Destination(s)</b>
-                            <span class="float-end">
-                                Aruba
-                            </span>
-                        </div>
-                        <div>
-                            <b>Inception Date</b>
-                            <span class="float-end">${quotation.t_Tariff_Starting_Date}</span>
-                        </div>
-                        <div>
-                            <b>Expiry Date</b>
-                            <span class="float-end">08-07-2023</span>
-                        </div>
-                        <div>
-                            <b>Duration</b>
-                            <span class="float-end">${quotation.duration} Days</span>
-                        </div>
-                        <div>
-                            <span class="float-end total_price" data-currency="USD"></span>
-                        </div>
-                        <table class="table table-sm table-bordered mt-3">
-                            <thead>
-                                <tr class="thead-light text-center">
-                                    <th>Full Name</th>
-                                    <th>Cons. / Cumul. Days</th>
-                                    <th>Base Price</th>
-                                    <th>Discount</th>
-                                    <th>Final Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="text-center">
-                                    <td>${calculateFullName(quotation.age)}</td>
-                                    <td>
-                                        <select class="form-control1 cum_con_days" name="plans_price[1][]">
-                                            <option value="${quotation.t_Id}" data-bprice="${quotation.t_Price_Amount}" 
-                                            data-fprice="${quotation.t_Net_Premium_Amount}" data-price0="${quotation.t_PA_Amount}" 
-                                            data-deductible="false">${quotation.p_Name}</option>
-                                        </select>
-                                    </td>
-                                    <td class="base_price" data-price="${quotation.t_Price_Amount}">
-                                        ${quotation.t_Price_Amount} USD
-                                    </td>
-                                    <td class="discount" data-discount="0">
-                                        0 %
-                                        <input type="hidden" class="discount" name="plans_discount[0][]" value="0">
-                                    </td>
-                                    <td>
-                                        <span class="final_price" data-price="${quotation.t_Net_Premium_Amount}">
-                                            ${quotation.t_Net_Premium_Amount} USD
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-
-        quotecontainer.appendChild(card);
-    }
-}

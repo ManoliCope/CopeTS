@@ -38,7 +38,7 @@
 				<div class="page-title mt-2">
 					<h4 class="card-title ">
 						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-						<span>Create Certificate </span>
+						<span>New Policy </span>
 
 					</h4>
 				</div>
@@ -85,8 +85,8 @@
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
-														<label for="product_id">Product</label>
-														<select class="form-control isselect2" id="product_id" name="product_id">
+														<label for="product_id">Product <span class="text-danger">*</span></label>
+														<select class="form-control isselect2 trgrthis" id="product_id" name="product_id">
 															<option value="">Select Product</option>
 															@*@foreach (var thislist in filldata.loadedData.products)
 																{
@@ -98,8 +98,8 @@
 
 												<div class="col-md-4">
 													<div class="form-group">
-														<label for="zone_id">Zone</label>
-														<select class="form-control isselect2" id="zone_id" name="zone_id" >
+														<label for="zone_id">Zone <span class="text-danger">*</span></label>
+														<select class="form-control isselect2 trgrthis" id="zone_id" name="zone_id" >
 															<option value="">Select Zone</option>
 															@*@foreach (var thislist in filldata.loadedData.zones)
 															{
@@ -165,7 +165,7 @@
 													<div class="row">
 														<div class="form-group col-md-3">
 															<label>First Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control first_name" value="" name="first_name">
+															<input type="text" class="form-control first_name" value="" name="first_name" required>
 														</div>
 														<div class="form-group col-md-3">
 															<label>Middle Name</label>
@@ -177,7 +177,7 @@
 														</div>
 														<div class="form-group col-md-3">
 															<label>Last Name <span class="text-danger">*</span></label>
-															<input type="text" class="form-control last_name" value="" name="last_name">
+															<input type="text" class="form-control last_name" value="" name="last_name" required>
 														</div>
 													</div>
 													<div class="row">
@@ -187,24 +187,12 @@
 														</div>
 														<div class="form-group col-md-3">
 															<label>Date Of Birth <span class="text-danger">*</span></label>
-															<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth">
+															<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth" required>
 														</div>
-														<div class="form-group col-md-3 passport_expiry_form" style="display: none">
-															<label>Passport Expiry Date <span class="isrequired text-danger" style="display:none">*</span></label>
-															<input type="text" class="form-control datepicker passport_expiry" value="" name="passport_expiry" id="passport_expiry" extra-field-validation="">
-														</div>
-														<div class="form-group col-md-3 nationality_form" style="display: none">
-															<label>Nationality <span class="isrequired text-danger" style="display:none">*</span></label>
-															<select class="form-control select2 nationality select2-hidden-accessible" name="nationality" id="nationality" data-select2-id="nationality" tabindex="-1" aria-hidden="true" extra-field-validation="">
-																<option value="" data-select2-id="7"></option>
-																<option value="AFG"> Afghanistan</option>
-																<option value="ALB"> Albania</option>
-															</select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-nationality-container"><span class="select2-selection__rendered" id="select2-nationality-container" role="textbox" aria-readonly="true"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear"><i class="fas fa-times text-danger"></i></span></span>
-
-														</div>
+													
 														<div class="form-group col-md-3 div-beneficiary ">
 															<label>&nbsp;</label>
-															<div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
+															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
 																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
 															</div>
 														</div>
@@ -275,8 +263,8 @@
 													<div class="col-md-12">
 														<div class="row">
 															<div class="form-group col-md-9">
-																<label for="destination_id">Destination(s)</label>
-																<select class="form-control isselect2" id="destination_id" name="destination_id" multiple disabled>
+																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
+																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple disabled>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
@@ -287,23 +275,23 @@
 														</div>
 														<div class="row">
 															<div class="form-group col-md-3">
-																<label>From</label>
-																<input type="date" id="from" class="form-control datepickermonth" name="from" value="" data-gtm-form-interact-field-id="1">
+																<label>From <span class="text-danger">*</span></label>
+																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="" data-gtm-form-interact-field-id="1">
 															</div>
 															<div class="form-group col-md-3">
-																<label>To</label>
-																<input type="date" id="to" class="form-control datepickermonth" name="to" value="" data-gtm-form-interact-field-id="2">
+																<label>To <span class="text-danger">*</span></label>
+																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="" data-gtm-form-interact-field-id="2">
 															</div>
 															<div class="form-group col-md-3">
-																<label>Duration</label>
-																<input type="number" step="1" min="1" id="duration" class="form-control" name="duration" value="">
+																<label>Duration <span class="text-danger">*</span></label>
+																<input type="number" step="1" min="1" id="duration" class="form-control trgrthis" name="duration" value="">
 															</div>
-															<div class="form-group col-md-3 mt-3 pt-1">
+															@*<div class="form-group col-md-3 mt-3 pt-1">
 																<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
-															</div>
+															</div>*@
 														</div>
 													</div>
-													<div class="col-md-12">
+													<!--<div class="col-md-12">
 														<div class="form-group">
 															<div class="table-responsive">
 																<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
@@ -316,13 +304,13 @@
 																			<th>Duration</th>
 																			<th style="width:90px;" data-orderable="false">Actions</th>
 																		</tr>
-																	</thead>
+																	</thead>-->
 																	@*<tbody class="travel-list small">
 																		</tbody>*@
-																</table>
+																<!--</table>
 															</div>
 														</div>
-													</div>
+													</div>-->
 												</div>
 											</div>
 										</div>
@@ -353,7 +341,7 @@
 							<div class="card-body result ">
 								<div class="quotecontainer">
 									
-									<div class="card mt-2">
+									@*<div class="card mt-2">
 										<div class="card-body" style="font-size:13px">
 											<div>
 												<b>Destination(s) </b>
@@ -412,7 +400,7 @@
 										<div class="btn btn-third float-end grand_total">14.00 USD</div>
 										<div class="btn btn-third float-right mr-2">Grand Total</div>
 									</div>
-									<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+									<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
 								</div>
 								<div class="loadersize"><div id="loader"></div></div>
 							</div>
