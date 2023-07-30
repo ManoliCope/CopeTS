@@ -2,6 +2,7 @@
 using ProjectX.Entities.dbModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace ProjectX.Repository.GeneralRepository
@@ -17,5 +18,6 @@ namespace ProjectX.Repository.GeneralRepository
         IList<EmailTemplate> GetEmailTemplates();
 
         IList<TextReplacement> GetTextReplacements();
+        DataTable ToDataTable(List<int> list);
     }
 }

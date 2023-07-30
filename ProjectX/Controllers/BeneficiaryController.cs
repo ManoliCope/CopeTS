@@ -126,8 +126,7 @@ namespace ProjectX.Controllers
         public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
         {
             BeneficiarySearchResp resp = new BeneficiarySearchResp();
-            resp.beneficiary = GenerateRandomBeneficiaries(prefix);
-
+            resp = _beneficiaryBusiness.SearchBeneficiaryPref(prefix);
             return resp;
         }
         private List<TR_Beneficiary> GenerateRandomBeneficiaries(string prefix)

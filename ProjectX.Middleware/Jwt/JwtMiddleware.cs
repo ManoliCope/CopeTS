@@ -133,9 +133,12 @@ namespace ProjectX.Middleware.Jwt
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "REQUEST/RESPONSE");
+                _logger.LogError(ex, "REQUEST/RESPONSE");
 
                 context.Response.StatusCode = -1000;
+
+                string ttt = Controller;
+                string aaa = Action;
 
                 //context.Response.Redirect("/");
                 context.Response.Redirect("/login");

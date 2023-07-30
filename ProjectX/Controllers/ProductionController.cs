@@ -10,6 +10,7 @@ using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
 using ProjectX.Entities.Models.Package;
 using ProjectX.Entities.Models.Product;
+using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Models.Profile;
 
 namespace ProjectX.Controllers
@@ -47,8 +48,8 @@ namespace ProjectX.Controllers
                 loadDestinations = true,
                 loadPlans = true,
                 loadTariffs = true
-               
-            }) ;
+
+            });
             return View(response);
         }
 
@@ -69,7 +70,7 @@ namespace ProjectX.Controllers
                 loadDestinations = true,
                 loadPlans = true,
                 loadTariffs = true,
-                loadZones= true
+                loadZones = true
 
             });
 
@@ -156,13 +157,33 @@ namespace ProjectX.Controllers
         {
             List<TR_Product> response = new List<TR_Product>();
             return _productionBusiness.GetProductsByType(id);
-            return response;
         }
+        public List<TR_Zone> GetZonesByProduct(int id) //individual,family,group
+        {
+            List<TR_Zone> response = new List<TR_Zone>();
+            return _productionBusiness.GetZonesByProduct(id);
+        }
+
         public List<TR_Destinations> GetDestinationByZone(int ZoneId)
         {
             List<TR_Destinations> response = new List<TR_Destinations>();
             return _productionBusiness.GetDestinationByZone(ZoneId);
             return response;
+        }
+
+
+
+        [HttpPost]
+        public List<ProductionResp> GetQuotation(List<ProductionReq> quotereq)
+        {
+            return _productionBusiness.getProductionDetails(quotereq);
+        }
+
+        [HttpPost]
+        public IActionResult GetPartialViewQuotation(List<ProductionResp> quotereq)
+        {
+            return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
+
         }
     }
 }

@@ -1,12 +1,6 @@
 ﻿var projectname = checkurlserver();
-
-
-
-
+var travelinfo = {}
 $(document).ready(function () {
-
-
-
     $("#search").click(function () {
 
         drawtable()
@@ -26,6 +20,7 @@ $(document).ready(function () {
     //$("#destinationtbl").DataTable()
 
 
+    populatezones();
     populateproducts();
     populatedestinations()
     populatebeneficiary()
@@ -99,6 +94,18 @@ $(document).ready(function () {
 
     });
 
+    $('.trgrthis').focusout(function () {
+        sendData()
+    });
+
+    $('.thisbeneficiary :input[required]').focusout(function () {
+        sendData()
+    });
+
+
+    $('.trgrthis.isselect2').on('select2:close', function () {
+        sendData();
+    });
     $('input[name="sgender"]').change(function () {
         var selectedGender = $(this).val();
         var maidenNameField = $('.maiden-field');
@@ -134,12 +141,13 @@ function searchbeneficiary() {
             method: 'GET',
             data: { prefix: query },
             success: function (data) {
-                //console.log(data.beneficiary)
+                console.log(data.beneficiary)
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
                     for (var i = 0; i < data.beneficiary.length; i++) {
-                        var item = $(`<a thisid=${data.beneficiary[i].bE_Id}>`).text(data.beneficiary[i].bE_FirstName).attr('href', '#');
+                        var bentext = data.beneficiary[i].bE_FirstName + ' ' + data.beneficiary[i].bE_MiddleName + ' ' + data.beneficiary[i].bE_LastName
+                        var item = $(`<a thisid=${data.beneficiary[i].bE_Id}>`).text(bentext).attr('href', '#');
                         dropdownContent.append(item);
                     }
                     dropdownContent.show();
@@ -172,13 +180,17 @@ function searchbeneficiary() {
                                 $('#female').prop('checked', true);
                             }
 
-
                         }
                         $('#searchDropdownContent a').off('click');
                     });
 
                 } else {
-                    dropdownContent.hide();
+                    var item = $(`<span>`).text("No Benificiary Found!");
+                    dropdownContent.append(item);
+                    dropdownContent.show();
+                    $(document).on('click', '#searchDropdownContent span', function () {
+                        dropdownContent.hide();
+                    });
                 }
 
 
@@ -240,9 +252,9 @@ function populatebeneficiary() {
         $('.dob').val('');
         $('.passport_no').val('');
 
-        var beneficiaryTable = $('#beneficiaryTable').DataTable();
-        beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
-        beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
+        //var beneficiaryTable = $('#beneficiaryTable').DataTable();
+        //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
+        //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
     });
 }
 function settofrom() {
@@ -273,7 +285,6 @@ function settofrom() {
 }
 function populateproducts() {
     $('.typeradio .we-checkbox input[type="radio"]').on('change', function () {
-
         var addBeneficiaryButton = $('.btn-beneficiary');
         var beneficiaryTable = $('.beneficiary-table');
 
@@ -294,8 +305,16 @@ function populateproducts() {
             beneficiaryTable.hide(); // Hide beneficiary table for Single
         }
 
+        //$("#destinationtbl tbody tr").empty();
+        const table = $('#destinationtbl').DataTable();
+        table.clear().draw();
+
         $('#product_id').empty().append('<option value="">Select Product</option>').val('').trigger('change');
-        $('#product_id').prop('disabled', true);
+        $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
+        $('#product_id,#zone_id').prop('disabled', true);
+
+
+
         $.ajax({
             url: projectname + '/Production/GetProdutctsByType',
             method: 'POST',
@@ -304,8 +323,36 @@ function populateproducts() {
                 $.each(response, function (index, product) {
                     $('#product_id').append('<option value="' + product.pR_Id + '">' + product.pR_Title + '</option>');
                 });
+                $('#product_id,#zone_id').prop('disabled', false);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
+}
 
-                $('#product_id').prop('disabled', false);
+
+
+function populatezones() {
+    $('#product_id').on('change', function () {
+        var selectedPr = $("#product_id").val();
+        $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
+        if (selectedPr == 0)
+            return
+
+        $('#zone_id').prop('disabled', true);
+
+        $.ajax({
+            url: projectname + '/Production/GetZonesByProduct',
+            method: 'POST',
+            data: { id: selectedPr },
+            success: function (response) {
+                $.each(response, function (index, zone) {
+                    $('#zone_id').append('<option value="' + zone.z_Id + '">' + zone.z_Title + '</option>');
+                });
+
+                $('#zone_id').prop('disabled', false);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -318,6 +365,11 @@ function populatedestinations() {
     $('#zone_id').on('change', function () {
         $('#destination_id').empty();
         $('#destination_id').prop('disabled', true);
+        $('#destination_id').empty().val('').trigger('change');
+
+        if ($('#zone_id').val() == "")
+            return
+
         $.ajax({
             url: projectname + '/Production/GetDestinationByZone',
             method: 'POST',
@@ -407,6 +459,7 @@ var sendButton = document.getElementById('sendButton');
 if (sendButton) {
     sendButton.addEventListener('click', sendData);
 }
+
 
 // Step 1: Add event listener to the button or trigger
 
@@ -525,6 +578,8 @@ function createBeneficiaryData() {
         beneficiaryList.push(beneficiaryData);
     }
 
+
+    console.log(beneficiaryList)
     // Return the beneficiary list
     return beneficiaryList;
 }
@@ -533,31 +588,31 @@ function createBeneficiaryData() {
 function createTravelData() {
     var travelList = [];
 
-    // Retrieve the travel data from the table
     var travelTable = document.getElementById('destinationtbl');
-    var travelRows = travelTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-    // Loop through the travel rows and create travel objects
-    for (var i = 0; i < travelRows.length; i++) {
-        var row = travelRows[i];
-        var destination = row.cells[0].textContent;
-        var from = row.cells[1].textContent;
-        var to = row.cells[2].textContent;
-        var duration = row.cells[3].textContent;
+    var tbody = travelTable.getElementsByTagName('tbody')[0];
+    if (tbody) {
+        var travelRows = tbody.getElementsByTagName('tr');
 
-        // Create a travel object
-        var travelData = {
-            Destination: destination,
-            From: from,
-            To: to,
-            Duration: duration
-        };
+        for (var i = 0; i < travelRows.length; i++) {
 
-        // Add the travel object to the travel list
-        travelList.push(travelData);
+            var row = travelRows[i];
+            var destination = row.cells[0].textContent;
+            var from = row.cells[1].textContent;
+            var to = row.cells[2].textContent;
+            var duration = row.cells[3].textContent;
+
+            // Create a travel object
+            var travelData = {
+                Destination: destination,
+                From: from,
+                To: to,
+                Duration: duration
+            };
+
+            travelList.push(travelData);
+        }
     }
-
-    // Return the travel list
     return travelList;
 }
 
@@ -567,16 +622,64 @@ function convertToJSON(data) {
 }
 
 // Step 4: Send the JSON strings to the server using AJAX call
+function validatequatation() {
+    var inputValues = [];
+    var requiredFields = $('.trgrthis');
+    requiredFields.each(function () {
+
+        var field = $(this).val();
+        inputValues.push({ val: field }); // to return flag valid
+
+        var id = $(this).attr("id");
+
+        //if (field == undefined || field == '') {
+        //    $(this).css('border-color', 'red');
+        //    $(this).parent().find(".select2-container").addClass("select2-borderred");
+        //} else {
+        //    $(this).css('border-color', '#e2e7f1');
+        //    $(this).parent().find(".select2-container").removeClass("select2-borderred");
+        //}
+    });
+
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryTable = $('.beneficiary-table');
+        if (beneficiaryTable.find('tbody tr').length == 0) {
+            console.log('empty')
+            inputValues.push({ val: "" }); 
+        }
+        else
+            console.log('not empty')
+
+
+    } else {
+        var requiredenFields = $('.thisbeneficiary :input[required]');
+        requiredenFields.each(function () {
+            var field = $(this).val();
+            inputValues.push({ val: field }); // to return flag valid
+        });
+    }
+    console.log(inputValues)
+
+    const valid = inputValues.find(v => v.val == "");
+    console.log(valid)
+    return valid;
+}
 function sendData() {
+
+    if (validatequatation()) {
+        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+        return;
+    }
 
     $(".result").addClass("load")
 
-    setTimeout(function () {
-        $(".result").removeClass("load")
-    }, 2000);
 
 
-    console.log(getQuotationData())
+    getQuotationData()
+    //console.log(getQuotationData())
 
     return
     var generalInfoData = createGeneralInformationData();
@@ -609,12 +712,44 @@ function sendData() {
 }
 
 
+function gathertravelinfo() {
+    var selectedOptions = $('#destination_id option:selected');
+    var selectedDestinations = selectedOptions.map(function () {
+        return $(this).text();
+    }).get();
+    selectedDestinations = selectedDestinations.join(', ');
 
+
+    var selectedDestinationIds = selectedOptions.map(function () {
+        return $(this).val();
+    }).get();
+
+
+    var fromDate = $('#from').val();
+    var toDate = $('#to').val();
+    var duration = $('#duration').val();
+
+
+    // Validate fields
+    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+        toDate.trim() === '' || duration.trim() === '') {
+        return false; // Prevent adding the row if any field is empty
+    }
+
+    return {
+        "from": fromDate,
+        "to": toDate,
+        "duration": duration,
+        "selectedDestinations": selectedDestinations,
+        "selectedDestinationIds": selectedDestinationIds,
+    };
+}
 
 
 
 
 function getQuotationData() {
+
     // Retrieve ages of beneficiaries
     function calculateAge(dateOfBirth) {
         var today = new Date();
@@ -627,11 +762,27 @@ function getQuotationData() {
         return age;
     }
 
-    var beneficiaryRows = document.querySelectorAll('.beneficiary-table tbody tr');
-    var ages = Array.from(beneficiaryRows).map(function (row) {
-        var dateOfBirth = row.cells[2].textContent;
-        return calculateAge(dateOfBirth);
-    });
+    var ages = [];
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryTable = $('.beneficiary-table').DataTable();
+        var beneficiaryRows = beneficiaryTable.rows().data();
+
+        beneficiaryRows.each(function (index, row) {
+            var dateOfBirth = row[2];
+            ages.push(calculateAge(dateOfBirth));
+        });
+    }
+    else {
+        var dateOfBirthInput = document.getElementById('date_of_birth').value;
+        ages.push(calculateAge(dateOfBirthInput));
+    }
+    console.log(ages)
+
+    travelinfo = gathertravelinfo();
+    console.log('this', travelinfo)
 
     // Retrieve selected product
     var selectedProduct = document.getElementById('product_id').value;
@@ -640,18 +791,111 @@ function getQuotationData() {
     var selectedZone = document.getElementById('zone_id').value;
 
     // Retrieve durations in the travel section
-    var travelList = createTravelData();
-    var durations = travelList.map(function (travel) {
-        return travel.Duration;
-    });
+    //var travelList = createTravelData();
+    //var durations = travelList.map(function (travel) {
+    //    return travel.Duration;
+    //});
 
     // Construct the quotation data object
-    var quotationData = {
-        Ages: ages,
-        Product: selectedProduct,
-        Zone: selectedZone,
-        Durations: durations
-    };
+    //var quotationData = {
+    //    Ages: [10, 28],
+    //    Product: 682,
+    //    //Product: selectedProduct,
+    //    Zone: 270,
+    //    //Zone: selectedZone,
+    //    Durations: [25],
+    //};
+
+
+    var quotationData =
+        [
+            {
+                Insured: 1,
+                Ages: 10,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+            {
+                Insured: 2,
+                Ages: 28,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+            {
+                Insured: 3,
+                Ages: 28,
+                Product: 682,
+                //Product: selectedProduct,
+                Zone: 270,
+                //Zone: selectedZone,
+                Durations: [25]
+
+            },
+        ]
+    //{
+    //    Ages: [10, 28],
+    //        Product: 682,
+    //            //Product: selectedProduct,
+    //            Zone: 270,
+    //                //Zone: selectedZone,
+    //                Durations: [25],
+    //};
+
+
+    $.ajax({
+        url: projectname + '/Production/GetQuotation',
+        method: 'POST',
+        data: { quotereq: quotationData },
+        success: function (response) {
+            loadQuotePartialView(response)
+
+
+        },
+        error: function (xhr, status, error) {
+            alert('big error')
+            $(".result").removeClass("load")
+            console.log(error);
+        }
+    });
 
     return quotationData;
 }
+
+
+function loadQuotePartialView(response) {
+    $.ajax({
+        url: projectname + '/Production/GetPartialViewQuotation',
+        type: 'POST',
+        data: { quotereq: response },
+        success: function (data) {
+            $('.quotecontainer').html(data);
+            $('.quotecontainer .incdate').html(travelinfo.from);
+            $('.quotecontainer .expdate').html(travelinfo.to);
+            $('.quotecontainer .duration').html(travelinfo.duration + ' days');
+            $('.quotecontainer .dest').html(travelinfo.selectedDestinations);
+
+            var sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendData);
+            }
+
+            setTimeout(function () {
+                $(".result").removeClass("load")
+            }, 2000);
+
+        },
+        error: function (error) {
+            $(".result").removeClass("load")
+            console.error('Error loading partial view:', error);
+        }
+    });
+}
+

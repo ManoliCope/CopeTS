@@ -1,0 +1,67 @@
+﻿@model List<ProjectX.Entities.Models.Production.ProductionResp>
+@{
+	Layout = null;
+ }
+
+@foreach (var item in Model)
+{
+	<div class="card mt-2">
+		<div class="card-body" style="font-size:13px">
+			<div>
+				<b>Destination(s)</b>
+				<span class="float-end">@item.ZoneName</span>
+			</div>
+			<div>
+				<b>Inception Date</b>
+				<span class="float-end">@item.TariffStartingDate</span>
+			</div>
+			<div>
+				<b>Expiry Date</b>
+				<span class="float-end">@item.TariffStartingDate</span>
+			</div>
+			<div>
+				<b>Duration</b>
+				<span class="float-end">@item.Duration Days</span>
+			</div>
+			<div>
+				<span class="float-end total_price" data-currency="USD"></span>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-sm table-bordered mt-3">
+					<thead>
+						<tr class="thead-light text-center">
+							<th>Full Name</th>
+							<th>Cons. / Cumul. Days</th>
+							<th>Base Price</th>
+							<th>Discount</th>
+							<th>Final Price</th>
+						</tr>
+					</thead>
+					<tbody class="quotation-list">
+						<tr class="text-center">
+							<td>@item.Insured</td>
+
+							<td>
+								<select class="form-control cum_con_days">
+									@*@foreach (var plan in item.Plan)
+		{
+			<option value="@plan.PlanId" data-bprice="@plan.BasePrice" data-fprice="@plan.FinalPrice" data-price0="@plan.DiscountPercentage" data-deductible="@plan.IsDeductible">
+				@plan.PlanName
+			</option>
+		}*@
+									<option value="@item.Plan">
+										@item.PlanName
+									</option>
+								</select>
+							</td>
+
+							<td>@item.PriceAmount USD</td>
+							<td>@item.PriceAmount USD</td>
+							<td>@item.NetPremiumAmount USD</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+}

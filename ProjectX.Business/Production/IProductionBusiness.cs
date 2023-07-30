@@ -10,9 +10,10 @@ namespace ProjectX.Business.Production
     public interface IProductionBusiness
     {
         public List<TR_Product> GetProductsByType(int id);
+        public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
 
-        public ProductionResp getProductionDetails(ProductionReq req);
+        public List<ProductionResp> getProductionDetails(List<ProductionReq> req);
 
     }
 }

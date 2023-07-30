@@ -12,5 +12,6 @@ namespace ProjectX.Repository.BeneficiaryRepository
         public BeneficiaryResp ModifyBeneficiary(BeneficiaryReq req, string act, int userid);
         public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req);
         public TR_Beneficiary GetBeneficiary(int IdBeneficiary); //test
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix);
     }
 }

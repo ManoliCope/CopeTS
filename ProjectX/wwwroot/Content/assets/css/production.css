@@ -140,3 +140,18 @@
 .result .loadersize {
     display: none
 }
+
+.quotecontainer{
+    min-height:25px;
+}
+.quotecontainer .validatemsg {
+    color: red
+}
+
+
+#searchDropdownContent span {
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none; /* For Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+    user-select: none;
+}

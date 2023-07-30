@@ -98,5 +98,22 @@ namespace ProjectX.Repository.BeneficiaryRepository
 
             return resp;
         }
+        
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
+        {
+            var resp = new BeneficiarySearchResp();
+            var param = new DynamicParameters();
+            param.Add("@BE_Prefix", prefix);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Beneficiary_GetbyPerfix", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp.beneficiary = result.Read<TR_Beneficiary>().ToList();
+                }
+            }
+
+            return resp;
+        }
     }
 }

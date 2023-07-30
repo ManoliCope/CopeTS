@@ -122,5 +122,17 @@ namespace ProjectX.Repository.GeneralRepository
                 }
             }
         }
+
+        public DataTable ToDataTable(List<int> list)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Value", typeof(int));
+            foreach (int item in list)
+            {
+                dataTable.Rows.Add(item);
+            }
+            return dataTable;
+        }
+
     }
 }
