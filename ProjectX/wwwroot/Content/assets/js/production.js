@@ -9,9 +9,22 @@ $(document).ready(function () {
     drawtable();
 
     $(".isselect2").select2({
-        tags: true,
         tokenSeparators: [',', ' ']
     })
+
+
+    $('#product_id').on('select2:selecting', function (e) {
+        // Get the entered text in the search box
+        const enteredText = $('.select2-search__field').val();
+
+        // Check if there's no option containing the entered text
+        if ($('#product_id').find("option:contains('" + enteredText + "')").length === 0) {
+            e.preventDefault(); // Prevent the selection
+            alert('Option not found!'); // Show an alert or any other indication
+        }
+    });
+
+
 
     $('#destination_id').select2({
         closeOnSelect: false
@@ -117,7 +130,48 @@ $(document).ready(function () {
         }
     });
 
+    $('#date_of_birth').on('focusout', updateAge);
+
+
+
 });
+
+
+
+
+
+
+// Function to update the age text on date change
+function updateAge() {
+    //function calculateAge(date) {
+    //    const birthDate = new Date(date);
+    //    const now = new Date();
+    //    let age = now.getFullYear() - birthDate.getFullYear();
+    //    const monthDiff = now.getMonth() - birthDate.getMonth();
+    //    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+    //        age--;
+    //    }
+    //    if (age < 0) {
+    //        return 0;
+    //    }
+    //    return age;
+    //}
+    const dateOfBirthInput = $('#date_of_birth');
+    const ageText = $('.age');
+
+    if (dateOfBirthInput.val()) {
+        const age = calculateAge(dateOfBirthInput.val());
+        if (age == null)
+            ageText.text('');
+        else
+            ageText.text("(" + age + ")");
+    }
+    else {
+        ageText.text('');
+    }
+
+}
+
 
 function searchbeneficiary() {
     $('#searchbeneficiary').keyup(function () {
@@ -141,7 +195,7 @@ function searchbeneficiary() {
             method: 'GET',
             data: { prefix: query },
             success: function (data) {
-                console.log(data.beneficiary)
+                //console.log(data.beneficiary)
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
@@ -179,6 +233,7 @@ function searchbeneficiary() {
                             } else if (beneficiary.bE_Sex === 2) {
                                 $('#female').prop('checked', true);
                             }
+                            updateAge()
 
                         }
                         $('#searchDropdownContent a').off('click');
@@ -217,6 +272,10 @@ function searchbeneficiary() {
 }
 function populatebeneficiary() {
     $('.btn-beneficiary').click(function () {
+        if (validateForm(".thisbeneficiary")) {
+            return;
+        }
+
         var firstName = $('.first_name').val();
         var lastName = $('.last_name').val();
         var dateOfBirth = $('.dob').val();
@@ -230,18 +289,20 @@ function populatebeneficiary() {
         }
 
 
-        if (firstName === '' || lastName === '' || dateOfBirth === '' || sexValue === '') {
+        if (firstName === '' || lastName === '' || dateOfBirth === '' || sexValue === '' || passportNo === '') {
             return;
         }
+        var age = $('.age').text().replace(/\(|\)/g, '');
 
         var beneficiaryList = $('.beneficiary-list');
         var row = '<tr>' +
             '<td>' + firstName + '</td>' +
             '<td>' + lastName + '</td>' +
             '<td>' + dateOfBirth + '</td>' +
+            '<td>' + age + '</td>' +
             '<td>' + passportNo + '</td>' +
             '<td>' + selectedSexOption + '</td>' +
-            '<td><button type="button" class="btn btn-sm delete-beneficiary"><i class="fas fa-trash" style="color:red"></i></button></td>' +
+            '<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>' +
             '</tr>';
 
         beneficiaryList.append(row);
@@ -251,37 +312,56 @@ function populatebeneficiary() {
         $('.last_name').val('');
         $('.dob').val('');
         $('.passport_no').val('');
-
+        $('.age').text('');
         //var beneficiaryTable = $('#beneficiaryTable').DataTable();
         //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
     });
 }
+
+function removerow(me) {
+    $(me).closest("tr").remove();
+}
 function settofrom() {
-    $('#to, #from').change(function () {
+    $('#to, #from, #duration').change(function () {
         var toDate = new Date($('#to').val());
         var fromDate = new Date($('#from').val());
+        var duration = parseInt($('#duration').val());
 
-        if (fromDate && toDate && fromDate <= toDate) {
-            var duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
-            $('#duration').val(duration);
-        } else {
-            $('#duration').val('');
+        if (this.id === 'from' || this.id === 'to') {
+            if (fromDate && toDate && fromDate <= toDate) {
+                duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                $('#duration').val(duration);
+            } else {
+                $('#duration').val('');
+            }
+        } else if (this.id === 'duration') {
+            if (fromDate && !isNaN(duration)) {
+                var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+                if (!isNaN(toDate)) {
+                    var formattedToDate = toDate.toISOString().split('T')[0];
+                    $('#to').val(formattedToDate);
+                } else {
+                    $('#to').val('');
+                }
+            } else {
+                $('#to').val('');
+            }
         }
     });
 
-    $('#duration').change(function () {
-        var fromDate = new Date($('#from').val());
-        var duration = parseInt($(this).val());
+    //$('#duration').change(function () {
+    //    var fromDate = new Date($('#from').val());
+    //    var duration = parseInt($(this).val());
 
-        if (fromDate && duration) {
-            var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
-            var formattedToDate = toDate.toISOString().split('T')[0];
-            $('#to').val(formattedToDate);
-        } else {
-            $('#to').val('');
-        }
-    });
+    //    if (fromDate && duration) {
+    //        var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+    //        var formattedToDate = toDate.toISOString().split('T')[0];
+    //        $('#to').val(formattedToDate);
+    //    } else {
+    //        $('#to').val('');
+    //    }
+    //});
 }
 function populateproducts() {
     $('.typeradio .we-checkbox input[type="radio"]').on('change', function () {
@@ -648,7 +728,7 @@ function validatequatation() {
         var beneficiaryTable = $('.beneficiary-table');
         if (beneficiaryTable.find('tbody tr').length == 0) {
             console.log('empty')
-            inputValues.push({ val: "" }); 
+            inputValues.push({ val: "" });
         }
         else
             console.log('not empty')
@@ -669,10 +749,10 @@ function validatequatation() {
 }
 function sendData() {
 
-    if (validatequatation()) {
-        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
-        return;
-    }
+    //if (validatequatation()) {
+    //    $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+    //    return;
+    //}
 
     $(".result").addClass("load")
 
@@ -719,11 +799,9 @@ function gathertravelinfo() {
     }).get();
     selectedDestinations = selectedDestinations.join(', ');
 
-
     var selectedDestinationIds = selectedOptions.map(function () {
         return $(this).val();
     }).get();
-
 
     var fromDate = $('#from').val();
     var toDate = $('#to').val();
@@ -746,49 +824,23 @@ function gathertravelinfo() {
 }
 
 
-
+function calculateAge(dateOfBirth) {
+    var today = new Date();
+    var birthDate = new Date(dateOfBirth);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
 
 function getQuotationData() {
-
-    // Retrieve ages of beneficiaries
-    function calculateAge(dateOfBirth) {
-        var today = new Date();
-        var birthDate = new Date(dateOfBirth);
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-    }
-
-    var ages = [];
-    var selectedtype = document.querySelector('input[name="type"]:checked');
-    var typeId = selectedtype ? selectedtype.id : '';
-
-    if (typeId === 'is_family' || typeId === 'is_group') {
-        var beneficiaryTable = $('.beneficiary-table').DataTable();
-        var beneficiaryRows = beneficiaryTable.rows().data();
-
-        beneficiaryRows.each(function (index, row) {
-            var dateOfBirth = row[2];
-            ages.push(calculateAge(dateOfBirth));
-        });
-    }
-    else {
-        var dateOfBirthInput = document.getElementById('date_of_birth').value;
-        ages.push(calculateAge(dateOfBirthInput));
-    }
-    console.log(ages)
+    var quotationData = []
 
     travelinfo = gathertravelinfo();
-    console.log('this', travelinfo)
-
-    // Retrieve selected product
-    var selectedProduct = document.getElementById('product_id').value;
-
-    // Retrieve selected zone
-    var selectedZone = document.getElementById('zone_id').value;
+    //console.log('this', travelinfo)
+    // Retrieve ages of beneficiaries
 
     // Retrieve durations in the travel section
     //var travelList = createTravelData();
@@ -796,58 +848,71 @@ function getQuotationData() {
     //    return travel.Duration;
     //});
 
-    // Construct the quotation data object
-    //var quotationData = {
-    //    Ages: [10, 28],
-    //    Product: 682,
-    //    //Product: selectedProduct,
-    //    Zone: 270,
-    //    //Zone: selectedZone,
-    //    Durations: [25],
-    //};
+
+
+    var selectedProduct = document.getElementById('product_id').value;
+    var selectedDuration = $("#duration").val()
+    var selectedZone = document.getElementById('zone_id').value;
+
+
+
+
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryRows = $('.beneficiary-table tbody tr');
+        beneficiaryRows.each(function (index, row) {
+            var cells = $(row).find('td');
+            var thisage = $(cells[3]).text(); // Assuming birthdate is in the fourth column
+
+            quotationData.push({
+                Insured: index + 1,
+                Ages: thisage,
+                Product: selectedProduct,
+                Zone: selectedZone,
+                Durations: selectedDuration,
+            })
+        });
+    }
+    else {
+        var dateOfBirthInput = document.getElementById('date_of_birth').value;
+        var thisage = calculateAge(dateOfBirthInput);
+        quotationData.push({
+            Insured: 1,
+            Ages: thisage,
+            Product: selectedProduct,
+            Zone: selectedZone,
+            Durations: selectedDuration,
+        })
+    }
+
 
 
     var quotationData =
         [
             {
                 Insured: 1,
-                Ages: 10,
+                Ages: 28,
                 Product: 682,
-                //Product: selectedProduct,
                 Zone: 270,
-                //Zone: selectedZone,
-                Durations: [25]
-
+                Durations: [15]
             },
             {
                 Insured: 2,
                 Ages: 28,
                 Product: 682,
-                //Product: selectedProduct,
                 Zone: 270,
-                //Zone: selectedZone,
-                Durations: [25]
-
+                Durations: [15]
             },
             {
                 Insured: 3,
                 Ages: 28,
                 Product: 682,
-                //Product: selectedProduct,
                 Zone: 270,
-                //Zone: selectedZone,
-                Durations: [25]
-
+                Durations: [15]
             },
         ]
-    //{
-    //    Ages: [10, 28],
-    //        Product: 682,
-    //            //Product: selectedProduct,
-    //            Zone: 270,
-    //                //Zone: selectedZone,
-    //                Durations: [25],
-    //};
+
 
 
     $.ajax({
@@ -855,11 +920,13 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            loadQuotePartialView(response)
-
+            console.log(response.quotationResp, 'quotation result')
+            if (response.quotationResp.length > 0)
+                loadQuotePartialView(response)
 
         },
         error: function (xhr, status, error) {
+
             alert('big error')
             $(".result").removeClass("load")
             console.log(error);
@@ -871,11 +938,14 @@ function getQuotationData() {
 
 
 function loadQuotePartialView(response) {
+    console.log(response)
+
     $.ajax({
         url: projectname + '/Production/GetPartialViewQuotation',
         type: 'POST',
         data: { quotereq: response },
         success: function (data) {
+
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(travelinfo.from);
             $('.quotecontainer .expdate').html(travelinfo.to);
@@ -886,9 +956,14 @@ function loadQuotePartialView(response) {
             if (sendButton) {
                 sendButton.addEventListener('click', sendData);
             }
+            $(".isselect2").select2({
+                //tags: true,
+                tokenSeparators: [',', ' '],
+            })
 
+            triggercalculationfields()
+            $(".result").removeClass("load")
             setTimeout(function () {
-                $(".result").removeClass("load")
             }, 2000);
 
         },
@@ -899,3 +974,45 @@ function loadQuotePartialView(response) {
     });
 }
 
+function triggercalculationfields() {
+    //$('.benplus').on('change', recalculateTotalPrice);
+    //$('input[data-dedprice]').on('change', recalculateTotalPrice);
+    //$('input[data-sportsprice]').on('change', recalculateTotalPrice);
+
+    $('.quoatetable').on('change', function () {
+        recalculateTotalPrice($(this));
+    });
+
+}
+
+function recalculateTotalPrice(table) {
+    var selectedBenefits = table.find('.benplus option:selected');
+    var totalAdditionalPrice = 0;
+
+    selectedBenefits.each(function () {
+        totalAdditionalPrice += parseFloat($(this).data('benprice'));
+    });
+
+    var deductiblePrice = table.find('input[data-dedprice]:checked').length > 0 ? parseFloat(table.find('input[data-dedprice]:checked').data('dedprice')) : 0;
+    var sportsPrice = table.find('input[data-sportsprice]:checked').length > 0 ? parseFloat(table.find('input[data-sportsprice]:checked').data('sportsprice')) : 0;
+    var basePrice = parseFloat(table.find('span[data-bprice]').data('bprice'));
+    var discount = parseFloat(table.find('#discount').val());
+
+    var finalPrice = (isNaN(basePrice) ? 0 : basePrice) + (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) + (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice) ;
+
+    table.find('span[data-bprice]').text(finalPrice.toFixed(2));
+
+    var finalPricewithdiscount = finalPrice - (isNaN(discount) ? 0 : discount) 
+
+    table.find('#finalprice').text(finalPricewithdiscount.toFixed(2));
+
+
+    var insuredstotal = $('.finalprice');
+    var totalinsuredprem = 0;
+
+    insuredstotal.each(function () {
+        totalinsuredprem += parseFloat($(this).text());
+    });
+
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2));
+}

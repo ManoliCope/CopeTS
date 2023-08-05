@@ -13,6 +13,7 @@ namespace ProjectX.Entities.dbModels
         public string P_Name { get; set; }
 
         public bool B_Is_Plus { get; set; }
+        public double B_Benfees { get; set; }
 
     }
 }

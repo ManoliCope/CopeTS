@@ -1,75 +1,172 @@
-﻿@model List<ProjectX.Entities.Models.Production.ProductionResp>
+﻿@model ProjectX.Entities.Models.Production.ProductionResp
 @{
 	Layout = null;
 }
 
 
-<div class="card mt-2">
+<div class="card mt-2 mb-0">
 	<div class="card-body" style="font-size:13px">
 		<div>
 			<b>Destination(s)</b>
-			<span class="float-end dest">@Model.First().ZoneName</span>
+			<span class="float-end dest">@Model.QuotationResp.First().ZoneName</span>
 		</div>
 		<div>
 			<b>Inception Date</b>
-			<span class="float-end incdate">@Model.First().TariffStartingDate</span>
+			<span class="float-end incdate">@Model.QuotationResp.First().TariffStartingDate</span>
 		</div>
 		<div>
 			<b>Expiry Date</b>
-			<span class="float-end expdate">@Model.First().TariffStartingDate</span>
+			<span class="float-end expdate">@Model.QuotationResp.First().TariffStartingDate</span>
 		</div>
 		<div>
 			<b>Duration</b>
-			<span class="float-end duration">@Model.First().Duration Days</span>
+			<span class="float-end duration">@Model.QuotationResp.First().Duration Days</span>
 		</div>
 		<div>
 			<span class="float-end total_price" data-currency="USD"></span>
 		</div>
-		<div class="table-responsive">
-			<table class="table table-sm table-bordered mt-3">
-				<thead>
-					<tr class="thead-light text-center">
-						<th>Full Name</th>
-						<th>Cons. / Cumul. Days</th>
-						<th>Base Price</th>
-						<th>Discount</th>
-						<th>Final Price</th>
-					</tr>
-				</thead>
-				<tbody class="quotation-list">
-					@foreach (var item in Model.Where(x => x.RowId == 1))
-					{
-						<tr class="text-center">
-							<td>@item.Insured</td>
 
-							<td>
-								<select class="form-control cum_con_days">
-									@foreach (var thislist in Model.Where(x => x.Insured == item.Insured))
+
+
+		<div class="my-3 mb-1">
+			@foreach (var item in Model.QuotationResp.Where(x => x.RowId == 1))
+			{
+				<table class="table table-bordered mt-3 quoatetable">
+					<tbody>
+						<tr class="card-header">
+							<td>Full Name -  @item.Insured  - @item.Package</td>
+							<td colspan="2">Mussa Basma</td>
+						</tr>
+						<tr>
+							<td>Plan</td>
+							<td colspan="2">
+								<select class="form-control">
+									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == item.Insured))
 									{
 										<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
 											@thislist.PlanName
 										</option>
 									}
-									@*<option value="@item.Plan">
-											@item.PlanName
-										</option>*@
 								</select>
 							</td>
-
-							<td>@item.PriceAmount USD</td>
-							<td>@item.PriceAmount USD</td>
-							<td>@item.NetPremiumAmount USD</td>
 						</tr>
-					}
+						<tr>
+							<td>Additional Benefits</td>
+							<td colspan="2">
+								<select class="form-control isselect2 benplus" multiple>
+									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == item.Package))
+									{
+										<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
+											@thislist.B_Title @thislist.B_Benfees
+										</option>
+									}
+									
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Deductible - @item.DeductibleFee
+								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
+							</td>
+							<td>
+								Sports Activities - @item.SportAcitiviesFee
+								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
+							</td>
+							<td>
+								Price	<br />	
+								<span data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td>
+								Discount <br />
+								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off">
+							</td>
+							<td>
+								Final <br />
+								<span id="finalprice" class="finalprice" data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
+							</td>
+						</tr>
+					</tbody>
 
+				</table>
+			}
+
+			<table class="table table-bordered  mt-3 totaltable">
+				<tbody>
+					<tr>
+						<td>Initial Premium</td>
+						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+					</tr>
+					<tr>
+						<td>Additional</td>
+						<td class="text-end">1.00 $</td>
+					</tr>
+					<tr>
+						<td>Tax/VAT</td>
+						<td class="text-end">0.5 $</td>
+					</tr>
+					<tr>
+						<td>Stamps</td>
+						<td class="text-end">0.01 $</td>
+					</tr>
+					<tr>
+						<td>Total</td>
+						<td class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+					</tr>
 				</tbody>
 			</table>
+
+
+			@*<div class="btn btn-third float-end grand_total">Grand Total<span class="pl-4">14.00 USD</span></div>*@
+			@*<div class="btn btn-third float-right mr-2">Grand Total</div>*@
 		</div>
+
+
+
+		@*<div class="table-responsive">
+				<table class="table table-sm table-bordered mt-3">
+					<thead>
+						<tr class="thead-light text-center">
+							<th>Full Name</th>
+							<th>Plan</th>
+							<th>Price</th>
+							<th>Discount</th>
+							<th>Final Price</th>
+						</tr>
+					</thead>
+					<tbody class="quotation-list">
+						@foreach (var item in Model.Where(x => x.RowId == 1))
+						{
+							<tr class="text-center">
+								<td>@item.Insured</td>
+
+								<td>
+									<select class="form-control cum_con_days">
+										@foreach (var thislist in Model.Where(x => x.Insured == item.Insured))
+										{
+											<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
+												@thislist.PlanName
+											</option>
+										}
+
+									</select>
+								</td>
+
+								<td>@item.PriceAmount USD</td>
+								<td>@item.PriceAmount USD</td>
+								<td>@item.NetPremiumAmount USD</td>
+							</tr>
+						}
+
+					</tbody>
+				</table>
+			</div>*@
 	</div>
 </div>
 
-<div class="my-3" style="height: 32px;">
-	<div class="btn btn-third float-end grand_total">Grand Total<span class="pl-4">14.00 USD</span></div>
-	@*<div class="btn btn-third float-right mr-2">Grand Total</div>*@
-</div>
+
 <button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>

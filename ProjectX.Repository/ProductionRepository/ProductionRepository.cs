@@ -18,6 +18,7 @@ using ProjectX.Repository.BeneficiaryRepository;
 using ProjectX.Repository.GeneralRepository;
 using System.Collections;
 using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace ProjectX.Repository.ProductionRepository
 {
@@ -104,9 +105,9 @@ namespace ProjectX.Repository.ProductionRepository
             return response;
         }
 
-        public List<ProductionResp> getProductionDetails(List<ProductionReq> req)
+        public ProductionResp getProductionDetails(List<ProductionReq> req)
         {
-            List<ProductionResp> response = new List<ProductionResp>();
+            ProductionResp response = new ProductionResp();
             using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 //var param = new DynamicParameters();
@@ -128,9 +129,12 @@ namespace ProjectX.Repository.ProductionRepository
 
                 var query = "TR_GetProductionDetails";
 
-                connection.Open();
+                using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
+                {
+                    response.QuotationResp = result.Read<QuotationResp>().ToList();
+                    response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
 
-                response = connection.Query<ProductionResp>(query, queryParameters, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
 
             return response;

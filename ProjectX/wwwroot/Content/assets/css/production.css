@@ -115,7 +115,7 @@
 }
 
     .result table td:first-child {
-        white-space: pre-line !important;
+        /*white-space: pre-line !important;*/
     }
 
 .result table select {
@@ -154,4 +154,18 @@
     -moz-user-select: none; /* For Firefox */
     -ms-user-select: none; /* For Internet Explorer/Edge */
     user-select: none;
+}
+
+.totaltable td{
+    padding:5px
+}
+    .totaltable td:first-child {
+        background: #edf0f7;
+        border-color:white
+    }
+
+
+
+.quotecontainer .form-control {
+    height: 1.5rem;
 }
