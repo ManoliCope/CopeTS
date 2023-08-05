@@ -15,6 +15,7 @@ namespace ProjectX.Entities.dbModels
 
         public bool B_Is_Plus { get; set; }
         public int B_Additional_Benefits_Format { get; set; }
+        public double B_Benfees { get; set; }
 
     }
 }

@@ -87,95 +87,111 @@
         </div>
         <div class="sidebar-content">
             <nav class="menu open-current-submenu">
-                <ul>
-					<li class="menu-item @(controllerName == "production" ? "active" : "")">
-						<a href="~/production/">
-								<span class="menu-icon">
-									<i class="fa fa-chart-line"></i>
-								</span>
-								<span class="menu-title">Production</span>
-
-							</a>
+				<ul>
+					<li class="menu-item sub-menu">
+						<a>
+							<span class="menu-icon">
+								<i class="fa fa-file"></i>
+							</span>
+							<span class="menu-title">Policies</span>
+						</a>
+						<div class="sub-menu-list" data-popper-placement="left" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 221.6px, 0px); box-sizing: border-box; display: none;" data-popper-escaped="">
+							<ul>
+								<li class="menu-item @((controllerName == "production" && actionName == "index") ? "active" : "") ">
+									<a href="~/production/">
+										<span class="menu-title">Production</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "production" && actionName == "test" ? "active" : "")">
+									<a href="~/production/test">
+										<span class="menu-title">Creation</span>
+									</a>
+								</li>
+							
+							</ul>
+						</div>
 					</li>
-                    <li class="menu-item sub-menu">
-                        <a>
-                            <span class="menu-icon">
-                                <i class="ri-tools-line"></i>
-                            </span>
-                            <span class="menu-title">Configurations</span>
-                        </a>
-                        <div class="sub-menu-list" data-popper-placement="left" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 221.6px, 0px); box-sizing: border-box; display: none;" data-popper-escaped="">
-                            <ul>
-                                <li class="menu-item @(controllerName == "product" ? "active" : "") ">
-                                    <a href="~/product/">
-                                        <span class="menu-title">Products</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item @(controllerName == "plan" ? "active" : "")">
-                                    <a href="~/plan/">
-                                        <span class="menu-title">Plans</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item @(controllerName == "zone" ? "active" : "")">
-                                    <a href="~/zone/">
-                                        <span class="menu-title">Zones</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item @(controllerName == "package" ? "active" : "")">
-                                    <a href="~/package/">
-                                        <span class="menu-title">Packages</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item @(controllerName == "tariff" ? "active" : "")">
-                                    <a href="~/tariff/">
-                                        <span class="menu-title">Tariffs</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item @(controllerName == "benefit" ? "active" : "")">
-                                    <a href="~/benefit/">
-                                        <span class="menu-title">Benefits</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="menu-item @(controllerName == "users" ? "active" : "")">
-                        <a href="~/Users/">
-                            <span class="menu-icon">
-                                <i class="fa fa-users text-gray"></i>
-                            </span>
-                            <span class="menu-title">Users</span>
-                        </a>
 
-                    </li>
+
+
+					<li class="menu-item sub-menu">
+						<a>
+							<span class="menu-icon">
+								<i class="ri-tools-line"></i>
+							</span>
+							<span class="menu-title">Configurations</span>
+						</a>
+						<div class="sub-menu-list" data-popper-placement="left" style="position: fixed; left: 0px; top: 0px; margin: 0px; visibility: hidden; transform: translate3d(0px, 221.6px, 0px); box-sizing: border-box; display: none;" data-popper-escaped="">
+							<ul>
+								<li class="menu-item @(controllerName == "product" ? "active" : "") ">
+									<a href="~/product/">
+										<span class="menu-title">Products</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "plan" ? "active" : "")">
+									<a href="~/plan/">
+										<span class="menu-title">Plans</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "zone" ? "active" : "")">
+									<a href="~/zone/">
+										<span class="menu-title">Zones</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "package" ? "active" : "")">
+									<a href="~/package/">
+										<span class="menu-title">Packages</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "tariff" ? "active" : "")">
+									<a href="~/tariff/">
+										<span class="menu-title">Tariffs</span>
+									</a>
+								</li>
+								<li class="menu-item @(controllerName == "benefit" ? "active" : "")">
+									<a href="~/benefit/">
+										<span class="menu-title">Benefits</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="menu-item @(controllerName == "users" ? "active" : "")">
+						<a href="~/Users/">
+							<span class="menu-icon">
+								<i class="fa fa-users text-gray"></i>
+							</span>
+							<span class="menu-title">Users</span>
+						</a>
+
+					</li>
 					<li class="menu-item @(controllerName == "beneficiary" ? "active" : "")">
 						<a href="~/beneficiary/">
-								<span class="menu-icon">
-									<i class="ri-user-2-fill"></i>
-								</span>
-								<span class="menu-title">Beneficiaries</span>
-							</a>
+							<span class="menu-icon">
+								<i class="ri-user-2-fill"></i>
+							</span>
+							<span class="menu-title">Beneficiaries</span>
+						</a>
 
 					</li>
-                    <li class="menu-item @(controllerName == "reports" ? "active" : "")">
-                        <a >
-                            <span class="menu-icon">
-                                <i class="ri-bar-chart-2-fill"></i>
-                            </span>
-                            <span class="menu-title">Reports</span>
-                        </a>
+					<li class="menu-item @(controllerName == "reports" ? "active" : "")">
+						<a>
+							<span class="menu-icon">
+								<i class="ri-bar-chart-2-fill"></i>
+							</span>
+							<span class="menu-title">Reports</span>
+						</a>
 
-                    </li>
-                    <li class="menu-item @(controllerName == "policies" ? "active" : "")">
-                        <a >
-                            <span class="menu-icon">
-                                <i class="fa fa-file"></i>
-                            </span>
-                            <span class="menu-title">Policies</span>
-                        </a>
-
-                    </li>
-                </ul>
+					</li>
+					@*<li class="menu-item @(controllerName == "policies" ? "active" : "")">
+						<a>
+							<span class="menu-icon">
+								<i class="fa fa-file"></i>
+							</span>
+							<span class="menu-title">Policies</span>
+						</a>
+					</li>*@
+				</ul>
             </nav>
         </div>
     </div>

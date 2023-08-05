@@ -13,7 +13,7 @@ namespace ProjectX.Business.Production
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
 
-        public List<ProductionResp> getProductionDetails(List<ProductionReq> req);
+        public ProductionResp getProductionDetails(List<ProductionReq> req);
 
     }
 }
