@@ -33,6 +33,10 @@ namespace ProjectX.Entities.dbModels
         public double? U_Stamp { get; set; }
         public double? U_Additional_Fees { get; set; }
         public double? U_VAT { get; set; }
+        public double? U_Max_Additional_Fees { get; set; }
+        public DateTime U_Creation_Date { get; set; }
+        public int U_Tax_Format { get; set; }
+
         public bool? U_For_Syria { get; set; }
         public bool? U_Show_Commission { get; set; }
         public bool? U_Fixed_Additional_Fees { get; set; }

@@ -104,18 +104,34 @@
                             <input type="text" class="form-control" field-name="contact_Person" id="contactperson">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    @*<div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="insno">Insured Number *</label>
                             <input type="text" class="form-control" id="insno" field-name="insured_Number" required>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-md-3">
                         <div class="form-group">
+                            
                             <label class="form-control-label" for="tax">Tax (% and #)</label>
-                            <input class="form-control" field-name="tax" onclick="removeRedColor(this)" type="number" min="0" max="99" name="tax" id="tax" oninput="this.value = Math.abs(this.value)" value="0">
-                        </div>
-                    </div>
+
+										<div class="input-group mb-3">
+											<input type="number" class="form-control" aria-label="Text input with dropdown button" id="tax" name="tax">
+											<div class="input-group-prepend">
+												<select class="form-control" id="tax_format" name="tax_format" required>
+													<option>Select Type</option>
+													<option value="1">%</option>
+													<option value="2">Fixed</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									</div>
+
+
+
+
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="currencyId">Currency *</label>
@@ -161,18 +177,18 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                  @*  <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="uniqueTax">Unique Tax</label>
                             <input class="form-control" onclick="removeRedColor(this)" field-name="unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
-                    </div>
-                    <div class="col-md-3">
+                    </div>*@
+                  @*  <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="uniqueTaxAdmin">Unique Admin Tax</label>
                             <input class="form-control" onclick="removeRedColor(this)" field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="commPerc">Commission %</label>
@@ -193,11 +209,22 @@
                             <input class="form-control" onclick="removeRedColor(this)"  field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="0">
                         </div>
                     </div>
-
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
+                            <input class="form-control" onclick="removeRedColor(this)" field-name="max_Additional_Fees" type="number" min="0"  name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="0">
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="vat">VAT</label>
                             <input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0">
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="creationDate">Creation Date</label>
+                            <label class="form-control" id="creationDate"></label>
                         </div>
                     </div>
 
@@ -206,22 +233,22 @@
 
 
                     <div class="row">
-                        <div class="col-md-3">
+                     @*   <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="isSyria" id="isSyria" field-name="for_Syria">
                                     <label class="form-control-label" for="isSyria">For Syria</label>
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-3">
+                        </div>*@
+                       @* <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="showComm" id="showComm" field-name="show_Commission" value="">
                                     <label class="form-control-label" for="showComm">Show Commission</label>
                                 </label>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
@@ -230,14 +257,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                       @* <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="toRound" id="toRound"  field-name="apply_Rounding">
                                     <label class="form-control-label" for="toRound">Apply rounding</label>
                                 </label>
                             </div>
-                        </div>
+                        </div>*@
 
                         <div class="col-md-3">
                             <div class="form-check-inline ">
@@ -247,14 +274,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        @*<div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="showCertificate" id="showCertificate"  field-name="show_Certificate" value="">
                                     <label class="form-control-label" for="showCertificate">Show Cetificate</label>
                                 </label>
                             </div>
-                        </div>                                        <div class="col-md-3">
+                        </div>   *@                                     <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed"    field-name="cancellation_SubAgent" value="">
@@ -286,14 +313,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                       @* <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="userCreationApproval" id="userCreationApproval" field-name="agents_Creation_Approval" value="">
                                     <label class="form-control-label" for="userCreationApproval">Agents Creation Approval</label>
                                 </label>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
@@ -311,14 +338,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                       @* <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="printClientVoucher" id="printClientVoucher"    field-name="print_Client_Voucher" value="">
                                     <label class="form-control-label" for="printClientVoucher">Print Client Voucher</label>
                                 </label>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
@@ -327,14 +354,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                      @*  <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" name="enableTaxInvoice" id="enableTaxInvoice"    field-name="tax_Invoice" value="">
                                     <label class="form-control-label" for="enableTaxInvoice">Tax Invoice</label>
                                 </label>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-3">
                             <div class="form-check-inline ">
                                 <label class="custom-control custom-checkbox">

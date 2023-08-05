@@ -15,6 +15,7 @@ namespace ProjectX.Entities.bModels
         public bool loadZones { get; set; }
         public bool loadDestinations { get; set; }
         public bool loadSexNames { get; set; }
+        public bool loadFormats { get; set; }
        
         
 
