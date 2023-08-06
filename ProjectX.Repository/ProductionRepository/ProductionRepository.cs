@@ -133,7 +133,6 @@ namespace ProjectX.Repository.ProductionRepository
                 {
                     response.QuotationResp = result.Read<QuotationResp>().ToList();
                     response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
-
                 }
             }
 

@@ -1,5 +1,6 @@
 ﻿var projectname = checkurlserver();
 var travelinfo = {}
+var addbenefits =  []
 $(document).ready(function () {
     $("#search").click(function () {
 
@@ -920,7 +921,10 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            console.log(response.quotationResp, 'quotation result')
+            //console.log(response, 'quotation result')
+
+            addbenefits = response.additionalBenefits
+
             if (response.quotationResp.length > 0)
                 loadQuotePartialView(response)
 
@@ -983,19 +987,57 @@ function triggercalculationfields() {
         recalculateTotalPrice($(this));
     });
 
+    $('.plans').on('change', function () {
+        var selectedOption = $(this).find(':selected');
+        var thistable = $(this).closest(".quoatetable")
+        console.log(addbenefits, 'addbenefits')
+
+        var deductible = selectedOption.data('deductible');
+        var sportsActivities = selectedOption.data('sportactivitiesfee');
+        var price = selectedOption.data('price');
+
+        thistable.find('span[data-dedprice]').text(deductible);
+        thistable.find('[data-dedprice]').attr('data-dedprice',deductible);
+
+        thistable.find('span[data-sportsprice]').text(sportsActivities);
+        thistable.find('[data-sportsprice]').attr('data-sportsprice',sportsActivities);
+
+        thistable.find('[data-bprice]').text(price);
+
+        var selectedTariffId = $(this).find(':selected').data('tariffid');
+        populateBenefits(thistable,selectedTariffId);
+
+        recalculateTotalPrice(thistable)
+    });
+}
+
+function populateBenefits(thistable,tariffId) {
+    thistable.find('.benplus').empty().val('').trigger('change');
+    var filteredBenefits = addbenefits.filter(function (item) {
+        return item.tariffId === tariffId;
+    });
+
+    console.log(filteredBenefits)
+    $.each(filteredBenefits, function (index, benefit) {
+        var option = $('<option>').attr('data-benprice', benefit.b_Benfees).attr('value', benefit.b_Id).text(benefit.b_Title + ' ' + benefit.b_Benfees);
+        thistable.find('.benplus').append(option);
+    });
 }
 
 function recalculateTotalPrice(table) {
     var selectedBenefits = table.find('.benplus option:selected');
     var totalAdditionalPrice = 0;
 
+    var className = table.attr("class");
+
+
     selectedBenefits.each(function () {
-        totalAdditionalPrice += parseFloat($(this).data('benprice'));
+        totalAdditionalPrice += parseFloat($(this).attr('data-benprice'));
     });
 
-    var deductiblePrice = table.find('input[data-dedprice]:checked').length > 0 ? parseFloat(table.find('input[data-dedprice]:checked').data('dedprice')) : 0;
-    var sportsPrice = table.find('input[data-sportsprice]:checked').length > 0 ? parseFloat(table.find('input[data-sportsprice]:checked').data('sportsprice')) : 0;
-    var basePrice = parseFloat(table.find('span[data-bprice]').data('bprice'));
+    var deductiblePrice = table.find('input[data-dedprice]:checked').length > 0 ? parseFloat(table.find('input[data-dedprice]:checked').attr('data-dedprice')) : 0;
+    var sportsPrice = table.find('input[data-sportsprice]:checked').length > 0 ? parseFloat(table.find('input[data-sportsprice]:checked').attr('data-sportsprice')) : 0;
+    var basePrice = parseFloat(table.find('span[data-bprice]').attr('data-bprice'));
     var discount = parseFloat(table.find('#discount').val());
 
     var finalPrice = (isNaN(basePrice) ? 0 : basePrice) + (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) + (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice) ;

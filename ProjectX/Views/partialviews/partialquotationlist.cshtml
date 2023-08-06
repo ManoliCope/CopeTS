@@ -31,7 +31,7 @@
 		<div class="my-3 mb-1">
 			@foreach (var item in Model.QuotationResp.Where(x => x.RowId == 1))
 			{
-				<table class="table table-bordered mt-3 quoatetable">
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)">
 					<tbody>
 						<tr class="card-header">
 							<td>Full Name -  @item.Insured  - @item.Package</td>
@@ -40,12 +40,31 @@
 						<tr>
 							<td>Plan</td>
 							<td colspan="2">
-								<select class="form-control">
+								<select class="form-control plans" >
 									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == item.Insured))
 									{
-										<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
+										@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
 											@thislist.PlanName
-										</option>
+										</option>*@
+
+									<option value="@thislist.Plan" data-plan="@thislist.Plan"
+											data-price="@thislist.PriceAmount"
+											data-deductible="@thislist.DeductibleFee"
+											data-insured="@thislist.Insured"
+											data-age="@thislist.Age"
+											data-product="@thislist.Product"
+											data-plan="@thislist.Plan"
+											data-package="@thislist.Package"
+											data-duration="@thislist.Duration"
+											data-tariffid="@thislist.TariffID"
+											data-numberofdays="@thislist.NumberOfDays"
+											data-netpremiumamount="@thislist.NetPremiumAmount"
+											data-paamount="@thislist.PAAmount"
+											data-overrideamount="@thislist.OverrideAmount"
+											data-deductiblefee="@thislist.DeductibleFee"
+											data-sportactivitiesfee="@thislist.SportAcitiviesFee">
+										@thislist.PlanName
+									</option>
 									}
 								</select>
 							</td>
@@ -60,21 +79,21 @@
 											@thislist.B_Title @thislist.B_Benfees
 										</option>
 									}
-									
+
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Deductible - @item.DeductibleFee
+								Deductible - <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span> 
 								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
 							</td>
 							<td>
-								Sports Activities - @item.SportAcitiviesFee
+								Sports Activities - <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>
 								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
 							</td>
 							<td>
-								Price	<br />	
+								Price	<br />
 								<span data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
 							</td>
 						</tr>
@@ -87,7 +106,7 @@
 							</td>
 							<td>
 								Final <br />
-								<span id="finalprice" class="finalprice" data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
+								<span id="finalprice" class="finalprice" data-fprice="@item.PriceAmount"> @item.PriceAmount</span>
 							</td>
 						</tr>
 					</tbody>
