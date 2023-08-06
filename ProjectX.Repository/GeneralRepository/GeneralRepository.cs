@@ -38,6 +38,7 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadZones", loadDataModelSetup.loadZones);
             param.Add("@loadDestinations", loadDataModelSetup.loadDestinations);
             param.Add("@loadSexNames", loadDataModelSetup.loadSexNames);
+            param.Add("@@loadFormats", loadDataModelSetup.loadFormats);
 
 
 
@@ -63,6 +64,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.destinations = result.Read<Destination>().ToList();
                     if (loadDataModelSetup.loadSexNames)
                         resp.sex = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadFormats)
+                        resp.format = result.Read<LookUpp>().ToList();
                 }
             }
 

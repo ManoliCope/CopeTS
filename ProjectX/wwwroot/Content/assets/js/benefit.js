@@ -33,7 +33,7 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deleteben(this);
     });
-
+    checkBenFromat();
 
  
 });
@@ -84,7 +84,9 @@ function Search() {
         "id": $("#id").val(),
         "title": $("#title").val(),
         "packageId": $("#packageId").val(),
-        "limit": isNaN(parseFloat($("#limit").val())) ? $("#limit").val() : parseFloat($("#limit").val())
+        "limit": isNaN(parseFloat($("#limit").val())) ? $("#limit").val() : parseFloat($("#limit").val()),
+        "additionalBenefits": isNaN(parseFloat($('#additional_benefits').val())) ? $("#additional_benefits").val() : parseFloat($("#additional_benefits").val()),
+        "additionalBenefitsFormat": $('#additional_benefits_format').val()
     };
 
     $.ajax({
@@ -126,6 +128,8 @@ function addnew() {
         "packageId": $("#packageId").val(),
         "is_Plus": $("#is_Plus").prop('checked'),
         "limit": parseFloat($("#limit").val()),
+        "additionalBenefits": isNaN(parseFloat($('#additional_benefits').val())) ? $("#additional_benefits").val() : parseFloat($("#additional_benefits").val()),
+        "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
     };
 
 
@@ -163,7 +167,10 @@ function edit() {
         "title": $("#title").val(),
         "packageId": $("#packageId").val(),
         "is_Plus": $("#is_Plus").prop('checked'),
-        "limit": parseFloat($("#limit").val())
+        "limit": parseFloat($("#limit").val()),
+        "additionalBenefits": parseFloat($('#additional_benefits').val()),
+        "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
+
     };
 
 
@@ -229,4 +236,22 @@ function gotoben(me) {
     removeloader();
     return
 }
+$('#is_Plus').change(function () {
+
+    checkBenFromat();
+});
+function checkBenFromat() {
+    if ($('#is_Plus').is(':checked')) {
+        $('#addBenFormat').removeClass('hidden');
+        $('#additional_benefits').attr('required', '');
+
+    }
+    else {
+        $('#addBenFormat').addClass('hidden');
+        $('#additional_benefits').removeAttr('required');
+
+    }
+}
+   
+
 

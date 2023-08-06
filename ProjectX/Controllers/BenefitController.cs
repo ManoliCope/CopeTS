@@ -70,6 +70,7 @@ namespace ProjectX.Controllers
             LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
+                loadFormats=true
             });
 
             ViewData["filldata"] = load;
@@ -102,6 +103,8 @@ namespace ProjectX.Controllers
             LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
+                loadFormats=true
+                
             });
 
             ViewData["filldata"] = load;
