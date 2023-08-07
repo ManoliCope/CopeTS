@@ -1,6 +1,6 @@
 ﻿var projectname = checkurlserver();
 var travelinfo = {}
-var addbenefits =  []
+var addbenefits = []
 $(document).ready(function () {
     $("#search").click(function () {
 
@@ -297,7 +297,7 @@ function populatebeneficiary() {
 
         var beneficiaryList = $('.beneficiary-list');
         var row = '<tr>' +
-            '<td>' + firstName + '</td>' +
+            '<td insuredId=' + $('.first_name').attr("thisid") + ' >' + firstName + '</td>' +
             '<td>' + lastName + '</td>' +
             '<td>' + dateOfBirth + '</td>' +
             '<td>' + age + '</td>' +
@@ -308,7 +308,8 @@ function populatebeneficiary() {
 
         beneficiaryList.append(row);
 
-        $('.first_name').val('');
+        $('.first_name').removeAttr("thisid").val('');
+
         $('.middle_name').val('');
         $('.last_name').val('');
         $('.dob').val('');
@@ -317,6 +318,11 @@ function populatebeneficiary() {
         //var beneficiaryTable = $('#beneficiaryTable').DataTable();
         //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
+
+
+
+        createBeneficiaryData()
+
     });
 }
 
@@ -330,11 +336,18 @@ function settofrom() {
         var duration = parseInt($('#duration').val());
 
         if (this.id === 'from' || this.id === 'to') {
-            if (fromDate && toDate && fromDate <= toDate) {
-                duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
-                $('#duration').val(duration);
-            } else {
-                $('#duration').val('');
+            if (!isNaN(duration) && this.id === 'from') {
+                var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+                var formattedToDate = toDate.toISOString().split('T')[0];
+                $('#to').val(formattedToDate);
+            }
+            else {
+                if (fromDate && toDate && fromDate <= toDate) {
+                    duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                    $('#duration').val(duration);
+                } else {
+                    $('#duration').val('');
+                }
             }
         } else if (this.id === 'duration') {
             if (fromDate && !isNaN(duration)) {
@@ -556,146 +569,54 @@ function createGeneralInformationData() {
         Is_Group: typeId == 'is_group',
         productId: document.getElementById('product_id').value,
         zoneId: document.getElementById('zone_id').value,
-        notes: document.getElementById('notes').value
     };
 
     return generalInfoData;
 }
-
-//function createBeneficiaryData() {
-//    // Retrieve data from the Beneficiary container
-//    var beneficiaryData = {
-//        beneficiary: document.getElementById('searchbeneficiary').value,
-//        firstName: document.querySelector('.first_name').value,
-//        middleName: document.querySelector('.middle_name').value,
-//        lastName: document.querySelector('.last_name').value,
-//        gender: document.querySelector('input[name="sgender"]:checked').value,
-//        passportNo: document.querySelector('.passport_no').value,
-//        dateOfBirth: document.getElementById('date_of_birth').value
-//        // Include additional fields as needed
-//    };
-
-//    return beneficiaryData;
-//}
-
 
 function createBeneficiaryData() {
     var beneficiaryList = [];
     var selectedtype = document.querySelector('input[name="type"]:checked');
     var typeId = selectedtype ? selectedtype.id : '';
 
-    // Check if the selected type is family or group
     if (typeId === 'is_family' || typeId === 'is_group') {
-        var beneficiaryTable = $('.beneficiary-table').DataTable();
-        var beneficiaryRows = beneficiaryTable.rows().data();
+        $('.beneficiary-list tr').each(function (index, row) {
+            var thisinsuredId = $(row).find('td:eq(0)').attr('insuredid');
+            thisinsuredId = thisinsuredId !== undefined ? thisinsuredId : 0;
 
-        // Loop through the beneficiary rows and create beneficiary objects
-        beneficiaryRows.each(function (index, row) {
-            var firstName = row[0];
-            var lastName = row[1];
-            var dateOfBirth = row[2];
-            var passportNo = row[3];
-
-            // Retrieve the selected sex option
-            var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
-
-            // Map the selected sex option to the corresponding value
-            var sexValue;
-            if (selectedSexOption === 'M') {
-                sexValue = 1; // Set the appropriate value for male
-            } else if (selectedSexOption === 'F') {
-                sexValue = 2; // Set the appropriate value for female
-            } else {
-                sexValue = 0; // Set the appropriate default value
-            }
-
-            // Create a beneficiary object
-            var beneficiaryData = {
-                Id: 0, // Set the appropriate value for the Id property
-                Sex: sexValue,
-                SexName: '', // Set the appropriate value for the SexName property
-                FirstName: firstName,
-                MiddleName: '',
-                LastName: lastName,
-                PassportNumber: passportNo,
-                DateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null
+            var beneficiary = {
+                Insured: index + 1,
+                insuredId: thisinsuredId,
+                firstName: $(row).find('td:eq(0)').text(),
+                lastName: $(row).find('td:eq(1)').text(),
+                dateOfBirth: $(row).find('td:eq(2)').text(),
+                age: parseInt($(row).find('td:eq(3)').text()),
+                passportNo: $(row).find('td:eq(4)').text(),
+                gender: $(row).find('td:eq(5)').text()
             };
-
-            // Add the beneficiary object to the beneficiary list
-            beneficiaryList.push(beneficiaryData);
-
+            beneficiaryList.push(beneficiary);
         });
     }
     else {
-        // Retrieve the beneficiary data from individual input fields
-        var firstNameInput = document.querySelector('.first_name');
-        var middleNameInput = document.querySelector('.middle_name');
-        var lastNameInput = document.querySelector('.last_name');
-        var passportNoInput = document.querySelector('.passport_no');
-        var dateOfBirthInput = document.getElementById('date_of_birth');
-        var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
+        var thisinsuredId = $('#first_name').attr('thisid');
+        thisinsuredId = thisinsuredId !== undefined ? thisinsuredId : 0;
 
-        var sexValue;
-        if (selectedSexOption === 'M') {
-            sexValue = 1;
-        } else if (selectedSexOption === 'F') {
-            sexValue = 2;
-        } else {
-            sexValue = 0;
-        }
-        // Create a beneficiary object
-        var beneficiaryData = {
-            Id: 0, // Set the appropriate value for the Id property
-            Sex: sexValue, // Set the appropriate value for the Sex property
-            SexName: '', // Set the appropriate value for the SexName property
-            FirstName: firstNameInput.value,
-            MiddleName: middleNameInput.value,
-            LastName: lastNameInput.value,
-            PassportNumber: passportNoInput.value,
-            DateOfBirth: dateOfBirthInput.value ? new Date(dateOfBirthInput.value) : null
+        var beneficiary = {
+            Insured: 1,
+            insuredId: thisinsuredId,
+            firstName: $('#first_name').val(),
+            middleName: $('.middle_name').val(),
+            lastName: $('#last_name').val(),
+            dateOfBirth: calculateAge($('#date_of_birth').val()),
+            passportNo: $('#passport_no').val(),
+            gender: $('input[name="sgender"]:checked').val(),
         };
-
-        // Add the beneficiary object to the beneficiary list
-        beneficiaryList.push(beneficiaryData);
+        beneficiaryList.push(beneficiary);
     }
 
-
-    console.log(beneficiaryList)
-    // Return the beneficiary list
     return beneficiaryList;
 }
 
-
-function createTravelData() {
-    var travelList = [];
-
-    var travelTable = document.getElementById('destinationtbl');
-
-    var tbody = travelTable.getElementsByTagName('tbody')[0];
-    if (tbody) {
-        var travelRows = tbody.getElementsByTagName('tr');
-
-        for (var i = 0; i < travelRows.length; i++) {
-
-            var row = travelRows[i];
-            var destination = row.cells[0].textContent;
-            var from = row.cells[1].textContent;
-            var to = row.cells[2].textContent;
-            var duration = row.cells[3].textContent;
-
-            // Create a travel object
-            var travelData = {
-                Destination: destination,
-                From: from,
-                To: to,
-                Duration: duration
-            };
-
-            travelList.push(travelData);
-        }
-    }
-    return travelList;
-}
 
 // Step 3: Convert objects to JSON strings
 function convertToJSON(data) {
@@ -728,12 +649,8 @@ function validatequatation() {
     if (typeId === 'is_family' || typeId === 'is_group') {
         var beneficiaryTable = $('.beneficiary-table');
         if (beneficiaryTable.find('tbody tr').length == 0) {
-            console.log('empty')
             inputValues.push({ val: "" });
         }
-        else
-            console.log('not empty')
-
 
     } else {
         var requiredenFields = $('.thisbeneficiary :input[required]');
@@ -742,31 +659,31 @@ function validatequatation() {
             inputValues.push({ val: field }); // to return flag valid
         });
     }
-    console.log(inputValues)
-
     const valid = inputValues.find(v => v.val == "");
-    console.log(valid)
     return valid;
 }
 function sendData() {
 
-    //if (validatequatation()) {
-    //    $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
-    //    return;
-    //}
+    if (validatequatation()) {
+        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+        return;
+    }
 
     $(".result").addClass("load")
-
 
 
     getQuotationData()
     //console.log(getQuotationData())
 
-    return
-    var generalInfoData = createGeneralInformationData();
 
+
+    return
+    ///  saving policy if quotation accepted..
+    var generalInfoData = createGeneralInformationData();
     var beneficiaryData = createBeneficiaryData();
-    var travelData = createTravelData();
+    var travelData = gathertravelinfo();
+    console.log(generalInfoData)
+    console.log(beneficiaryData)
     console.log(travelData)
 
     return false;
@@ -886,33 +803,33 @@ function getQuotationData() {
             Durations: selectedDuration,
         })
     }
+    console.log(quotationData, 'quotationData')
 
 
-
-    var quotationData =
-        [
-            {
-                Insured: 1,
-                Ages: 28,
-                Product: 682,
-                Zone: 270,
-                Durations: [15]
-            },
-            {
-                Insured: 2,
-                Ages: 28,
-                Product: 682,
-                Zone: 270,
-                Durations: [15]
-            },
-            {
-                Insured: 3,
-                Ages: 28,
-                Product: 682,
-                Zone: 270,
-                Durations: [15]
-            },
-        ]
+    //var quotationData =
+    //    [
+    //        {
+    //            Insured: 1,
+    //            Ages: 10,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [25]
+    //        },
+    //        {
+    //            Insured: 2,
+    //            Ages: 28,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [5]
+    //        },
+    //        {
+    //            Insured: 3,
+    //            Ages: 10,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [5]
+    //        },
+    //    ]
 
 
 
@@ -923,10 +840,14 @@ function getQuotationData() {
         success: function (response) {
             //console.log(response, 'quotation result')
 
-            addbenefits = response.additionalBenefits
-
-            if (response.quotationResp.length > 0)
+            if (response.quotationResp.length > 0) {
+                for (var i = 0; i < response.quotationResp.length; i++) {
+                    console.log(response.quotationResp[i], 'quotation result')
+                    response.quotationResp[i].fullname = getFullNameFromIndex(response.quotationResp[i].insured - 1);
+                }
+                addbenefits = response.additionalBenefits
                 loadQuotePartialView(response)
+            }
 
         },
         error: function (xhr, status, error) {
@@ -942,7 +863,7 @@ function getQuotationData() {
 
 
 function loadQuotePartialView(response) {
-    console.log(response)
+    //console.log(response)
 
     $.ajax({
         url: projectname + '/Production/GetPartialViewQuotation',
@@ -990,34 +911,34 @@ function triggercalculationfields() {
     $('.plans').on('change', function () {
         var selectedOption = $(this).find(':selected');
         var thistable = $(this).closest(".quoatetable")
-        console.log(addbenefits, 'addbenefits')
+        //console.log(addbenefits, 'addbenefits')
 
         var deductible = selectedOption.data('deductible');
         var sportsActivities = selectedOption.data('sportactivitiesfee');
         var price = selectedOption.data('price');
 
         thistable.find('span[data-dedprice]').text(deductible);
-        thistable.find('[data-dedprice]').attr('data-dedprice',deductible);
+        thistable.find('[data-dedprice]').attr('data-dedprice', deductible);
 
         thistable.find('span[data-sportsprice]').text(sportsActivities);
-        thistable.find('[data-sportsprice]').attr('data-sportsprice',sportsActivities);
+        thistable.find('[data-sportsprice]').attr('data-sportsprice', sportsActivities);
 
         thistable.find('[data-bprice]').text(price);
 
         var selectedTariffId = $(this).find(':selected').data('tariffid');
-        populateBenefits(thistable,selectedTariffId);
+        populateBenefits(thistable, selectedTariffId);
 
         recalculateTotalPrice(thistable)
     });
 }
 
-function populateBenefits(thistable,tariffId) {
+function populateBenefits(thistable, tariffId) {
     thistable.find('.benplus').empty().val('').trigger('change');
     var filteredBenefits = addbenefits.filter(function (item) {
         return item.tariffId === tariffId;
     });
 
-    console.log(filteredBenefits)
+    //console.log(filteredBenefits)
     $.each(filteredBenefits, function (index, benefit) {
         var option = $('<option>').attr('data-benprice', benefit.b_Benfees).attr('value', benefit.b_Id).text(benefit.b_Title + ' ' + benefit.b_Benfees);
         thistable.find('.benplus').append(option);
@@ -1040,11 +961,11 @@ function recalculateTotalPrice(table) {
     var basePrice = parseFloat(table.find('span[data-bprice]').attr('data-bprice'));
     var discount = parseFloat(table.find('#discount').val());
 
-    var finalPrice = (isNaN(basePrice) ? 0 : basePrice) + (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) + (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice) ;
+    var finalPrice = (isNaN(basePrice) ? 0 : basePrice) + (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) + (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice);
 
     table.find('span[data-bprice]').text(finalPrice.toFixed(2));
 
-    var finalPricewithdiscount = finalPrice - (isNaN(discount) ? 0 : discount) 
+    var finalPricewithdiscount = finalPrice - (isNaN(discount) ? 0 : discount)
 
     table.find('#finalprice').text(finalPricewithdiscount.toFixed(2));
 
@@ -1058,3 +979,63 @@ function recalculateTotalPrice(table) {
 
     $('#initpremtotal').text(totalinsuredprem.toFixed(2));
 }
+
+function getbeneficiarydetails() {
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryRows = $('.beneficiary-table tbody tr');
+        beneficiaryRows.each(function (index, row) {
+            var cells = $(row).find('td');
+            var thisage = $(cells[3]).text(); // Assuming birthdate is in the fourth column
+
+            quotationData.push({
+                Insured: index + 1,
+                Ages: thisage,
+                Product: selectedProduct,
+                Zone: selectedZone,
+                Durations: selectedDuration,
+            })
+        });
+    }
+    else {
+        var dateOfBirthInput = document.getElementById('date_of_birth').value;
+        var thisage = calculateAge(dateOfBirthInput);
+        quotationData.push({
+            Insured: 1,
+            Ages: thisage,
+            Product: selectedProduct,
+            Zone: selectedZone,
+            Durations: selectedDuration,
+        })
+    }
+
+}
+
+
+
+function getFullNameFromIndex(index) {
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        const table = document.querySelector('.beneficiary-table');
+        const rows = table.querySelectorAll('tbody tr');
+
+        if (index >= 0 && index < rows.length) {
+            const row = rows[index];
+            const firstName = row.querySelector('td:first-child').textContent.trim();
+            const lastName = row.querySelector('td:nth-child(2)').textContent.trim();
+            return `${firstName} ${lastName}`;
+        } else {
+            return 'Invalid index';
+        }
+    }
+    else
+        return `${$('.first_name').val()} ${$('.last_name').val()}`;
+}
+
+
+
+
+

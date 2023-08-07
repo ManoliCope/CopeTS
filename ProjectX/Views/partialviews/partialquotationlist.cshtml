@@ -34,8 +34,8 @@
 				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)">
 					<tbody>
 						<tr class="card-header">
-							<td>Full Name -  @item.Insured  - @item.Package</td>
-							<td colspan="2">Mussa Basma</td>
+							<td>Full Name -  @item.Insured </td>
+							<td colspan="2">@item.Fullname</td>
 						</tr>
 						<tr>
 							<td>Plan</td>
@@ -53,7 +53,6 @@
 											data-insured="@thislist.Insured"
 											data-age="@thislist.Age"
 											data-product="@thislist.Product"
-											data-plan="@thislist.Plan"
 											data-package="@thislist.Package"
 											data-duration="@thislist.Duration"
 											data-tariffid="@thislist.TariffID"

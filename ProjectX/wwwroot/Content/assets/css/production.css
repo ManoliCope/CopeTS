@@ -161,11 +161,19 @@
 }
     .totaltable td:first-child {
         background: #edf0f7;
-        border-color:white
+        border-color: white;
+        width: 50%;
+        min-width: 50%;
+        max-width: 50%;
     }
 
 
 
 .quotecontainer .form-control {
-    height: 1.5rem;
+    height: 1.8rem;
 }
+
+.quoatetable td, .quoatetable th {
+    padding:10px;
+}
+
