@@ -1,18 +1,21 @@
 ﻿var projectname = checkurlserver();
+var userRights = [];
 $(document).ready(function () {
-    var usersid = sessionStorage.getItem('userid');
-
-    sessionStorage.removeItem('userid');
-
-    if (usersid != null && usersid > 0)
-        fillUser(usersid);
-    else
+   // var usersid = sessionStorage.getItem('userid');
+    var usid = $('#addUserForm').attr('userid');
+  
+    ////sessionStorage.removeItem('userid');
+    if (usid != null && usid > 0) {
+        getUserRights(usid);
+        fillUser(usid);
+    }
+    else 
     getAllUsers();
 
 });
 function drawtable(data) {
     console.log(data)
-
+    var generate = $('#userstable').attr('generate');
     var table = $('#userstable').DataTable({
         "data": data,
         "paging": true,
@@ -20,11 +23,36 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
+            {
+            'data': 'u_Id',
+            className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    if (full.u_Have_Parents) {
+                return `<a  href="#" title="View Users" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="showChildren(` + full.u_Id.toString() + `)"><i class="fas fa-eye"/></a>`;
+
+                    } else {
+                        return '';
+                    }
+                //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+            }
+        },
             { "title": "Name", "className": "text-center filter", "orderable": true, "data": "u_Full_Name" },
             { "title": "Insured Number", "className": "text-center filter", "orderable": true, "data": "u_Insured_Number" },
             { "title": "Phone Number", "className": "text-center filter", "orderable": true, "data": "u_Telephone" },
             { "title": "Email", "className": "text-center filter", "orderable": true, "data": "u_Email" },
             {
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    if (generate=='1') {
+
+                    return `<a  href="#" title="Add User" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="createChildUser(`+ full.u_Id.toString() +`)"><i class="fas fa-plus"/></a>`;
+                    } else {
+                        return '';
+                    }
+                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+                }
+            },{
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
@@ -123,11 +151,17 @@ function resetpassword() {
 
 }
 function saveUser() {
+    if (validateForm(".container-fluid")) {
+        return;
+    }
+
+    showloader("load")
+
     // Array to store all the fields
     var user = {};
     var url = '';
     // Loop through each input, select, and textarea element inside the form
-    $('#addBrokerForm input, #addBrokerForm select, #addBrokerForm textarea').each(function () {
+    $('#addUserForm input, #addUserForm select, #addUserForm textarea').each(function () {
         var field = $(this).attr('field-name'); // Get the field's ID
         var value = $(this).val(); // Get the field's value
         if ($(this).attr('type') == 'checkbox')
@@ -141,11 +175,18 @@ function saveUser() {
         user[field] = value;
 
     });
-    var userid = $('#addBrokerForm').attr('userid');
+    var userid = $('#addUserForm').attr('userid');
     user.id = userid;
     if (userid > 0)
         url = "/Users/EditUser";
-    else url="/Users/createNewUser";
+    else {
+        var parentid = sessionStorage.getItem('parentid');
+        sessionStorage.removeItem('parentid');
+        if (parentid != null)
+            user.Parent_Id = parentid;
+            url = "/Users/createNewUser";
+
+    }
     console.log(user);
     $.ajax({
         type: 'POST',
@@ -193,12 +234,16 @@ $("#kt_reset").click(function () {
 function getAllUsers() {
     var filter = {};
     var name = $('#prname').val();
+
+    var parentid = sessionStorage.getItem('parid');
+    sessionStorage.removeItem('parid');
+
     filter.Last_Name = $('#prname').val();
     console.log(filter)
     $.ajax({
         type: 'GET',
         url: projectname + "/Users/GetUsersList",
-        data: { name: name },
+        data: { name: name, parentid: parentid },
         success: function (result) {
             removeloader();
 
@@ -230,7 +275,7 @@ function edit() {
     var user = {};
 
     // Loop through each input, select, and textarea element inside the form
-    $('#addBrokerForm input, #addBrokerForm select, #addBrokerForm textarea').each(function () {
+    $('#addUserForm input, #addUserForm select, #addUserForm textarea').each(function () {
         var field = $(this).attr('field-name'); // Get the field's ID
         var value = $(this).val(); // Get the field's value
         if ($(this).attr('type') == 'checkbox')
@@ -302,8 +347,8 @@ function deleteuser(me) {
 function gotouser(me) {
     console.log(me)
     var userId = $(me).attr('userid');
-    sessionStorage.setItem('userid', userId);
-    window.location.href = '/users/createuser';
+    //sessionStorage.setItem('userid', userId);
+    window.location.href = '/users/createuser?userid=' + userId;
 }
 function fillUser(usersid) {
     var users = {};
@@ -316,17 +361,21 @@ function fillUser(usersid) {
             removeloader();
 
             users = result;
-            $('#addBrokerForm').attr('userid', users.id.toString());
-            $('#addBrokerForm input, #addBrokerForm select, #addBrokerForm textarea').each(function () {
+            $('#addUserForm').attr('userid', users.id.toString());
+            $('#addUserForm input, #addUserForm select, #addUserForm textarea').each(function () {
                 var field = $(this).attr('field-name'); // Get the field's ID
                 var value = users[field];
                 var id = $(this).attr('id');// Get the field's value
                 if ($('#' + id).is(":checkbox")) {
                     $('#' + id).prop("checked", value);
-                } else {
+                }
+                else {
                     $('#' + id).val(value);
                 }
             });
+            console.log(users);
+            if (users.creation_Date != null)
+                $('#creationDate').text(formatDate(users.creation_Date));
 
         },
         failure: function (data, success, failure) {
@@ -339,4 +388,57 @@ function fillUser(usersid) {
             //alert("fail");
         }
     });
-    }
+}
+function getUserRights(userid) {
+
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Users/GetUserRights",
+        data: { userid: userid },
+        success: function (result) {
+            
+            userRights = result;
+
+        }
+    });
+}
+function formatDate(data) {
+    
+       
+            var date = new Date(data);
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var year = date.getFullYear();
+            return day + '/' + month + '/' + year;
+        
+    
+    
+}
+function getUserPass(userid) {
+
+    $.ajax({
+        type: 'GET',
+        data: { userid: userid },
+        url: projectname + "/Users/getUserPass",
+        
+        success: function (result) {
+
+            $('#inputPassword').val(result);
+
+        }
+    });
+}
+
+$('#changePassword').click(function(){
+    var pass = $('#inputPassword').val();
+    window.location.href = "/Users/ResetPass?pass=" + pass;
+});
+function createChildUser(parentid) {
+    sessionStorage.setItem('parentid', parentid);
+    window.location.href = '/users/createuser';
+}
+function showChildren(parentid) {
+    sessionStorage.setItem('parid', parentid);
+    //window.location.href = '/users/createuser';
+    getAllUsers();
+}

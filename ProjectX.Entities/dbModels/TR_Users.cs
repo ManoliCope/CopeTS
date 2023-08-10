@@ -55,9 +55,11 @@ namespace ProjectX.Entities.dbModels
         public bool? U_Tax_Invoice { get; set; }
         public bool? U_Hide_Premium_Info { get; set; }
         public bool? U_Active { get; set; }
+        public bool? U_Have_Parents { get; set; }
         public int? U_Parent_Id { get; set; }
         public string? U_Full_Name { get; set; }
         public string? U_User_Name { get; set; }
+        public bool? U_Is_Admin { get; set; }
 
     }
 }

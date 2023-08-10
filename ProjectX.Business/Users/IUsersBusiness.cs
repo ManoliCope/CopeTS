@@ -10,10 +10,11 @@ namespace ProjectX.Business.Users
     {
         public LoginResp Login(LoginReq Req);
         public GetUserResp GetUserAuth(GetUserReq Req);
-
+        public UserRights GetUserRights(int userid);
         public UsersResp ModifyUser(UsersReq req, string act, int userid);
         public List<TR_Users> GetUsersList(UsersSearchReq req);
-        public UsersResp GetUser(int IdUser);
+        public UsersResp GetUser(int userid);
         public ResetPass resetPass(ResetPass res);
+        public string getUserPass(int userid);
     }
 }

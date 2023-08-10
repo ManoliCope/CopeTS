@@ -54,7 +54,7 @@ namespace ProjectX.Controllers
         public IActionResult Index()
         {
             //Testupload();
-
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 //loadCountries = true,
@@ -94,13 +94,14 @@ namespace ProjectX.Controllers
         //    //return _profileBusiness.SearchProfiles(req);
         //}
 
-       public IActionResult ResetPass()
+       public IActionResult ResetPass(string? pass)
         {
             //LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             //{
             //    loadProducts = true,
             //    loadProfiles = true
             //});
+            ViewData["pass"] = pass;
             return View();
         }
         [HttpPost]
@@ -114,7 +115,8 @@ namespace ProjectX.Controllers
         public UsersResp createNewUser(UsersReq req)
         {
             var response = new UsersResp();
-
+            if (req.Parent_Id == null)
+                req.Parent_Id = _user.U_Id;
             if (req != null)
             {
                  response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
@@ -130,20 +132,35 @@ namespace ProjectX.Controllers
 
         }
         [HttpGet]
-        public UsersSearchResp GetUsersList(string name)
+        public UsersSearchResp GetUsersList(string name,int? parentid)
         {
             //user.Id = _user.UserId;
             var user = new UsersSearchReq();
             user.First_Name = name;
+            if (parentid == null)
+                user.Parent_Id = _user.U_Id;
+            else 
+                user.Parent_Id = parentid;
             var response = new UsersSearchResp();
             response.users = _usersBusiness.GetUsersList(user);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
         }
-        public IActionResult createUser() 
+        public IActionResult createUser(int userid)
         {
-             return View();
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadFormats=true
+                //loadCountries = true,
+                //loadProfileTypes = true,
+                //loadDocumentTypes = true
+            });
+            ViewData["loadDataCreate"] = response;
+            ViewData["userid"] = userid.ToString();
+
+            
+            return View();
         }
         [HttpPost]
         public UsersResp EditUser(UsersReq req)
@@ -187,6 +204,13 @@ namespace ProjectX.Controllers
             {
                 throw ex;
             }
+        }
+        [HttpGet]
+        public string getUserPass(int userid)
+        {
+           
+                return _usersBusiness.getUserPass(userid);
+          
         }
     }
 }

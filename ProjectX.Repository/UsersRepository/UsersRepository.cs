@@ -53,6 +53,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_First_Name", req.First_Name);
             param.Add("@U_Middle_Name", req.Middle_Name);
             param.Add("@U_Last_Name", req.Last_Name);
+            param.Add("@U_User_Name", req.Last_Name);
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);
@@ -72,6 +73,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Commission", req.Commission);
             param.Add("@U_Stamp", req.Stamp);
             param.Add("@U_Additional_Fees", req.Additional_Fees);
+            param.Add("@U_Max_Additional_Fees", req.Max_Additional_Fees);
             param.Add("@U_VAT", req.VAT);
             param.Add("@U_For_Syria", req.For_Syria);
             param.Add("@U_Show_Commission", req.Show_Commission);
@@ -119,6 +121,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_First_Name", req.First_Name);
             param.Add("@U_Middle_Name", req.Middle_Name);
             param.Add("@U_Last_Name", req.Last_Name);
+            param.Add("@U_User_Name", req.Last_Name);
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);
@@ -138,6 +141,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Commission", req.Commission);
             param.Add("@U_Stamp", req.Stamp);
             param.Add("@U_Additional_Fees", req.Additional_Fees);
+            param.Add("@U_Max_Additional_Fees", req.Max_Additional_Fees);
             param.Add("@U_VAT", req.VAT);
             param.Add("@U_For_Syria", req.For_Syria);
             param.Add("@U_Show_Commission", req.Show_Commission);
@@ -173,11 +177,11 @@ namespace ProjectX.Repository.UsersRepository
 
             return resp;
         }
-        public TR_Users GetUser(int IdUser)
+        public TR_Users GetUser(int userid)
         {
             var resp = new TR_Users();
             var param = new DynamicParameters();
-            param.Add("@U_ID", IdUser);
+            param.Add("@U_ID", userid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -243,5 +247,39 @@ namespace ProjectX.Repository.UsersRepository
         //    }
         //    return user;
         //}
+        public TR_Users GetUserRights(int userid)
+        {
+
+            var resp = new TR_Users();
+            var param = new DynamicParameters();
+            param.Add("@U_ID", userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Get_UserRights", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.ReadFirstOrDefault<TR_Users>();
+                    
+                }
+            }
+
+            return resp;
+        }
+        public string getUserPass(int userid)
+        {
+            string resp = null;
+            var param = new DynamicParameters();
+            param.Add("@U_ID", userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Get_UserPass", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.ReadFirstOrDefault<string>();
+                }
+            }
+
+            return resp;
+        }
     }
 }

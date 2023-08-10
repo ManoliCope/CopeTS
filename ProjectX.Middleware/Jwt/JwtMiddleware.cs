@@ -50,7 +50,6 @@ namespace ProjectX.Middleware.Jwt
                 Controller = routeData?.Values["controller"]?.ToString().ToLower();
                 Action = routeData?.Values["action"]?.ToString().ToLower();
 
-
                 if (!string.IsNullOrEmpty(Controller))
                 {
                     if (Controller == "login" || Controller == "content" || Controller == "errorf" || Controller == "user" || Action == "display" || Action == "drawpdf")

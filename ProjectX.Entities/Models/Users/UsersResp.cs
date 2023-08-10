@@ -11,6 +11,7 @@ namespace ProjectX.Entities.Models.Users
         public string first_Name { get; set; }
         public string middle_Name { get; set; }
         public string last_Name { get; set; }
+        public string user_Name { get; set; }
         public string category { get; set; }
         public long? broker_Code { get; set; }
         public int? country { get; set; }
@@ -49,6 +50,10 @@ namespace ProjectX.Entities.Models.Users
         public bool? tax_Invoice { get; set; }
         public bool? hide_Premium_Info { get; set; }
         public bool? active { get; set; }
+        public bool? have_Parents { get; set; }
         public int? parent_Id { get; set; }
+        public double? max_Additional_Fees { get; set; }
+        public DateTime creation_Date { get; set; }
+
     }
 }

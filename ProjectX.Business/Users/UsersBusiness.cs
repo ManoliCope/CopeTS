@@ -40,14 +40,17 @@ namespace ProjectX.Business.Users
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidCredentials);
             return response;
         }
-        public UsersResp GetUser(int IdUser)
+        public UsersResp GetUser(int userid)
         {
-            TR_Users repores = _usersRepository.GetUser(IdUser);
+            if (userid <= 0)
+                return null;
+            TR_Users repores = _usersRepository.GetUser(userid);
             UsersResp resp = new UsersResp();
             resp.id = repores.U_Id;
             resp.first_Name = repores.U_First_Name;
             resp.middle_Name = repores.U_Middle_Name;
             resp.last_Name = repores.U_Last_Name;
+            resp.user_Name = repores.U_User_Name;
             resp.category = repores.U_Category;
             resp.broker_Code = repores.U_Broker_Code;
             resp.country = repores.U_Country;
@@ -59,6 +62,7 @@ namespace ProjectX.Business.Users
             resp.contact_Person = repores.U_Contact_Person;
             resp.insured_Number = repores.U_Insured_Number;
             resp.tax = repores.U_Tax;
+            resp.tax_Type = repores.U_Tax_Type;
             resp.tax_Invoice = repores.U_Tax_Invoice;
             resp.currency = repores.U_Currency;
             resp.rounding_Rule = repores.U_Rounding_Rule;
@@ -86,6 +90,10 @@ namespace ProjectX.Business.Users
             resp.hide_Premium_Info = repores.U_Hide_Premium_Info;
             resp.active = repores.U_Active;
             resp.parent_Id = repores.U_Parent_Id;
+            resp.max_Additional_Fees = repores.U_Max_Additional_Fees;
+            resp.creation_Date = repores.U_Creation_Date;
+            resp.have_Parents = repores.U_Have_Parents;
+
 
             return resp;
         }
@@ -102,7 +110,54 @@ namespace ProjectX.Business.Users
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.serverError);
             return response;
         }
-
+        public UserRights GetUserRights(int userid)
+        {
+            var resp = new UserRights();
+            var users= _usersRepository.GetUserRights(userid);
+            if (users.U_Is_Admin == true)
+            {
+                resp = new UserRights
+                {
+                    Fixed_Additional_Fees = true,
+                    Allow_Cancellation = true,
+                    Cancellation_SubAgent = true,
+                    Preview_Total_Only = true,
+                    Preview_Net = true,
+                    Agents_Creation = true,
+                    Agents_Commission_ReportView = true,
+                    SubAgents_Commission_ReportView = true,
+                    Multi_Lang_Policy = true,
+                    Hide_Premium_Info = true,
+                    Active = true,
+                    Is_Admin = true
+                };
+            }
+            else
+            {
+                resp = new UserRights
+                {
+                    Fixed_Additional_Fees = users.U_Fixed_Additional_Fees,
+                    Allow_Cancellation = users.U_Allow_Cancellation,
+                    Cancellation_SubAgent = users.U_Cancellation_SubAgent,
+                    Preview_Total_Only = users.U_Preview_Total_Only,
+                    Preview_Net = users.U_Preview_Net,
+                    Agents_Creation = users.U_Agents_Creation,
+                    Agents_Commission_ReportView = users.U_Agents_Commission_ReportView,
+                    SubAgents_Commission_ReportView = users.U_SubAgents_Commission_ReportView,
+                    Multi_Lang_Policy = users.U_Multi_Lang_Policy,
+                    Hide_Premium_Info = users.U_Hide_Premium_Info,
+                    Active = users.U_Active,
+                    Is_Admin = users.U_Is_Admin
+                };
+            }
+             
+            
+            return resp;
+        }
+        public string getUserPass(int userid)
+        {
+            return _usersRepository.getUserPass(userid);
+        }
 
     }
 }
