@@ -102,8 +102,8 @@
 										<span class="menu-title">Production</span>
 									</a>
 								</li>
-								<li class="menu-item @(controllerName == "production" && actionName == "test" ? "active" : "")">
-									<a href="~/production/test">
+								<li class="menu-item @(controllerName == "production" && actionName == "create" ? "active" : "")">
+									<a href="~/production/create">
 										<span class="menu-title">Creation</span>
 									</a>
 								</li>
@@ -175,12 +175,12 @@
 
 					</li>
 					<li class="menu-item @(controllerName == "reports" ? "active" : "")">
-						<a>
-							<span class="menu-icon">
-								<i class="ri-bar-chart-2-fill"></i>
-							</span>
-							<span class="menu-title">Reports</span>
-						</a>
+						<a href="~/production/edit/4">
+								<span class="menu-icon">
+									<i class="ri-bar-chart-2-fill"></i>
+								</span>
+								<span class="menu-title">Reports</span>
+							</a>
 
 					</li>
 					@*<li class="menu-item @(controllerName == "policies" ? "active" : "")">

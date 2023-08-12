@@ -281,9 +281,13 @@
 	{
 		<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
 	}
-	else if (controllerName == "production")
+	else if (controllerName == "production" && actionName == "create")
 	{
-		<script src="~/Content/assets/js/production.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/js/productioncreate.js" asp-append-version="true"></script>
+	}	
+	else if (controllerName == "production" && actionName == "edit")
+	{
+		<script src="~/Content/assets/js/productionedit.js" asp-append-version="true"></script>
 	}
 	else if (controllerName == "beneficiary")
 	{

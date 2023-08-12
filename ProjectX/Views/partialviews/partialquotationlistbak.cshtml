@@ -1,67 +1,127 @@
-﻿@model List<ProjectX.Entities.Models.Production.QuotationResp>
+﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
+
 @{
 	Layout = null;
- }
+	var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
+}
 
-@foreach (var item in Model)
-{
-	<div class="card mt-2">
-		<div class="card-body" style="font-size:13px">
-			<div>
-				<b>Destination(s)</b>
-				<span class="float-end">@item.ZoneName</span>
-			</div>
-			<div>
-				<b>Inception Date</b>
-				<span class="float-end">@item.TariffStartingDate</span>
-			</div>
-			<div>
-				<b>Expiry Date</b>
-				<span class="float-end">@item.TariffStartingDate</span>
-			</div>
-			<div>
-				<b>Duration</b>
-				<span class="float-end">@item.Duration Days</span>
-			</div>
-			<div>
-				<span class="float-end total_price" data-currency="USD"></span>
-			</div>
-			<div class="table-responsive">
-				<table class="table table-sm table-bordered mt-3">
-					<thead>
-						<tr class="thead-light text-center">
-							<th>Full Name</th>
-							<th>Cons. / Cumul. Days</th>
-							<th>Base Price</th>
-							<th>Discount</th>
-							<th>Final Price</th>
+
+<div class="card mt-2 mb-0">
+	<div class="card-body" style="font-size:13px">
+		<div>
+			<b>Destination(s)</b>
+			<span class="float-end dest">@DestinationNames</span>
+		</div>
+		<div>
+			<b>Inception Date</b>
+			<span class="float-end incdate">@Model.FromDate.ToString("yyyy-MM-dd")</span>
+		</div>
+		<div>
+			<b>Expiry Date</b>
+			<span class="float-end expdate">@Model.ToDate.ToString("yyyy-MM-dd")</span>
+		</div>
+		<div>
+			<b>Duration</b>
+			<span class="float-end duration">@Model.Duration Days</span>
+		</div>
+		<div>
+			<span class="float-end total_price" data-currency="USD"></span>
+		</div>
+
+
+
+		<div class="my-3 mb-1">
+			@foreach (var item in Model.PolicyDetails)
+			{
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId">
+					<tbody>
+						<tr class="card-header">
+							<td>Full Name -  @item.InsuredId </td>
+							<td colspan="2">@item.FullName</td>
 						</tr>
-					</thead>
-					<tbody class="quotation-list">
-						<tr class="text-center">
-							<td>@item.Insured</td>
-
-							<td>
-								<select class="form-control cum_con_days">
-									@*@foreach (var plan in item.Plan)
-		{
-			<option value="@plan.PlanId" data-bprice="@plan.BasePrice" data-fprice="@plan.FinalPrice" data-price0="@plan.DiscountPercentage" data-deductible="@plan.IsDeductible">
-				@plan.PlanName
-			</option>
-		}*@
-									<option value="@item.Plan">
+						<tr>
+							<td>Plan</td>
+							<td colspan="2">
+								<select class="form-control plans">
+									<option value="@item.Plan" data-plan="@item.Plan">
 										@item.PlanName
 									</option>
 								</select>
 							</td>
+						</tr>
+						<tr>
+							<td>Additional Benefits</td>
+							<td colspan="2">
+								<select class="form-control isselect2 benplus" multiple>
+									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
+									{
+										<option data-benprice="@thislist.Price" value="@thislist.ID">
+											@thislist.Name
+										</option>
+									}
 
-							<td>@item.PriceAmount USD</td>
-							<td>@item.PriceAmount USD</td>
-							<td>@item.NetPremiumAmount USD</td>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.Discount</span>
+								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.DeductiblePrice > 0 ? "checked" : "" ) />
+							</td>
+							<td>
+								Sports Activities - <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>
+								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivitiesPrice > 0 ? "checked" : "" ) />
+							</td>
+							<td>
+								Price	<br />
+								<span data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td>
+								Discount <br />
+								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount">
+							</td>
+							<td>
+								Final <br />
+								<span id="finalprice" class="finalprice" data-fprice="@item.FinalPrice"> @item.FinalPrice</span>
+							</td>
 						</tr>
 					</tbody>
+
 				</table>
-			</div>
+			}
+
+
+			<table class="table table-bordered  mt-3 totaltable">
+				<tbody>
+					<tr>
+						<td>Initial Premium</td>
+						<td id="initpremtotal" class="text-end">@Model.InitialPremium $</td>
+					</tr>
+					<tr>
+						<td>Additional</td>
+						<td id="additiononprem" class="text-end">@Model.AdditionalValue $</td>
+					</tr>
+					<tr>
+						<td>Tax/VAT</td>
+						<td id="taxvat" class="text-end">@Model.TaxVATValue $</td>
+					</tr>
+					<tr>
+						<td>Stamps</td>
+						<td id="stamps" class="text-end">@Model.StampsValue $</td>
+					</tr>
+					<tr>
+						<td>Total</td>
+						<td id="grandtotal" class="text-end">@Model.GrandTotal $</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
-}
+</div>
+
+
+<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>

@@ -201,7 +201,7 @@ function saveUser() {
             else {
 
                 showresponsemodal(1, result.statusCode.message)
-                window.location.href = '/users/';
+                //window.location.href = '/users/';
 
                 //drawtable(result);
             }
@@ -289,7 +289,6 @@ function edit() {
         user[field] = value;
 
     });
-
 
     $.ajax({
         type: 'post',

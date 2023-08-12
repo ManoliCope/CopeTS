@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ProjectX.Business.General;
 using ProjectX.Business.Production;
 using ProjectX.Business.Profile;
+using ProjectX.Controllers;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
@@ -12,6 +13,7 @@ using ProjectX.Entities.Models.Package;
 using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Models.Profile;
+using static ProjectX.Controllers.ProductionController;
 
 namespace ProjectX.Controllers
 {
@@ -60,7 +62,7 @@ namespace ProjectX.Controllers
         }
 
 
-        public ActionResult Test()
+        public ActionResult Create()
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -84,7 +86,7 @@ namespace ProjectX.Controllers
 
 
         // GET: ProductionController/Create
-        public ActionResult Create()
+        public ActionResult Createbak()
         {
             LoadDataResp response = new LoadDataResp();
             response.loadedData = new LoadDataModel();
@@ -113,7 +115,25 @@ namespace ProjectX.Controllers
         // GET: ProductionController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadBenefits = true,
+                loadProducts = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true,
+                loadZones = true
+
+            });
+
+            ViewData["filldata"] = response;
+
+            ProductionPolicy policyreponse = new ProductionPolicy();
+            policyreponse = _productionBusiness.GetPolicy(id, 1);
+
+            return View("details", policyreponse);
+
         }
 
         // POST: ProductionController/Edit/5
@@ -184,6 +204,12 @@ namespace ProjectX.Controllers
         {
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
 
+        }
+
+        [HttpPost]
+        public ProductionResp IssuePolicy(IssuanceReq IssuanceReq)
+        {
+            return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
         }
     }
 }

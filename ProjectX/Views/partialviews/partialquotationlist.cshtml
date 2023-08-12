@@ -31,7 +31,7 @@
 		<div class="my-3 mb-1">
 			@foreach (var item in Model.QuotationResp.Where(x => x.RowId == 1))
 			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)">
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.Insured">
 					<tbody>
 						<tr class="card-header">
 							<td>Full Name -  @item.Insured </td>
@@ -121,19 +121,19 @@
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td class="text-end">1.00 $</td>
+						<td id="additiononprem" class="text-end">1.00 $</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td class="text-end">0.5 $</td>
+						<td id="taxvat" class="text-end">0.5 $</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td class="text-end">0.01 $</td>
+						<td id="stamps" class="text-end">0.01 $</td>
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+						<td id="grandtotal"class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
 					</tr>
 				</tbody>
 			</table>

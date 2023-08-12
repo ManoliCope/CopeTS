@@ -19,6 +19,7 @@ using ProjectX.Repository.GeneralRepository;
 using System.Collections;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 
 namespace ProjectX.Repository.ProductionRepository
 {
@@ -138,6 +139,106 @@ namespace ProjectX.Repository.ProductionRepository
 
             return response;
         }
+
+        public static DataTable ConvertIntListToDataTable(List<int> intList)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("Value", typeof(int));
+
+            foreach (int value in intList)
+            {
+                dataTable.Rows.Add(value);
+            }
+
+            return dataTable;
+        }
+
+        public ProductionResp SaveIssuance(IssuanceReq IssuanceReq, int userid)
+        {
+            ProductionResp response = new ProductionResp();
+            string thisresult = "";
+
+
+            DataTable test = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
+            DataTable additionalDT = new DataTable();
+            if (IssuanceReq.additionalBenefits != null)
+                additionalDT = ConvertToDataTable(IssuanceReq.additionalBenefits);
+            else
+            {
+                additionalDT.Columns.Add("insuredid", typeof(int));
+                additionalDT.Columns.Add("value", typeof(string));
+                additionalDT.Columns.Add("price", typeof(double));
+            }
+
+            using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                //var param = new DynamicParameters();
+                //param.Add("@Zone", req.Zone);
+                //param.Add("@Product", req.Product);
+                //param.Add("@Ages", _generalRepository.ToDataTable(req.Ages));
+                //param.Add("@Durations", _generalRepository.ToDataTable(req.Durations));
+                var queryParameters = new DynamicParameters(new
+                {
+                    InsuredData = ConvertToDataTable(IssuanceReq.beneficiaryDetails),
+                    BeneficiaryData = ConvertToDataTable(IssuanceReq.beneficiaryData),
+                    AdditionalBenefit = additionalDT,
+
+                    SelectedDestinationIds = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds),
+                    SelectedDestinations = IssuanceReq.selectedDestinations,
+                    Duration = IssuanceReq.duration,
+                    ToDate = IssuanceReq.to,
+                    FromDate = IssuanceReq.from,
+                    IsFamily = IssuanceReq.is_family,
+                    IsIndividual = IssuanceReq.Is_Individual,
+                    IsGroup = IssuanceReq.Is_Group,
+                    ProductId = IssuanceReq.productId,
+                    ZoneId = IssuanceReq.zoneId,
+                    InitialPremium = IssuanceReq.InitialPremium,
+                    AdditionalValue = IssuanceReq.AdditionalValue,
+                    TaxVATValue = IssuanceReq.TaxVATValue,
+                    StampsValue = IssuanceReq.StampsValue,
+                    GrandTotal = IssuanceReq.GrandTotal,
+                    Userid = userid
+                });
+
+                var query = "TR_SaveIssuanceProcedure";
+
+                using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
+                {
+                    thisresult = result.Read<string>().First();
+                    //response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
+                }
+            }
+
+            return response;
+        }
+
+
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid)
+        {
+            var resp = new ProductionPolicy();
+            var param = new DynamicParameters();
+            param.Add("@PolicyID", IdPolicy);
+            param.Add("@Userid", userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_GetPolicy", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.Read<ProductionPolicy>().SingleOrDefault();
+                    if (resp != null)
+                    {
+                        resp.PolicyDetails = result.Read<PolicyDetail>().ToList();
+                        resp.AdditionalBenefits = result.Read<PolicyAdditionalBenefit>().ToList();
+                        resp.Destinations = result.Read<PolicyDestination>().ToList();
+                    }
+                }
+            }
+
+            return resp;
+        }
+
+
 
         public static DataTable ConvertToDataTable<T>(IEnumerable<T> list)
         {

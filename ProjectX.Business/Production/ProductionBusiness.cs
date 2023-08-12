@@ -36,5 +36,14 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.getProductionDetails(req);
         }
+        public ProductionResp SaveIssuance(IssuanceReq req, int userid)
+        {
+            return _prodRepository.SaveIssuance(req, userid);
+        }
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid)
+        {
+            return _prodRepository.GetPolicy(IdPolicy, userid);
+        }
+
     }
 }

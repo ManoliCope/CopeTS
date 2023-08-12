@@ -2,17 +2,9 @@
 var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
-    $("#search").click(function () {
-
-        drawtable()
-        //Search();
-    });
-    drawtable();
-
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
     })
-
 
     $('#product_id').on('select2:selecting', function (e) {
         // Get the entered text in the search box
@@ -319,10 +311,9 @@ function populatebeneficiary() {
         //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
 
+        sendData()
 
-
-        createBeneficiaryData()
-
+        //createBeneficiaryData()
     });
 }
 
@@ -482,76 +473,12 @@ function populatedestinations() {
     });
 }
 
-function drawtable(data) {
-    //console.log(data)
-
-    var table = $('#productiontable').DataTable({
-        "data": data,
-        "paging": true,
-        "ordering": true,
-        "filter": true,
-        "destroy": true,
-        "columns": [
-            { "title": "Name", "className": "text-center filter", "orderable": true, "data": "name" },
-            { "title": "Type", "className": "text-center filter", "orderable": true, "data": "allProfileTypes" },
-            { "title": "Phone Number", "className": "text-center filter", "orderable": true, "data": "phoneNumber" },
-            {
-                'data': 'idProfile',
-                className: "dt-center editor-edit",
-                "render": function (data, type, full) {
-                    return `<a   title="Edit" profid="` + full.idProfile + `"  class="text-black-50" onclick="gotoprofile(this)"><i class="fas fa-book"/></a>`;
-                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
-                }
-            }
-        ],
-        orderCellsTop: true,
-        fixedHeader: true
-    });
-
-    triggerfiltertable(table, "profile")
-}
 
 
-function Search() {
-    if (validateForm("#searchform")) {
-        return;
-    }
-    showloader("load")
-
-    var filter = {
-        profileName: $("#prname").val().trim(),
-        idProfileType: $("#sprtype").val(),
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: projectname + "/Profile/Search",
-        data: { req: filter },
-        success: function (result) {
-            removeloader();
-
-            if (result.statusCode.code != 1)
-                showresponsemodal("error", result.statusCode.message)
-            else {
-                drawtable(result.profiles);
-            }
-
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-
-            //alert("Error:" + failure);
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
-        }
-    });
-}
 
 var sendButton = document.getElementById('sendButton');
 if (sendButton) {
-    sendButton.addEventListener('click', sendData);
+    sendButton.addEventListener('click', sendDataIssuance);
 }
 
 
@@ -664,10 +591,10 @@ function validatequatation() {
 }
 function sendData() {
 
-    if (validatequatation()) {
-        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
-        return;
-    }
+    //if (validatequatation()) {
+    //    $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+    //    return;
+    //}
 
     $(".result").addClass("load")
 
@@ -677,14 +604,49 @@ function sendData() {
 
 
 
-    return
     ///  saving policy if quotation accepted..
     var generalInfoData = createGeneralInformationData();
     var beneficiaryData = createBeneficiaryData();
     var travelData = gathertravelinfo();
+
+
     console.log(generalInfoData)
     console.log(beneficiaryData)
     console.log(travelData)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return false;
     var generalInfoJSON = convertToJSON(generalInfoData);
@@ -709,6 +671,115 @@ function sendData() {
     xhr.send(JSON.stringify({ generalInfo: generalInfoJSON, beneficiary: beneficiaryJSON, travel: travelJSON }));
 }
 
+
+
+function sendDataIssuance() {
+    var BeneficiaryDetails = [];
+    var listadditionalbenefits = []
+    $(".quoatetable").each(function (index) {
+        var insuredSection = $(this);
+
+        var dataForInsured = {
+            insured:index + 1,
+            //fullName: insuredSection.find(".card-header td:eq(1)").text(),
+            tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
+            plan: insuredSection.find(".plans option:selected").val(),
+            deductibleprice: insuredSection.find("input[name='name'][data-dedprice]").prop("checked")
+                ? parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) : 0,
+            sportsActivitiesprice: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked")
+                ? parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) : 0,
+            discount: isNaN(parseFloat(insuredSection.find(".discount").val())) ? 0 : parseFloat(insuredSection.find(".discount").val()),
+            planPrice: parseFloat(insuredSection.find(".plans option:selected").data("price")),
+            finalPrice: parseFloat(insuredSection.find(".finalprice").data("fprice"))
+
+        };
+
+        // Additional Benefits for the insured
+        insuredSection.find(".benplus option:selected").each(function (index) {
+            listadditionalbenefits.push({
+                insuredid: insuredSection.attr("ins"),
+                value: $(this).val(),
+                price: $(this).data("benprice")
+            });
+        });
+
+        BeneficiaryDetails.push(dataForInsured);
+    });
+
+    var beneficiaryData = [
+        {
+            "Insured": 1,
+            "insuredId": "75",
+            "firstName": "test ",
+            "lastName": "www",
+            "dateOfBirth": "1990-02-27",
+            "age": 33,
+            "passportNo": "123",
+            "gender": "M"
+        },
+        {
+            "Insured": 2,
+            "insuredId": "76",
+            "firstName": "second",
+            "lastName": "test",
+            "dateOfBirth": "1955-04-24",
+            "age": 68,
+            "passportNo": "123",
+            "gender": "M"
+        },
+        {
+            "Insured": 3,
+            "insuredId": "76",
+            "firstName": "second",
+            "lastName": "test",
+            "dateOfBirth": "1955-04-24",
+            "age": 68,
+            "passportNo": "123",
+            "gender": "M"
+        }
+    ];
+
+    var dataToSend = {
+        beneficiaryDetails: BeneficiaryDetails,
+        beneficiaryData: beneficiaryData,
+        additionalBenefits: listadditionalbenefits,
+        "from": "2023-08-22",
+        "to": "2023-09-03",
+        "duration": "12",
+        "selectedDestinations": "Algeria, Angola, Armenia",
+        "selectedDestinationIds": [
+            "4",
+            "7",
+            "12"
+        ],
+        "is_family": false,
+        "Is_Individual": false,
+        "Is_Group": true,
+        "productId": "682",
+        "zoneId": "270",
+        "initialPremium" : parseFloat($('#initpremtotal').text()),
+        "additionalValue" : parseFloat($('#additiononprem').text()),
+        "taxVATValue" : parseFloat($('#taxvat').text()),
+        "stampsValue" : parseFloat($('#stamps').text()),
+        "grandTotal" : parseFloat($('#grandtotal').text()),
+    };
+
+    console.log(dataToSend)
+
+    $.ajax({
+        url: projectname + '/Production/IssuePolicy',
+        data: { IssuanceReq: dataToSend },
+        method: 'POST',
+        success: function (response) {
+            alert("Data sent successfully:");
+            console.log("Data sent successfully:", response);
+        },
+        error: function (error) {
+            console.error("Error sending data:", error);
+        }
+    });
+
+}
 
 function gathertravelinfo() {
     var selectedOptions = $('#destination_id option:selected');
@@ -806,30 +877,30 @@ function getQuotationData() {
     console.log(quotationData, 'quotationData')
 
 
-    //var quotationData =
-    //    [
-    //        {
-    //            Insured: 1,
-    //            Ages: 10,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [25]
-    //        },
-    //        {
-    //            Insured: 2,
-    //            Ages: 28,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [5]
-    //        },
-    //        {
-    //            Insured: 3,
-    //            Ages: 10,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [5]
-    //        },
-    //    ]
+    var quotationData =
+        [
+            {
+                Insured: 1,
+                Ages: 10,
+                Product: 682,
+                Zone: 270,
+                Durations: [25]
+            },
+            {
+                Insured: 2,
+                Ages: 28,
+                Product: 682,
+                Zone: 270,
+                Durations: [5]
+            },
+            {
+                Insured: 3,
+                Ages: 10,
+                Product: 682,
+                Zone: 270,
+                Durations: [5]
+            },
+        ]
 
 
 
@@ -879,7 +950,7 @@ function loadQuotePartialView(response) {
 
             var sendButton = document.getElementById('sendButton');
             if (sendButton) {
-                sendButton.addEventListener('click', sendData);
+                sendButton.addEventListener('click', sendDataIssuance);
             }
             $(".isselect2").select2({
                 //tags: true,

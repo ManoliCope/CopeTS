@@ -1,963 +1,373 @@
 ﻿@model ProjectX.Entities.Models.Product.ProdGetResp
 @{
-    //var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
-
-    Boolean isnew = true;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
+<style>
 
+	.search-dropdown {
+		position: relative;
+	}
+
+	.search-dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 200px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		padding: 12px;
+		z-index: 1;
+	}
+
+		.search-dropdown-content a {
+			display: block;
+			padding: 6px 0;
+			text-decoration: none;
+			color: black;
+		}
+
+			.search-dropdown-content a:hover {
+				background-color: #f1f1f1;
+			}
+</style>
 
 <div class="content" pgtype="view">
-    <div class="container-fluid" style="padding:10px 0">
-        <div class="row" data-select2-id="20">
-            <div class="col-12">
-                <div class="page-title mt-2">
-                    <h4 class="card-title ">
-                        <i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-                        <span>Create Certificate </span>
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row" data-select2-id="20">
+			<div class="col-12">
+				<div class="page-title mt-2">
+					<h4 class="card-title ">
+						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+						<span>New Policy </span>
 
-                    </h4>
-                </div>
+					</h4>
+				</div>
+				<span class="text-warning"></span>
+			</div>
+			<div class="page-content w-100">
+				<div class="row m-0">
+					<div class="col-md-6">
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Product Information</h3>
+											<hr>
+											<div class="row">
+												<div class="col-md-12 typeradio">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="we-checkbox">
+																<input type="radio" id="is_individual" name="type">
+																<label for="is_individual">Single</label>
+																<i class="fa fa-question-circle" title="Single"></i>
+															</div>
+														</div>
+														<div class="col-md-4 family" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_family" name="type">
+																<label for="is_family">Family</label>
+																<i class="fa fa-question-circle" title="Family"></i>
+															</div>
+														</div>
+														<div class="col-md-4 group" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_group" name="type">
+																<label for="is_group">Group</label>
+																<i class="fa fa-question-circle" title="Group"></i>
+															</div>
+														</div>
+													</div>
+												</div>
 
-                <span class="text-warning"></span>
-            </div>
-            <div class="page-content" data-select2-id="19">
-                <form id="frm-certificate" action="" method="POST" enctype="multipart/form-data" autocomplete="off" class="has-validation-callback" data-select2-id="frm-certificate" data-gtm-form-interact-id="0">
-                    <input type="hidden" name="_token" value="mAZmpe0ndnadlPxh2cApz4R9WidxkK9XZvmgnOne">	<input type="hidden" id="create_duplicate" name="create_duplicate" value="0">
-                    <div class="row m-0" data-select2-id="18">
-                        <div class="col-md-8" data-select2-id="17">
-                            <div class="card mt-4">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <h3>General Information</h3>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group  d-none ">
-                                                            <label>Agency</label>
-                                                            <select name="agency" id="agency" class="form-control select2 select2-hidden-accessible" data-select2-id="agency" tabindex="-1" aria-hidden="true">
-                                                                <option value="5610" data-family="1" data-group="1" data-select2-id="2">
-                                                                    The Travel Desk
-                                                                </option>
-                                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: auto;">
-                                                                <span class="selection">
-                                                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-agency-container">
-                                                                        <span class="select2-selection__rendered" id="select2-agency-container" role="textbox" aria-readonly="true" title="The Travel Desk
-													">
-                                                                            The Travel Desk
-                                                                        </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-                                                                    </span>
-                                                                </span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear" style="display: block;"><i class="fas fa-times text-danger"></i></span>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Assistance Plan</label>
-                                                            <select name="assistance_plan" id="plan" class="form-control select2 select2-hidden-accessible" data-old="" data-select2-id="plan" tabindex="-1" aria-hidden="true"><option value="88" data-duration="" data-promo-start="" data-toshow="" data-promo-end="" data-select2-id="8">Going Advanced</option><option value="719" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Advanced Cov</option><option value="725" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Advanced Cov Plus Sport</option><option value="82" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Basic</option><option value="716" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Basic Cov</option><option value="713" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Basic Cov plus sport</option><option value="1086" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Basic L</option><option value="205" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Premium</option><option value="731" data-duration="" data-promo-start="" data-toshow="" data-promo-end="">Going Premium Cov</option><option value="1093" data-duration="" data-promo-start="" data-toshow="passport_expiry:M,nationality:M" data-promo-end="">Inbound Qatar Compulsory</option></select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="3" style="width: 419.801px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-plan-container"><span class="select2-selection__rendered" id="select2-plan-container" role="textbox" aria-readonly="true" title="Going Advanced">Going Advanced</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear" style="display: block;"><i class="fas fa-times text-danger"></i></span></span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Country Of Residence</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 float-end">
-                                                        <label>Email</label>
-                                                        <div class="input-group mb-2">
-                                                            <span class="input-group-text get-email" style="cursor:pointer;"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="product_id">Product <span class="text-danger">*</span></label>
 
-                                                            <input type="email" id="email" class="form-control" value="" name="email" data-validation="email">
-                                                        </div>
+														<select class="form-control isselect2 trgrthis" id="product_id" name="product_id">
+															<option value="">Select Product</option>
+															@*@foreach (var thislist in filldata.loadedData.products)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}*@
+														</select>
+													</div>
+												</div>
 
-                                                        <div class="form-group mt-2">
-                                                            <label>Phone Number</label>
-                                                            <span id="valid-msg" class="hide"><i class="fas fa-check text-success"></i></span>
-                                                            <div>
-                                                                <span id="error-msg" class="hide"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group mt-2">
-                                                            <!--<label>&nbsp;</label>-->
-                                                            <button type="button" class="btn btn-sm form-control btn-secondary add-phonenumber"> <i class="fa fa-plus" aria-hidden="true"></i> Add Phone </button>
-                                                        </div>
-                                                        <div class="form-group mt-4">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-sm table-bordered table-phonenumber mt-3" style="">
-                                                                    <tbody>
-                                                                        <tr class="thead-light">
-                                                                            <th>Phone Number</th>
-                                                                            <th></th>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                    <tbody class="phonenumber-list">
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" value="" name="address">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="notes">Notes</label>
-                                                            <textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mt-4" data-select2-id="16">
-                                <div class="card-body" data-select2-id="15">
-                                    <div class="row" data-select2-id="14">
-                                        <div class="col-md-12" data-select2-id="13">
-                                            <div class="form-group" data-select2-id="12">
-                                                <h3>Travel</h3><hr>
-                                                <div class="row" data-select2-id="11">
-                                                    <div class="col-md-5" data-select2-id="318">
-                                                        <div class="row" data-select2-id="317">
-                                                            <div class="form-group col-md-12">
-                                                                <label>Destination(s)</label>
-                                                                <select name="destination[]" id="destination" class="form-control select2 noselectall closeeverytime select2-hidden-accessible" multiple="" data-old="" data-select2-id="destination" tabindex="-1" aria-hidden="true"><option value="AAA" data-select2-id="26">Worldwide excluding country of residence</option><option value="ABW" data-select2-id="27">Aruba</option><option value="AFG" data-select2-id="28">Afghanistan</option><option value="AFRICA" data-select2-id="29">Africa</option><option value="AGO" data-select2-id="30">Angola</option><option value="AIA" data-select2-id="31">Anguilla</option><option value="ALA" data-select2-id="32">Åland Islands</option><option value="ALB" data-select2-id="33">Albania</option><option value="AND" data-select2-id="34">Andorra</option><option value="ANT" data-select2-id="35">Netherlands Antilles</option><option value="ARE" data-select2-id="36">United Arab Emirates</option><option value="ARG" data-select2-id="37">Argentina</option><option value="ARM" data-select2-id="38">Armenia</option><option value="ASEXC" data-select2-id="39">Asia (excluding Japan)</option><option value="ASM" data-select2-id="40">American Samoa</option><option value="ATA" data-select2-id="41">Antarctica</option><option value="ATF" data-select2-id="42">French Southern Territories</option><option value="ATG" data-select2-id="43">Antigua and Barbuda</option><option value="AUS" data-select2-id="44">Australia</option><option value="AUSC" data-select2-id="45">Austria-Schengen</option><option value="AUT" data-select2-id="46">Austria</option><option value="AZE" data-select2-id="47">Azerbaijan</option><option value="BDI" data-select2-id="48">Burundi</option><option value="BEL" data-select2-id="49">Belgium</option><option value="BEL_SH" data-select2-id="50">BELGIUM_Schengen</option><option value="BEN" data-select2-id="51">Benin</option><option value="BFA" data-select2-id="52">Burkina Faso</option><option value="BGD" data-select2-id="53">Bangladesh</option><option value="BGR" data-select2-id="54">Bulgaria</option><option value="BHR" data-select2-id="55">Bahrain</option><option value="BHS" data-select2-id="56">Bahamas</option><option value="BIH" data-select2-id="57">Bosnia and Herzegovina</option><option value="BLM" data-select2-id="58">Saint Barthélemy</option><option value="BLR" data-select2-id="59">Belarus</option><option value="BLZ" data-select2-id="60">Belize</option><option value="BMU" data-select2-id="61">Bermuda</option><option value="BOL" data-select2-id="62">Bolivia</option><option value="BRA" data-select2-id="63">Brazil</option><option value="BRB" data-select2-id="64">Barbados</option><option value="BRN" data-select2-id="65">Brunei Darussalam</option><option value="BTN" data-select2-id="66">Bhutan</option><option value="BVT" data-select2-id="67">Bouvet Island</option><option value="BWA" data-select2-id="68">Botswana</option><option value="CAF" data-select2-id="69">Central African</option><option value="CAN" data-select2-id="70">Canada</option><option value="CAR" data-select2-id="71">Central Africian Republic</option><option value="CARR" data-select2-id="72">The Caribbean</option><option value="CCK" data-select2-id="73">Cocos (Keeling) Islands</option><option value="CENAM" data-select2-id="74">Central America</option><option value="CHE" data-select2-id="75">Switzerland</option><option value="CHL" data-select2-id="76">Chile</option><option value="CHN" data-select2-id="77">China</option><option value="CIV" data-select2-id="78">Ivory Coast</option><option value="CMR" data-select2-id="79">Cameroon</option><option value="COD" data-select2-id="80">The Democratic Republic Of The Congo</option><option value="COG" data-select2-id="81">Congo Brazaville</option><option value="COK" data-select2-id="82">Cook Islands</option><option value="COL" data-select2-id="83">Colombia</option><option value="COM" data-select2-id="84">Comoros</option><option value="CPV" data-select2-id="85">Cape Verde</option><option value="CRI" data-select2-id="86">Costa Rica</option><option value="CU-NA" data-select2-id="87">CURAÇAO</option><option value="CXR" data-select2-id="88">Christmas Island</option><option value="CYM" data-select2-id="89">Cayman Islands</option><option value="CYP" data-select2-id="90">Cyprus</option><option value="CZE" data-select2-id="91">Czech Republic</option><option value="CZE_SH" data-select2-id="92">CZECHIA_Schengen</option><option value="DEN_SH" data-select2-id="93">DENMARK_Schengen</option><option value="DEU" data-select2-id="94">Germany</option><option value="DJI" data-select2-id="95">Djibouti</option><option value="DMA" data-select2-id="96">Dominica</option><option value="DNK" data-select2-id="97">Denmark</option><option value="DOM" data-select2-id="98">Dominican Republic</option><option value="DZA" data-select2-id="99">Algeria</option><option value="ECU" data-select2-id="100">Ecuador</option><option value="EGY" data-select2-id="101">Egypt</option><option value="ERI" data-select2-id="102">Eritrea</option><option value="ESH" data-select2-id="103">Western Sahara</option><option value="ESP" data-select2-id="104">Spain</option><option value="EST" data-select2-id="105">Estonia</option><option value="EST-SCH" data-select2-id="106">Estonia-Schengen</option><option value="ESW" data-select2-id="107">Eswatini</option><option value="ETH" data-select2-id="108">Ethiopia</option><option value="EUR" data-select2-id="109">Europe-Schengen</option><option value="EURO" data-select2-id="110">Europe</option><option value="FIN" data-select2-id="111">Finland</option><option value="FIN_SC" data-select2-id="112">Finland_schengen</option><option value="FJI" data-select2-id="113">Fiji</option><option value="FLK" data-select2-id="114">Falkland Islands</option><option value="FR" data-select2-id="115">France - Schengen</option><option value="FRA" data-select2-id="116">France</option><option value="FRO" data-select2-id="117">Faroe Islands</option><option value="FSM" data-select2-id="118">Federated States of Micronesia</option><option value="GAB" data-select2-id="119">Gabon</option><option value="GBR" data-select2-id="120">United Kingdom of Great Britain and Northern Ireland</option><option value="GEO" data-select2-id="121">Georgia</option><option value="GE_SH" data-select2-id="122">GERMANY - Schengen</option><option value="GGY" data-select2-id="123">Guernsey</option><option value="GHA" data-select2-id="124">Ghana</option><option value="GIB" data-select2-id="125">Gibraltar</option><option value="GIN" data-select2-id="126">Guinea</option><option value="GLP" data-select2-id="127">Guadeloupe</option><option value="GMB" data-select2-id="128">Gambia</option><option value="GNB" data-select2-id="129">Guinea-Bissau</option><option value="GNQ" data-select2-id="130">Equatorial Guinea</option><option value="GRC" data-select2-id="131">Greece</option><option value="GRD" data-select2-id="132">Grenada</option><option value="GREE_SH" data-select2-id="133">GREECE - Schengen</option><option value="GRL" data-select2-id="134">Greenland</option><option value="GTM" data-select2-id="135">Guatemala</option><option value="GUF" data-select2-id="136">French Guiana</option><option value="GUM" data-select2-id="137">Guam</option><option value="GUY" data-select2-id="138">Guyana</option><option value="HKG" data-select2-id="139">Hong Kong</option><option value="HMD" data-select2-id="140">Heard Island and McDonald Islands</option><option value="HND" data-select2-id="141">Honduras</option><option value="HRV" data-select2-id="142">Croatia</option><option value="HTI" data-select2-id="143">Haiti</option><option value="HUN" data-select2-id="144">Hungary</option><option value="HUN_SH" data-select2-id="145">HUNGARY - Schengen</option><option value="ICE_SH" data-select2-id="146">ICELAND - Schengen</option><option value="IDN" data-select2-id="147">Indonesia</option><option value="IMN" data-select2-id="148">Isle of Man</option><option value="IND" data-select2-id="149">India</option><option value="IOT" data-select2-id="150">British Indian Ocean Territory</option><option value="IRL" data-select2-id="151">Ireland</option><option value="IRQ" data-select2-id="152">Iraq</option><option value="ISL" data-select2-id="153">Iceland</option><option value="ISR" data-select2-id="154">Israel</option><option value="ITA" data-select2-id="155">Italy</option><option value="IT_SH" data-select2-id="156">ITALY - Schengen</option><option value="JAM" data-select2-id="157">Jamaica</option><option value="JEY" data-select2-id="158">Jersey</option><option value="JOR" data-select2-id="159">Jordan</option><option value="JPN" data-select2-id="160">Japan</option><option value="KAZ" data-select2-id="161">Kazakhstan</option><option value="KEN" data-select2-id="162">Kenya</option><option value="KGZ" data-select2-id="163">Kyrgyzstan</option><option value="KHM" data-select2-id="164">Cambodia</option><option value="KIR" data-select2-id="165">Kiribati</option><option value="KNA" data-select2-id="166">Saint Kitts and Nevis</option><option value="KOR" data-select2-id="167">Republic of Korea</option><option value="KSV" data-select2-id="168">Kosovo</option><option value="KWT" data-select2-id="169">Kuwait</option><option value="LAO" data-select2-id="170">Lao People's Democratic Republic</option><option value="LAT_SH" data-select2-id="171">LATVIA_Schengen</option><option value="LBN" data-select2-id="172">Lebanon</option><option value="LBR" data-select2-id="173">Liberia</option><option value="LBY" data-select2-id="174">Libyan Arab Jamahiriya</option><option value="LCA" data-select2-id="175">Saint Lucia</option><option value="LIE" data-select2-id="176">Liechtenstein</option><option value="LIE_SH" data-select2-id="177">LIECHTENSTEIN - Schengen</option><option value="LITH_SH" data-select2-id="178">LITHUANIA - Schengen</option><option value="LKA" data-select2-id="179">Sri Lanka</option><option value="LSO" data-select2-id="180">Lesotho</option><option value="LTU" data-select2-id="181">Lithuania</option><option value="LUX" data-select2-id="182">Luxembourg</option><option value="LUX_SH" data-select2-id="183">LUXEMBOURG - Schengen</option><option value="LVA" data-select2-id="184">Latvia</option><option value="MAC" data-select2-id="185">Macao</option><option value="MAF" data-select2-id="186">Saint Martin</option><option value="MAR" data-select2-id="187">Morocco</option><option value="MA_SH" data-select2-id="188">MALTA - Schengen</option><option value="MCO" data-select2-id="189">Monaco</option><option value="MDA" data-select2-id="190">Republic of Moldova</option><option value="MDG" data-select2-id="191">Madagascar</option><option value="MDV" data-select2-id="192">Maldives</option><option value="MENA" data-select2-id="193">Middle East and North Africa</option><option value="MEX" data-select2-id="194">Mexico</option><option value="MHL" data-select2-id="195">Marshall Islands</option><option value="MKD" data-select2-id="196">The Former Yugoslav Republic of Macedonia</option><option value="MLI" data-select2-id="197">Mali</option><option value="MLT" data-select2-id="198">Malta</option><option value="MMR" data-select2-id="199">Myanmar</option><option value="MNE" data-select2-id="200">Montenegro</option><option value="MNG" data-select2-id="201">Mongolia</option><option value="MNP" data-select2-id="202">Northern Mariana Islands</option><option value="MOZ" data-select2-id="203">Mozambique</option><option value="MRT" data-select2-id="204">Mauritania</option><option value="MSR" data-select2-id="205">Montserrat</option><option value="MTQ" data-select2-id="206">Martinique</option><option value="MUS" data-select2-id="207">Mauritius</option><option value="MWI" data-select2-id="208">Malawi</option><option value="MYS" data-select2-id="209">Malaysia</option><option value="MYT" data-select2-id="210">Mayotte</option><option value="NAM" data-select2-id="211">Namibia</option><option value="NCL" data-select2-id="212">New Caledonia</option><option value="NER" data-select2-id="213">Niger</option><option value="NETH_SH" data-select2-id="214">NETHERLANDS - Schengen</option><option value="NFK" data-select2-id="215">Norfolk Island</option><option value="NGA" data-select2-id="216">Nigeria</option><option value="NIC" data-select2-id="217">Nicaragua</option><option value="NIU" data-select2-id="218">Niue</option><option value="NLD" data-select2-id="219">Netherlands</option><option value="NOR" data-select2-id="220">Norway</option><option value="NO_SH" data-select2-id="221">NORWAY - Schengen</option><option value="NPL" data-select2-id="222">Nepal</option><option value="NRU" data-select2-id="223">Nauru</option><option value="NZL" data-select2-id="224">New Zealand</option><option value="OMN" data-select2-id="225">Oman</option><option value="PAK" data-select2-id="226">Pakistan</option><option value="PAN" data-select2-id="227">Panama</option><option value="PCN" data-select2-id="228">Pitcairn</option><option value="PER" data-select2-id="229">Peru</option><option value="PHL" data-select2-id="230">Philippines</option><option value="PLW" data-select2-id="231">Palau</option><option value="PNG" data-select2-id="232">Papua New Guinea</option><option value="POL" data-select2-id="233">Poland</option><option value="POR_SH" data-select2-id="234">PORTUGAL - Schengen</option><option value="PO_SH" data-select2-id="235">POLAND - Schengen</option><option value="PRI" data-select2-id="236">Puerto Rico</option><option value="PRT" data-select2-id="237">Portugal</option><option value="PRY" data-select2-id="238">Paraguay</option><option value="PSE" data-select2-id="239">Occupied Palestinian Territory</option><option value="PYF" data-select2-id="240">French Polynesia</option><option value="QAT" data-select2-id="241">Qatar</option><option value="REU" data-select2-id="242">Réunion</option><option value="RI" data-select2-id="243">Reunion Island</option><option value="ROU" data-select2-id="244">Romania</option><option value="RUS" data-select2-id="245">Russian Federation</option><option value="RWA" data-select2-id="246">Rwanda</option><option value="SAU" data-select2-id="247">Saudi Arabia</option><option value="SCH" data-select2-id="248">Schengen</option><option value="SDN" data-select2-id="249">Sudan</option><option value="SEN" data-select2-id="250">Senegal</option><option value="SGP" data-select2-id="251">Singapore</option><option value="SGS" data-select2-id="252">South Georgia and the South Sandwich Islands</option><option value="SHN" data-select2-id="253">Saint Helena</option><option value="SJM" data-select2-id="254">Svalbard and Jan Mayen</option><option value="SLB" data-select2-id="255">Solomon Islands</option><option value="SLE" data-select2-id="256">Sierra Leone</option><option value="SLOVA_SH" data-select2-id="257">SLOVAKIA - Schengen</option><option value="SLOVE_SH" data-select2-id="258">SLOVENIA - Schengen</option><option value="SLV" data-select2-id="259">El Salvador</option><option value="SMR" data-select2-id="260">San Marino</option><option value="SOM" data-select2-id="261">Somalia</option><option value="SPA_SH" data-select2-id="262">SPAIN - Schengen</option><option value="SPM" data-select2-id="263">Saint-Pierre and Miquelon</option><option value="SRB" data-select2-id="264">Serbia</option><option value="SSD" data-select2-id="265">South Sudan</option><option value="STP" data-select2-id="266">Sao Tome and Principe</option><option value="SUR" data-select2-id="267">Suriname</option><option value="SVK" data-select2-id="268">Slovakia</option><option value="SVN" data-select2-id="269">Slovenia</option><option value="SWE" data-select2-id="270">Sweden</option><option value="SWE_SH" data-select2-id="271">SWEDEN - Schengen</option><option value="SWI_SH" data-select2-id="272">SWITZERLAND - Schengen</option><option value="SWZ" data-select2-id="273">Swaziland</option><option value="SYC" data-select2-id="274">Seychelles</option><option value="SYR" data-select2-id="275">Syrian Arab Republic</option><option value="S_AM" data-select2-id="276">South America</option><option value="TCA" data-select2-id="277">Turks and Caicos Islands</option><option value="TCD" data-select2-id="278">Chad</option><option value="TGO" data-select2-id="279">Togo</option><option value="THA" data-select2-id="280">Thailand</option><option value="TJK" data-select2-id="281">Tajikistan</option><option value="TKL" data-select2-id="282">Tokelau</option><option value="TKM" data-select2-id="283">Turkmenistannn</option><option value="TLS" data-select2-id="284">Timor-Leste</option><option value="TON" data-select2-id="285">Tonga</option><option value="TTO" data-select2-id="286">Trinidad and Tobago</option><option value="TUN" data-select2-id="287">Tunisia</option><option value="TUR" data-select2-id="288">Turkey</option><option value="TUV" data-select2-id="289">Tuvalu</option><option value="TWN" data-select2-id="290">Taiwan</option><option value="TZA" data-select2-id="291">United Republic Of Tanzania</option><option value="UGA" data-select2-id="292">Uganda</option><option value="UK" data-select2-id="293">United Kingdom</option><option value="UKR" data-select2-id="294">Ukraine</option><option value="UMI" data-select2-id="295">United States Minor Outlying Islands</option><option value="URY" data-select2-id="296">Uruguay</option><option value="USA" data-select2-id="297">United States of America</option><option value="UZB" data-select2-id="298">Uzbekistan</option><option value="VAT" data-select2-id="299">Vatican City State</option><option value="VCT" data-select2-id="300">Saint Vincent and the Grenadines</option><option value="VEN" data-select2-id="301">Venezuela</option><option value="VGB" data-select2-id="302">British Virgin Islands</option><option value="VIR" data-select2-id="303">U.S. Virgin Islands</option><option value="VNM" data-select2-id="304">Vietnam</option><option value="VUT" data-select2-id="305">Vanuatu</option><option value="WELUCAJP" data-select2-id="306">Worldwide excluding LB, US, CA, AU, JP</option><option value="WIUAJ" data-select2-id="307">Worldwide including US, CA, AU, JP (excluding residence)</option><option value="WLF" data-select2-id="308">Wallis and Futuna</option><option value="WSM" data-select2-id="309">Samoa</option><option value="WWE" data-select2-id="310">Worldwide excluding US, CA, AU, JP</option><option value="WWWW" data-select2-id="311">Worldwide</option><option value="ZAF" data-select2-id="312">South Africa</option><option value="ZMB" data-select2-id="313">Zambia</option><option value="ZWE" data-select2-id="314">Zimbabwe</option></select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="5" style="width: 346.335px;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear" style="display: block;"><i class="fas fa-times text-danger"></i></span></span>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label>From</label>
-                                                                <input type="text" id="from" class="form-control datepickermonth" name="from" value="">
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label>To</label>
-                                                                <input type="text" id="to" class="form-control datepickermonth" name="to" value="">
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label>Duration</label>
-                                                                <input type="number" step="1" min="1" id="duration" class="form-control" name="duration" value="">
-                                                            </div>
-                                                            <div class="form-group col-md-12 mt-3">
-                                                                <button type="button" class="btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <div class="form-group">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-sm table-bordered table-travel mt-3">
-                                                                    <tbody>
-                                                                        <tr class="thead-light">
-                                                                            <th>Destination(s)</th>
-                                                                            <th>From</th>
-                                                                            <th>To</th>
-                                                                            <th>Duration</th>
-                                                                            <th style="width:90px;" data-orderable="false">Actions</th>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                    <tbody class="travel-list small">
-                                                                        <tr><td>Worldwide excluding country of residence<br><input type="hidden" name="travel_destination[]" value="AAA"><input type="hidden" name="tdestination[]" value="Worldwide excluding country of residence<br>"></td><td>13-06-2023<input type="hidden" name="travel_from[]" value="13-06-2023"></td><td>29-06-2023<input type="hidden" class="to-date" name="travel_to[]" value="29-06-2023"></td><td>17<input type="hidden" name="travel_duration[]" value="17"></td><td><i class="fa fa-trash text-danger delete-travel" aria-hidden="true"></i></td></tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mt-4">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <h3>Beneficiary</h3><hr>
-                                                <div class="row">
-                                                    <div class="col-md-6 typeradio">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="we-checkbox">
-                                                                    <input type="radio" id="typesg" name="type" value="SG" checked="">
-                                                                    <label for="typesg">Single</label>
-                                                                    <i class="fa fa-question-circle"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4 family" style="">
-                                                                <div class="we-checkbox">
-                                                                    <input type="radio" id="typefm" name="type" value="FM">
-                                                                    <label for="typefm">Family</label>
-                                                                    <i class="fa fa-question-circle"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4 group" style="">
-                                                                <div class="we-checkbox">
-                                                                    <input type="radio" id="typegr" name="type" value="GR">
-                                                                    <label for="typegr">Group</label>
-                                                                    <i class="fa fa-question-circle"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row mt-3">
-                                                            <div class="form-group col-md-6">
-                                                                <input id="search" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
-                                                            </div>
-                                                            <div class="form-group col-md-6 xlsxupload" style="display: none;">
-                                                                <a  class="text-danger" style="font-size: 12px;">Sample File</a>
-                                                                <span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
-                                                                <div class="row">
-                                                                    <div class="col-md-2">
-                                                                        <div class="we-checkbox">
-                                                                            <input type="radio" id="male" name="sgender" value="M" checked="checked">
-                                                                            <label for="male">Male</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <div class="we-checkbox">
-                                                                            <input type="radio" id="female" name="sgender" value="F">
-                                                                            <label for="female">Female</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="form-group col-md-3">
-                                                                <label>First Name <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control first_name" value="" name="first_name">
-                                                            </div>
-                                                            <div class="form-group col-md-3">
-                                                                <label>Middle Name</label>
-                                                                <input type="text" class="form-control middle_name" value="" name="middle_name">
-                                                            </div>
-                                                            <div class="form-group col-md-3 maiden-field" style="display: none;">
-                                                                <label>Maiden Name</label>
-                                                                <input type="text" class="form-control maiden_name" value="" name="maiden_name">
-                                                            </div>
-                                                            <div class="form-group col-md-3">
-                                                                <label>Last Name <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control last_name" value="" name="last_name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="form-group col-md-3 passport_no_form">
-                                                                <label>Passport No. <span class="isrequired text-danger" style="display:none">*</span></label>
-                                                                <input type="text" class="form-control passport_no" value="" name="passport_no">
-                                                            </div>
-                                                            <div class="form-group col-md-3">
-                                                                <label>Date Of Birth <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth">
-                                                            </div>
-                                                            <div class="form-group col-md-3 passport_expiry_form" style="display: none">
-                                                                <label>Passport Expiry Date <span class="isrequired text-danger" style="display:none">*</span></label>
-                                                                <input type="text" class="form-control datepicker passport_expiry" value="" name="passport_expiry" id="passport_expiry" extra-field-validation="">
-                                                            </div>
-                                                            <div class="form-group col-md-3 nationality_form" style="display: none">
-                                                                <label>Nationality <span class="isrequired text-danger" style="display:none">*</span></label>
-                                                                <select class="form-control select2 nationality select2-hidden-accessible" name="nationality" id="nationality" data-select2-id="nationality" tabindex="-1" aria-hidden="true" extra-field-validation="">
-                                                                    <option value="" data-select2-id="7"></option>
-                                                                    <option value="AFG"> Afghanistan</option>
-                                                                    <option value="ALB"> Albania</option>
-                                                                    <option value="DZA"> Algeria</option>
-                                                                    <option value="AGO"> Angola</option>
-                                                                    <option value="ATG"> Antigua and Barbuda</option>
-                                                                    <option value="AZE"> Azerbaijan</option>
-                                                                    <option value="ARG"> Argentina</option>
-                                                                    <option value="BHS"> Bahamas</option>
-                                                                    <option value="BHR"> Bahrain</option>
-                                                                    <option value="BGD"> Bangladesh</option>
-                                                                    <option value="ARM"> Armenia</option>
-                                                                    <option value="BRB"> Barbados</option>
-                                                                    <option value="BMU"> Bermuda</option>
-                                                                    <option value="BTN"> Bhutan</option>
-                                                                    <option value="BOL"> Bolivia</option>
-                                                                    <option value="BIH"> Bosnia and Herzegovina</option>
-                                                                    <option value="BWA"> Botswana</option>
-                                                                    <option value="BRA"> Brazil</option>
-                                                                    <option value="BLZ"> Belize</option>
-                                                                    <option value="BRN"> Brunei Darussalam</option>
-                                                                    <option value="BGR"> Bulgaria</option>
-                                                                    <option value="MMR"> Myanmar</option>
-                                                                    <option value="BDI"> Burundi</option>
-                                                                    <option value="BLR"> Belarus</option>
-                                                                    <option value="KHM"> Cambodia</option>
-                                                                    <option value="CMR"> Cameroon</option>
-                                                                    <option value="CAN"> Canada</option>
-                                                                    <option value="CPV"> Cape Verde</option>
-                                                                    <option value="CYM"> Cayman Islands</option>
-                                                                    <option value="CAF"> Central African</option>
-                                                                    <option value="LKA"> Sri Lanka</option>
-                                                                    <option value="TCD"> Chad</option>
-                                                                    <option value="CHL"> Chile</option>
-                                                                    <option value="CHN"> China</option>
-                                                                    <option value="TWN"> Taiwan</option>
-                                                                    <option value="COL"> Colombia</option>
-                                                                    <option value="COM"> Comoros</option>
-                                                                    <option value="COG"> Congo Brazaville</option>
-                                                                    <option value="COD"> The Democratic Republic Of The Congo</option>
-                                                                    <option value="CRI"> Costa Rica</option>
-                                                                    <option value="HRV"> Croatia</option>
-                                                                    <option value="CUB"> Cuba</option>
-                                                                    <option value="CYP"> Cyprus</option>
-                                                                    <option value="BEN"> Benin</option>
-                                                                    <option value="DMA"> Dominica</option>
-                                                                    <option value="DOM"> Dominican Republic</option>
-                                                                    <option value="ECU"> Ecuador</option>
-                                                                    <option value="SLV"> El Salvador</option>
-                                                                    <option value="GNQ"> Equatorial Guinea</option>
-                                                                    <option value="ETH"> Ethiopia</option>
-                                                                    <option value="ERI"> Eritrea</option>
-                                                                    <option value="EST"> Estonia</option>
-                                                                    <option value="FJI"> Fiji</option>
-                                                                    <option value="DJI"> Djibouti</option>
-                                                                    <option value="GAB"> Gabon</option>
-                                                                    <option value="GEO"> Georgia</option>
-                                                                    <option value="GMB"> Gambia</option>
-                                                                    <option value="DEU"> Germany</option>
-                                                                    <option value="GHA"> Ghana</option>
-                                                                    <option value="GRC"> Greece</option>
-                                                                    <option value="GRD"> Grenada</option>
-                                                                    <option value="GTM"> Guatemala</option>
-                                                                    <option value="GIN"> Guinea</option>
-                                                                    <option value="GUY"> Guyana</option>
-                                                                    <option value="HTI"> Haiti</option>
-                                                                    <option value="VAT"> Vatican City State</option>
-                                                                    <option value="HND"> Honduras</option>
-                                                                    <option value="HKG"> Hong Kong</option>
-                                                                    <option value="IND"> India</option>
-                                                                    <option value="IDN"> Indonesia</option>
-                                                                    <option value="IRN"> Islamic Republic of Iran</option>
-                                                                    <option value="IRQ"> Iraq</option>
-                                                                    <option value="IRL"> Ireland</option>
-                                                                    <option value="ISR"> Israel</option>
-                                                                    <option value="CIV"> Ivory Coast</option>
-                                                                    <option value="JAM"> Jamaica</option>
-                                                                    <option value="JPN"> Japan</option>
-                                                                    <option value="KAZ"> Kazakhstan</option>
-                                                                    <option value="JOR"> Jordan</option>
-                                                                    <option value="KEN"> Kenya</option>
-                                                                    <option value="KOR"> Republic of Korea</option>
-                                                                    <option value="KWT"> Kuwait</option>
-                                                                    <option value="KGZ"> Kyrgyzstan</option>
-                                                                    <option value="LAO"> Lao People's Democratic Republic</option>
-                                                                    <option value="LBN"> Lebanon</option>
-                                                                    <option value="LSO"> Lesotho</option>
-                                                                    <option value="LBR"> Liberia</option>
-                                                                    <option value="LBY"> Libyan Arab Jamahiriya</option>
-                                                                    <option value="MAC"> Macao</option>
-                                                                    <option value="MDG"> Madagascar</option>
-                                                                    <option value="MWI"> Malawi</option>
-                                                                    <option value="MYS"> Malaysia</option>
-                                                                    <option value="MDV"> Maldives</option>
-                                                                    <option value="MLI"> Mali</option>
-                                                                    <option value="MRT"> Mauritania</option>
-                                                                    <option value="MUS"> Mauritius</option>
-                                                                    <option value="MEX"> Mexico</option>
-                                                                    <option value="MNG"> Mongolia</option>
-                                                                    <option value="MDA"> Republic of Moldova</option>
-                                                                    <option value="MAR"> Morocco</option>
-                                                                    <option value="MOZ"> Mozambique</option>
-                                                                    <option value="OMN"> Oman</option>
-                                                                    <option value="NAM"> Namibia</option>
-                                                                    <option value="NPL"> Nepal</option>
-                                                                    <option value="ANT"> Netherlands Antilles</option>
-                                                                    <option value="VUT"> Vanuatu</option>
-                                                                    <option value="NZL"> New Zealand</option>
-                                                                    <option value="NIC"> Nicaragua</option>
-                                                                    <option value="NER"> Niger</option>
-                                                                    <option value="NGA"> Nigeria</option>
-                                                                    <option value="PAK"> Pakistan</option>
-                                                                    <option value="PAN"> Panama</option>
-                                                                    <option value="PNG"> Papua New Guinea</option>
-                                                                    <option value="PRY"> Paraguay</option>
-                                                                    <option value="PER"> Peru</option>
-                                                                    <option value="PHL"> Philippines</option>
-                                                                    <option value="GNB"> Guinea-Bissau</option>
-                                                                    <option value="QAT"> Qatar</option>
-                                                                    <option value="ROU"> Romania</option>
-                                                                    <option value="RUS"> Russian Federation</option>
-                                                                    <option value="RWA"> Rwanda</option>
-                                                                    <option value="KNA"> Saint Kitts and Nevis</option>
-                                                                    <option value="LCA"> Saint Lucia</option>
-                                                                    <option value="SAU"> Saudi Arabia</option>
-                                                                    <option value="SEN"> Senegal</option>
-                                                                    <option value="SYC"> Seychelles</option>
-                                                                    <option value="SLE"> Sierra Leone</option>
-                                                                    <option value="SGP"> Singapore</option>
-                                                                    <option value="VNM"> Vietnam</option>
-                                                                    <option value="SOM"> Somalia</option>
-                                                                    <option value="ZAF"> South Africa</option>
-                                                                    <option value="ZWE"> Zimbabwe</option>
-                                                                    <option value="SDN"> Sudan</option>
-                                                                    <option value="SUR"> Suriname</option>
-                                                                    <option value="SWZ"> Swaziland</option>
-                                                                    <option value="SYR"> Syrian Arab Republic</option>
-                                                                    <option value="TJK"> Tajikistan</option>
-                                                                    <option value="THA"> Thailand</option>
-                                                                    <option value="TGO"> Togo</option>
-                                                                    <option value="TON"> Tonga</option>
-                                                                    <option value="TTO"> Trinidad and Tobago</option>
-                                                                    <option value="ARE"> United Arab Emirates</option>
-                                                                    <option value="TUN"> Tunisia</option>
-                                                                    <option value="TUR"> Turkey</option>
-                                                                    <option value="TKM"> Turkmenistannn</option>
-                                                                    <option value="UGA"> Uganda</option>
-                                                                    <option value="UKR"> Ukraine</option>
-                                                                    <option value="MKD"> The Former Yugoslav Republic of Macedonia</option>
-                                                                    <option value="EGY"> Egypt</option>
-                                                                    <option value="GBR"> United Kingdom of Great Britain and Northern Ireland</option>
-                                                                    <option value="TZA"> United Republic Of Tanzania</option>
-                                                                    <option value="USA"> United States of America</option>
-                                                                    <option value="BFA"> Burkina Faso</option>
-                                                                    <option value="URY"> Uruguay</option>
-                                                                    <option value="UZB"> Uzbekistan</option>
-                                                                    <option value="VEN"> Venezuela</option>
-                                                                    <option value="YEM"> Yemen</option>
-                                                                    <option value="MNE"> Montenegro</option>
-                                                                    <option value="ZMB"> Zambia</option>
-                                                                    <option value="LIE"> Liechtenstein</option>
-                                                                    <option value="SRB"> Serbia</option>
-                                                                    <option value="DNK"> Denmark</option>
-                                                                    <option value="FRA"> France</option>
-                                                                    <option value="BEL"> Belgium</option>
-                                                                    <option value="CZE"> Czech Republic</option>
-                                                                    <option value="FIN"> Finland</option>
-                                                                    <option value="HUN"> Hungary</option>
-                                                                    <option value="ISL"> Iceland</option>
-                                                                    <option value="NOR"> Norway</option>
-                                                                    <option value="POL"> Poland</option>
-                                                                    <option value="SVK"> Slovakia</option>
-                                                                    <option value="SWE"> Sweden</option>
-                                                                    <option value="LUX"> Luxembourg</option>
-                                                                    <option value="PAL"> Palestine</option>
-                                                                    <option value="SSD"> South Sudan</option>
-                                                                    <option value="UK"> United Kingdom</option>
-                                                                    <option value="KSV"> Kosovo</option>
-                                                                    <option value="CHE"> Switzerland</option>
-                                                                    <option value="AUS"> Australia</option>
-                                                                    <option value="PRT"> Portugal</option>
-                                                                    <option value="SVN"> Slovenia</option>
-                                                                    <option value="ESP"> Spain</option>
-                                                                    <option value="ITA"> Italy</option>
-                                                                    <option value="MLT"> Malta</option>
-                                                                    <option value="NLD"> Netherlands</option>
-                                                                    <option value="AUT"> Austria</option>
-                                                                    <option value="LVA"> Latvia</option>
-                                                                    <option value="LTU"> Lithuania</option>
-                                                                </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-nationality-container"><span class="select2-selection__rendered" id="select2-nationality-container" role="textbox" aria-readonly="true"></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span><span class="select2-clear"><i class="fas fa-times text-danger"></i></span></span>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="zone_id">Zone <span class="text-danger">*</span></label>
+														<select class="form-control isselect2 trgrthis" id="zone_id" name="zone_id">
+															<option value="">Select Zone</option>
+															@*@foreach (var thislist in filldata.loadedData.zones)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}*@
+														</select>
+													</div>
+												</div>
+											</div>
+											@*<div class="row">
+													<div class="col-md-8">
+														<div class="form-group">
+															<label for="notes">Notes</label>
+															<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
+														</div>
+													</div>
+												</div>*@
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                                                            </div>
-                                                            <div class="form-group col-md-3 div-beneficiary" style="display:none;">
-                                                                <label>&nbsp;</label>
-                                                                <div class="btn btn-md btn-warning btn-block text-left btn-beneficiary w-100" style="cursor:pointer;">
-                                                                    <i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-3 div-beneficiary-update" style="display:none;">
-                                                                <label>&nbsp;</label><br>
-                                                                <div class="btn btn-md btn-success text-left btn-ben-update" style="cursor:pointer;">
-                                                                    <i class="fa fa-check" aria-hidden="true"></i> Done
-                                                                </div>
-                                                                <div class="btn btn-md btn-danger text-left btn-ben-cancel" style="cursor:pointer;">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-3 div-riders" style="display:none;" data-bs-toggle="modal" data-bs-target="#riders">
-                                                                <label>&nbsp;</label>
-                                                                <div class="btn btn-md btn-warning btn-block text-left btn-riders w-100" style="cursor:pointer;">
-                                                                    <i class="fa fa-plus" aria-hidden="true"></i> Add Riders
-                                                                </div>
-                                                            </div>
-                                                            <div class="rider-plans col-12 col-md-8" style="display:none;">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-sm table-bordered mt-3">
-                                                                        <thead>
-                                                                            <tr class="thead-light">
-                                                                                <th>
-                                                                                    Name
-                                                                                    <input type="hidden" class="rider-field" name="rider" value="">
-                                                                                </th>
-                                                                                <th style="width: 125px;">Insured Value</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody></tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none">
-                                                                <tbody>
-                                                                    <tr class="thead-light">
-                                                                        <th>First Name</th>
-                                                                        <th>Last Name</th>
-                                                                        <th>Date Of Birth</th>
-                                                                        <th>Passport No.</th>
-                                                                        <th style="width:90px;" data-orderable="false">Actions<button type="button" class="btn btn-sm delete-beneficiaries"><i class="fas fa-trash"></i></button></th>
-                                                                    </tr>
-                                                                </tbody>
-                                                                <tbody class="beneficiary-list">
-                                                                </tbody>
-                                                            </table>
-                                                            <input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <a  class="btn btn-outline-dark" role="button">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mt-4  sticky-top" style="top:90px;">
-                                <div class="card-header text-center">
-                                    <h4>
-                                        Quotation
-                                        <div class="excess float-end d-none">
-                                            <div class="we-checkbox pt-2">
-                                                <input type="hidden" name="with_excess" value="0" id="with_excess">
-                                                <input type="checkbox" name="box-excess" value="1" id="box-excess">
-                                                <label for="box-excess" style="font-size: 14px; font-weight: 400; padding-top: 5px;">
-                                                    With Excess
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </h4>
-                                </div>
-                                <div class="card-body result">
-                                    <div class="card mt-2">
-                                        <div class="card-body" style="font-size:13px">
-                                            <div>
-                                                <b>Destination(s) </b>
-                                                <span class="float-end">
-                                                    Worldwide excluding country of residence,
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <b>Inception Date </b>
-                                                <span class="float-end">13-06-2023  </span>
-                                            </div>
-                                            <div>
-                                                <b>Expiry Date</b>
-                                                <span class="float-end">29-06-2023  </span>
-                                            </div>
-                                            <div>
-                                                <b>Plan </b>
-                                                <span class="float-end">
-                                                    Going Advanced
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <b>Duration </b>
-                                                <span class="float-end">17 Days </span>
-                                            </div>
-                                            <div>
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Beneficiaries</h3><hr>
+											<div class="row thisbeneficiary">
+												<div class="col-md-12">
+													<div class="row">
+														<div class="form-group col-md-6">
+															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
+															<div class="search-dropdown">
+																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+																<div id="searchDropdownContent" class="search-dropdown-content"></div>
+															</div>
+														</div>
 
-                                                <span class="float-end total_price" data-currency="USD"> </span>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-sm table-bordered mt-3">
-                                                    <tbody>
-                                                        <tr class="thead-light text-center">
-                                                            <th>Full Name</th>
-                                                            <th>Cons. / Cumul. Days</th>
-                                                            <th>Base Price</th>
-                                                            <th>Discount</th>
-                                                            <th>Final Price </th>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody class="quotation-list">
-                                                        <tr class="text-center">
-                                                            <td>
-                                                                Ahmad Faour
-                                                            </td>
-                                                            <td>
-                                                                21 - 0
-                                                                <input type="hidden" class="cum_con_days_in" name="plans_price[0][]" value="23790" data-deductible="0">
-                                                            </td>
-                                                            <td class="base_price" data-price="36.00">36.00 USD </td>
-                                                            <td class="discount" data-discount="0">
-                                                                0 %
-                                                                <input type="hidden" class="discount" name="plans_discount[0][]" value="0">
-                                                            </td>
-                                                            <td>
-                                                                <span class="final_price" data-price="36">
-                                                                    36 USD
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="plans_all[0]" value="88">
-                                    <div class="my-3" style="height: 32px;">
-                                        <div class="btn btn-warning float-end grand_total">36.00 USD</div>
-                                        <div class="btn btn-warning float-right mr-2">Grand Total</div>
-                                    </div><button type="submit" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- Modal for Riders -->
-                <div class="modal fade" id="riders">
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"> Rider Plan </h4>
-                                <button type="button" class="close btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr class="bg-warning">
-                                                <th></th>
-                                                <th>Name</th>
-                                                <th style="width: 125px;">Insured Value</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                                <div class="alert alert-danger error-msg" style="display:none;">Please enter Insured Value</div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-done" data-bs-dismiss1="modal">Done</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal for Group Beneficiaries upload -->
-                <div class="modal fade" id="benupload">
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"> Select File </h4>
-                                <button type="button" class="close btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="alert alert-danger error-msg" style="display:none;">Only xlsx file accepted. As in sample.</div>
-                                <div class="form-group col-md-12">
-                                    <input type="file" id="benxlsx" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-xlsx" data-bs-dismiss1="modal">Done</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+														<div class="form-group col-md-6 xlsxupload" style="display: none;">
+															<a class="text-danger" style="font-size: 12px;">Sample File</a>
+															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
+														</div>
+														<div class="form-group col-md-12">
+															<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
+															<div class="row">
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="male" name="sgender" value="M" checked="checked">
+																		<label for="male">Male</label>
+																	</div>
+																</div>
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="female" name="sgender" value="F">
+																		<label for="female">Female</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-4">
+															<label>First Name <span class="text-danger">*</span></label>
+															<input id="first_name" type="text" class="form-control first_name" value="" name="first_name" autocomplete="off" required>
+														</div>
+														<div class="form-group col-md-4">
+															<label>Middle Name</label>
+															<input type="text" class="form-control middle_name" value="" name="middle_name" autocomplete="off">
+														</div>
+														<div class="form-group col-md-4">
+															<label>Last Name <span class="text-danger">*</span></label>
+															<input id="last_name" type="text" class="form-control last_name" value="" name="last_name" autocomplete="off" required>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-4 passport_no_form">
+															<label>Passport No. <span class="isrequired text-danger">*</span></label>
+															<input id="passport_no" type="text" class="form-control passport_no" value="" name="passport_no" autocomplete="off" required>
+														</div>
+														<div class="form-group col-md-4">
+															<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+															<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+														</div>
 
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid" style="padding:10px 0" hidden>
-        <div class="row mb-3">
-            <div class="col-md-12 ">
-                <div class="card h-100 ">
-                    <div class="card-body">
-                        <h4 class="card-title ">
-                            <i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-                            @if (!isnew)
-                            {<span>Edit </span> }
-                            else
-                            { <span>New </span>}
+														<div class="form-group col-md-4 div-beneficiary ">
+															<label>&nbsp;</label>
+															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
+															</div>
+														</div>
+													</div>
+													<div class="table-responsive">
+														<table class="table table-sm table-bordered mt-3 beneficiary-table" style="display: none;">
+															<thead>
+																<tr class="thead-light">
+																	<th>First Name</th>
+																	<th>Last Name</th>
+																	<th>Date Of Birth</th>
+																	<th>Age</th>
+																	<th>Passport No.</th>
+																	<th>Sex</th>
+																	<th style="width:90px;" data-orderable="false">Actions</th>
+																</tr>
+															</thead>
+															<tbody class="beneficiary-list">
+															</tbody>
+														</table>
+														<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Travel Info</h3><hr>
 
-                        </h4>
-                        <hr />
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="form-group col-md-12">
+																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
+																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple disabled>
+																	@*<option value="">Select Destinations</option>*@
+																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+																		{
+																			<option value="@thislist.D_Id" cid="@thislist.D_IdContinent"> @thislist.D_Destination</option>
+																		}*@
+																</select>
+															</div>
+														</div>
+														<div class="row">
+															<div class="form-group col-md-4">
+																<label>Duration <span class="text-danger">*</span></label>
+																<input type="number" step="1" min="1" id="duration" class="form-control trgrthis" name="duration" value="">
+															</div>
+															<div class="form-group col-md-4">
+																<label>From <span class="text-danger">*</span></label>
+																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="" data-gtm-form-interact-field-id="1">
+															</div>
+															<div class="form-group col-md-4">
+																<label>To <span class="text-danger">*</span></label>
+																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="" data-gtm-form-interact-field-id="2">
+															</div>
 
-                        <div class="row">
-                            <div id="divinfo" class="col-lg-12">
-                                <div class="row">
+															@*<div class="form-group col-md-3 mt-3 pt-1">
+																	<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
+																</div>*@
+														</div>
+													</div>
+													<!--<div class="col-md-12">
+													<div class="form-group">
+														<div class="table-responsive">
+															<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
+																<thead>
+																	<tr class="thead-light">
+																		<th hidden>Destination ID</th>
+																		<th>Destination(s)</th>
+																		<th>From</th>
+																		<th>To</th>
+																		<th>Duration</th>
+																		<th style="width:90px;" data-orderable="false">Actions</th>
+																	</tr>
+																</thead>-->
+													@*<tbody class="travel-list small">
+														</tbody>*@
+													<!--</table>
+															</div>
+														</div>
+													</div>-->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="validationCustom02">Name</label>
-                                        <input type="text" class="form-control" id="prname" placeholder=""  required>
+					</div>
+					<div class="col-md-6">
+						<div class="card mt-4  sticky-top" style="top:90px;">
+							<div class="card-header text-center">
+								<h4>
+									<span class="float-left ">
+										Quotation
+									</span>
+								</h4>
+							</div>
+							<div class="card-body result ">
+								<div class="quotecontainer ">
 
-                                        @*<input type="file" class="btn btn-info" multiple id="producer-file-upload" onchange="uploadProducerFile(this);" />*@
+									@*<div class="card mt-2">
+											<div class="card-body" style="font-size:13px">
+												<div>
+													<b>Destination(s) </b>
+													<span class="float-end">
+														Aruba,
+													</span>
+												</div>
+												<div>
+													<b>Inception Date </b>
+													<span class="float-end">08-07-2023  </span>
+												</div>
+												<div>
+													<b>Expiry Date</b>
+													<span class="float-end">08-07-2023  </span>
+												</div>
+												<div>
+													<b>Duration </b>
+													<span class="float-end">1 Days </span>
+												</div>
+												<div>
 
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="prtype">Type</label>
-                                        <select id="prtype" data-plugin="prtype" class="form-control" required>
-                                            <option value="" disabled> Select Type </option>
-                                            @*@if (filldata.loadedData.profileTypes != null)
-                                                @foreach (var ptype in filldata.loadedData.profileTypes)
-                                                {
-                                                    if (Model.profile.profileTypes.Where(x => x.IdProfileType == ptype.LK_ID).FirstOrDefault() == null)
-                                                    {
-                                                        <option value="@ptype.LK_ID"> @ptype.LK_TableField</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@ptype.LK_ID" selected> @ptype.LK_TableField</option>
-                                                    }
-                                                }*@
-                                        </select>
-
-
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="prcountry">Country</label>
-                                        <select id="prcountry" data-plugin="prcountry" class="form-control" required>
-                                            <option value="" disabled> Select Country </option>
-                                            @*@if (filldata.loadedData.countries != null)
-                                                @foreach (var country in filldata.loadedData.countries)
-                                                {
-                                                    if (Model.profile.countries.Where(x => x.LK_ID == country.IdCountry).FirstOrDefault() == null)
-                                                    {
-                                                        <option value="@country.IdCountry"> @country.Name </option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@country.IdCountry" selected> @country.Name </option>
-                                                    }
-                                                }*@
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="validationCustom03">Phone Number</label>
-                                        @*<input type="text" class="form-control hasphone" id="prphone" value="@Model.profile.PhoneNumber">*@
-                                        <input id="prphone" class="form-control hasphone contactphone" name="prphone" type="tel" >
-
-                                    </div>
-
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="validationCustom03">Account Number</label>
-                                        <input type="text" class="form-control hasnumber" id="pracc">
-                                    </div>
-
-
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <label for="validationCustom03">Email</label>
-                                        <input type="text" class="form-control hasemail" id="premail" >
-                                    </div>
-
-                                    <div class="form-group mb-3 col-lg-4" id="addCovDiv">
-                                        <label for="addCov">Additional Coverage</label>
-                                        <select id="addCov" data-plugin="addCov" class="form-control">
-                                            <option value="" disabled> Select Additional Coverage </option>
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3 col-lg-4">
-                                        <div class="form-group mb-0">
-                                            <div class="form-check">
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-lg-8">
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                @if (isnew)
-                                {
-                                    <div class="col-lg-4">
-                                        <button id="confirmdeletebtn" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
-                                            <span> Delete </span>
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
-                                            <span> Files </span>
-                                        </button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-lg-8">
-                                    </div>
-                                }
-                                <div class="col-lg-4">
-                                    <button id="saveprofile" class="btn btn-primary w-100 bglocalcolor" type="submit">
-                                        @if (isnew)
-                                        {<span> Add </span>}
-                                        else
-                                        {<span> Save </span>}
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+													<span class="float-end total_price" data-currency="USD"> </span>
+												</div>
+												<div class="table-responsive">
+													<table class="table table-sm table-bordered mt-3">
+														<thead>
+															<tr class="thead-light text-center">
+																<th>Full Name</th>
+																<th>Cons. / Cumul. Days</th>
+																<th>Base Price</th>
+																<th>Discount</th>
+																<th>Final Price </th>
+															</tr>
+														</thead>
+														<tbody class="quotation-list">
+															<tr class="text-center">
+																<td>SAHAR </td>
+																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
+																<td>0</td>
+																<td>0</td>
+																<td>12 USD</td>
+															</tr>
+															<tr class="text-center">
+																<td>Mussa Basma</td>
+																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
+																<td class="base_price" data-price="11.00">14.00 USD</td>
+																<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
+																<td><span class="final_price" data-price="11">14 USD</span></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="my-3" style="height: 32px;">
+											<div class="btn btn-third float-end grand_total">14.00 USD</div>
+											<div class="btn btn-third float-right mr-2">Grand Total</div>
+										</div>
+										<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
+								</div>
+								<div class="loadersize"><div id="loader"></div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-    <div class="modal-dialog modal-dialog-centered" role="document">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title" id="exampleModalLongTitle"> Delete Profile </h5>
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-                    <span aria-hidden="true"> &times;</span>
-
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-                Are you sure you want to delete this profile?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn bglocalcolor" data-dismiss="modal"> Close </button>
-
-                <div id="thisloader" class="smloader hide">
-                </div>
-
-                <button id="profiledelete" type="button" class="btn btn-danger"> Delete </button>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-
-<div class="modal fade" id="add-type" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"> Fees </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"> &times;</span>
-                </button>
-            </div>
-
-            <div id="divnewfees" class="modal-body">
-                <div class="row">
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">Type</label>
-                        <select id="newfeestype" data-plugin="prfeestype" class="form-control" onchange="togglefees(this)" required>
-                            <option value=""> Select Fees Type</option>
-                            @*@if (filldata.loadedData.feesTypes != null)
-                                @foreach (var Fees in filldata.loadedData.feesTypes)
-                                {
-                                    <option value="@Fees.LK_ID"> @Fees.LK_TableField </option>
-                                }*@
-                        </select>
-                    </div>
-                    <div id="divcomplexity" class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">Level</label>
-                        <select id="newfeeslevel" class="form-control">
-                            <option> </option>
-                           @* @if (filldata.loadedData.caseComplexities != null)
-                                @foreach (var Currency in filldata.loadedData.caseComplexities)
-                                {
-                                    <option value="@Currency.LK_ID">@Currency.LK_TableField</option>
-                                }*@
-                        </select>
-                    </div>
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="newfeescountry">Country</label>
-                        <select id="newfeescountry" data-plugin="newfeescountry" class="form-control" required>
-                            <option value="" disabled selected> Select Country </option>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">Currency</label>
-                        <select id="newfeescurrency" class="form-control" required>
-                            <option value=""> Select Currency</option>
-
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">Amount</label>
-                        <input type="text" class="form-control hasnumber" id="newfeesamount" required>
-                    </div>
-                    <div class="form-group mb-3 col-lg-4">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">From</label>
-                        <input type="date" class="form-control" id="newfeesfrom" required>
-                    </div>
-                    <div class="form-group mb-3 col-lg-4">
-                        <label for="validationCustom03">To</label>
-                        <input type="date" class="form-control" id="newfeesto" required>
-                    </div>
-                    <div class="form-group mb-3 col-lg-4">
-                    </div>
-                    <div class="col-lg-12">
-                        <button id="addnewfees" class="btn btn-primary w-100 bglocalcolor" type="submit">
-                            <span> Add </span>
-                        </button>
-                        <div id="thisloader" class="smloader hide"></div>
-
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="modal-footer" style="display:none">
-                <button type="button" class="btn bglocalcolor" data-dismiss="modal">Close</button>
-                <div id="thisloader" class="smloader hide"></div>
-                <button id="adherentimport" type="button" class="btn btn-danger">Proceed</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-@*@if (!isnew)
-{
-    <partial name="~/Views/partialviews/upload/partialupload.cshtml" model="@Model.profile.attachmentModel" />
-}*@
-
-
-@*<script src="~/countryflags/js/intlTelInput.js"></script>*@
-@*<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>*@
-
-<script>
-    //$(document).ready(function () {
-    //    $('#pdfhtmlviewer').summernote();
-    //    var table = $('#testtable').DataTable();
-
-    //});
-</script>
-
-

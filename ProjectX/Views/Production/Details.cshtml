@@ -1,1 +1,407 @@
-﻿
+﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
+@{
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+}
+
+<style>
+
+	.search-dropdown {
+		position: relative;
+	}
+
+	.search-dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 200px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		padding: 12px;
+		z-index: 1;
+	}
+
+		.search-dropdown-content a {
+			display: block;
+			padding: 6px 0;
+			text-decoration: none;
+			color: black;
+		}
+
+			.search-dropdown-content a:hover {
+				background-color: #f1f1f1;
+			}
+</style>
+
+<div class="content" pgtype="view">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row" data-select2-id="20">
+			<div class="col-12">
+				<div class="page-title mt-2">
+					<h4 class="card-title ">
+						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+						<span>Edit Policy - @Model.Reference</span>
+
+					</h4>
+				</div>
+				<span class="text-warning"></span>
+			</div>
+			<div class="page-content w-100">
+				<div class="row m-0">
+					<div class="col-md-6">
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Product Information</h3>
+											<hr>
+											<div class="row">
+												<div class="col-md-12 typeradio">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="we-checkbox">
+																<input type="radio" id="is_individual" name="type" @(Model.IsIndividual ? "checked" : "")>
+
+																<label for="is_individual">Single</label>
+																<i class="fa fa-question-circle" title="Single"></i>
+															</div>
+														</div>
+														<div class="col-md-4 family" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_family" name="type" @(Model.IsFamily ? "checked" : "")>
+																<label for="is_family">Family</label>
+																<i class="fa fa-question-circle" title="Family"></i>
+															</div>
+														</div>
+														<div class="col-md-4 group" style="">
+															<div class="we-checkbox">
+																<input type="radio" id="is_group" name="type" @(Model.IsGroup ? "checked" : "")>
+																<label for="is_group">Group</label>
+																<i class="fa fa-question-circle" title="Group"></i>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="product_id">Product <span class="text-danger">*</span></label>
+
+														<select class="form-control isselect2 trgrthis" id="product_id" name="product_id">
+															<option value="">Select Product</option>
+															@foreach (var thislist in filldata.loadedData.products)
+															{
+																if (thislist.LK_ID == Model.ProductID)
+																{
+																	<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+
+																}
+															}
+														</select>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="zone_id">Zone <span class="text-danger">*</span></label>
+														<select class="form-control isselect2 trgrthis" id="zone_id" name="zone_id">
+															<option value="">Select Zone</option>
+															@foreach (var thislist in filldata.loadedData.zones)
+															{
+																if (thislist.LK_ID == Model.ZoneID)
+																{
+																	<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+																}
+															}
+														</select>
+													</div>
+												</div>
+											</div>
+											@*<div class="row">
+													<div class="col-md-8">
+														<div class="form-group">
+															<label for="notes">Notes</label>
+															<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
+														</div>
+													</div>
+												</div>*@
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Beneficiaries</h3><hr>
+											<div class="row thisbeneficiary">
+												<div class="col-md-12">
+													<div class="row">
+														<div class="form-group col-md-6">
+															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
+															<div class="search-dropdown">
+																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+																<div id="searchDropdownContent" class="search-dropdown-content"></div>
+															</div>
+														</div>
+
+														<div class="form-group col-md-6 xlsxupload" style="display: none;">
+															<a class="text-danger" style="font-size: 12px;">Sample File</a>
+															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
+														</div>
+														<div class="form-group col-md-12">
+															<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
+															<div class="row">
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="male" name="sgender" value="M" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "" : "checked")>
+																		<label for="male">Male</label>
+																	</div>
+																</div>
+																<div class="col-md-2">
+																	<div class="we-checkbox">
+																		<input type="radio" id="female" name="sgender" value="F" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
+																		@*@if (Model.IsIndividual)
+																			{
+																				<input type="radio" id="female" name="sgender" value="F" @(Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
+																			}
+																			else
+																			{
+																				<input type="radio" id="female" name="sgender" value="F">
+																			}*@
+																		<label for="female">Female</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-4">
+															<label>First Name <span class="text-danger">*</span></label>
+															<input id="first_name" type="text" class="form-control first_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="first_name" autocomplete="off" required>
+														</div>
+														<div class="form-group col-md-4">
+															<label>Middle Name</label>
+															<input type="text" class="form-control middle_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="middle_name" autocomplete="off">
+														</div>
+														<div class="form-group col-md-4">
+															<label>Last Name <span class="text-danger">*</span></label>
+															<input id="last_name" type="text" class="form-control last_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().LastName : "")" name="last_name" autocomplete="off" required>
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-4 passport_no_form">
+															<label>Passport No. <span class="isrequired text-danger">*</span></label>
+															<input id="passport_no" type="text" class="form-control passport_no" value="@(Model.IsIndividual ? Model.PolicyDetails.First().PassportNo : "")" name="passport_no" autocomplete="off" required>
+														</div>
+														<div class="form-group col-md-4">
+															<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+														</div>
+
+														<div class="form-group col-md-4 div-beneficiary ">
+															<label>&nbsp;</label>
+															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100 @(Model.IsIndividual ? "hide" : "")" style="cursor: pointer">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
+															</div>
+														</div>
+													</div>
+													<div class="table-responsive">
+														<table class="table table-sm table-bordered mt-3 beneficiary-table @(Model.IsIndividual ? "hide" : "")">
+															<thead>
+																<tr class="thead-light">
+																	<th>First Name</th>
+																	<th>Last Name</th>
+																	<th>Date Of Birth</th>
+																	<th>Age</th>
+																	<th>Passport No.</th>
+																	<th>Sex</th>
+																	<th style="width:90px;" data-orderable="false">Actions</th>
+																</tr>
+															</thead>
+															<tbody class="beneficiary-list">
+																@foreach (var tdrow in Model.PolicyDetails)
+																{
+																	<tr>
+																		<td>@tdrow.FirstName</td>
+																		<td>@tdrow.LastName</td>
+																		<td>@tdrow.DateOfBirth</td>
+																		<td>@tdrow.Age</td>
+																		<td>@tdrow.PassportNo</td>
+																		<td>@tdrow.Gender</td>
+																		<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>
+																	</tr>
+																}
+															</tbody>
+														</table>
+														<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Travel Info</h3><hr>
+
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="form-group col-md-12">
+																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
+																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple>
+																	@*<option value="">Select Destinations</option>*@
+																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+																	{
+																		if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
+																		{
+																			<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
+																		}
+
+																	}
+																</select>
+															</div>
+														</div>
+														<div class="row">
+															<div class="form-group col-md-4">
+																<label>Duration <span class="text-danger">*</span></label>
+																<input type="number" step="1" min="1" id="duration" class="form-control trgrthis" name="duration" value="@Model.Duration">
+															</div>
+															<div class="form-group col-md-4">
+																<label>From <span class="text-danger">*</span></label>
+																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="@Model.FromDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="1">
+															</div>
+															<div class="form-group col-md-4">
+																<label>To <span class="text-danger">*</span></label>
+																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="2">
+															</div>
+
+															@*<div class="form-group col-md-3 mt-3 pt-1">
+																	<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
+																</div>*@
+														</div>
+													</div>
+													<!--<div class="col-md-12">
+													<div class="form-group">
+														<div class="table-responsive">
+															<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
+																<thead>
+																	<tr class="thead-light">
+																		<th hidden>Destination ID</th>
+																		<th>Destination(s)</th>
+																		<th>From</th>
+																		<th>To</th>
+																		<th>Duration</th>
+																		<th style="width:90px;" data-orderable="false">Actions</th>
+																	</tr>
+																</thead>-->
+													@*<tbody class="travel-list small">
+														</tbody>*@
+													<!--</table>
+															</div>
+														</div>
+													</div>-->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="card mt-4  sticky-top" style="top:90px;">
+							<div class="card-header text-center">
+								<h4>
+									<span class="float-left ">
+										Quotation
+									</span>
+								</h4>
+							</div>
+							<div class="card-body result ">
+								<div class="quotecontainer ">
+									<partial name="~/Views/partialviews/partialquotationlistbak.cshtml" model="@Model"/>
+
+
+									@*<div class="card mt-2">
+			<div class="card-body" style="font-size:13px">
+				<div>
+					<b>Destination(s) </b>
+					<span class="float-end">
+						Aruba,
+					</span>
+				</div>
+				<div>
+					<b>Inception Date </b>
+					<span class="float-end">08-07-2023  </span>
+				</div>
+				<div>
+					<b>Expiry Date</b>
+					<span class="float-end">08-07-2023  </span>
+				</div>
+				<div>
+					<b>Duration </b>
+					<span class="float-end">1 Days </span>
+				</div>
+				<div>
+
+					<span class="float-end total_price" data-currency="USD"> </span>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered mt-3">
+						<thead>
+							<tr class="thead-light text-center">
+								<th>Full Name</th>
+								<th>Cons. / Cumul. Days</th>
+								<th>Base Price</th>
+								<th>Discount</th>
+								<th>Final Price </th>
+							</tr>
+						</thead>
+						<tbody class="quotation-list">
+							<tr class="text-center">
+								<td>SAHAR </td>
+								<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
+								<td>0</td>
+								<td>0</td>
+								<td>12 USD</td>
+							</tr>
+							<tr class="text-center">
+								<td>Mussa Basma</td>
+								<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
+								<td class="base_price" data-price="11.00">14.00 USD</td>
+								<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
+								<td><span class="final_price" data-price="11">14 USD</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="my-3" style="height: 32px;">
+			<div class="btn btn-third float-end grand_total">14.00 USD</div>
+			<div class="btn btn-third float-right mr-2">Grand Total</div>
+		</div>
+		<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
+								</div>
+								<div class="loadersize"><div id="loader"></div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
