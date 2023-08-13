@@ -36,7 +36,7 @@
 				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId">
 					<tbody>
 						<tr class="card-header">
-							<td>Full Name -  @item.InsuredId </td>
+							<td>Full Name  </td>
 							<td colspan="2">@item.FirstName @item.LastName</td>
 						</tr>
 						<tr>
@@ -56,7 +56,7 @@
 									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
 									{
 										<option data-benprice="@thislist.Price" value="@thislist.ID" selected>
-											@thislist.Name
+											@thislist.Name @thislist.Price
 										</option>
 									}
 

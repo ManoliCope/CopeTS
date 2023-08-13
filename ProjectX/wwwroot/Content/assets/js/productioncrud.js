@@ -102,16 +102,16 @@ $(document).ready(function () {
     });
 
     $('.trgrthis').focusout(function () {
-        sendData()
+        getQuotation()
     });
 
     $('.thisbeneficiary :input[required]').focusout(function () {
-        sendData()
+        getQuotation()
     });
 
 
     $('.trgrthis.isselect2').on('select2:close', function () {
-        sendData();
+        getQuotation();
     });
     $('input[name="sgender"]').change(function () {
         var selectedGender = $(this).val();
@@ -312,7 +312,7 @@ function populatebeneficiary() {
         //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
 
-        sendData()
+        getQuotation()
 
         //createBeneficiaryData()
     });
@@ -320,6 +320,7 @@ function populatebeneficiary() {
 
 function removerow(me) {
     $(me).closest("tr").remove();
+    getQuotation()
 }
 function settofrom() {
     $('#to, #from, #duration').change(function () {
@@ -535,7 +536,8 @@ function createBeneficiaryData() {
             firstName: $('#first_name').val(),
             middleName: $('.middle_name').val(),
             lastName: $('#last_name').val(),
-            dateOfBirth: calculateAge($('#date_of_birth').val()),
+            dateOfBirth: $('#date_of_birth').val(),
+            age: calculateAge($('#date_of_birth').val()),
             passportNo: $('#passport_no').val(),
             gender: $('input[name="sgender"]:checked').val(),
         };
@@ -590,7 +592,7 @@ function validatequatation() {
     const valid = inputValues.find(v => v.val == "");
     return valid;
 }
-function sendData() {
+function getQuotation() {
 
     if (validatequatation()) {
         $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
@@ -604,16 +606,15 @@ function sendData() {
     //console.log(getQuotationData())
 
 
-
     ///  saving policy if quotation accepted..
     var generalInfoData = createGeneralInformationData();
     var beneficiaryData = createBeneficiaryData();
     var travelData = gathertravelinfo();
 
 
-    console.log(generalInfoData)
-    console.log(beneficiaryData)
-    console.log(travelData)
+    //console.log(generalInfoData)
+    //console.log(beneficiaryData)
+    //console.log(travelData)
 
 
     return false;
@@ -621,22 +622,8 @@ function sendData() {
     var beneficiaryJSON = convertToJSON(beneficiaryData);
     var travelJSON = convertToJSON(travelData);
 
-    return;
 
-    var url = 'your-endpoint-url';
-    var method = 'POST';
 
-    var xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            // AJAX call successful
-            var response = JSON.parse(xhr.responseText);
-            // Handle the response as needed
-        }
-    };
-    xhr.send(JSON.stringify({ generalInfo: generalInfoJSON, beneficiary: beneficiaryJSON, travel: travelJSON }));
 }
 
 
@@ -876,7 +863,6 @@ function getQuotationData() {
             Durations: selectedDuration,
         })
     }
-    console.log(quotationData, 'quotationData')
 
 
     //var quotationData =
@@ -911,15 +897,20 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            //console.log(response, 'quotation result')
+            console.log(response, 'quotationData')
+
 
             if (response.quotationResp.length > 0) {
                 for (var i = 0; i < response.quotationResp.length; i++) {
-                    console.log(response.quotationResp[i], 'quotation result')
+                    //console.log(response.quotationResp[i], 'quotation result')
                     response.quotationResp[i].fullname = getFullNameFromIndex(response.quotationResp[i].insured - 1);
                 }
                 addbenefits = response.additionalBenefits
                 loadQuotePartialView(response)
+            }
+            else {
+                $('.quotecontainer').html("<span class='validatemsg'>No Result Found !</span>");
+                $(".result").removeClass("load")
             }
 
         },
@@ -1034,15 +1025,23 @@ function sendDataIssuance() {
         "grandTotal": parseFloat($('#grandtotal').text()),
     };
 
-    console.log(dataToSend)
+    //console.log(dataToSend)
 
     $.ajax({
         url: projectname + '/Production/IssuePolicy',
         data: { IssuanceReq: dataToSend },
         method: 'POST',
-        success: function (response) {
-            alert("Data sent successfully:");
-            console.log("Data sent successfully:", response);
+        success: function (result) {
+            if (result.statusCode.code == 1) {
+                showresponsemodal("1", result.statusCode.message)
+                $("#responsemodal button").click(function () {
+                    gotopage("production", "Edit", result.policyID);
+                });
+            }
+
+            else {
+                showresponsemodal("0", result.statusCode.message)
+            }
         },
         error: function (error) {
             console.error("Error sending data:", error);

@@ -15,6 +15,9 @@ using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Models.Profile;
 using ProjectX.Entities.Resources;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System;
 using static ProjectX.Controllers.ProductionController;
 
 namespace ProjectX.Controllers
@@ -137,17 +140,33 @@ namespace ProjectX.Controllers
                 loadZones = true
 
             });
-
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
             policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id);
-            if (policyreponse == null)
+
+            if (policyreponse != null)
             {
-                return RedirectToAction("index", "Production"); // Redirect to another action
+                int typeid = 0;
+                if (policyreponse.IsIndividual)
+                    typeid = 1;
+                else if (policyreponse.IsFamily)
+                    typeid = 2;
+                else if (policyreponse.IsGroup)
+                    typeid = 3;
+
+                List<TR_Product> productlist = GetProdutctsByType(typeid);
+                List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
+                List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
+
+                ViewData["productlist"] = productlist;
+                ViewData["zonelist"] = zonelist;
+                ViewData["destinationlist"] = destinationlist;
+
+                return View("details", policyreponse);
             }
             else
-                return View("details", policyreponse);
+                return RedirectToAction("index", "Production"); // Redirect to another action
 
         }
 
@@ -217,7 +236,7 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public ProductionResp IssuePolicy(IssuanceReq IssuanceReq)
+        public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
         }

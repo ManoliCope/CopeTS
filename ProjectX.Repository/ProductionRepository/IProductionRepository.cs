@@ -15,7 +15,7 @@ namespace ProjectX.Repository.ProductionRepository
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
         public ProductionResp getProductionDetails(List<ProductionReq> req, int userid);
-        public ProductionResp SaveIssuance(IssuanceReq req, int userid);
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid);
         
     }

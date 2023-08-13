@@ -36,7 +36,7 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.getProductionDetails(req, userid);
         }
-        public ProductionResp SaveIssuance(IssuanceReq req, int userid)
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
         {
             return _prodRepository.SaveIssuance(req, userid);
         }

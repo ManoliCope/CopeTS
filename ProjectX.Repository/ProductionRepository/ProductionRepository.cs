@@ -172,9 +172,9 @@ namespace ProjectX.Repository.ProductionRepository
             return dataTable;
         }
 
-        public ProductionResp SaveIssuance(IssuanceReq IssuanceReq, int userid)
+        public ProductionSaveResp SaveIssuance(IssuanceReq IssuanceReq, int userid)
         {
-            ProductionResp response = new ProductionResp();
+            ProductionSaveResp response = new ProductionSaveResp();
             string thisresult = "";
 
 
@@ -229,9 +229,34 @@ namespace ProjectX.Repository.ProductionRepository
                 }
             }
 
+            if (double.TryParse(thisresult, out double numericValue))
+            {
+                response.statusCode.code = 1;
+                response.statusCode.message = "Policy Created";
+                response.PolicyID = Convert.ToInt32(thisresult);
+            }
+            else
+            {
+                response.statusCode.code = 0;
+                response.statusCode.message = thisresult;
+            }
+
+
             return response;
         }
 
+
+        //public class GlobalResponse
+        //{
+        //    public StatusCode statusCode { get; set; } = new StatusCode();
+        //}
+        //public class StatusCode
+        //{
+        //    public int code { get; set; } = 0;
+        //    public string message { get; set; }
+        //    [JsonIgnore]
+        //    public string idLanguage { get; set; } = "1";
+        //}
 
         public ProductionPolicy GetPolicy(int IdPolicy, int userid)
         {

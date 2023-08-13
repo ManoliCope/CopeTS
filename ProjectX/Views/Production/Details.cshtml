@@ -1,6 +1,9 @@
 ﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
 @{
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var productlist = ViewData["productlist"] as List<ProjectX.Entities.dbModels.TR_Product>;
+	var zonelist = ViewData["zonelist"] as List<ProjectX.Entities.dbModels.TR_Zone>;
+	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
 }
 
 <style>
@@ -90,12 +93,15 @@
 
 														<select class="form-control isselect2 trgrthis" id="product_id" name="product_id">
 															<option value="">Select Product</option>
-															@foreach (var thislist in filldata.loadedData.products)
+															@foreach (var thislist in productlist)
 															{
-																if (thislist.LK_ID == Model.ProductID)
+																if (thislist.PR_Id == Model.ProductID)
 																{
-																	<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
-
+																	<option value="@thislist.PR_Id" selected> @thislist.PR_Title</option>
+																}
+																else
+																{
+																	<option value="@thislist.PR_Id" > @thislist.PR_Title</option>
 																}
 															}
 														</select>
@@ -107,11 +113,15 @@
 														<label for="zone_id">Zone <span class="text-danger">*</span></label>
 														<select class="form-control isselect2 trgrthis" id="zone_id" name="zone_id">
 															<option value="">Select Zone</option>
-															@foreach (var thislist in filldata.loadedData.zones)
+															@foreach (var thislist in zonelist)
 															{
-																if (thislist.LK_ID == Model.ZoneID)
+																if (thislist.Z_Id == Model.ZoneID)
 																{
-																	<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+																	<option value="@thislist.Z_Id" selected> @thislist.Z_Title</option>
+																}
+																else
+																{
+																	<option value="@thislist.Z_Id"> @thislist.Z_Title</option>
 																}
 															}
 														</select>
@@ -199,8 +209,8 @@
 															<input id="passport_no" type="text" class="form-control passport_no" value="@(Model.IsIndividual ? Model.PolicyDetails.First().PassportNo : "")" name="passport_no" autocomplete="off" required>
 														</div>
 														<div class="form-group col-md-4">
-															<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
-															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+															<label>Date Of Birth <span class="text-danger">*</span> <span class="age">(@Model.PolicyDetails.First().Age)</span></label>
+															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth.ToString("yyyy-MM-dd") : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
 														</div>
 
 														<div class="form-group col-md-4 div-beneficiary ">
@@ -229,7 +239,7 @@
 																	<tr>
 																		<td>@tdrow.FirstName</td>
 																		<td>@tdrow.LastName</td>
-																		<td>@tdrow.DateOfBirth</td>
+																		<td>@tdrow.DateOfBirth.ToString("yyyy-MM-dd")</td>
 																		<td>@tdrow.Age</td>
 																		<td>@tdrow.PassportNo</td>
 																		<td>@tdrow.Gender</td>
@@ -262,14 +272,26 @@
 																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
 																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
-																	@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																	{
 																		if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
 																		{
 																			<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
 																		}
+																	}*@
 
+																	@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+																	{
+																		if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
+																		{
+																			<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
+																		}
+																		else
+																		{
+																			<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+																		}
 																	}
+
 																</select>
 															</div>
 														</div>
@@ -332,69 +354,69 @@
 							</div>
 							<div class="card-body result ">
 								<div class="quotecontainer ">
-									<partial name="~/Views/partialviews/partialquotationlistbak.cshtml" model="@Model"/>
+									<partial name="~/Views/partialviews/partialquotationlistbak.cshtml" model="@Model" />
 
 
 									@*<div class="card mt-2">
-			<div class="card-body" style="font-size:13px">
-				<div>
-					<b>Destination(s) </b>
-					<span class="float-end">
-						Aruba,
-					</span>
-				</div>
-				<div>
-					<b>Inception Date </b>
-					<span class="float-end">08-07-2023  </span>
-				</div>
-				<div>
-					<b>Expiry Date</b>
-					<span class="float-end">08-07-2023  </span>
-				</div>
-				<div>
-					<b>Duration </b>
-					<span class="float-end">1 Days </span>
-				</div>
-				<div>
+											<div class="card-body" style="font-size:13px">
+												<div>
+													<b>Destination(s) </b>
+													<span class="float-end">
+														Aruba,
+													</span>
+												</div>
+												<div>
+													<b>Inception Date </b>
+													<span class="float-end">08-07-2023  </span>
+												</div>
+												<div>
+													<b>Expiry Date</b>
+													<span class="float-end">08-07-2023  </span>
+												</div>
+												<div>
+													<b>Duration </b>
+													<span class="float-end">1 Days </span>
+												</div>
+												<div>
 
-					<span class="float-end total_price" data-currency="USD"> </span>
-				</div>
-				<div class="table-responsive">
-					<table class="table table-sm table-bordered mt-3">
-						<thead>
-							<tr class="thead-light text-center">
-								<th>Full Name</th>
-								<th>Cons. / Cumul. Days</th>
-								<th>Base Price</th>
-								<th>Discount</th>
-								<th>Final Price </th>
-							</tr>
-						</thead>
-						<tbody class="quotation-list">
-							<tr class="text-center">
-								<td>SAHAR </td>
-								<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
-								<td>0</td>
-								<td>0</td>
-								<td>12 USD</td>
-							</tr>
-							<tr class="text-center">
-								<td>Mussa Basma</td>
-								<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
-								<td class="base_price" data-price="11.00">14.00 USD</td>
-								<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
-								<td><span class="final_price" data-price="11">14 USD</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="my-3" style="height: 32px;">
-			<div class="btn btn-third float-end grand_total">14.00 USD</div>
-			<div class="btn btn-third float-right mr-2">Grand Total</div>
-		</div>
-		<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
+													<span class="float-end total_price" data-currency="USD"> </span>
+												</div>
+												<div class="table-responsive">
+													<table class="table table-sm table-bordered mt-3">
+														<thead>
+															<tr class="thead-light text-center">
+																<th>Full Name</th>
+																<th>Cons. / Cumul. Days</th>
+																<th>Base Price</th>
+																<th>Discount</th>
+																<th>Final Price </th>
+															</tr>
+														</thead>
+														<tbody class="quotation-list">
+															<tr class="text-center">
+																<td>SAHAR </td>
+																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
+																<td>0</td>
+																<td>0</td>
+																<td>12 USD</td>
+															</tr>
+															<tr class="text-center">
+																<td>Mussa Basma</td>
+																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
+																<td class="base_price" data-price="11.00">14.00 USD</td>
+																<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
+																<td><span class="final_price" data-price="11">14 USD</span></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="my-3" style="height: 32px;">
+											<div class="btn btn-third float-end grand_total">14.00 USD</div>
+											<div class="btn btn-third float-right mr-2">Grand Total</div>
+										</div>
+										<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
 								</div>
 								<div class="loadersize"><div id="loader"></div></div>
 							</div>
