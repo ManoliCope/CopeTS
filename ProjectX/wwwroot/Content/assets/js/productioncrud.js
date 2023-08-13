@@ -2,20 +2,21 @@
 var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
+
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
     })
 
-    $('#product_id').on('select2:selecting', function (e) {
-        // Get the entered text in the search box
-        const enteredText = $('.select2-search__field').val();
+    //$('#product_id').on('select2:selecting', function (e) {
+    //    // Get the entered text in the search box
+    //    const enteredText = $('.select2-search__field').val();
 
-        // Check if there's no option containing the entered text
-        if ($('#product_id').find("option:contains('" + enteredText + "')").length === 0) {
-            e.preventDefault(); // Prevent the selection
-            alert('Option not found!'); // Show an alert or any other indication
-        }
-    });
+    //    // Check if there's no option containing the entered text
+    //    if ($('#product_id').find("option:contains('" + enteredText + "')").length === 0) {
+    //        e.preventDefault(); // Prevent the selection
+    //        alert('Option not found!'); // Show an alert or any other indication
+    //    }
+    //});
 
 
 
@@ -526,7 +527,7 @@ function createBeneficiaryData() {
     }
     else {
         var thisinsuredId = $('#first_name').attr('thisid');
-        thisinsuredId = thisinsuredId !== undefined ? thisinsuredId : 0;
+        thisinsuredId = thisinsuredId != "undefined" ? thisinsuredId : 0;
 
         var beneficiary = {
             Insured: 1,
@@ -591,10 +592,10 @@ function validatequatation() {
 }
 function sendData() {
 
-    //if (validatequatation()) {
-    //    $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
-    //    return;
-    //}
+    if (validatequatation()) {
+        $('.quotecontainer').html("<span class='validatemsg'>Please Check Mandatory Fields !</span>");
+        return;
+    }
 
     $(".result").addClass("load")
 
@@ -613,39 +614,6 @@ function sendData() {
     console.log(generalInfoData)
     console.log(beneficiaryData)
     console.log(travelData)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     return false;
@@ -673,113 +641,6 @@ function sendData() {
 
 
 
-function sendDataIssuance() {
-    var BeneficiaryDetails = [];
-    var listadditionalbenefits = []
-    $(".quoatetable").each(function (index) {
-        var insuredSection = $(this);
-
-        var dataForInsured = {
-            insured:index + 1,
-            //fullName: insuredSection.find(".card-header td:eq(1)").text(),
-            tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
-            plan: insuredSection.find(".plans option:selected").val(),
-            deductibleprice: insuredSection.find("input[name='name'][data-dedprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) : 0,
-            sportsActivitiesprice: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) : 0,
-            discount: isNaN(parseFloat(insuredSection.find(".discount").val())) ? 0 : parseFloat(insuredSection.find(".discount").val()),
-            planPrice: parseFloat(insuredSection.find(".plans option:selected").data("price")),
-            finalPrice: parseFloat(insuredSection.find(".finalprice").data("fprice"))
-
-        };
-
-        // Additional Benefits for the insured
-        insuredSection.find(".benplus option:selected").each(function (index) {
-            listadditionalbenefits.push({
-                insuredid: insuredSection.attr("ins"),
-                value: $(this).val(),
-                price: $(this).data("benprice")
-            });
-        });
-
-        BeneficiaryDetails.push(dataForInsured);
-    });
-
-    var beneficiaryData = [
-        {
-            "Insured": 1,
-            "insuredId": "75",
-            "firstName": "test ",
-            "lastName": "www",
-            "dateOfBirth": "1990-02-27",
-            "age": 33,
-            "passportNo": "123",
-            "gender": "M"
-        },
-        {
-            "Insured": 2,
-            "insuredId": "76",
-            "firstName": "second",
-            "lastName": "test",
-            "dateOfBirth": "1955-04-24",
-            "age": 68,
-            "passportNo": "123",
-            "gender": "M"
-        },
-        {
-            "Insured": 3,
-            "insuredId": "76",
-            "firstName": "second",
-            "lastName": "test",
-            "dateOfBirth": "1955-04-24",
-            "age": 68,
-            "passportNo": "123",
-            "gender": "M"
-        }
-    ];
-
-    var dataToSend = {
-        beneficiaryDetails: BeneficiaryDetails,
-        beneficiaryData: beneficiaryData,
-        additionalBenefits: listadditionalbenefits,
-        "from": "2023-08-22",
-        "to": "2023-09-03",
-        "duration": "12",
-        "selectedDestinations": "Algeria, Angola, Armenia",
-        "selectedDestinationIds": [
-            "4",
-            "7",
-            "12"
-        ],
-        "is_family": false,
-        "Is_Individual": false,
-        "Is_Group": true,
-        "productId": "682",
-        "zoneId": "270",
-        "initialPremium" : parseFloat($('#initpremtotal').text()),
-        "additionalValue" : parseFloat($('#additiononprem').text()),
-        "taxVATValue" : parseFloat($('#taxvat').text()),
-        "stampsValue" : parseFloat($('#stamps').text()),
-        "grandTotal" : parseFloat($('#grandtotal').text()),
-    };
-
-    console.log(dataToSend)
-
-    $.ajax({
-        url: projectname + '/Production/IssuePolicy',
-        data: { IssuanceReq: dataToSend },
-        method: 'POST',
-        success: function (response) {
-            alert("Data sent successfully:");
-            console.log("Data sent successfully:", response);
-        },
-        error: function (error) {
-            console.error("Error sending data:", error);
-        }
-    });
-
-}
 
 function gathertravelinfo() {
     var selectedOptions = $('#destination_id option:selected');
@@ -822,152 +683,6 @@ function calculateAge(dateOfBirth) {
         age--;
     }
     return age;
-}
-
-function getQuotationData() {
-    var quotationData = []
-
-    travelinfo = gathertravelinfo();
-    //console.log('this', travelinfo)
-    // Retrieve ages of beneficiaries
-
-    // Retrieve durations in the travel section
-    //var travelList = createTravelData();
-    //var durations = travelList.map(function (travel) {
-    //    return travel.Duration;
-    //});
-
-
-
-    var selectedProduct = document.getElementById('product_id').value;
-    var selectedDuration = $("#duration").val()
-    var selectedZone = document.getElementById('zone_id').value;
-
-
-
-
-    var selectedtype = document.querySelector('input[name="type"]:checked');
-    var typeId = selectedtype ? selectedtype.id : '';
-    if (typeId === 'is_family' || typeId === 'is_group') {
-        var beneficiaryRows = $('.beneficiary-table tbody tr');
-        beneficiaryRows.each(function (index, row) {
-            var cells = $(row).find('td');
-            var thisage = $(cells[3]).text(); // Assuming birthdate is in the fourth column
-
-            quotationData.push({
-                Insured: index + 1,
-                Ages: thisage,
-                Product: selectedProduct,
-                Zone: selectedZone,
-                Durations: selectedDuration,
-            })
-        });
-    }
-    else {
-        var dateOfBirthInput = document.getElementById('date_of_birth').value;
-        var thisage = calculateAge(dateOfBirthInput);
-        quotationData.push({
-            Insured: 1,
-            Ages: thisage,
-            Product: selectedProduct,
-            Zone: selectedZone,
-            Durations: selectedDuration,
-        })
-    }
-    console.log(quotationData, 'quotationData')
-
-
-    var quotationData =
-        [
-            {
-                Insured: 1,
-                Ages: 10,
-                Product: 682,
-                Zone: 270,
-                Durations: [25]
-            },
-            {
-                Insured: 2,
-                Ages: 28,
-                Product: 682,
-                Zone: 270,
-                Durations: [5]
-            },
-            {
-                Insured: 3,
-                Ages: 10,
-                Product: 682,
-                Zone: 270,
-                Durations: [5]
-            },
-        ]
-
-
-
-    $.ajax({
-        url: projectname + '/Production/GetQuotation',
-        method: 'POST',
-        data: { quotereq: quotationData },
-        success: function (response) {
-            //console.log(response, 'quotation result')
-
-            if (response.quotationResp.length > 0) {
-                for (var i = 0; i < response.quotationResp.length; i++) {
-                    console.log(response.quotationResp[i], 'quotation result')
-                    response.quotationResp[i].fullname = getFullNameFromIndex(response.quotationResp[i].insured - 1);
-                }
-                addbenefits = response.additionalBenefits
-                loadQuotePartialView(response)
-            }
-
-        },
-        error: function (xhr, status, error) {
-
-            alert('big error')
-            $(".result").removeClass("load")
-            console.log(error);
-        }
-    });
-
-    return quotationData;
-}
-
-
-function loadQuotePartialView(response) {
-    //console.log(response)
-
-    $.ajax({
-        url: projectname + '/Production/GetPartialViewQuotation',
-        type: 'POST',
-        data: { quotereq: response },
-        success: function (data) {
-
-            $('.quotecontainer').html(data);
-            $('.quotecontainer .incdate').html(travelinfo.from);
-            $('.quotecontainer .expdate').html(travelinfo.to);
-            $('.quotecontainer .duration').html(travelinfo.duration + ' days');
-            $('.quotecontainer .dest').html(travelinfo.selectedDestinations);
-
-            var sendButton = document.getElementById('sendButton');
-            if (sendButton) {
-                sendButton.addEventListener('click', sendDataIssuance);
-            }
-            $(".isselect2").select2({
-                //tags: true,
-                tokenSeparators: [',', ' '],
-            })
-
-            triggercalculationfields()
-            $(".result").removeClass("load")
-            setTimeout(function () {
-            }, 2000);
-
-        },
-        error: function (error) {
-            $(".result").removeClass("load")
-            console.error('Error loading partial view:', error);
-        }
-    });
 }
 
 function triggercalculationfields() {
@@ -1110,3 +825,228 @@ function getFullNameFromIndex(index) {
 
 
 
+
+function getQuotationData() {
+    var quotationData = []
+
+    travelinfo = gathertravelinfo();
+    //console.log('this', travelinfo)
+    // Retrieve ages of beneficiaries
+
+    // Retrieve durations in the travel section
+    //var travelList = createTravelData();
+    //var durations = travelList.map(function (travel) {
+    //    return travel.Duration;
+    //});
+
+
+
+    var selectedProduct = document.getElementById('product_id').value;
+    var selectedDuration = $("#duration").val()
+    var selectedZone = document.getElementById('zone_id').value;
+
+
+
+
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+    if (typeId === 'is_family' || typeId === 'is_group') {
+        var beneficiaryRows = $('.beneficiary-table tbody tr');
+        beneficiaryRows.each(function (index, row) {
+            var cells = $(row).find('td');
+            var thisage = $(cells[3]).text(); // Assuming birthdate is in the fourth column
+
+            quotationData.push({
+                Insured: index + 1,
+                Ages: thisage,
+                Product: selectedProduct,
+                Zone: selectedZone,
+                Durations: selectedDuration,
+            })
+        });
+    }
+    else {
+        var dateOfBirthInput = document.getElementById('date_of_birth').value;
+        var thisage = calculateAge(dateOfBirthInput);
+        quotationData.push({
+            Insured: 1,
+            Ages: thisage,
+            Product: selectedProduct,
+            Zone: selectedZone,
+            Durations: selectedDuration,
+        })
+    }
+    console.log(quotationData, 'quotationData')
+
+
+    //var quotationData =
+    //    [
+    //        {
+    //            Insured: 1,
+    //            Ages: 10,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [25]
+    //        },
+    //        {
+    //            Insured: 2,
+    //            Ages: 28,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [5]
+    //        },
+    //        {
+    //            Insured: 3,
+    //            Ages: 10,
+    //            Product: 682,
+    //            Zone: 270,
+    //            Durations: [5]
+    //        },
+    //    ]
+
+
+
+    $.ajax({
+        url: projectname + '/Production/GetQuotation',
+        method: 'POST',
+        data: { quotereq: quotationData },
+        success: function (response) {
+            //console.log(response, 'quotation result')
+
+            if (response.quotationResp.length > 0) {
+                for (var i = 0; i < response.quotationResp.length; i++) {
+                    console.log(response.quotationResp[i], 'quotation result')
+                    response.quotationResp[i].fullname = getFullNameFromIndex(response.quotationResp[i].insured - 1);
+                }
+                addbenefits = response.additionalBenefits
+                loadQuotePartialView(response)
+            }
+
+        },
+        error: function (xhr, status, error) {
+
+            alert('big error')
+            $(".result").removeClass("load")
+            console.log(error);
+        }
+    });
+
+    return quotationData;
+}
+
+
+function loadQuotePartialView(response) {
+    //console.log(response)
+
+    $.ajax({
+        url: projectname + '/Production/GetPartialViewQuotation',
+        type: 'POST',
+        data: { quotereq: response },
+        success: function (data) {
+
+            $('.quotecontainer').html(data);
+            $('.quotecontainer .incdate').html(travelinfo.from);
+            $('.quotecontainer .expdate').html(travelinfo.to);
+            $('.quotecontainer .duration').html(travelinfo.duration + ' days');
+            $('.quotecontainer .dest').html(travelinfo.selectedDestinations);
+
+            var sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendDataIssuance);
+            }
+            $(".isselect2").select2({
+                //tags: true,
+                tokenSeparators: [',', ' '],
+            })
+
+            triggercalculationfields()
+            $(".result").removeClass("load")
+            setTimeout(function () {
+            }, 2000);
+
+        },
+        error: function (error) {
+            $(".result").removeClass("load")
+            console.error('Error loading partial view:', error);
+        }
+    });
+}
+
+
+function sendDataIssuance() {
+    var BeneficiaryDetails = [];
+    var listadditionalbenefits = []
+    $(".quoatetable").each(function (index) {
+        var insuredSection = $(this);
+
+        var dataForInsured = {
+            insured: index + 1,
+            //fullName: insuredSection.find(".card-header td:eq(1)").text(),
+            tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
+            plan: insuredSection.find(".plans option:selected").val(),
+            deductibleprice: insuredSection.find("input[name='name'][data-dedprice]").prop("checked")
+                ? parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) : 0,
+            sportsActivitiesprice: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked")
+                ? parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) : 0,
+            discount: isNaN(parseFloat(insuredSection.find(".discount").val())) ? 0 : parseFloat(insuredSection.find(".discount").val()),
+            planPrice: parseFloat(insuredSection.find(".planprice").text()),
+            finalPrice: parseFloat(insuredSection.find(".finalprice").text())
+
+        };
+
+        // Additional Benefits for the insured
+        insuredSection.find(".benplus option:selected").each(function (index) {
+            listadditionalbenefits.push({
+                insuredid: insuredSection.attr("ins"),
+                value: $(this).val(),
+                price: $(this).data("benprice")
+            });
+        });
+
+        BeneficiaryDetails.push(dataForInsured);
+    });
+
+    var beneficiaryData = createBeneficiaryData()
+    var travelData = gathertravelinfo()
+    var GeneralData = createGeneralInformationData()
+
+    var dataToSend = {
+        beneficiaryDetails: BeneficiaryDetails,
+        beneficiaryData: beneficiaryData,
+        additionalBenefits: listadditionalbenefits,
+
+        "from": travelData.from,
+        "to": travelData.to,
+        "duration": travelData.duration,
+        "selectedDestinations": travelData.selectedDestinations,
+        "selectedDestinationIds": travelData.selectedDestinationIds,
+
+        "is_family": GeneralData.is_family,
+        "Is_Individual": GeneralData.Is_Individual,
+        "Is_Group": GeneralData.Is_Group,
+        "productId": GeneralData.productId,
+        "zoneId": GeneralData.zoneId,
+
+        "initialPremium": parseFloat($('#initpremtotal').text()),
+        "additionalValue": parseFloat($('#additiononprem').text()),
+        "taxVATValue": parseFloat($('#taxvat').text()),
+        "stampsValue": parseFloat($('#stamps').text()),
+        "grandTotal": parseFloat($('#grandtotal').text()),
+    };
+
+    console.log(dataToSend)
+
+    $.ajax({
+        url: projectname + '/Production/IssuePolicy',
+        data: { IssuanceReq: dataToSend },
+        method: 'POST',
+        success: function (response) {
+            alert("Data sent successfully:");
+            console.log("Data sent successfully:", response);
+        },
+        error: function (error) {
+            console.error("Error sending data:", error);
+        }
+    });
+
+}
