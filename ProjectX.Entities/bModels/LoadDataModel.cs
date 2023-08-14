@@ -17,6 +17,9 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> sex { get; set; }
         public List<LookUpp> format { get; set; }
         public List<Destination> destinations { get; set; }
+        public List<LookUpp> userCategory { get; set; }
+        public List<LookUpp> roundingRule { get; set; }
+        public List<LookUpp> superAgents { get; set; }
         
     }
 }

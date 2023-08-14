@@ -147,7 +147,15 @@ namespace ProjectX.Business.Users
                     Multi_Lang_Policy = users.U_Multi_Lang_Policy,
                     Hide_Premium_Info = users.U_Hide_Premium_Info,
                     Active = users.U_Active,
-                    Is_Admin = users.U_Is_Admin
+                    Is_Admin = users.U_Is_Admin,
+                    Commission = users.U_Commission,
+                    Stamp = users.U_Stamp,
+                    Addional_Fees = users.U_Additional_Fees,
+                    Max_Additional_Fees = users.U_Max_Additional_Fees,
+                    VAT = users.U_VAT,
+                    Tax = users.U_Tax,
+                    Tax_Type = users.U_Tax_Format
+
                 };
             }
              

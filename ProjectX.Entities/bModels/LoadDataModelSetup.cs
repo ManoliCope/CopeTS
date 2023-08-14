@@ -16,6 +16,9 @@ namespace ProjectX.Entities.bModels
         public bool loadDestinations { get; set; }
         public bool loadSexNames { get; set; }
         public bool loadFormats { get; set; }
+        public bool loadUserCategory { get; set; }
+        public bool loadRoundingRule { get; set; }
+        public bool loadSuperAgents { get; set; }
        
         
 

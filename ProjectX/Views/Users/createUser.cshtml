@@ -40,13 +40,11 @@
                             <label class="form-control-label" for="categoryId">Category *</label>
                             <select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
                                 <option></option>
-                                <option value="9">Insurance Company Branch</option>
-                                <option value="11">Reinsurer</option>
-                                <option value="10">Travel Agency Branch</option>
-                                <option value="1">Insurance Company</option>
-                                <option value="3">Broker</option>
-                                <option value="8">Intermediary</option>
-                                <option value="2">Travel Agency</option>
+                                 @foreach (var thislist in filldata.loadedData.userCategory)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                                
 
                             </select>
                         </div>
@@ -63,8 +61,10 @@
                             <label class="form-control-label" for="country">Country *</label>
                             <select class="form-control" name="countryId" id="countryId" field-name="country" required>
                                 <option></option>
-                                <option value="1">Afghanistan</option>
-                                <option value="2">Albania</option>
+                                @foreach (var thislist in filldata.loadedData.destinations)
+											        {
+											        	<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+											        }
                            
                             </select>
                         </div>
@@ -96,12 +96,10 @@
                             <label class="form-control-label" for="superAgentId">Super-Agent *</label>
                             <select class=" form-control" required field-name="super_Agent_Id">
                                 <option data-select2-id="2">Select Super Agent (Mother Account)</option>
-                                <option value="2" data-select2-id="3">2 - 0 - Green Greens</option>
-                                <option value="3" data-select2-id="4">3 -  - Mubasher Holidays  travel</option>
-                                <option value="4" data-select2-id="5">4 -  - test iraq</option>
-                                <option value="6" data-select2-id="6">6 -  - TEST TEST</option>
-                                <option value="8" data-select2-id="7">8 - 2417 - FAST  MONDIAL</option>
-                      
+                                 @foreach (var thislist in filldata.loadedData.superAgents)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
                             </select>
                         </div>
                     </div>
@@ -180,10 +178,10 @@
                             <label class="form-control-label" for="roundingRule">Rounding Rule</label>
                             <select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" required>
                                 <option></option>
-                                <option value="1">Upper</option>
-                                <option value="2">Lower</option>
-                                <option value="3">(T)Unkown</option>
-                                <option value="4">Nearest</option>
+                                @foreach (var thislist in filldata.loadedData.roundingRule)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
                             </select>
                         </div>
                     </div>
@@ -418,7 +416,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @if (userId != null)
+                    @if (userId != null && Convert.ToInt16(userId)>0)
                     {
                     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#openPasswordView" onclick="getUserPass(@userId)">Show Password</button>
                         

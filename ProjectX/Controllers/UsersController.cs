@@ -104,11 +104,11 @@ namespace ProjectX.Controllers
             ViewData["pass"] = pass;
             return View();
         }
-        [HttpPost]
-        public ResetPass resetPassword(ResetPass res)
+        [HttpGet]
+        public ResetPass resetPassword(ResetPass pass)
         {
-                res.userId = _user.U_Id;
-                var resp= _usersBusiness.resetPass(res);
+                pass.userId = _user.U_Id;
+                var resp= _usersBusiness.resetPass(pass);
                 return resp;
         }
         [HttpPost]
@@ -151,16 +151,33 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadFormats=true
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+                loadFormats=true,
+                loadUserCategory=true,
+                loadRoundingRule=true,
+                loadDestinations=true,
+                loadSuperAgents=true
             });
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = userid.ToString();
 
             
             return View();
+        }
+        public IActionResult Details(int userid)
+        {
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadFormats=true
+                //loadCountries = true,
+                //loadProfileTypes = true,
+                //loadDocumentTypes = true
+            });
+            var user = _usersBusiness.GetUser(userid);
+            ViewData["loadDataCreate"] = response;
+            //ViewData["userid"] = userid.ToString();
+
+            
+            return View(user);
         }
         [HttpPost]
         public UsersResp EditUser(UsersReq req)

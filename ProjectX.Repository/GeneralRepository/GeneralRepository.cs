@@ -38,7 +38,10 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadZones", loadDataModelSetup.loadZones);
             param.Add("@loadDestinations", loadDataModelSetup.loadDestinations);
             param.Add("@loadSexNames", loadDataModelSetup.loadSexNames);
-            param.Add("@@loadFormats", loadDataModelSetup.loadFormats);
+            param.Add("@loadFormats", loadDataModelSetup.loadFormats);
+            param.Add("@loadUserCategory", loadDataModelSetup.loadUserCategory);
+            param.Add("@loadRoundingRule", loadDataModelSetup.loadRoundingRule);
+            param.Add("@loadSuperAgents", loadDataModelSetup.loadSuperAgents);
 
 
 
@@ -54,8 +57,6 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.plans = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadPackages)
                         resp.packages = result.Read<LookUpp>().ToList();
-                    //if (loadDataModelSetup.loadTariffs)
-                    //    resp.tariffs = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadUsers)
                         resp.users = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadZones)
@@ -66,6 +67,12 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.sex = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadFormats)
                         resp.format = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadUserCategory)
+                        resp.userCategory = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadRoundingRule)
+                        resp.roundingRule = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadSuperAgents)
+                        resp.superAgents = result.Read<LookUpp>().ToList();
                 }
             }
 
