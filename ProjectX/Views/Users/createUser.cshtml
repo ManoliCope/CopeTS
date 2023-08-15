@@ -7,120 +7,118 @@
 
 
 <div class="content" pgtype="view">
-	<div class="container-fluid" style="padding:10px 0">
-		<div class="card-body">
-			<form class="needs-validation" novalidate="" id="addUserForm" userid="@userId" autocomplete="off">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="firstName">First Name *</label>
-							<input type="text" class="form-control" id="firstName" field-name="first_Name" required value="">
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="middleName">Middle Name</label>
-							<input type="text" class="form-control" id="middleName" field-name="middle_Name" required>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="lastName">Last Name *</label>
-							<input type="text" class="form-control" id="lastName" field-name="last_Name" required>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="userName">User Name *</label>
-							<input type="text" class="form-control" id="userName" field-name="user_Name" required>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="categoryId">Category *</label>
-							<select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
-								<option></option>
-								<option value="9">Insurance Company Branch</option>
-								<option value="11">Reinsurer</option>
-								<option value="10">Travel Agency Branch</option>
-								<option value="1">Insurance Company</option>
-								<option value="3">Broker</option>
-								<option value="8">Intermediary</option>
-								<option value="2">Travel Agency</option>
+    <div class="container-fluid" style="padding:10px 0">
+        <div class="card-body">
+            <form class="needs-validation" novalidate="" id="addUserForm" userid="@userId" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="firstName">First Name *</label>
+                            <input type="text" class="form-control" id="firstName" field-name="first_Name" required value="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="middleName">Middle Name</label>
+                            <input type="text" class="form-control" id="middleName"  field-name="middle_Name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="lastName">Last Name *</label>
+                            <input type="text" class="form-control" id="lastName" field-name="last_Name" required>
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="userName">User Name *</label>
+                            <input type="text" class="form-control" id="userName" field-name="user_Name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="categoryId">Category *</label>
+                            <select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
+                                <option></option>
+                                 @foreach (var thislist in filldata.loadedData.userCategory)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                                
 
-							</select>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="lastName">Broker Code *</label>
-							<input type="text" class="form-control" id="brkNumber" field-name="broker_Code" required>
-						</div>
-					</div>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="lastName">Broker Code *</label>
+                            <input type="text" class="form-control" id="brkNumber" field-name="broker_Code" required>
+                        </div>
+                    </div>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="country">Country *</label>
-							<select class="form-control" name="countryId" id="countryId" field-name="country" required>
-								<option></option>
-								<option value="1">Afghanistan</option>
-								<option value="2">Albania</option>
-
-							</select>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="city">City</label>
-							<input type="text" class="form-control" id="city" field-name="city" name="city" required>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="telephone">Telephone *</label>
-							<div class="input-group">
-								<input type="text" class="form-control" field-name="country_code" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ccode" name="ccode" value="961">
-								<input type="text" class="form-control" field-name="telephone" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="telephone" name="telephone">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="email">Email *</label>
-							<input type="email" class="form-control" field-name="email" id="email" name="email" required>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="superAgentId">Super-Agent *</label>
-							<select class=" form-control" required field-name="super_Agent_Id">
-								<option data-select2-id="2">Select Super Agent (Mother Account)</option>
-								<option value="2" data-select2-id="3">2 - 0 - Green Greens</option>
-								<option value="3" data-select2-id="4">3 -  - Mubasher Holidays  travel</option>
-								<option value="4" data-select2-id="5">4 -  - test iraq</option>
-								<option value="6" data-select2-id="6">6 -  - TEST TEST</option>
-								<option value="8" data-select2-id="7">8 - 2417 - FAST  MONDIAL</option>
-
-							</select>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="contactperson">Contact Person</label>
-							<input type="text" class="form-control" field-name="contact_Person" id="contactperson" required>
-						</div>
-					</div>
-					@*<div class="col-md-3">
-					<div class="form-group">
-						<label class="form-control-label" for="insno">Insured Number *</label>
-						<input type="text" class="form-control" id="insno" field-name="insured_Number" required>
-					</div>
-				</div>*@
-					<div class="col-md-3">
-						<div class="form-group">
-
-							<label class="form-control-label" for="tax">Tax (% and #)</label>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="country">Country *</label>
+                            <select class="form-control" name="countryId" id="countryId" field-name="country" required>
+                                <option></option>
+                                @foreach (var thislist in filldata.loadedData.destinations)
+											        {
+											        	<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+											        }
+                           
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="city">City</label>
+                            <input type="text" class="form-control" id="city" field-name="city" name="city" required>
+                        </div>
+                    </div>
+                   
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="telephone">Telephone *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" field-name="country_code"  maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ccode" name="ccode" value="961">
+                                <input type="text" class="form-control" field-name="telephone"  maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="telephone" name="telephone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="email">Email *</label>
+                            <input type="email" class="form-control" field-name="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="superAgentId">Super-Agent *</label>
+                            <select class=" form-control" required field-name="super_Agent_Id">
+                                <option data-select2-id="2">Select Super Agent (Mother Account)</option>
+                                 @foreach (var thislist in filldata.loadedData.superAgents)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="contactperson">Contact Person</label>
+                            <input type="text" class="form-control" field-name="contact_Person" id="contactperson" required>
+                        </div>
+                    </div>
+                    @*<div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="insno">Insured Number *</label>
+                            <input type="text" class="form-control" id="insno" field-name="insured_Number" required>
+                        </div>
+                    </div>*@
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            
+                            <label class="form-control-label" for="tax">Tax (% and #)</label>
 
 							<div class="input-group mb-3">
 								<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" required>
@@ -175,18 +173,18 @@
 						</div>
 					</div>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="roundingRule">Rounding Rule</label>
-							<select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" required>
-								<option></option>
-								<option value="1">Upper</option>
-								<option value="2">Lower</option>
-								<option value="3">(T)Unkown</option>
-								<option value="4">Nearest</option>
-							</select>
-						</div>
-					</div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="roundingRule">Rounding Rule</label>
+                            <select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" required>
+                                <option></option>
+                                @foreach (var thislist in filldata.loadedData.roundingRule)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                            </select>
+                        </div>
+                    </div>
 
 					@*  <div class="col-md-3">
 					<div class="form-group">
@@ -416,23 +414,24 @@
 			</form>
 
 
-			<div class="row">
-				<div class="col-md-2">
-					@if (userId != null)
-					{
-						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#openPasswordView" onclick="getUserPass(@userId)">Show Password</button>
-					}
-					@* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
-
-				</div>
-				<div class="col-md-8 ">
-				</div>
-				<div class="col-md-2 text-center">
-					<div class="form-group">
-						<button class="btn btn-primary float-right w-100" type="button" onclick="saveUser()">Save</button>
-					</div>
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-2">
+                    @if (userId != null && Convert.ToInt16(userId)>0)
+                    {
+                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#openPasswordView" onclick="getUserPass(@userId)">Show Password</button>
+                        
+                    }
+                       @* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
+                   
+                </div>
+                <div class="col-md-8 ">
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="form-group">
+                        <button class="btn btn-primary float-right w-100" type="button" onclick="saveUser()">Save</button>
+                    </div>
+                </div>
+            </div>
 
 			@*    <div class="modal" id="openPasswordView" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">

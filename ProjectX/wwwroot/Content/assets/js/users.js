@@ -7,7 +7,7 @@ $(document).ready(function () {
     ////sessionStorage.removeItem('userid');
     if (usid != null && usid > 0) {
         getUserRights(usid);
-        fillUser(usid);
+        //fillUser(usid);
     }
     else 
     getAllUsers();
@@ -114,19 +114,19 @@ function resetpassword() {
     var oldPass = $("#old-password").val();
     var newPass = $("#new-password").val();
     var conPass = $("#confirm-password").val();
-    var res = {};
-    res = {
-        "oldPass": "sss",
-        "newPass": "sss",
-        "conPass": "sss"    }
-    //res["oldPass"] = oldPass;
-    //res["newPass"] = newPass;
-    //res["conPass"] = conPass;
-    console.log(res);
+    var pass = {};
+    //res = {
+    //    "oldPass": "sss",
+    //    "newPass": "sss",
+    //    "conPass": "sss"    }
+    pass["oldPass"] = oldPass;
+    pass["newPass"] = newPass;
+    pass["conPass"] = conPass;
+    console.log(pass);
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: projectname + "/Users/ResetPassword",
-        data: { res: res },
+        data: pass ,
         //data: res ,
         success: function (result) {
             removeloader();
@@ -347,7 +347,7 @@ function gotouser(me) {
     console.log(me)
     var userId = $(me).attr('userid');
     //sessionStorage.setItem('userid', userId);
-    window.location.href = '/users/createuser?userid=' + userId;
+    window.location.href = '/users/details?userid=' + userId;
 }
 function fillUser(usersid) {
     var users = {};
