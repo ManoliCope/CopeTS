@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
 using static ProjectX.Controllers.ProductionController;
+using System.IO.Packaging;
 
 namespace ProjectX.Controllers
 {
@@ -158,10 +159,12 @@ namespace ProjectX.Controllers
                 List<TR_Product> productlist = GetProdutctsByType(typeid);
                 List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
                 List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
+                List<TR_Benefit> benefitlist = GetAdditionalBenbyTariff(policyreponse.PolicyDetails.Select(detail => detail.Tariff).ToList());
 
                 ViewData["productlist"] = productlist;
                 ViewData["zonelist"] = zonelist;
                 ViewData["destinationlist"] = destinationlist;
+                ViewData["benefitlist"] = benefitlist;
 
                 return View("details", policyreponse);
             }
@@ -217,10 +220,13 @@ namespace ProjectX.Controllers
         {
             List<TR_Destinations> response = new List<TR_Destinations>();
             return _productionBusiness.GetDestinationByZone(ZoneId);
-            return response;
         }
 
-
+        public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff)
+        {
+            List<TR_Benefit> response = new List<TR_Benefit>();
+            return _productionBusiness.GetAdditionalBenbyTariff(Tariff);
+        }
 
         [HttpPost]
         public ProductionResp GetQuotation(List<ProductionReq> quotereq)

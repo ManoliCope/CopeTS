@@ -41,7 +41,9 @@ namespace ProjectX.Entities.Models.Production
         public int Plan { get; set; }
         public string PlanName { get; set; }
 
+        public bool Deductible { get; set; }
         public decimal DeductiblePrice { get; set; }
+        public bool SportsActivities { get; set; }
         public decimal SportsActivitiesPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal PlanPrice { get; set; }

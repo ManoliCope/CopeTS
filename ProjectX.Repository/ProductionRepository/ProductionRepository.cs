@@ -119,6 +119,28 @@ namespace ProjectX.Repository.ProductionRepository
                 return null;
             }
 
+            return response;
+        }
+
+
+        public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff)
+        {
+            List<TR_Benefit> response = new List<TR_Benefit>();
+            using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                DataTable ListTariff = ConvertIntListToDataTable(Tariff);
+
+                var queryParameters = new DynamicParameters(new
+                {
+                    Tariffs = ListTariff
+                });
+
+                var query = "TR_AdditionalBen_GetbyTariff";
+                using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<TR_Benefit>().ToList();
+                }
+            }
 
             return response;
         }
@@ -147,7 +169,7 @@ namespace ProjectX.Repository.ProductionRepository
 
                 });
 
-                var query = "TR_GetProductionDetails";
+                var query = "TR_Production_GetQuotation";
 
                 using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
                 {
@@ -176,6 +198,7 @@ namespace ProjectX.Repository.ProductionRepository
         {
             ProductionSaveResp response = new ProductionSaveResp();
             string thisresult = "";
+            var query = "";
 
 
             DataTable test = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
@@ -204,6 +227,8 @@ namespace ProjectX.Repository.ProductionRepository
 
                     SelectedDestinationIds = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds),
                     SelectedDestinations = IssuanceReq.selectedDestinations,
+
+                    PolicyId = IssuanceReq.policyId,
                     Duration = IssuanceReq.duration,
                     ToDate = IssuanceReq.to,
                     FromDate = IssuanceReq.from,
@@ -220,7 +245,10 @@ namespace ProjectX.Repository.ProductionRepository
                     Userid = userid
                 });
 
-                var query = "TR_SaveIssuanceProcedure";
+                if (IssuanceReq.policyId == 0)
+                    query = "TR_Production_IssuePolicy";
+                else
+                    query = "TR_Production_EditPolicy";
 
                 using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
                 {
@@ -232,7 +260,12 @@ namespace ProjectX.Repository.ProductionRepository
             if (double.TryParse(thisresult, out double numericValue))
             {
                 response.statusCode.code = 1;
-                response.statusCode.message = "Policy Created";
+
+                if (IssuanceReq.policyId == 0)
+                    response.statusCode.message = "Policy Created";
+                else
+                    response.statusCode.message = "Policy Edited";
+
                 response.PolicyID = Convert.ToInt32(thisresult);
             }
             else

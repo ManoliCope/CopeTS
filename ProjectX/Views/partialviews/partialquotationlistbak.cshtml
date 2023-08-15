@@ -2,8 +2,10 @@
 
 @{
 	Layout = null;
+	var benefitlist = ViewData["benefitlist"] as List<ProjectX.Entities.dbModels.TR_Benefit>;
 	var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
 }
+
 
 
 <div class="card mt-2 mb-0">
@@ -60,17 +62,30 @@
 										</option>
 									}
 
+									@*adding tariff benefits with price that are not save into this policy*@
+									@foreach (var thislist in benefitlist)
+									{
+										var test = Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId).ToList();
+										bool benefitExists = Model.AdditionalBenefits.Any(ab => ab.Insuredid == item.InsuredId && ab.AB_ID == thislist.B_Id);
+
+										if (thislist.TariffId == item.Tariff && !benefitExists)
+										{
+											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
+												@thislist.B_Title @thislist.B_Benfees
+											</option>
+										}
+									}
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>
-								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.DeductiblePrice > 0 ? "checked" : "" ) />
+								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.Deductible ? "checked" : "" ) />
 							</td>
 							<td>
 								Sports Activities - <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>
-								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivitiesPrice > 0 ? "checked" : "" ) />
+								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivities ? "checked" : "" ) />
 							</td>
 							<td>
 								Price	<br />

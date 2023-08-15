@@ -2,6 +2,7 @@
 var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
+    var polIdValue = $(".editscreen").attr("pol-id");
 
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
@@ -18,6 +19,7 @@ $(document).ready(function () {
     //    }
     //});
 
+    triggercalculationfields()
 
 
     $('#destination_id').select2({
@@ -676,7 +678,6 @@ function triggercalculationfields() {
     //$('.benplus').on('change', recalculateTotalPrice);
     //$('input[data-dedprice]').on('change', recalculateTotalPrice);
     //$('input[data-sportsprice]').on('change', recalculateTotalPrice);
-
     $('.quoatetable').on('change', function () {
         recalculateTotalPrice($(this));
     });
@@ -975,10 +976,10 @@ function sendDataIssuance() {
             //fullName: insuredSection.find(".card-header td:eq(1)").text(),
             tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
             plan: insuredSection.find(".plans option:selected").val(),
-            deductibleprice: insuredSection.find("input[name='name'][data-dedprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) : 0,
-            sportsActivitiesprice: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) : 0,
+            deductible: insuredSection.find("input[name='name'][data-dedprice]").prop("checked"),
+            deductibleprice:  parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) ,
+            sportsActivities: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked"),
+            sportsActivitiesprice: parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) ,
             discount: isNaN(parseFloat(insuredSection.find(".discount").val())) ? 0 : parseFloat(insuredSection.find(".discount").val()),
             planPrice: parseFloat(insuredSection.find(".planprice").text()),
             finalPrice: parseFloat(insuredSection.find(".finalprice").text())
@@ -1002,6 +1003,8 @@ function sendDataIssuance() {
     var GeneralData = createGeneralInformationData()
 
     var dataToSend = {
+        policyId: $(".editscreen").attr("pol-id"),
+
         beneficiaryDetails: BeneficiaryDetails,
         beneficiaryData: beneficiaryData,
         additionalBenefits: listadditionalbenefits,
