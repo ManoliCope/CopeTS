@@ -84,8 +84,8 @@ function showloader(inside) {
             //$('#cover-spin').show(0)
             //$("#cover-spin").css("display", "block !important")
             $("#partialscreen .container-fluid").parent().prepend(` <div class="myloader" >
-                                <div class="loader" style="background:none !important"></div>
-                            </div>`);
+                <div class="loader" style="background:none !important"></div>
+            </div>`);
 
             $("#partialscreen .container-fluid").css("opacity", "0.2");
         }
