@@ -32,11 +32,11 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetDestinationByZone(idZone);
         }
-        public ProductionResp getProductionDetails(List<ProductionReq> req)
+        public ProductionResp getProductionDetails(List<ProductionReq> req, int userid)
         {
-            return _prodRepository.getProductionDetails(req);
+            return _prodRepository.getProductionDetails(req, userid);
         }
-        public ProductionResp SaveIssuance(IssuanceReq req, int userid)
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
         {
             return _prodRepository.SaveIssuance(req, userid);
         }
@@ -44,6 +44,12 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetPolicy(IdPolicy, userid);
         }
+
+        public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid)
+        {
+            return _prodRepository.GetPoliciesList(req, userid);
+        }
+
 
     }
 }

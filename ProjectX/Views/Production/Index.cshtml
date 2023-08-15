@@ -42,30 +42,10 @@
 												<div id="searchform">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
-															<label>Name:</label>
-															<input id="prname" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
+															<label>Reference:</label>
+															<input id="referencename" type="text" class="form-control datatable-input" placeholder="Profile Name" data-col-index="0">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6 ">
-															<label for="sprtype">Type: </label>
-															<select id="sprtype" data-plugin="prtype" class="form-control" data-placeholder="Select an option">
-																<option selected>Select Type</option>
-																@*@foreach (var type in Model.loadedData.profileTypes)
-																	{
-																		<option value="@type.LK_ID"> @type.LK_TableField</option>
-																	}*@
-															</select>
-														</div>
-
-														<div class="col-lg-3 mb-lg-0 mb-6 hidden">
-															<label for="prcountry">Country: </label>
-															<select id="prcountry" data-plugin="prcountry" class="form-control" data-placeholder="Select an option">
-																<option disabled selected>Select Country</option>
-
-															</select>
-														</div>
-
-
-														<div class="col-lg-3">
+														<div class="col-lg-6">
 														</div>
 														<div class="col-lg-3">
 															<div class="row mt-4">

@@ -10,12 +10,13 @@ namespace ProjectX.Repository.ProductionRepository
 {
     public interface IProductionRepository
     {
+        public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
         public List<TR_Product> GetProductsByType(int id);
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
-        public ProductionResp getProductionDetails(List<ProductionReq> req);
-        public ProductionResp SaveIssuance(IssuanceReq req, int userid);
+        public ProductionResp getProductionDetails(List<ProductionReq> req, int userid);
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid);
-
+        
     }
 }

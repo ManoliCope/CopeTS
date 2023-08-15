@@ -55,7 +55,7 @@ namespace ProjectX.Entities.Models.Production
     public class BeneficiaryData
     {
         public int Insured { get; set; }
-        public string insuredId { get; set; }
+        public int insuredId { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string dateOfBirth { get; set; }

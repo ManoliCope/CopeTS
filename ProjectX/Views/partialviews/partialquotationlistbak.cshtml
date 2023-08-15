@@ -36,8 +36,8 @@
 				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId">
 					<tbody>
 						<tr class="card-header">
-							<td>Full Name -  @item.InsuredId </td>
-							<td colspan="2">@item.FullName</td>
+							<td>Full Name  </td>
+							<td colspan="2">@item.FirstName @item.LastName</td>
 						</tr>
 						<tr>
 							<td>Plan</td>
@@ -55,8 +55,8 @@
 								<select class="form-control isselect2 benplus" multiple>
 									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
 									{
-										<option data-benprice="@thislist.Price" value="@thislist.ID">
-											@thislist.Name
+										<option data-benprice="@thislist.Price" value="@thislist.ID" selected>
+											@thislist.Name @thislist.Price
 										</option>
 									}
 
@@ -65,7 +65,7 @@
 						</tr>
 						<tr>
 							<td>
-								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.Discount</span>
+								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>
 								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.DeductiblePrice > 0 ? "checked" : "" ) />
 							</td>
 							<td>
@@ -74,7 +74,7 @@
 							</td>
 							<td>
 								Price	<br />
-								<span data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
+								<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
 							</td>
 						</tr>
 						<tr>

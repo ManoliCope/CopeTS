@@ -35,6 +35,23 @@ namespace ProjectX.Repository.ProductionRepository
             _generalRepository = generalrepository;
         }
 
+        public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid)
+        {
+            var resp = new List<TR_PolicyHeader>();
+
+            var param = new DynamicParameters();
+            param.Add("@Pol_Reference", req.Reference);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_Get", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.Read<TR_PolicyHeader>().ToList();
+                }
+            }
+            return resp;
+        }
+
         public List<TR_Product> GetProductsByType(int idType)
         {
             List<TR_Product> response = new List<TR_Product>();
@@ -106,7 +123,7 @@ namespace ProjectX.Repository.ProductionRepository
             return response;
         }
 
-        public ProductionResp getProductionDetails(List<ProductionReq> req)
+        public ProductionResp getProductionDetails(List<ProductionReq> req, int userid)
         {
             ProductionResp response = new ProductionResp();
             using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -125,7 +142,9 @@ namespace ProjectX.Repository.ProductionRepository
                     //Products = req.InsuredQuotations.Select(iq => iq.Product).ToList(),
                     //Ages = req.InsuredQuotations.Select(iq => iq.Ages).ToList(),
                     //Durations = req.InsuredQuotations.Select(iq => iq.Durations).ToList(),
-                    QuoteReq = dataTable
+                    QuoteReq = dataTable,
+                    IdUser = userid
+
                 });
 
                 var query = "TR_GetProductionDetails";
@@ -153,9 +172,9 @@ namespace ProjectX.Repository.ProductionRepository
             return dataTable;
         }
 
-        public ProductionResp SaveIssuance(IssuanceReq IssuanceReq, int userid)
+        public ProductionSaveResp SaveIssuance(IssuanceReq IssuanceReq, int userid)
         {
-            ProductionResp response = new ProductionResp();
+            ProductionSaveResp response = new ProductionSaveResp();
             string thisresult = "";
 
 
@@ -210,9 +229,34 @@ namespace ProjectX.Repository.ProductionRepository
                 }
             }
 
+            if (double.TryParse(thisresult, out double numericValue))
+            {
+                response.statusCode.code = 1;
+                response.statusCode.message = "Policy Created";
+                response.PolicyID = Convert.ToInt32(thisresult);
+            }
+            else
+            {
+                response.statusCode.code = 0;
+                response.statusCode.message = thisresult;
+            }
+
+
             return response;
         }
 
+
+        //public class GlobalResponse
+        //{
+        //    public StatusCode statusCode { get; set; } = new StatusCode();
+        //}
+        //public class StatusCode
+        //{
+        //    public int code { get; set; } = 0;
+        //    public string message { get; set; }
+        //    [JsonIgnore]
+        //    public string idLanguage { get; set; } = "1";
+        //}
 
         public ProductionPolicy GetPolicy(int IdPolicy, int userid)
         {

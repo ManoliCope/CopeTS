@@ -281,13 +281,13 @@
 	{
 		<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>
 	}
-	else if (controllerName == "production" && actionName == "create")
+	else if (controllerName == "production" && actionName == "index")
 	{
-		<script src="~/Content/assets/js/productioncreate.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/js/productionindex.js" asp-append-version="true"></script>
 	}	
-	else if (controllerName == "production" && actionName == "edit")
+	else if (controllerName == "production" && (actionName == "edit" || actionName =="create"))
 	{
-		<script src="~/Content/assets/js/productionedit.js" asp-append-version="true"></script>
+		<script src="~/Content/assets/js/productioncrud.js" asp-append-version="true"></script>
 	}
 	else if (controllerName == "beneficiary")
 	{

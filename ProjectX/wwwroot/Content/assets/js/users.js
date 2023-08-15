@@ -414,6 +414,7 @@ function formatDate(data) {
     
 }
 function getUserPass(userid) {
+    showresponsemodalbyid('openPasswordView')
 
     $.ajax({
         type: 'GET',
@@ -441,3 +442,6 @@ function showChildren(parentid) {
     //window.location.href = '/users/createuser';
     getAllUsers();
 }
+
+
+

@@ -5,6 +5,7 @@ using ProjectX.Business.General;
 using ProjectX.Business.Production;
 using ProjectX.Business.Profile;
 using ProjectX.Controllers;
+using ProjectX.Entities;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
@@ -13,6 +14,10 @@ using ProjectX.Entities.Models.Package;
 using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Production;
 using ProjectX.Entities.Models.Profile;
+using ProjectX.Entities.Resources;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System;
 using static ProjectX.Controllers.ProductionController;
 
 namespace ProjectX.Controllers
@@ -84,6 +89,15 @@ namespace ProjectX.Controllers
         }
 
 
+        [HttpPost]
+        public ProductionSearchResp Search(ProductionSearchReq req)
+        {
+            ProductionSearchResp response = new ProductionSearchResp();
+            response.Production = _productionBusiness.GetPoliciesList( req, _user.U_Id);
+
+            return response;
+        }
+
 
         // GET: ProductionController/Create
         public ActionResult Createbak()
@@ -126,13 +140,33 @@ namespace ProjectX.Controllers
                 loadZones = true
 
             });
-
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(id, 1);
+            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id);
 
-            return View("details", policyreponse);
+            if (policyreponse != null)
+            {
+                int typeid = 0;
+                if (policyreponse.IsIndividual)
+                    typeid = 1;
+                else if (policyreponse.IsFamily)
+                    typeid = 2;
+                else if (policyreponse.IsGroup)
+                    typeid = 3;
+
+                List<TR_Product> productlist = GetProdutctsByType(typeid);
+                List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
+                List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
+
+                ViewData["productlist"] = productlist;
+                ViewData["zonelist"] = zonelist;
+                ViewData["destinationlist"] = destinationlist;
+
+                return View("details", policyreponse);
+            }
+            else
+                return RedirectToAction("index", "Production"); // Redirect to another action
 
         }
 
@@ -151,11 +185,6 @@ namespace ProjectX.Controllers
             }
         }
 
-        // GET: ProductionController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
         // POST: ProductionController/Delete/5
         [HttpPost]
@@ -196,7 +225,7 @@ namespace ProjectX.Controllers
         [HttpPost]
         public ProductionResp GetQuotation(List<ProductionReq> quotereq)
         {
-            return _productionBusiness.getProductionDetails(quotereq);
+            return _productionBusiness.getProductionDetails(quotereq, _user.U_Id);
         }
 
         [HttpPost]
@@ -207,7 +236,7 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public ProductionResp IssuePolicy(IssuanceReq IssuanceReq)
+        public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
         }
