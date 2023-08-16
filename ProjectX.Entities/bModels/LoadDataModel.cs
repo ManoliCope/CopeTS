@@ -20,6 +20,8 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> userCategory { get; set; }
         public List<LookUpp> roundingRule { get; set; }
         public List<LookUpp> superAgents { get; set; }
+        public List<LookUpp> currencies { get; set; }
+        public List<LookUpp> currencyRate { get; set; }
         
     }
 }

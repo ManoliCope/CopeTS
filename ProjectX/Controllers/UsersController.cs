@@ -64,17 +64,23 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int userid)
         {
-            //Testupload();
-
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+                loadFormats = true,
+                loadUserCategory = true,
+                loadRoundingRule = true,
+                loadDestinations = true,
+                loadSuperAgents = true,
+                loadCurrencyRate=true
             });
+            ViewData["loadDataCreate"] = response;
+            ViewData["userid"] = userid.ToString();
+
+
             return View();
+            
         }
 
         public IActionResult Contract()
@@ -94,17 +100,11 @@ namespace ProjectX.Controllers
         //    //return _profileBusiness.SearchProfiles(req);
         //}
 
-       public IActionResult ResetPass(string? pass)
+       public IActionResult Reset()
         {
-            //LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
-            //{
-            //    loadProducts = true,
-            //    loadProfiles = true
-            //});
-            ViewData["pass"] = pass;
             return View();
         }
-        [HttpGet]
+        [HttpPost]
         public ResetPass resetPassword(ResetPass pass)
         {
                 pass.userId = _user.U_Id;
@@ -147,22 +147,22 @@ namespace ProjectX.Controllers
 
             return response;
         }
-        public IActionResult createUser(int userid)
-        {
-            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
-            {
-                loadFormats=true,
-                loadUserCategory=true,
-                loadRoundingRule=true,
-                loadDestinations=true,
-                loadSuperAgents=true
-            });
-            ViewData["loadDataCreate"] = response;
-            ViewData["userid"] = userid.ToString();
+        //public IActionResult createUser(int userid)
+        //{
+        //    LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+        //    {
+        //        loadFormats=true,
+        //        loadUserCategory=true,
+        //        loadRoundingRule=true,
+        //        loadDestinations=true,
+        //        loadSuperAgents=true
+        //    });
+        //    ViewData["loadDataCreate"] = response;
+        //    ViewData["userid"] = userid.ToString();
 
             
-            return View();
-        }
+        //    return View();
+        //}
         public IActionResult Details(int userid)
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup

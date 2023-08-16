@@ -12,6 +12,9 @@ $(document).ready(function () {
     else 
     getAllUsers();
 
+    resetPassScreen();
+   
+
 });
 function drawtable(data) {
     console.log(data)
@@ -115,26 +118,22 @@ function resetpassword() {
     var newPass = $("#new-password").val();
     var conPass = $("#confirm-password").val();
     var pass = {};
-    //res = {
-    //    "oldPass": "sss",
-    //    "newPass": "sss",
-    //    "conPass": "sss"    }
+
     pass["oldPass"] = oldPass;
     pass["newPass"] = newPass;
     pass["conPass"] = conPass;
     console.log(pass);
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: projectname + "/Users/ResetPassword",
         data: pass ,
-        //data: res ,
         success: function (result) {
             removeloader();
 
             if (result.statusCode.code != 1)
-                showresponsemodal("error", result.statusCode.message)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
             else {
-                drawtable(result.users);
+                showresponsemodal(1, result.statusCode.message)
             }
 
         },
@@ -428,20 +427,25 @@ function getUserPass(userid) {
         }
     });
 }
-
 $('#changePassword').click(function(){
     var pass = $('#inputPassword').val();
-    window.location.href = "/Users/ResetPass?pass=" + pass;
+    sessionStorage.setItem('pass', pass);
+    window.location.href = "/Users/Reset";
 });
 function createChildUser(parentid) {
     sessionStorage.setItem('parentid', parentid);
-    window.location.href = '/users/createuser';
+    window.location.href = '/users/create';
 }
 function showChildren(parentid) {
     sessionStorage.setItem('parid', parentid);
     //window.location.href = '/users/createuser';
     getAllUsers();
 }
-
+function resetPassScreen() {
+    var pass = sessionStorage.getItem('pass').toString();
+    sessionStorage.removeItem('pass');
+    if (pass != null)
+        $("#old-password").val(pass);
+}
 
 

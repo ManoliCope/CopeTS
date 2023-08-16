@@ -1,6 +1,6 @@
 ﻿@*@model ProjectX.Entities.Models.General.LoadDataResp *@
 @{
-    var pass = ViewData["pass"] as string??"";
+   
 
 }
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
   <h2>Password Reset</h2>
   <form>
       <div class="col-lg-3 mb-lg-0 mb-6">
-    <input type="password" class="form-control" id="old-password" name="old-password" placeholder="Old Password" value="@pass" required><br><br>
+    <input type="password" class="form-control" id="old-password" name="old-password" placeholder="Old Password" required><br><br>
     </div>
     <div class="col-lg-3 mb-lg-0 mb-6">
     <input type="password" class="form-control" id="new-password" name="new-password" placeholder="New Password" required><br><br>

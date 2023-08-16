@@ -20,6 +20,7 @@ using ProjectX.Repository.GeneralRepository;
 using ProjectX.Repository.NotificationsRepository;
 using ProjectX.Repository.ProfileRepository;
 using ProjectX.Repository.UserRepository;
+using ProjectX.Repository.CurrencyRateRepository;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProjectX.Extension.Jwt;
@@ -30,6 +31,7 @@ using ProjectX.Business.Package;
 using ProjectX.Repository.PackageRepository;
 using ProjectX.Repository.TariffRepository;
 using ProjectX.Business.Tariff;
+using ProjectX.Business.CurrencyRate;
 using ProjectX.Repository.PlanRepository;
 using ProjectX.Business.Plan;
 using ProjectX.Repository.ProductionRepository;
@@ -141,6 +143,9 @@ public class Startup
 
         services.AddSingleton<IBeneficiaryBusiness, BeneficiaryBusiness>();
         services.AddSingleton<IBeneficiaryRepository, BeneficiaryRepository>();
+
+        services.AddSingleton<ICurrencyRateBusiness, CurrencyRateBusiness>();
+        services.AddSingleton<ICurrencyRateRepository, CurrencyRateRepository>();
 
         services.AddDistributedMemoryCache();
         services.AddSession();

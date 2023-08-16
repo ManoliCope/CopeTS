@@ -42,6 +42,8 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadUserCategory", loadDataModelSetup.loadUserCategory);
             param.Add("@loadRoundingRule", loadDataModelSetup.loadRoundingRule);
             param.Add("@loadSuperAgents", loadDataModelSetup.loadSuperAgents);
+            param.Add("@loadCurrencies", loadDataModelSetup.loadCurrencies);
+            param.Add("@loadCurrencyRate", loadDataModelSetup.loadCurrencyRate);
 
 
 
@@ -73,6 +75,10 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.roundingRule = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadSuperAgents)
                         resp.superAgents = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadCurrencies)
+                        resp.currencies = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadCurrencyRate)
+                        resp.currencyRate = result.Read<LookUpp>().ToList();
                 }
             }
 
