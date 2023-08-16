@@ -56,6 +56,7 @@ namespace ProjectX.Entities.Models.Production
         public string PassportNo { get; set; }
         public string Gender { get; set; }
         public int Tariff { get; set; }
+        public decimal TariffPrice { get; set; }
     }
 
     public class PolicyAdditionalBenefit

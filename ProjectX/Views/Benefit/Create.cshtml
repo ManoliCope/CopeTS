@@ -2,21 +2,14 @@
 @{
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
-<style>
-	.card-header {
-		background: linear-gradient(to right, white,var(--main-color) );
-		border-top-right-radius: 5px;
-		height: 54px;
-		border-top-left-radius: 5px;
-	}
-</style>
+
 
 <div class="content" pgtype="view">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="row mb-3">
 			<div class="col-md-12 ">
 				<div class="card h-100 ">
-					<div class="card-header">
+					<div class="card-header custom">
 						<h4 class="card-title ">
 							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 							<span>New Benefit</span>
@@ -60,14 +53,13 @@
 									<div id="addBenFormat" class="form-group col-lg-4 hidden">
 										<label for="additional_benefits">Additional Benefits</label>
 										<div class="input-group mb-3">
-											<input type="number" class="form-control" aria-label="text input with dropdown button" id="additional_benefits" name="additional_benefits" >
+											<input type="number" class="form-control" aria-label="text input with dropdown button" id="additional_benefits" name="additional_benefits">
 											<div class="input-group-prepend">
 												<select class="form-control" id="additional_benefits_format" name="additional_benefits_format" required>
-													<option>select type</option>
-													@foreach (var thislist in filldata.loadedData.format)
-											{
-												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											}
+													@foreach (var thislist in filldata.loadedData.format.OrderByDescending(x=>x.LK_ID))
+													{
+														<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+													}
 												</select>
 											</div>
 										</div>

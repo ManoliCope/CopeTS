@@ -10,12 +10,13 @@
 		<div class="row mb-3">
 			<div class="col-md-12 ">
 				<div class="card h-100 ">
-					<div class="card-body">
+					<div class="card-header custom">
 						<h4 class="card-title ">
 							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 							<span>Edit Benefit</span>
 						</h4>
-						<hr />
+					</div>
+					<div class="card-body">
 						<div class="row">
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
 								<div class="row">
@@ -49,7 +50,7 @@
 										<div class="form-group mb-0">
 											<div class="form-check">
 												<input class="form-check-input" type="checkbox" id="is_Plus" autocomplete="off" @(Model.is_Plus == true ? "checked" : "")>
-												<label class="form-check-label" for="is_Plus" >
+												<label class="form-check-label" for="is_Plus">
 													Is Benefit Plus
 
 												</label>
@@ -62,30 +63,24 @@
 											<input type="number" class="form-control" aria-label="text input with dropdown button" id="additional_benefits" name="additional_benefits" value="@Model.additionalBenefits">
 											<div class="input-group-prepend">
 												<select class="form-control" id="additional_benefits_format" name="additional_benefits_format" required>
-													<option>select type</option>
-													@foreach (var thislist in filldata.loadedData.format)
-											{
-												@if (thislist.LK_ID == Model.additionalBenefitsFormat)
-												{
-													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
-												}
-												else
-												{
-													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-												}
-											}
+													@foreach (var thislist in filldata.loadedData.format.OrderByDescending(x => x.LK_ID))
+													{
+														@if (thislist.LK_ID == Model.additionalBenefitsFormat)
+														{
+															<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+														}
+														else
+														{
+															<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+														}
+													}
 												</select>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
-
 						</div>
-
-
-
 					</div>
 				</div>
 			</div>
@@ -101,15 +96,18 @@
 						<div class="col-lg-4">
 							<div class="row">
 								<div class="col-lg-4">
+								</div>
+
+								<div class="col-lg-4">
 									<button id="btndelete" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
 										<span> Delete </span>
 									</button>
 								</div>
-								<div class="col-lg-4">
-									<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
-										<span> Files </span>
-									</button>
-								</div>
+								@*<div class="col-lg-4">
+										<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
+											<span> Files </span>
+										</button>
+									</div>*@
 								<div class="col-lg-4">
 									<button id="edit" class="btn btn-primary w-100 bglocalcolor" type="submit">
 										<span> Save </span>

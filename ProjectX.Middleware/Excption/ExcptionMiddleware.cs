@@ -18,6 +18,7 @@ using System.Diagnostics;
 using NLog;
 using System.Net.Http;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace ProjectX.Middleware.Excption
 {
@@ -96,6 +97,9 @@ namespace ProjectX.Middleware.Excption
             }
             catch (Exception ex)
             {
+                int errorCode = ex.HResult;
+
+
                 _ex = ex;
                 MappedDiagnosticsLogicalContext.Set("Exception", ex.Message + Environment.NewLine + ex.StackTrace);
                 StackFrame stackFrame = new StackTrace(ex, true).GetFrame(0);
@@ -118,8 +122,21 @@ namespace ProjectX.Middleware.Excption
 
                 if (_ex != null)
                 {
+
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var errorResponse = new
+                    {
+                        Message = "An error occurred while processing your request."
+                    };
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
+
+
+
                     _logger.LogError(_ex, "REQUEST/RESPONSE");
-                    context.Response.Redirect(@"/error");
+                    //context.Response.Redirect(@"/error");
                 }
                 else
                 {

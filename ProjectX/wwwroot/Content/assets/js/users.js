@@ -10,7 +10,11 @@ $(document).ready(function () {
         //fillUser(usid);
     }
     else 
-    getAllUsers();
+        getAllUsers();
+
+    $("#searchprofile").click(function () {
+        getAllUsers();
+    });
 
     resetPassScreen();
    
@@ -217,13 +221,7 @@ function saveUser() {
         }
     });
 }
-$("#searchprofile").click(function () {
-    
-    
-    getAllUsers();
-    
-    
-});
+
 $("#kt_reset").click(function () {
     var divname = $(this).closest(".card-body").attr("id")
     resetAllValues(divname);
@@ -239,13 +237,14 @@ function getAllUsers() {
 
     filter.Last_Name = $('#prname').val();
     console.log(filter)
+    showloader("load")
+
     $.ajax({
         type: 'GET',
         url: projectname + "/Users/GetUsersList",
         data: { name: name, parentid: parentid },
         success: function (result) {
             removeloader();
-
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {

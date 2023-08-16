@@ -13,6 +13,12 @@ $(document).ready(function () {
         tokenSeparators: [',', ' ']
     })
 
+    $(".resetdiv").click(function () {
+        var divname = $(this).closest(".card-body").attr("id")
+        resetAllValues(divname);
+        resetdatatable("#productiontable");
+    });
+
     Search();
 
 });
@@ -20,7 +26,7 @@ $(document).ready(function () {
 
 
 function drawtable(data) {
-    //console.log(data)
+    console.log(data,'drawtable')
 
     var table = $('#productiontable').DataTable({
         "data": data,
@@ -32,6 +38,22 @@ function drawtable(data) {
             { "title": "Reference", "className": "text-center filter", "orderable": true, "data": "reference" },
             { "title": "Grand Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
             { "title": "Duration", "className": "text-center filter", "orderable": true, "data": "duration" },
+            {
+                "title": "Type",
+                className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    let typeLabel = "";
+
+                    if (full.isIndividual) {
+                        typeLabel = "Individual";
+                    } else if (full.isGroup) {
+                        typeLabel = "Group";
+                    } else if (full.isFamily) {
+                        typeLabel = "Family";
+                    }
+                    return `<label>${typeLabel}</label>`;
+                }
+            },
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
@@ -64,7 +86,10 @@ function Search() {
         data: { req: filter },
         success: function (result) {
             removeloader();
+            if (result.production)
             drawtable(result.production);
+            else 
+                drawtable();
 
             //if (result.statusCode.code != 1)
             //    showresponsemodal("error", result.statusCode.message)
@@ -76,11 +101,19 @@ function Search() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-            //alert("Error:" + failure);
+           alert("Error:" + failure);
         },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+        error: function (xhr,data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
+
+            showresponsemodal("Error", errorMessage)
         }
     });
 }
