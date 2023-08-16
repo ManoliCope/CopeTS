@@ -100,9 +100,13 @@
 	{
 		<link href="~/Content/assets/css/profile.css" rel="stylesheet" asp-append-version="true" />
 	}
-	else if (controllerName == "production")
+	else if (controllerName == "production" && actionName == "index")
 	{
 		<link href="~/Content/assets/css/production.css" rel="stylesheet" asp-append-version="true" />
+	}
+	else if (controllerName == "production" && (actionName == "edit" || actionName == "create"))
+	{
+		<link href="~/Content/assets/css/productioncrud.css" rel="stylesheet" asp-append-version="true" />
 	}
 	else if (controllerName == "beneficiary")
 	{
@@ -112,6 +116,7 @@
 	{
 
 	}
+
 
 </head>
 

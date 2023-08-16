@@ -9,6 +9,7 @@ using ProjectX.Entities;
 using ProjectX.Entities.bModels;
 using ProjectX.Repository.ProductionRepository;
 using ProjectX.Entities.Models.Production;
+using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
 
 namespace ProjectX.Business.Production
 {
@@ -32,6 +33,10 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetDestinationByZone(idZone);
         }
+        public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff)
+        {
+            return _prodRepository.GetAdditionalBenbyTariff(Tariff);
+        }
         public ProductionResp getProductionDetails(List<ProductionReq> req, int userid)
         {
             return _prodRepository.getProductionDetails(req, userid);
@@ -49,6 +54,8 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetPoliciesList(req, userid);
         }
+
+      
 
 
     }

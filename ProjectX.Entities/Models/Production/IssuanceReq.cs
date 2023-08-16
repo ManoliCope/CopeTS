@@ -11,6 +11,7 @@ namespace ProjectX.Entities.Models.Production
     //}
     public class IssuanceReq
     {
+        public int policyId { get; set; }
         public List<BeneficiaryDetails> beneficiaryDetails { get; set; }
         public List<BeneficiaryData> beneficiaryData { get; set; }
         public List<AdditionalBenefit> additionalBenefits { get; set; }
@@ -45,7 +46,9 @@ namespace ProjectX.Entities.Models.Production
         public int tariff { get; set; }
         public string fullName { get; set; }
         public string plan { get; set; }
+        public bool Deductible { get; set; }
         public double Deductibleprice { get; set; }
+        public bool SportsActivities { get; set; }
         public double SportsActivitiesprice { get; set; }
         public double discount { get; set; }
         public double planPrice { get; set; }

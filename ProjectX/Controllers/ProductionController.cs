@@ -19,6 +19,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
 using static ProjectX.Controllers.ProductionController;
+using System.IO.Packaging;
+using ProjectX.Business.Users;
+using ProjectX.Repository.UsersRepository;
+using ProjectX.Business.User;
 
 namespace ProjectX.Controllers
 {
@@ -28,15 +32,18 @@ namespace ProjectX.Controllers
         private IProductionBusiness _productionBusiness;
         private IGeneralBusiness _generalBusiness;
         private readonly TrAppSettings _appSettings;
+        private IUsersBusiness _usersBusiness;
         private TR_Users _user;
+        private IUsersRepository _usersRepository;
 
         private IWebHostEnvironment _env;
 
-        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness usersBusiness, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _productionBusiness = productionBusiness;
             _generalBusiness = generalBusiness;
+            _usersBusiness = usersBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
@@ -129,6 +136,8 @@ namespace ProjectX.Controllers
         // GET: ProductionController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
@@ -158,10 +167,12 @@ namespace ProjectX.Controllers
                 List<TR_Product> productlist = GetProdutctsByType(typeid);
                 List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
                 List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
+                List<TR_Benefit> benefitlist = GetAdditionalBenbyTariff(policyreponse.PolicyDetails.Select(detail => detail.Tariff).ToList());
 
                 ViewData["productlist"] = productlist;
                 ViewData["zonelist"] = zonelist;
                 ViewData["destinationlist"] = destinationlist;
+                ViewData["benefitlist"] = benefitlist;
 
                 return View("details", policyreponse);
             }
@@ -217,10 +228,13 @@ namespace ProjectX.Controllers
         {
             List<TR_Destinations> response = new List<TR_Destinations>();
             return _productionBusiness.GetDestinationByZone(ZoneId);
-            return response;
         }
 
-
+        public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff)
+        {
+            List<TR_Benefit> response = new List<TR_Benefit>();
+            return _productionBusiness.GetAdditionalBenbyTariff(Tariff);
+        }
 
         [HttpPost]
         public ProductionResp GetQuotation(List<ProductionReq> quotereq)

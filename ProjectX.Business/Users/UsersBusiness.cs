@@ -10,7 +10,7 @@ namespace ProjectX.Business.Users
 { 
     public class UsersBusiness : IUsersBusiness
     {
-        IUsersRepository _usersRepository;
+        private IUsersRepository _usersRepository;
 
 
         public UsersBusiness(IUsersRepository usersRepository)

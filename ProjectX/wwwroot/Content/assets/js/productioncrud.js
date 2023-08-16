@@ -2,6 +2,7 @@
 var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
+    var polIdValue = $(".editscreen").attr("pol-id");
 
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
@@ -18,6 +19,7 @@ $(document).ready(function () {
     //    }
     //});
 
+    triggercalculationfields()
 
 
     $('#destination_id').select2({
@@ -676,7 +678,6 @@ function triggercalculationfields() {
     //$('.benplus').on('change', recalculateTotalPrice);
     //$('input[data-dedprice]').on('change', recalculateTotalPrice);
     //$('input[data-sportsprice]').on('change', recalculateTotalPrice);
-
     $('.quoatetable').on('change', function () {
         recalculateTotalPrice($(this));
     });
@@ -746,11 +747,31 @@ function recalculateTotalPrice(table) {
     var insuredstotal = $('.finalprice');
     var totalinsuredprem = 0;
 
+
+
+
+
+
+
     insuredstotal.each(function () {
         totalinsuredprem += parseFloat($(this).text());
     });
 
-    $('#initpremtotal').text(totalinsuredprem.toFixed(2));
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "$");
+
+    var initialPremium = parseFloat($('#initpremtotal').text());
+    var additionalValue = parseFloat($('#additiononprem').text());
+    var taxVATValue = parseFloat($('#taxvat').text());
+    var stampsValue = parseFloat($('#stamps').text());
+
+    if (isNaN(initialPremium)) initialPremium = 0;
+    if (isNaN(additionalValue)) additionalValue = 0;
+    if (isNaN(taxVATValue)) taxVATValue = 0;
+    if (isNaN(stampsValue)) stampsValue = 0;
+
+    var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
+    console.log(grandTotal)
+    $('#grandtotal').text(grandTotal.toFixed(2) + "$");
 }
 
 function getbeneficiarydetails() {
@@ -975,10 +996,10 @@ function sendDataIssuance() {
             //fullName: insuredSection.find(".card-header td:eq(1)").text(),
             tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
             plan: insuredSection.find(".plans option:selected").val(),
-            deductibleprice: insuredSection.find("input[name='name'][data-dedprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")) : 0,
-            sportsActivitiesprice: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked")
-                ? parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")) : 0,
+            deductible: insuredSection.find("input[name='name'][data-dedprice]").prop("checked"),
+            deductibleprice: parseFloat(insuredSection.find("input[name='name'][data-dedprice]").data("dedprice")),
+            sportsActivities: insuredSection.find("input[name='name'][data-sportsprice]").prop("checked"),
+            sportsActivitiesprice: parseFloat(insuredSection.find("input[name='name'][data-sportsprice]").data("sportsprice")),
             discount: isNaN(parseFloat(insuredSection.find(".discount").val())) ? 0 : parseFloat(insuredSection.find(".discount").val()),
             planPrice: parseFloat(insuredSection.find(".planprice").text()),
             finalPrice: parseFloat(insuredSection.find(".finalprice").text())
@@ -1002,6 +1023,8 @@ function sendDataIssuance() {
     var GeneralData = createGeneralInformationData()
 
     var dataToSend = {
+        policyId: $(".editscreen").attr("pol-id"),
+
         beneficiaryDetails: BeneficiaryDetails,
         beneficiaryData: beneficiaryData,
         additionalBenefits: listadditionalbenefits,
@@ -1025,27 +1048,51 @@ function sendDataIssuance() {
         "grandTotal": parseFloat($('#grandtotal').text()),
     };
 
-    //console.log(dataToSend)
+    console.log($(".editscreen").attr("pol-id"))
 
+    showscreenloader("load")
     $.ajax({
         url: projectname + '/Production/IssuePolicy',
         data: { IssuanceReq: dataToSend },
         method: 'POST',
         success: function (result) {
-            if (result.statusCode.code == 1) {
-                showresponsemodal("1", result.statusCode.message)
-                $("#responsemodal button").click(function () {
-                    gotopage("production", "Edit", result.policyID);
-                });
-            }
+            removescreenloader();
 
+            if (result.statusCode.code == 1) {
+                if ($(".editscreen").attr("pol-id") == undefined)
+                    $("#responsemodal button").click(function () {
+                        gotopage("production", "Edit", result.policyID);
+                    });
+                showresponsemodal("1", result.statusCode.message)
+            }
             else {
                 showresponsemodal("0", result.statusCode.message)
             }
         },
         error: function (error) {
+            removescreenloader()
+            showresponsemodal("0", "Error")
             console.error("Error sending data:", error);
         }
     });
-
 }
+
+
+
+
+function showscreenloader() {
+    $("#partialscreen .container-fluid").parent().prepend(` <div class="myloader" >
+                                <div class="loader" style="background:none !important"></div>
+                            </div>`);
+
+    $("#partialscreen .container-fluid").css("opacity", "0.2");
+    $('body').css('overflow-y', 'hidden');
+}
+
+function removescreenloader() {
+    $(".myloader").remove();
+    $('body').css('overflow-y', 'auto');
+    $("#partialscreen .container-fluid").css("opacity", "unset")
+    //$(".modal-backdrop").remove();
+}
+
