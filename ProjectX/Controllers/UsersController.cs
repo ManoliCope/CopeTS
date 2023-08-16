@@ -167,10 +167,12 @@ namespace ProjectX.Controllers
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadFormats=true
-                //loadCountries = true,
-                //loadProfileTypes = true,
-                //loadDocumentTypes = true
+                loadFormats = true,
+                loadUserCategory = true,
+                loadRoundingRule = true,
+                loadDestinations = true,
+                loadSuperAgents = true,
+                loadCurrencyRate = true
             });
             var user = _usersBusiness.GetUser(userid);
             ViewData["loadDataCreate"] = response;

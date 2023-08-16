@@ -40,13 +40,19 @@
                             <label class="form-control-label" for="categoryId">Category *</label>
                             <select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
                                 <option></option>
-                                <option value="9">Insurance Company Branch</option>
-                                <option value="11">Reinsurer</option>
-                                <option value="10">Travel Agency Branch</option>
-                                <option value="1">Insurance Company</option>
-                                <option value="3">Broker</option>
-                                <option value="8">Intermediary</option>
-                                <option value="2">Travel Agency</option>
+                                @foreach (var thislist in filldata.loadedData.userCategory)
+                                {
+                                    
+                                @if (thislist.LK_ID == Convert.ToInt64(Model.category))
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+                                }
+                                
 
                             </select>
                            
@@ -66,8 +72,18 @@
                             <label class="form-control-label" for="country">Country *</label>
                             <select class="form-control" name="countryId" id="countryId" field-name="country" required>
                                 <option></option>
-                                <option value="1">Afghanistan</option>
-                                <option value="2">Albania</option>
+                                @foreach (var thislist in filldata.loadedData.destinations)
+                                {
+                                    
+                                @if (thislist.D_Id == Model.country)
+												{
+													<option value="@thislist.D_Id" selected> @thislist.D_Destination</option>
+												}
+												else
+												{
+													<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+												}
+                                }
                            
                             </select>
                         </div>
@@ -99,11 +115,18 @@
                             <label class="form-control-label" for="superAgentId">Super-Agent *</label>
                             <select class=" form-control" required field-name="super_Agent_Id">
                                 <option data-select2-id="2">Select Super Agent (Mother Account)</option>
-                                <option value="2" data-select2-id="3">2 - 0 - Green Greens</option>
-                                <option value="3" data-select2-id="4">3 -  - Mubasher Holidays  travel</option>
-                                <option value="4" data-select2-id="5">4 -  - test iraq</option>
-                                <option value="6" data-select2-id="6">6 -  - TEST TEST</option>
-                                <option value="8" data-select2-id="7">8 - 2417 - FAST  MONDIAL</option>
+                                @foreach (var thislist in filldata.loadedData.superAgents)
+                                {
+                                    
+                                @if (thislist.LK_ID == Model.super_Agent_Id)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+                                }
                       
                             </select>
                         </div>
@@ -158,29 +181,18 @@
                             <label class="form-control-label" for="currencyId">Currency *</label>
                             <select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
                                 <option></option>
-                                <option value="1">1 USD 1</option>
-                                <option value="10">10 KUWAITI DINAR 0.29</option>
-                                <option value="11">11 BAHREINI DINAR 0.376</option>
-                                <option value="12">12 UAE DIRHAM 3.67</option>
-                                <option value="14">14 SYRIAN POUND 4000</option>
-                                <option value="15">15 EGYPTIAN POUND 5.88</option>
-                                <option value="16">16 IRAQI 1165.5</option>
-                                <option value="17">17 ARAB EMIRATES DIRHAM 3.67</option>
-                                <option value="18">18 QATAR RIYAL 3.65</option>
-                                <option value="19">19 SYR PND 3100</option>
-                                <option value="2">2 LBP 1</option>
-                                <option value="20">20 Nigerian Naira 340</option>
-                                <option value="21">21 Jordanian Dinar 0.71</option>
-                                <option value="22">22 KUWAITI DINAR 1</option>
-                                <option value="23">23 Omani Rial 0.3855</option>
-                                <option value="24">24 KUWAITI DINAR 0.305</option>
-                                <option value="25">25 Qatari Riyal 3.64</option>
-                                <option value="26">26 Tajikistani Somoni 11.3</option>
-                                <option value="4">4 Libyan Dinar 4.5157</option>
-                                <option value="5">5 JORDANIAN DINAR 0.75</option>
-                                <option value="6">6 EGYPTIAN POUND 17.7</option>
-                                <option value="7">7 JORDANIAN DINAR 0.75</option>
-                                <option value="8">8 SYRIAN POUND 4000</option>
+                                @foreach (var thislist in filldata.loadedData.currencyRate)
+                                {
+                                    
+                                @if (thislist.LK_ID == Model.currency)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+                                }
                             </select>
                         </div>
                     </div>
@@ -190,10 +202,18 @@
                             <label class="form-control-label" for="roundingRule">Rounding Rule</label>
                             <select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" required>
                                 <option></option>
-                                <option value="1">Upper</option>
-                                <option value="2">Lower</option>
-                                <option value="3">(T)Unkown</option>
-                                <option value="4">Nearest</option>
+                                 @foreach (var thislist in filldata.loadedData.roundingRule)
+                                {
+                                    
+                                @if (thislist.LK_ID == Model.rounding_Rule)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+                                }
                             </select>
                         </div>
                     </div>
