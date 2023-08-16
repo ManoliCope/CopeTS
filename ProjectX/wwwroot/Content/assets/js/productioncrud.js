@@ -108,9 +108,18 @@ $(document).ready(function () {
     });
 
     $('.thisbeneficiary :input[required]').focusout(function () {
-        getQuotation()
+
+        var selectedtype = document.querySelector('input[name="type"]:checked');
+        var typeId = selectedtype ? selectedtype.id : '';
+
+        if (typeId === 'is_individual') {
+            getQuotation()
+        }
     });
 
+    //$('.thisbeneficiary :input[required]').change(function () {
+    //    showresponsemodal("0", "Modifying beneficiary information will result in creation of a new beneficiary!!")
+    //});
 
     $('.trgrthis.isselect2').on('select2:close', function () {
         getQuotation();
@@ -732,10 +741,15 @@ function recalculateTotalPrice(table) {
 
     var deductiblePrice = table.find('input[data-dedprice]:checked').length > 0 ? parseFloat(table.find('input[data-dedprice]:checked').attr('data-dedprice')) : 0;
     var sportsPrice = table.find('input[data-sportsprice]:checked').length > 0 ? parseFloat(table.find('input[data-sportsprice]:checked').attr('data-sportsprice')) : 0;
-    var basePrice = parseFloat(table.find('span[data-bprice]').attr('data-bprice'));
+
+    var basePrice = parseFloat(table.find('.plans').find(':selected').attr('data-price'));
+    //var basePrice = parseFloat(table.find('span[data-bprice]').attr('data-bprice'));
     var discount = parseFloat(table.find('#discount').val());
 
-    var finalPrice = (isNaN(basePrice) ? 0 : basePrice) + (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) + (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice);
+    var finalPrice = (isNaN(basePrice) ? 0 : basePrice) +
+        (isNaN(totalAdditionalPrice) ? 0 : totalAdditionalPrice) +
+        (isNaN(deductiblePrice) ? 0 : deductiblePrice) + (isNaN(sportsPrice) ? 0 : sportsPrice);
+
 
     table.find('span[data-bprice]').text(finalPrice.toFixed(2));
 

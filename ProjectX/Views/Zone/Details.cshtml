@@ -10,19 +10,19 @@
 		<div class="row mb-3">
 			<div class="col-md-12 ">
 				<div class="card h-100 ">
-					<div class="card-body">
+					<div class="card-header custom">
 						<h4 class="card-title ">
 							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 							<span>Edit Zone </span>
 						</h4>
-						<hr />
-
+					</div>
+					<div class="card-body">
 						<div class="row">
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
 								<div class="row">
 									<div class="form-group mb-3 col-lg-4">
 										<label for="Z_Id">ID</label>
-                                        <label class="form-control">@Model.id</label>
+										<label class="form-control">@Model.id</label>
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
@@ -55,7 +55,7 @@
 												{
 													<li>
 														<label>
-															<input type="checkbox" id="checkbox_@(continentId)_@destination.D_Id" value="@destination.D_Id" @(Model.destinationId.Contains(destination.D_Id) ? "checked" : "")  onchange="checkContinent(this, @continentId)">
+															<input type="checkbox" id="checkbox_@(continentId)_@destination.D_Id" value="@destination.D_Id" @(Model.destinationId.Contains(destination.D_Id) ? "checked" : "") onchange="checkContinent(this, @continentId)">
 
 															@destination.D_Destination
 														</label>
@@ -82,15 +82,17 @@
 						<div class="col-lg-4">
 							<div class="row">
 								<div class="col-lg-4">
+								</div>
+								<div class="col-lg-4">
 									<button id="btndelete" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
 										<span> Delete </span>
 									</button>
 								</div>
-								<div class="col-lg-4">
-									<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
-										<span> Files </span>
-									</button>
-								</div>
+								@*<div class="col-lg-4">
+										<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
+											<span> Files </span>
+										</button>
+									</div>*@
 								<div class="col-lg-4">
 									<button id="edit" class="btn btn-primary w-100 bglocalcolor" type="submit">
 										<span> Save </span>

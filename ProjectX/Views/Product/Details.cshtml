@@ -10,12 +10,13 @@
 		<div class="row mb-3">
 			<div class="col-md-12 ">
 				<div class="card h-100 ">
-					<div class="card-body">
+					<div class="card-header custom">
 						<h4 class="card-title ">
 							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 							<span>Edit Product</span>
 						</h4>
-						<hr />
+					</div>
+					<div class="card-body">
 
 						<div class="row">
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
@@ -163,15 +164,17 @@
 						<div class="col-lg-4">
 							<div class="row">
 								<div class="col-lg-4">
+								</div>
+								<div class="col-lg-4">
 									<button id="btndelete" class="btn btn-danger w-100 mb-2" type="submit" data-toggle="modal" data-target="#confirm-delete">
 										<span> Delete </span>
 									</button>
 								</div>
-								<div class="col-lg-4">
-									<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
-										<span> Files </span>
-									</button>
-								</div>
+								@*<div class="col-lg-4">
+										<button id="ppp" class="btn btn-info w-100 mb-2" type="submit" data-toggle="modal" data-target="#view-attach-2">
+											<span> Files </span>
+										</button>
+									</div>*@
 								<div class="col-lg-4">
 									<button id="edit" class="btn btn-primary w-100 bglocalcolor" type="submit">
 										<span> Save </span>

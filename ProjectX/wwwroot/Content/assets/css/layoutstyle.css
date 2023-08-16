@@ -851,4 +851,9 @@ table td a {
 /********************************************************/
 /********************************************************/
 
-
+.card-header.custom {
+    background: linear-gradient(to right, white,var(--main-color) ) !important;
+    border-top-right-radius: 5px;
+    height: 54px;
+    border-top-left-radius: 5px;
+}
