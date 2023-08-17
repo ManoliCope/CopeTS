@@ -63,7 +63,7 @@ namespace ProjectX.Controllers
                 loadPlans = true,
                 loadTariffs = true
 
-            });
+            });            
             return View(response);
         }
 

@@ -36,6 +36,12 @@ $(document).ready(function () {
     settofrom()
     searchbeneficiary()
 
+    $('#printButton').click(function () {
+
+        Printpolicy();
+
+
+    });
 
     $('.add-travel').click(function () {
         var selectedOptions = $('#destination_id option:selected');
@@ -140,6 +146,41 @@ $(document).ready(function () {
 
 
 });
+
+
+async function Printpolicy() {
+    try {
+        const requestData = {
+            PolicyID: 43
+        };
+
+        const response = await fetch('/Document/GetPdfFromRazor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'RazorPdf.pdf';
+        link.click();
+
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
 
 
 
