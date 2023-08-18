@@ -41,6 +41,8 @@ namespace ProjectX.Repository.ProductionRepository
 
             var param = new DynamicParameters();
             param.Add("@Pol_Reference", req.Reference);
+            param.Add("@Pol_Beneficiary", req.Beneficiarys);
+            param.Add("@Pol_Passportno", req.Passportno);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

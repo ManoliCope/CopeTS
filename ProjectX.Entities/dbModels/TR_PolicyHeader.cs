@@ -27,6 +27,11 @@ namespace ProjectX.Entities.dbModels
         public decimal TaxVATValue { get; set; }
         public decimal StampsValue { get; set; }
         public decimal GrandTotal { get; set; }
+
+        public string mainname { get; set; }
+        public string nbofclients { get; set; }
+        public bool IsEditable { get; set; }
+
     }
-    
+
 }
