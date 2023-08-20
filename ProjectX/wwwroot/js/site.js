@@ -851,6 +851,30 @@ function ordinal_suffix_of(i) {
 }
 
 
+
+function formatDate_DdMmYyyy(inputDate) {
+    // Parse the input date string (assuming it's in a standard format)
+    var date = new Date(inputDate);
+
+    // Extract day, month, and year components
+    var day = date.getDate();
+    var month = date.getMonth() + 1; // Months are zero-based
+    var year = date.getFullYear();
+
+    // Ensure two-digit formatting for day and month
+    var formattedDay = day < 10 ? '0' + day : day;
+    var formattedMonth = month < 10 ? '0' + month : month;
+
+    // Format the date as "dd/mm/yyyy"
+    var formattedDate = formattedDay + '/' + formattedMonth + '/' + year;
+
+    return formattedDate;
+}
+
+
+
+
+
 ////// country flag full use
 //var input = document.querySelector("#testme");
 //window.intlTelInput(input, {

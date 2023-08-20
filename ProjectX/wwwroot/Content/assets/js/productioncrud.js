@@ -3,6 +3,7 @@ var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
     var polIdValue = $(".editscreen").attr("pol-id");
+    var isadmin = $(".prodadm").attr("prodadm")
 
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
@@ -43,71 +44,71 @@ $(document).ready(function () {
 
     });
 
-    $('.add-travel').click(function () {
-        var selectedOptions = $('#destination_id option:selected');
-        var selectedDestinations = selectedOptions.map(function () {
-            return $(this).text();
-        }).get();
-        var selectedDestinationIds = selectedOptions.map(function () {
-            return $(this).val();
-        }).get();
+    //$('.add-travel').click(function () {
+    //    var selectedOptions = $('#destination_id option:selected');
+    //    var selectedDestinations = selectedOptions.map(function () {
+    //        return $(this).text();
+    //    }).get();
+    //    var selectedDestinationIds = selectedOptions.map(function () {
+    //        return $(this).val();
+    //    }).get();
 
 
-        var fromDate = $('#from').val();
-        var toDate = $('#to').val();
-        var duration = $('#duration').val();
+    //    var fromDate = $('#from').val();
+    //    var toDate = $('#to').val();
+    //    var duration = $('#duration').val();
+    //    alert(fromDate)
+
+    //    // Validate fields
+    //    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+    //        toDate.trim() === '' || duration.trim() === '') {
+    //        return false; // Prevent adding the row if any field is empty
+    //    }
+
+    //    if ($.fn.DataTable.isDataTable('#destinationtbl')) {
+    //        $('#destinationtbl').DataTable().destroy();
+    //    }
+
+    //    var table = $('#destinationtbl').DataTable({
+    //        searching: false,
+    //        paging: false,
+    //        info: false
+    //    });
+    //    table.on('draw', function () {
+    //        table.column(0).nodes().each(function (cell, index) {
+    //            var destinations = $(cell).text().split(',').map(function (destination) {
+    //                return destination.trim();
+    //            }).join('<br>');
+
+    //            $(cell).html(destinations);
+    //        });
+    //    });
 
 
-        // Validate fields
-        if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
-            toDate.trim() === '' || duration.trim() === '') {
-            return false; // Prevent adding the row if any field is empty
-        }
+    //    table.row.add([
+    //        selectedDestinationIds,
+    //        selectedDestinations.join(','), // Display destination text
+    //        fromDate,
+    //        toDate,
+    //        duration,
+    //        `<i class="fa fa-trash text-danger delete-travel" aria-hidden="true"></i>`
+    //    ]).draw();
 
-        if ($.fn.DataTable.isDataTable('#destinationtbl')) {
-            $('#destinationtbl').DataTable().destroy();
-        }
+    //    $('#destination_id').val('').trigger('change');
+    //    $('#from').val('');
+    //    $('#to').val('');
+    //    $('#duration').val('');
 
-        var table = $('#destinationtbl').DataTable({
-            searching: false,
-            paging: false,
-            info: false
-        });
-        table.on('draw', function () {
-            table.column(0).nodes().each(function (cell, index) {
-                var destinations = $(cell).text().split(',').map(function (destination) {
-                    return destination.trim();
-                }).join('<br>');
+    //    $('#destinationtbl').on('click', '.delete-travel', function () {
+    //        table.row($(this).closest('tr')).remove().draw();
+    //    });
 
-                $(cell).html(destinations);
-            });
-        });
+    //    var columnIndex = 0; // Adjust the index if the column position changes
+    //    table.column(columnIndex).visible(false);
 
+    //    var allRows = $('#destinationtbl').DataTable().rows().data().toArray();
 
-        table.row.add([
-            selectedDestinationIds,
-            selectedDestinations.join(','), // Display destination text
-            fromDate,
-            toDate,
-            duration,
-            `<i class="fa fa-trash text-danger delete-travel" aria-hidden="true"></i>`
-        ]).draw();
-
-        $('#destination_id').val('').trigger('change');
-        $('#from').val('');
-        $('#to').val('');
-        $('#duration').val('');
-
-        $('#destinationtbl').on('click', '.delete-travel', function () {
-            table.row($(this).closest('tr')).remove().draw();
-        });
-
-        var columnIndex = 0; // Adjust the index if the column position changes
-        table.column(columnIndex).visible(false);
-
-        var allRows = $('#destinationtbl').DataTable().rows().data().toArray();
-
-    });
+    //});
 
     $('.trgrthis').focusout(function () {
         getQuotation()
@@ -324,7 +325,8 @@ function populatebeneficiary() {
 
         var firstName = $('.first_name').val();
         var lastName = $('.last_name').val();
-        var dateOfBirth = $('.dob').val();
+        var dateOfBirth = formatDate_DdMmYyyy($('.dob').val());
+
         var passportNo = $('.passport_no').val();
         var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
         var sexValue;
