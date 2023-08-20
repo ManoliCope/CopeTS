@@ -299,7 +299,6 @@ function showresponsemodalbyid(popupid, thisid, trindex) {
 
 
 function resetAllValues(divname) {
-    alert(divname)
     $("#" + divname).find('input').val('');
     $("#" + divname).find("select").each(function () {
         this.selectedIndex = 0;

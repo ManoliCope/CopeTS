@@ -4,6 +4,8 @@
 	var user = ViewData["User"] as ProjectX.Entities.dbModels.User;
 	//var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
 
+	string username = ViewData["username"] as string;
+
 
 	string screentype = "home";
 	screentype = ViewBag.screentype;
@@ -188,7 +190,7 @@
 							<span class="menu-icon">
 								<i class="fa fa-university text-gray"></i>
 							</span>
-							<span class="menu-title">Currency Rate</span>
+							<span class="menu-title">Currency Rates</span>
 						</a>
 
 					</li>

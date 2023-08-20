@@ -144,7 +144,9 @@
 
 					<ul class="nav-list">
 						<li>
-							<B style="color:red">test 1</B>
+							<B style="color: red; margin-bottom: 4px; display:block">Welcome, @Context.Items["Username"]!</B>
+
+
 						</li>
 						<li>
 							<a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
@@ -158,9 +160,9 @@
 									<i class="fas fas fa-user " style="color:Black; font-size:20px"></i>
 								</button>
 								<div class="dropdown-menu dropdown-menu-right dropdown-md " style="">
-									<div class="dropdown-header"><h5> My Username</h5> </div>
+									<div class="dropdown-header"><h5> @Context.Items["Username"]</h5> </div>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">
+									<a class="dropdown-item" href="~/users/details?userid=@Context.Items["Userid"]">
 										<i class="fas fa-user-edit"></i> Edit Profile
 									</a>
 									<a class="dropdown-item" href="~/Users/Reset/">
@@ -289,8 +291,8 @@
 	else if (controllerName == "production" && actionName == "index")
 	{
 		<script src="~/Content/assets/js/productionindex.js" asp-append-version="true"></script>
-	}	
-	else if (controllerName == "production" && (actionName == "edit" || actionName =="create"))
+	}
+	else if (controllerName == "production" && (actionName == "edit" || actionName == "create"))
 	{
 		<script src="~/Content/assets/js/productioncrud.js" asp-append-version="true"></script>
 	}

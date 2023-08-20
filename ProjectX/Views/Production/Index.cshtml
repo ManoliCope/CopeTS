@@ -43,10 +43,16 @@
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
 															<label>Reference:</label>
-															<input id="referencename" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0">
+															<input id="referencename" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-6">
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Beneficiary:</label>
+															<input id="beneficiaryname" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Passport No:</label>
+															<input id="passportno" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
+														</div>														
 														<div class="col-lg-3">
 															<div class="row mt-4">
 																<div class="col-sm-6">
@@ -115,6 +121,28 @@
 			</div>
 		</div>
 
+	</div>
+</div>
+
+
+<div id="confirm-email-approval" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Confirm Cancellation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to cancel this record?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
 	</div>
 </div>
 @*<script src="~/countryflags/js/intlTelInput.js"></script>

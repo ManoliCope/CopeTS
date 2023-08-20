@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="EPPlus" Version="6.2.8" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
@@ -29,6 +30,10 @@
     <ProjectReference Include="..\ProjectX.Entities\ProjectX.Entities.csproj" />
     <ProjectReference Include="..\ProjectX.Extension\ProjectX.Extension.csproj" />
     <ProjectReference Include="..\ProjectX.Repository\ProjectX.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

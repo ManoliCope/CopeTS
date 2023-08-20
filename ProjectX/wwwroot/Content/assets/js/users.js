@@ -1,15 +1,21 @@
 ﻿var projectname = checkurlserver();
 var userRights = [];
-$(document).ready(function () {
-   // var usersid = sessionStorage.getItem('userid');
+
+
+///////1557///////  if one js for 2 screen..
+////u need to be careful of calling useless scripts designated for another screen..
+////like getallusers here
+
+$(document).ready(function () {                     
+    // var usersid = sessionStorage.getItem('userid');
     var usid = $('#addUserForm').attr('userid');
-  
+
     ////sessionStorage.removeItem('userid');
-    if (usid != null && usid > 0) {
-        getUserRights(usid);
+    if (usid != null && usid >= 0) {                    ///////1557/////// for creation its 0 so >=
+        //getUserRights(usid);                          ///////1557/////// do u need it?
         //fillUser(usid);
     }
-    else 
+    else
         getAllUsers();
 
     $("#searchprofile").click(function () {
@@ -17,7 +23,7 @@ $(document).ready(function () {
     });
 
     resetPassScreen();
-   
+
 
 });
 function drawtable(data) {
@@ -31,18 +37,18 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             {
-            'data': 'u_Id',
-            className: "dt-center editor-edit",
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     if (full.u_Have_Parents) {
-                return `<a  href="#" title="View Users" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="showChildren(` + full.u_Id.toString() + `)"><i class="fas fa-eye"/></a>`;
+                        return `<a  href="#" title="View Users" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="showChildren(` + full.u_Id.toString() + `)"><i class="fas fa-eye"/></a>`;
 
                     } else {
                         return '';
                     }
-                //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
-            }
-        },
+                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+                }
+            },
             { "title": "Name", "className": "text-center filter", "orderable": true, "data": "u_Full_Name" },
             { "title": "Insured Number", "className": "text-center filter", "orderable": true, "data": "u_Insured_Number" },
             { "title": "Phone Number", "className": "text-center filter", "orderable": true, "data": "u_Telephone" },
@@ -51,15 +57,15 @@ function drawtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    if (generate=='1') {
+                    if (generate == '1') {
 
-                    return `<a  href="#" title="Add User" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="createChildUser(`+ full.u_Id.toString() +`)"><i class="fas fa-plus"/></a>`;
+                        return `<a  href="#" title="Add User" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="createChildUser(` + full.u_Id.toString() + `)"><i class="fas fa-plus"/></a>`;
                     } else {
                         return '';
                     }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
-            },{
+            }, {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
@@ -130,7 +136,7 @@ function resetpassword() {
     $.ajax({
         type: 'POST',
         url: projectname + "/Users/ResetPassword",
-        data: pass ,
+        data: pass,
         success: function (result) {
             removeloader();
 
@@ -187,7 +193,7 @@ function saveUser() {
         sessionStorage.removeItem('parentid');
         if (parentid != null)
             user.Parent_Id = parentid;
-            url = "/Users/createNewUser";
+        url = "/Users/createNewUser";
 
     }
     console.log(user);
@@ -321,13 +327,13 @@ function deleteuser(me) {
         success: function (result) {
 
             if (result.statusCode.code == 1) {
-                
-                    removebtnloader(me);
+
+                removebtnloader(me);
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
-                getAllUsers();
-                }
-                
-            
+                getAllUsers();      ///////1557///////    why do u need to get all users after deleting?
+            }
+
+
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
 
@@ -393,23 +399,23 @@ function getUserRights(userid) {
         url: projectname + "/Users/GetUserRights",
         data: { userid: userid },
         success: function (result) {
-            
+
             userRights = result;
 
         }
     });
 }
 function formatDate(data) {
-    
-       
-            var date = new Date(data);
-            var day = date.getDate().toString().padStart(2, '0');
-            var month = (date.getMonth() + 1).toString().padStart(2, '0');
-            var year = date.getFullYear();
-            return day + '/' + month + '/' + year;
-        
-    
-    
+
+
+    var date = new Date(data);
+    var day = date.getDate().toString().padStart(2, '0');
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var year = date.getFullYear();
+    return day + '/' + month + '/' + year;
+
+
+
 }
 function getUserPass(userid) {
     showresponsemodalbyid('openPasswordView')
@@ -418,7 +424,7 @@ function getUserPass(userid) {
         type: 'GET',
         data: { userid: userid },
         url: projectname + "/Users/getUserPass",
-        
+
         success: function (result) {
 
             $('#inputPassword').val(result);
@@ -426,7 +432,7 @@ function getUserPass(userid) {
         }
     });
 }
-$('#changePassword').click(function(){
+$('#changePassword').click(function () {
     var pass = $('#inputPassword').val();
     sessionStorage.setItem('pass', pass);
     window.location.href = "/Users/Reset";
