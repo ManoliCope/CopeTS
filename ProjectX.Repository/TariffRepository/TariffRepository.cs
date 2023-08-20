@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using ProjectX.Entities.Models.Tariff;
+using OfficeOpenXml;
 
 namespace ProjectX.Repository.TariffRepository
 {
@@ -102,6 +103,47 @@ namespace ProjectX.Repository.TariffRepository
             }
 
             return resp;
+        }
+        public TariffResp Import(string filePath)
+        {
+            try
+            {
+                FileInfo file = new FileInfo(filePath);
+
+
+                using (var package = new ExcelPackage(file))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+
+                    //using (var dbContext = new YourDbContext()) // Replace with your actual DbContext class
+                    //{
+                    for (int row = 2; row <= rowCount; row++) // Assuming header is in the first row
+                    {
+                        string columnName = worksheet.Cells[row, 1].Value.ToString(); // Replace with actual column index
+                                                                                      // ... Extract other columns ...
+
+                        //YourEntity entity = new YourEntity
+                        //{
+                        //    ColumnName = columnName,
+                        //    // ... Set other properties ...
+                        //};
+
+                        //dbContext.YourEntities.Add(entity);
+                    }
+
+                    //dbContext.SaveChanges();
+                    //}
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return null;
+           
         }
     }
 }
