@@ -21,6 +21,7 @@ namespace ProjectX.Entities.bModels
         public bool loadSuperAgents { get; set; }
         public bool loadCurrencies { get; set; }
         public bool loadCurrencyRate { get; set; }
+        public bool loadBenefitTitle { get; set; }
        
         
 

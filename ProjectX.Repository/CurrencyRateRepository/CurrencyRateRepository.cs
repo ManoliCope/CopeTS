@@ -57,6 +57,7 @@ namespace ProjectX.Repository.CurrencyRateRepository
             param.Add("@CR_Id", req.Id);
             param.Add("@CR_Currency_Id", req.Currency_Id);
             param.Add("@CR_Rate", req.Rate);
+            param.Add("@CR_Currency", req.Currency);
             //param.Add("@CR_Creation_Date", null);
             //param.Add("@CR_Creation_Date", req.Creation_Date);
 

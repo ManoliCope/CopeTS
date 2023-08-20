@@ -22,6 +22,7 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> superAgents { get; set; }
         public List<LookUpp> currencies { get; set; }
         public List<LookUpp> currencyRate { get; set; }
+        public List<LookUpp> benefitTitle { get; set; }
         
     }
 }
