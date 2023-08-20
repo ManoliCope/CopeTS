@@ -4,16 +4,28 @@
 <div class="content">
 	<!-- Start Content-->
 	<div class="row page-title">
-		<div class="col-md-12">
-			@*<span class="pointercursor">
-					<a href="~/zone/create/">
-						<i class="fas fa-plus-circle addnew pointercursor float-right"></i>
-					</a>
-				</span>*@
+		<div class="col-md-11">
+	
+
+			<a class="btn bglocalcolor float-right addnewbtn" data-toggle="modal" data-target="#import-tariff-file" onclick="showImportModel()">
+				<i class="fas fa-plus-circle"></i> Import Tariff
+			</a>
+
+			
+			<h4 class="mb-0 mt-0 float-left">Tariffs</h4>
+
+
+
+
+		</div>
+		<div class="col-md-1">
+	
+
+			
+
 			<a class="btn bglocalcolor float-right addnewbtn" href="~/tariff/create/">
 				<i class="fas fa-plus-circle"></i> Add
 			</a>
-			<h4 class="mb-0 mt-0 float-left">Tariffs</h4>
 
 
 
@@ -136,6 +148,41 @@
 				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
 				<div id="thisloader" class="smloader hide"></div>
 				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="import-tariff-file" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Import Tariff</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@*Select tariff file for importing:		
+				<button id="browseTariff" type="button" class="btn btn-danger" onclick="browseForTariff()">Browse</button>*@
+				@if (!string.IsNullOrEmpty(ViewBag.Message))
+				{
+				    <div class="alert alert-info">@ViewBag.Message</div>
+				}
+				
+				@using (Html.BeginForm("Upload", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+				{
+				    <div class="form-group">
+				        <label for="file">Select Excel File:</label>
+				        <input type="file" name="file" id="file" accept=".xlsx, .xls" class="form-control-file" required />
+				    </div>
+				}
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="importFile" type="button" class="btn btn-danger">Import</button>
 			</div>
 		</div>
 	</div>

@@ -50,5 +50,9 @@ namespace ProjectX.Business.Tariff
             return resp;
            
         }
+        public TariffResp Import(string filePath)
+        {
+            return _tariffRepository.Import(filePath);
+        }
     }
 }

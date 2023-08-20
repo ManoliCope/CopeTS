@@ -44,6 +44,7 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadSuperAgents", loadDataModelSetup.loadSuperAgents);
             param.Add("@loadCurrencies", loadDataModelSetup.loadCurrencies);
             param.Add("@loadCurrencyRate", loadDataModelSetup.loadCurrencyRate);
+            param.Add("@loadBenefitTitle", loadDataModelSetup.loadBenefitTitle);
 
 
 
@@ -79,6 +80,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.currencies = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadCurrencyRate)
                         resp.currencyRate = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadBenefitTitle)
+                        resp.benefitTitle = result.Read<LookUpp>().ToList();
                 }
             }
 

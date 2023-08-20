@@ -12,7 +12,7 @@ $(document).ready(function () {
     $(".resetdiv").click(function () {
         var divname = $(this).closest(".card-body").attr("id")
         resetAllValues(divname);
-        //resetdatatable("#currtable");
+        //resetdatatable("#bentitletable");
     });
     $("#create").click(function () {
         addnew();
@@ -24,34 +24,34 @@ $(document).ready(function () {
         showresponsemodalbyid('confirm-email-approval', $("#divinfo").attr("mid"))
     });
     $("#confirmdeletebtn").click(function () {
-        deletecurrencyrate(this);
+        deletebentitle(this);
     });
 });
 
 function drawtable(data) {
     console.log(data)
-    var table = $('#currtable').DataTable({
+    var table = $('#bentitletable').DataTable({
         "data": data,
         "paging": true,
         "ordering": true,
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "Currency", "className": "text-center filter", "orderable": true, "data": "cR_Currency" },
-            { "title": "Rate", "className": "text-center filter", "orderable": true, "data": "cR_Rate" },
-            { "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "cR_Creation_Date" },
+            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "bT_Id" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "bT_Title" },
+            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             {
-                'data': 'cR_Id',
+                'data': 'bT_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a title="Edit" currid="` + full.cR_Id + `"  class="text-black-50" onclick="gotocurrencyrate(this)"><i class="fas fa-edit pr-1"></i></a>`;
+                    return `<a title="Edit" bentitleid="` + full.bT_Id + `"  class="text-black-50" onclick="gotobentitle(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
-                'data': 'CR_Id',
+                'data': 'bT_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  title="Delete" currid="` + full.cR_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.cR_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+                    return `<a  title="Delete" bentitleid="` + full.bT_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.bT_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
 
                 }
@@ -61,7 +61,7 @@ function drawtable(data) {
         fixedHeader: true
     });
 
-    triggerfiltertable(table, "currencyrate")
+    triggerfiltertable(table, "bentitletable")
 }
 
 function Search() {
@@ -72,13 +72,13 @@ function Search() {
 
 
     var filter = {
-        "Currency": $("#currency").val(),
+        "title": $("#title").val(),
     }
 
 
     $.ajax({
         type: 'POST',
-        url: projectname + "/currencyrate/Search",
+        url: projectname + "/BenefitTitle/Search",
         data: { req: filter },
         success: function (result) {
             removeloader();
@@ -86,11 +86,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                $(result.currencyRate).each(function (index, currency) {
-                    currency.cR_Creation_Date = formatDate(currency.cR_Creation_Date);
-
-                });
-                drawtable(result.currencyRate);
+                drawtable(result.benefit_title);
             }
         },
         failure: function (data, success, failure) {
@@ -111,17 +107,15 @@ function addnew() {
     }
 
     showloader("load")
-    var currReq = {
-        "Currency_Id": $("#currencyId").val(),
-        "Rate": $("#rateId").val()
+    var benTitleReq = {
+        "title": $("#title").val(),
     }
-    console.log(currReq)
 
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/currencyrate/CreateCurrencyRate",
-        data: { req: currReq },
+        url: projectname + "/BenefitTitle/CreateBenTitle",
+        data: { req: benTitleReq },
         success: function (result) {
             console.log(result)
             removeloader();
@@ -130,7 +124,7 @@ function addnew() {
 
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
-                gotopage("currencyrate", "Edit", result.id);
+                gotopage("benefittitle", "Edit", result.id);
             });
 
         },
@@ -149,17 +143,16 @@ function edit() {
     }
 
     showloader("load")
-    var currReq = {
-        "Id": $("#divinfo").attr("mid"),
-        "Currency_Id": $("#currencyId").val(),
-        "Rate": $("#rateId").val()
+    var benTitleReq = {
+        "id": $("#divinfo").attr("mid"),
+        "title": $("#title").val(),
     }
 
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/currencyrate/EditCurrencyRate",
-        data: { req: currReq },
+        url: projectname + "/BenefitTitle/EditBenTitle",
+        data: { req: benTitleReq },
         success: function (result) {
             removeloader();
             showresponsemodal(1, result.statusCode.message)
@@ -173,7 +166,7 @@ function edit() {
     });
 }
 
-function deletecurrencyrate(me) {
+function deletebentitle(me) {
     if (validateForm(".container-fluid")) {
         return;
     }
@@ -184,19 +177,18 @@ function deletecurrencyrate(me) {
     $.ajax({
         type: 'post',
         dataType: 'json',
-        url: projectname + "/currencyrate/DeleteCurrencyRate",
+        url: projectname + "/BenefitTitle/DeleteBenTitle",
         data: { id: thisid },
         success: function (result) {
 
             if (result.statusCode.code == 1) {
-                if ($('#currtable').length > 0) {
-                    deletedatatablerowbyid(thisid, "CR_Id", "currtable")
+                if ($('#bentitletable').length > 0) {
+                    deletedatatablerowbyid(thisid, "bT_Id", "bentitletable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
-                    Search()
                 }
                 else
-                    showresponsemodal(result.statusCode.code, result.statusCode.message, "Currency Rate")
+                    showresponsemodal(result.statusCode.code, result.statusCode.message, "Benefit Title")
 
             }
             else
@@ -212,22 +204,10 @@ function deletecurrencyrate(me) {
         }
     });
 }
-function gotocurrencyrate(me) {
+function gotobentitle(me) {
     showloader("load")
-    window.location.href = "/currencyrate/edit/" + $(me).attr("currid");
+    window.location.href = "/benefittitle/edit/" + $(me).attr("bentitleid");
     removeloader();
     return
 }
 
-function formatDate(data) {
-
-
-    var date = new Date(data);
-    var day = date.getDate().toString().padStart(2, '0');
-    var month = (date.getMonth() + 1).toString().padStart(2, '0');
-    var year = date.getFullYear();
-    return day + '/' + month + '/' + year;
-
-
-
-}

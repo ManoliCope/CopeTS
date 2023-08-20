@@ -34,7 +34,42 @@ $(document).ready(function () {
     $("#confirmdeletebtn").click(function () {
         deletetariff(this);
     });
+
+    var $fileInput = $('#file');
+    var $importButton = $('#importFile');
+
+    $fileInput.on('change', function () {
+        $importButton.prop('disabled', $fileInput.get(0).files.length === 0);
+    });
+
+    $importButton.on('click', function () {
+        var formData = new FormData();
+        var file = $fileInput.get(0).files;
+        formData.append('import', file[0]);
+
+        $.ajax({
+            url: projectname + "/Tariff/Import",
+            type: 'POST',
+            data: { formData: formData }, 
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                // Handle success here
+                console.log(response);
+            },
+            error: function (error) {
+                // Handle error here
+                console.log(error);
+            }
+        });
+    });
 });
+
+
+
+
+
+
 
 function drawtable(data) {
     console.log(data)
@@ -277,4 +312,12 @@ function gototariff(me) {
     window.location.href = "/tariff/edit/" + $(me).attr("tarid");
     removeloader();
     return
+}
+function browseForTariff() {
+
+}
+function showImportModel() {
+    var fileInput = document.getElementById("file");
+    fileInput.value = null;
+    showresponsemodalbyid('import-tariff-file');
 }
