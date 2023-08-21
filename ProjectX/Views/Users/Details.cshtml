@@ -13,32 +13,32 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="firstName">First Name *</label>
+							<label class="form-control-label" for="firstName">First Name<span class="red-star"> *</span></label>
 							<input type="text" class="form-control" id="firstName" field-name="first_Name" required value="@Model.first_Name">
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="middleName">Middle Name</label>
-							<input type="text" class="form-control" id="middleName" field-name="middle_Name" value="@Model.middle_Name" required>
+							<input type="text" class="form-control" id="middleName" field-name="middle_Name" value="@Model.middle_Name" >
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="lastName">Last Name *</label>
+							<label class="form-control-label" for="lastName">Last Name<span class="red-star"> *</span></label>
 							<input type="text" class="form-control" id="lastName" field-name="last_Name" value="@Model.last_Name" required>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="userName">User Name *</label>
+							<label class="form-control-label" for="userName">User Name<span class="red-star"> *</span></label>
 							<input type="text" class="form-control" id="userName" field-name="user_Name" value="@Model.user_Name" required>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="categoryId">Category *</label>
-							<select class="form-control" name="categoryId" id="categoryId" field-name="category" required onchange="ChangeFormByCategoryId()">
+							<label class="form-control-label" for="categoryId">Category<span class="red-star"> *</span></label>
+							<select class="form-control" name="categoryId" id="categoryId" field-name="category" required >
 								<option></option>
 								@foreach (var thislist in filldata.loadedData.userCategory)
 								{
@@ -62,14 +62,14 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="lastName">Broker Code *</label>
+							<label class="form-control-label" for="lastName">Broker Code<span class="red-star"> *</span></label>
 							<input type="text" class="form-control" id="brkNumber" value="@Model.broker_Code" field-name="broker_Code" required>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="country">Country *</label>
+							<label class="form-control-label" for="country">Country<span class="red-star"> *</span></label>
 							<select class="form-control" name="countryId" id="countryId" field-name="country" required>
 								<option></option>
 								@foreach (var thislist in filldata.loadedData.destinations)
@@ -91,13 +91,13 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="city">City</label>
-							<input type="text" class="form-control" id="city" field-name="city" name="city" value="@Model.city" required>
+							<input type="text" class="form-control" id="city" field-name="city" name="city" value="@Model.city" >
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="telephone">Telephone *</label>
+							<label class="form-control-label" for="telephone">Telephone</label>
 							<div class="input-group">
 								<input type="text" class="form-control" field-name="country_code" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ccode" name="ccode" value="@Model.country_code">
 								<input type="text" class="form-control" field-name="telephone" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="telephone" name="telephone" value="@Model.telephone">
@@ -106,13 +106,13 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="email">Email *</label>
+							<label class="form-control-label" for="email">Email<span class="red-star"> *</span></label>
 							<input type="email" class="form-control" field-name="email" id="email" name="email" value="@Model.email" required>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="superAgentId">Super-Agent *</label>
+							<label class="form-control-label" for="superAgentId">Super-Agent<span class="red-star"> *</span></label>
 							<select class=" form-control" required field-name="super_Agent_Id">
 								<option data-select2-id="2">Select Super Agent (Mother Account)</option>
 								@foreach (var thislist in filldata.loadedData.superAgents)
@@ -134,7 +134,7 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="contactperson">Contact Person</label>
-							<input type="text" class="form-control" field-name="contact_Person" id="contactperson" value="@Model.contact_Person" required>
+							<input type="text" class="form-control" field-name="contact_Person" id="contactperson" value="@Model.contact_Person" >
 						</div>
 					</div>
 					@*<div class="col-md-3">
@@ -149,9 +149,9 @@
 							<label class="form-control-label" for="tax">Tax (% and #)</label>
 
 							<div class="input-group mb-3">
-								<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" value="@Model.tax" required>
+								<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" value="@Model.tax" >
 								<div class="input-group-prepend">
-									<select class="form-control" id="tax_Type" name="tax_type" field-name="tax_Type" required>
+									<select class="form-control" id="tax_Type" name="tax_type" field-name="tax_Type" >
 										<option>Select Type</option>
 										@foreach (var thislist in filldata.loadedData.format)
 										{
@@ -178,7 +178,7 @@
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="form-control-label" for="currencyId">Currency *</label>
+							<label class="form-control-label" for="currencyId">Currency<span class="red-star"> *</span></label>
 							<select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
 								<option></option>
 								@foreach (var thislist in filldata.loadedData.currencyRate)
@@ -200,7 +200,7 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="roundingRule">Rounding Rule</label>
-							<select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" required>
+							<select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" >
 								<option></option>
 								@foreach (var thislist in filldata.loadedData.roundingRule)
 								{
@@ -233,33 +233,33 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="commPerc">Commission %</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission" required>
+							<input class="form-control" onclick="removeRedColor(this)" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission" >
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="stampPerc">Stamp %</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp" required>
+							<input class="form-control" onclick="removeRedColor(this)" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp" >
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="additionalFees">Addional Fees</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.additional_Fees" required>
+							<input class="form-control" onclick="removeRedColor(this)" field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.additional_Fees" >
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees" required>
+							<input class="form-control" onclick="removeRedColor(this)" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees" >
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="vat">VAT</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat" required>
+							<input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat" >
 						</div>
 					</div>
 					<div class="col-md-3">
@@ -420,7 +420,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 hide" id="logoDivId">
+					@*<div class="col-md-4 hide" id="logoDivId">
 						<div class="form-group">
 							<label class="form-control-label" for="example3cols1Input">Logo</label>
 							<br>
@@ -441,7 +441,7 @@
 							</div>
 
 						</div>
-					</div>
+					</div>*@
 				</div>
 			</form>
 

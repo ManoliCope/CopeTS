@@ -2,24 +2,21 @@
 var userRights = [];
 
 
-///////1557///////  if one js for 2 screen..
-////u need to be careful of calling useless scripts designated for another screen..
-////like getallusers here
 
 $(document).ready(function () {                     
     // var usersid = sessionStorage.getItem('userid');
-    var usid = $('#addUserForm').attr('userid');
+   // var usid = $('#addUserForm').attr('userid');
 
     ////sessionStorage.removeItem('userid');
-    if (usid != null && usid >= 0) {                    ///////1557/////// for creation its 0 so >=
+    //if (usid != null && usid >= 0) {                    ///////1557/////// for creation its 0 so >=
         //getUserRights(usid);                          ///////1557/////// do u need it?
         //fillUser(usid);
-    }
-    else
-        getAllUsers();
+    //}
+    //else
+        Search();
 
     $("#searchprofile").click(function () {
-        getAllUsers();
+        Search();
     });
 
     resetPassScreen();
@@ -76,7 +73,7 @@ function drawtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="deleteuser(this)"><i class="fas fa-trash"/></a>`;
+                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="deleteuser(this)"><i class="fas fa-trash"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             }
@@ -87,42 +84,7 @@ function drawtable(data) {
 
     triggerfiltertable(table, "users")
 }
-function Search() {
-    if (validateForm("#searchform")) {
-        return;
-    }
-    showloader("load")
 
-    var filter = {
-        userName: $("#prname").val().trim(),
-        idUserType: $("#sprtype").val(),
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: projectname + "/Users/Search",
-        data: { req: filter },
-        success: function (result) {
-            removeloader();
-
-            if (result.statusCode.code != 1)
-                showresponsemodal("error", result.statusCode.message)
-            else {
-                drawtable(result.users);
-            }
-
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-
-            //alert("Error:" + failure);
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
-        }
-    });
-}
 function resetpassword() {
     var oldPass = $("#old-password").val();
     var newPass = $("#new-password").val();
@@ -150,11 +112,11 @@ function resetpassword() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-            //alert("Error:" + failure);
+        
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+      
         }
     });
 
@@ -219,11 +181,11 @@ function saveUser() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-            //alert("Error:" + failure);
+      
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+          
         }
     });
 }
@@ -234,7 +196,7 @@ $("#kt_reset").click(function () {
     var dropdown = $('.select2-hidden-accessible');
     dropdown.val(null).trigger('change');
 });
-function getAllUsers() {
+function Search() {
     var filter = {};
     var name = $('#prname').val();
 
@@ -247,7 +209,7 @@ function getAllUsers() {
 
     $.ajax({
         type: 'GET',
-        url: projectname + "/Users/GetUsersList",
+        url: projectname + "/Users/Search",
         data: { name: name, parentid: parentid },
         success: function (result) {
             removeloader();
@@ -261,11 +223,11 @@ function getAllUsers() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-            //alert("Error:" + failure);
+         
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+           
         }
     });
 }
@@ -317,7 +279,7 @@ function deleteuser(me) {
     }
     togglebtnloader(me)
     var thisid = $(me).attr("userid")
-    alert(thisid);
+
 
     $.ajax({
         type: 'post',
@@ -330,7 +292,7 @@ function deleteuser(me) {
 
                 removebtnloader(me);
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
-                getAllUsers();      ///////1557///////    why do u need to get all users after deleting?
+                Search();      ///////1557///////    why do u need to get all users after deleting?
             }
 
 
@@ -352,58 +314,6 @@ function gotouser(me) {
     var userId = $(me).attr('userid');
     //sessionStorage.setItem('userid', userId);
     window.location.href = '/users/details?userid=' + userId;
-}
-function fillUser(usersid) {
-    var users = {};
-
-    $.ajax({
-        type: 'POST',
-        url: projectname + "/Users/GetUserById",
-        data: { userId: usersid },
-        success: function (result) {
-            removeloader();
-
-            users = result;
-            $('#addUserForm').attr('userid', users.id.toString());
-            $('#addUserForm input, #addUserForm select, #addUserForm textarea').each(function () {
-                var field = $(this).attr('field-name'); // Get the field's ID
-                var value = users[field];
-                var id = $(this).attr('id');// Get the field's value
-                if ($('#' + id).is(":checkbox")) {
-                    $('#' + id).prop("checked", value);
-                }
-                else {
-                    $('#' + id).val(value);
-                }
-            });
-            console.log(users);
-            if (users.creation_Date != null)
-                $('#creationDate').text(formatDate(users.creation_Date));
-
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-
-            //alert("Error:" + failure);
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
-        }
-    });
-}
-function getUserRights(userid) {
-
-    $.ajax({
-        type: 'POST',
-        url: projectname + "/Users/GetUserRights",
-        data: { userid: userid },
-        success: function (result) {
-
-            userRights = result;
-
-        }
-    });
 }
 function formatDate(data) {
 
@@ -444,10 +354,10 @@ function createChildUser(parentid) {
 function showChildren(parentid) {
     sessionStorage.setItem('parid', parentid);
     //window.location.href = '/users/createuser';
-    getAllUsers();
+    Search();
 }
 function resetPassScreen() {
-    var pass = sessionStorage.getItem('pass').toString();
+    var pass = sessionStorage.getItem('pass');
     sessionStorage.removeItem('pass');
     if (pass != null)
         $("#old-password").val(pass);

@@ -132,7 +132,7 @@ namespace ProjectX.Controllers
 
         }
         [HttpGet]
-        public UsersSearchResp GetUsersList(string name,int? parentid)
+        public UsersSearchResp Search(string name,int? parentid)
         {
             //user.Id = _user.UserId;
             var user = new UsersSearchReq();
