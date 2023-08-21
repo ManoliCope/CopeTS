@@ -50,7 +50,7 @@ $(document).ready(function () {
         $.ajax({
             url: projectname + "/Tariff/Import",
             type: 'POST',
-            data: { formData: formData }, 
+            data: { formData: formData },
             processData: false,
             contentType: false,
             success: function (response) {
@@ -320,4 +320,79 @@ function showImportModel() {
     var fileInput = document.getElementById("file");
     fileInput.value = null;
     showresponsemodalbyid('import-tariff-file');
+}
+
+var importbutton = $("#importupload");
+importbutton.click(function () {
+    var importupload = $(this).parent().find(".file-upload");
+    importupload.click();
+
+    importupload.change(function () {
+        //togglebtnloader($("#importupload"));
+        var profileid = $("#prname").attr("name")
+
+        importtariff(this)
+
+        importupload.unbind();
+    });
+});
+
+function importtariff(me) {
+    var thisformData = new FormData();
+
+    var selectedfiles = Getuploadedexcel(me)
+    if (selectedfiles)
+        thisformData = selectedfiles;
+    else
+        return false;
+
+    $.ajax({
+        url: projectname + '/Tariff/exceltotable',
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (data) {
+            console.log(data)
+            showresponsemodal(1, 'Tariff Uploaded')
+
+        },
+        error: function (xhr, status, error) {
+            //console.log('Error:'+ xhr.responseText + '. Try Again!'); 
+            var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            showresponsemodal(0, responseerror)
+        }
+    });
+}
+
+function Getuploadedexcel(me) {
+    var files = $(me)[0].files;
+    var formData = new FormData();
+
+    if (files.length > 0) {
+        var allowedExtensions = ['xlsx', 'xls'];
+        var valid = true;
+        for (var i = 0; i != files.length; i++) {
+            var path = files[i].name.split('.');
+            var extension = path[path.length - 1]
+            if ($.inArray(extension.toLowerCase(), allowedExtensions) < 0)
+                if ($.inArray(extension, allowedExtensions) < 0)
+                    valid = false;
+
+            formData.append("files", files[i]);
+        }
+
+        if (!valid) {
+            removebtnloader($(".btnFileUpload"));
+            $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
+
+            removebtnloader($("#importupload"));
+            return;
+        }
+
+
+        return formData;
+    } else {
+        return formData;
+    }
 }

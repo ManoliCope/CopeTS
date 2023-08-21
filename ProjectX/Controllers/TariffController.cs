@@ -81,7 +81,7 @@ namespace ProjectX.Controllers
             response.tariff = new TR_Tariff();
             return View(response);
         }
-        
+
 
         public ActionResult importTariff()
         {
@@ -157,6 +157,68 @@ namespace ProjectX.Controllers
             return _tariffBusiness.ModifyTariff(req, "Delete", _user.U_Id);
         }
 
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files)
+        {
+            List<TR_Tariff> tariffs = new List<TR_Tariff>();
+            List<int> rowsWithError = new List<int>();
+
+            foreach (IFormFile formFile in files)
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = new System.IO.MemoryStream())
+                {
+                    formFile.CopyTo(stream);
+                    stream.Position = 0;
+                    int rowNumber = 1;
+                    using (var reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream))
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.Depth != 0)
+                            {
+                                rowNumber++;
+                                try
+                                {
+                                    tariffs.Add(new TR_Tariff
+                                    {
+                                        P_Id = Convert.ToInt16(reader.GetValue(0)),
+                                        T_Start_Age = Convert.ToInt16(reader.GetValue(1)),
+                                        T_End_Age = Convert.ToInt16(reader.GetValue(2)),
+                                        T_Number_Of_Days = Convert.ToInt16(reader.GetValue(3)),
+                                        T_Price_Amount = Convert.ToDouble(reader.GetValue(4)),
+                                        T_Net_Premium_Amount = Convert.ToDouble(reader.GetValue(5)),
+                                        T_PA_Amount = Convert.ToDouble(reader.GetValue(6)),
+                                        T_Tariff_Starting_Date = Convert.ToDateTime(reader.GetValue(7).ToString()),
+                                        T_Override_Amount = Convert.ToDouble(reader.GetValue(8)),
+                                        PL_Id = Convert.ToInt16(reader.GetValue(9))
+                                    });
+                                }
+                                catch (Exception ex)
+                                {
+                                    rowsWithError.Add(rowNumber);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (rowsWithError.Count > 0)
+            {
+                string numbersString = string.Join(",", rowsWithError);
+                return BadRequest(numbersString);
+            }
+
+            ///  after no error detected
+            ///  call business and insert to db and change below return ok to text success
+
+            return Ok(tariffs);
+        }
+
+
+
         //[HttpPost]
         //public ActionResult Import(string filePath)
         //{
@@ -230,7 +292,7 @@ namespace ProjectX.Controllers
         //}
 
     }
-  
+
 
 }
 
