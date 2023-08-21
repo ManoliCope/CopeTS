@@ -56,7 +56,7 @@ namespace ProjectX.Business.Email
                 {
                     Subject = subject,
                     Body = body,
-                    Date = DateTime.Now.Date.ToString("yyyy/MM/dd"),
+                    Date = DateTime.Now.Date.ToString("dd-MM-yyyy"),
                     DisplayName = displayName,
                     IsSent = isSent,
                     ErrorMessage = errorMessage,
@@ -74,7 +74,7 @@ namespace ProjectX.Business.Email
                 {
                     Subject = subject,
                     Body = body,
-                    Date = DateTime.Now.Date.ToString("yyyy/MM/dd"),
+                    Date = DateTime.Now.Date.ToString("dd-MM-yyyy"),
                     DisplayName = displayName,
                     IsSent = isSent,
                     ErrorMessage = errorMessage,

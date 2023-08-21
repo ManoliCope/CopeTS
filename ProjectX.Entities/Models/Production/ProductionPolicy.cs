@@ -21,6 +21,7 @@ namespace ProjectX.Entities.Models.Production
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public bool IsCanceled { get; set; }
+        public bool IsEditable { get; set; }
         public decimal InitialPremium { get; set; }
         public decimal AdditionalValue { get; set; }
         public decimal TaxVATValue { get; set; }

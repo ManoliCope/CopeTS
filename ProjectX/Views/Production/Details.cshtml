@@ -4,11 +4,11 @@
 	var productlist = ViewData["productlist"] as List<ProjectX.Entities.dbModels.TR_Product>;
 	var zonelist = ViewData["zonelist"] as List<ProjectX.Entities.dbModels.TR_Zone>;
 	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
-	var userrights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 
 }
 
-<div class="content editscreen" pgtype="view" pol-id="@Model.PolicyID">
+<div class="content editscreen prodadm" pgtype="view" pol-id="@Model.PolicyID" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="row" data-select2-id="20">
 			<div class="col-12">
@@ -75,7 +75,7 @@
 																}
 																else
 																{
-																	<option value="@thislist.PR_Id" > @thislist.PR_Title</option>
+																	<option value="@thislist.PR_Id"> @thislist.PR_Title</option>
 																}
 															}
 														</select>
@@ -184,18 +184,18 @@
 														</div>
 														<div class="form-group col-md-4">
 															<label>Date Of Birth <span class="text-danger">*</span> <span class="age">(@Model.PolicyDetails.First().Age)</span></label>
-															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth.ToString("yyyy-MM-dd") : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth.ToString("dd-MM-yyyy") : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
 														</div>
 
 														<div class="form-group col-md-4 div-beneficiary ">
 															<label>&nbsp;</label>
-															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100 @(Model.IsIndividual ? "hide" : "")" style="cursor: pointer">
+															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100 " style="cursor: pointer; @(Model.IsIndividual ? "display:none" : "")">
 																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
 															</div>
 														</div>
 													</div>
 													<div class="table-responsive">
-														<table class="table table-sm table-bordered mt-3 beneficiary-table @(Model.IsIndividual ? "hide" : "")">
+														<table class="table table-sm table-bordered mt-3 beneficiary-table " style="@(Model.IsIndividual ? "display:none" : "")">
 															<thead>
 																<tr class="thead-light">
 																	<th>First Name</th>
@@ -208,17 +208,20 @@
 																</tr>
 															</thead>
 															<tbody class="beneficiary-list">
-																@foreach (var tdrow in Model.PolicyDetails)
+																@if (!Model.IsIndividual)
 																{
-																	<tr>
-																		<td insuredid="@tdrow.InsuredId">@tdrow.FirstName</td>
-																		<td>@tdrow.LastName</td>
-																		<td>@tdrow.DateOfBirth.ToString("yyyy-MM-dd")</td>
-																		<td>@tdrow.Age</td>
-																		<td>@tdrow.PassportNo</td>
-																		<td>@tdrow.Gender</td>
-																		<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>
-																	</tr>
+																	@foreach (var tdrow in Model.PolicyDetails)
+																	{
+																		<tr>
+																			<td insuredid="@tdrow.InsuredId">@tdrow.FirstName</td>
+																			<td>@tdrow.LastName</td>
+																			<td>@tdrow.DateOfBirth.ToString("dd-MM-yyyy")</td>
+																			<td>@tdrow.Age</td>
+																			<td>@tdrow.PassportNo</td>
+																			<td>@tdrow.Gender</td>
+																			<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>
+																		</tr>
+																	}
 																}
 															</tbody>
 														</table>
@@ -247,12 +250,12 @@
 																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
-																	{
-																		if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
 																		{
-																			<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
-																		}
-																	}*@
+																			if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
+																			{
+																				<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
+																			}
+																		}*@
 
 																	@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
 																	{
@@ -276,11 +279,11 @@
 															</div>
 															<div class="form-group col-md-4">
 																<label>From <span class="text-danger">*</span></label>
-																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="@Model.FromDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="1">
+																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="@Model.FromDate.ToString("dd-MM-yyyy")" data-gtm-form-interact-field-id="1">
 															</div>
 															<div class="form-group col-md-4">
 																<label>To <span class="text-danger">*</span></label>
-																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="2">
+																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("dd-MM-yyyy")" data-gtm-form-interact-field-id="2">
 															</div>
 
 															@*<div class="form-group col-md-3 mt-3 pt-1">

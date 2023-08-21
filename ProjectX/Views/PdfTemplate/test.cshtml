@@ -156,7 +156,7 @@
 			</tr>  
 			<tr>   
 				<td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
-				<td class="td25"><label id="dateOfBirth">@Model.PolicyDetails.First().DateOfBirth.ToString("dd/mm/yyyy")</label></td>
+				<td class="td25"><label id="dateOfBirth">@Model.PolicyDetails.First().DateOfBirth.ToString("dd-MM-yyyy")</label></td>
 				<td class="td25"><label for="age">Age:</label></td>
 				<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
 			</tr>   
@@ -179,14 +179,14 @@
 			</tr>   
 			<tr>    
 				<td class="td25"><label for="inceptionDate">Inception Date:</label></td>
-				<td class="td25"><label id="inceptionDate">@Model.FromDate.ToString("dd/mm/yyyy")</label></td>
+				<td class="td25"><label id="inceptionDate">@Model.FromDate.ToString("dd-MM-yyyy")</label></td>
 				<td class="td25"><label for="destinations">Destinations:</label></td>
 				<td class="td25"><label id="destinations">@string.Join(", ", Model.Destinations.Select(d => d.DestinationName))</label></td>
 				   
 			</tr>   
 			<tr>    
 				<td class="td25"><label for="expiryDate">Expiry Date:</label></td>
-				<td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd/mm/yyyy")</label></td>
+				<td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd-MM-yyyy")</label></td>
 				<td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
 				<td class="td25"><label id="excessDeductible"> @Model.PolicyDetails.First().DeductiblePrice</label></td>
 			</tr>   

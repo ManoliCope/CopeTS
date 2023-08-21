@@ -54,6 +54,8 @@ namespace ProjectX.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
@@ -70,6 +72,9 @@ namespace ProjectX.Controllers
         // GET: ProductionController/Details/5
         public ActionResult Details(int id)
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
+
             return View();
         }
 
@@ -89,6 +94,7 @@ namespace ProjectX.Controllers
             });
 
             ViewData["filldata"] = response;
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             ProdGetResp ttt = new ProdGetResp();
             ttt.product = new TR_Product();

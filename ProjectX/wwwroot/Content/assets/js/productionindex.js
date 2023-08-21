@@ -21,6 +21,9 @@ $(document).ready(function () {
 
     Search();
 
+
+    var isadmin = $(".prodadm").attr("prodadm")
+    alert(isadmin)
 });
 
 
@@ -43,7 +46,8 @@ function drawtable(data) {
                     if (type === 'display' || type === 'filter') {
                         // Format the date using JavaScript's toLocaleDateString function
                         var date = new Date(data);
-                        var formattedDate = date.toLocaleDateString('en-US'); // Adjust the locale as needed
+                        //var formattedDate = date.toLocaleDateString('en-US'); // Adjust the locale as needed
+                        var formattedDate = formatDate_DdMmYyyy(date);
                         return formattedDate;
                     }
                     return data; // For other types, return the original data
@@ -172,8 +176,6 @@ function gotopol(me) {
     removeloader();
     return
 }
-
-
 
 
 

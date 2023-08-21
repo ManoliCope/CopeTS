@@ -1,9 +1,12 @@
 ﻿@*@model ProjectX.Entities.Models.General.LoadDataResp*@
-
+@{
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+}
 
 <div class="content">
 	<!-- Start Content-->
-	<div class="row page-title">
+	<div class="row page-title prodadm" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
+
 		<div class="col-md-12">
 			@*<span class="pointercursor">
 					<a href="~/product/create/">
@@ -52,7 +55,7 @@
 														<div class="col-lg-3 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
-														</div>														
+														</div>
 														<div class="col-lg-3">
 															<div class="row mt-4">
 																<div class="col-sm-6">
