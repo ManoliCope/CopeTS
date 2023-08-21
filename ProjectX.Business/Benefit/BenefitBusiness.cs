@@ -16,7 +16,7 @@ namespace ProjectX.Business.Benefit
         {
             _benefitRepository = benefitRepository;
         }
-        public BenResp ModifyBenefit(BenReq req, string act, int userid)
+        public BenResp ModifyBenefit(BenReq req, string act, int userid) 
         {
             BenResp response = new BenResp();
             response = _benefitRepository.ModifyBenefit(req, act, userid);
@@ -39,6 +39,7 @@ namespace ProjectX.Business.Benefit
             resp.packageId= repores.P_Id;
             resp.additionalBenefits= repores.B_Additional_Benefits;
             resp.additionalBenefitsFormat= repores.B_Additional_Benefits_Format;
+            resp.titleId= repores.BT_Id;
 
             return resp;
         }

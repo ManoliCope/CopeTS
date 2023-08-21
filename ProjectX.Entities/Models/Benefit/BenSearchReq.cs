@@ -17,6 +17,7 @@ namespace ProjectX.Entities.Models.Benefit
         public double additionalBenefits { get; set; }
 
         public int additionalBenefitsFormat { get; set; }
+        public int titleId { get; set; }
 
 
     }

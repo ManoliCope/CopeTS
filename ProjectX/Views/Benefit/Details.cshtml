@@ -20,9 +20,26 @@
 						<div class="row">
 							<div id="divinfo" class="col-lg-12" mid="@Model.id">
 								<div class="row">
-									<div class="form-group col-lg-4">
+									@*<div class="form-group col-lg-4">
 										<label for="title">Title</label>
 										<input type="text" class="form-control" id="title" name="title" value="@Model.title" required>
+									</div>*@
+									<div class="form-group col-lg-4">
+										<label for="title">Title</label>
+										<select class="form-control isselect2" id="titleId" name="titleId" required>
+											<option>Select Title</option>
+											@foreach (var thislist in filldata.loadedData.benefitTitle)
+											{
+												@if (thislist.LK_ID == Model.titleId)
+												{
+													<option value="@thislist.LK_ID" selected> @thislist.LK_TableField</option>
+												}
+												else
+												{
+													<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+												}
+											}
+										</select>
 									</div>
 
 									<div class="form-group col-lg-4">

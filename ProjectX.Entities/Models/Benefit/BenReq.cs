@@ -14,5 +14,6 @@ namespace ProjectX.Entities.Models.Benefit
         public int packageId { get; set; }
         public bool is_Plus { get; set; }
         public int additionalBenefitsFormat { get; set; }
+        public int titleId { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace ProjectX.Entities.dbModels
         public string B_Title { get; set; }
         public double B_Limit { get; set; }
         public int P_Id { get; set; }
+        public int BT_Id { get; set; }
         public string P_Name { get; set; }
         public double B_Additional_Benefits { get; set; }
 

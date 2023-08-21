@@ -86,7 +86,9 @@ function Search() {
         "packageId": $("#packageId").val(),
         "limit": isNaN(parseFloat($("#limit").val())) ? $("#limit").val() : parseFloat($("#limit").val()),
         "additionalBenefits": isNaN(parseFloat($('#additional_benefits').val())) ? $("#additional_benefits").val() : parseFloat($("#additional_benefits").val()),
-        "additionalBenefitsFormat": $('#additional_benefits_format').val()
+        "additionalBenefitsFormat": $('#additional_benefits_format').val(),
+        "titleId": $('#titleId').val()
+
     };
 
     $.ajax({
@@ -130,6 +132,8 @@ function addnew() {
         "limit": parseFloat($("#limit").val()),
         "additionalBenefits": isNaN(parseFloat($('#additional_benefits').val())) ? $("#additional_benefits").val() : parseFloat($("#additional_benefits").val()),
         "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
+        "titleId": $('#titleId').val()
+
     };
 
 
@@ -170,6 +174,8 @@ function edit() {
         "limit": parseFloat($("#limit").val()),
         "additionalBenefits": parseFloat($('#additional_benefits').val()),
         "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
+        "titleId": $('#titleId').val()
+
 
     };
 

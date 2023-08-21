@@ -86,13 +86,12 @@ namespace ProjectX.Controllers
         public BenResp CreateBenefit(BenReq req)
         {
             BenResp response = new BenResp();
-            if (string.IsNullOrEmpty(req.title) || string.IsNullOrWhiteSpace(req.title))
-            {
-                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
-                return response;
-            }
+            if (req.titleId>0)
+                return _benefitBusiness.ModifyBenefit(req, "Create", _user.U_Id);
 
-            return _benefitBusiness.ModifyBenefit(req, "Create", _user.U_Id);
+            
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InvalidProfileName);
+            return response;
         }
 
 
@@ -104,8 +103,10 @@ namespace ProjectX.Controllers
             LoadDataResp load = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
-                loadFormats=true
-                
+                loadFormats=true,
+                loadBenefitTitle = true
+
+
             });
 
             ViewData["filldata"] = load;
