@@ -23,7 +23,7 @@ $(document).ready(function () {
 
 
     var isadmin = $(".prodadm").attr("prodadm")
-    alert(isadmin)
+    //alert(isadmin)
 });
 
 

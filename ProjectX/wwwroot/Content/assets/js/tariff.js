@@ -35,34 +35,19 @@ $(document).ready(function () {
         deletetariff(this);
     });
 
-    var $fileInput = $('#file');
-    var $importButton = $('#importFile');
 
-    $fileInput.on('change', function () {
-        $importButton.prop('disabled', $fileInput.get(0).files.length === 0);
+    var importbutton = $("#importupload");
+    importbutton.click(function () {
+        if (validateForm("#import-tariff-file .modal-body")) {
+            return;
+        }
+
+        togglebtnloader(this)
+        importtariff(this)
+        //var importupload = $(this).parent().find(".file-upload");
+        //importupload.click();
     });
 
-    $importButton.on('click', function () {
-        var formData = new FormData();
-        var file = $fileInput.get(0).files;
-        formData.append('import', file[0]);
-
-        $.ajax({
-            url: projectname + "/Tariff/Import",
-            type: 'POST',
-            data: { formData: formData }, 
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                // Handle success here
-                console.log(response);
-            },
-            error: function (error) {
-                // Handle error here
-                console.log(error);
-            }
-        });
-    });
 });
 
 
@@ -317,7 +302,75 @@ function browseForTariff() {
 
 }
 function showImportModel() {
-    var fileInput = document.getElementById("file");
-    fileInput.value = null;
+    //var fileInput = document.getElementById("file");
+    //fileInput.value = null;
     showresponsemodalbyid('import-tariff-file');
+}
+
+
+
+function importtariff(me) {
+    var importupload = $(me).parent().find(".file-upload");
+    var thisformData = new FormData();
+
+    var $fileInput = $('#file');
+
+    var selectedfiles = Getuploadedexcel($fileInput)
+    if (selectedfiles) {
+        thisformData = selectedfiles;
+        thisformData.append("tarPackageid", $("#tarPackageid").val());
+        thisformData.append("tarPlanid", $("#tarPlanid").val());
+    }
+    else
+        return false;
+
+    $.ajax({
+        url: projectname + '/Tariff/exceltotable',
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (data) {
+            showresponsemodal(1, 'Tariff Uploaded')
+            removebtnloader(me)
+        },
+        error: function (xhr, status, error) {
+            //console.log('Error:'+ xhr.responseText + '. Try Again!'); 
+            var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            showresponsemodal(0, responseerror)
+        }
+    });
+}
+
+function Getuploadedexcel(me) {
+    var files = me.get(0).files;
+    //var files = $(me)[0].files;
+    var formData = new FormData();
+
+    if (files.length > 0) {
+        var allowedExtensions = ['xlsx', 'xls'];
+        var valid = true;
+        for (var i = 0; i != files.length; i++) {
+            var path = files[i].name.split('.');
+            var extension = path[path.length - 1]
+            if ($.inArray(extension.toLowerCase(), allowedExtensions) < 0)
+                if ($.inArray(extension, allowedExtensions) < 0)
+                    valid = false;
+
+            formData.append("files", files[i]);
+        }
+
+        //if (!valid) {
+        //    removebtnloader($(".btnFileUpload"));
+        //    $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
+
+        //    removebtnloader($("#importupload"));
+        //    return;
+        //}
+
+
+        return formData;
+    } else {
+        return formData;
+    }
 }
