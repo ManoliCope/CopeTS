@@ -35,34 +35,19 @@ $(document).ready(function () {
         deletetariff(this);
     });
 
-    var $fileInput = $('#file');
-    var $importButton = $('#importFile');
 
-    $fileInput.on('change', function () {
-        $importButton.prop('disabled', $fileInput.get(0).files.length === 0);
+    var importbutton = $("#importupload");
+    importbutton.click(function () {
+        if (validateForm("#import-tariff-file .modal-body")) {
+            return;
+        }
+
+        togglebtnloader(this)
+        importtariff(this)
+        //var importupload = $(this).parent().find(".file-upload");
+        //importupload.click();
     });
 
-    $importButton.on('click', function () {
-        var formData = new FormData();
-        var file = $fileInput.get(0).files;
-        formData.append('import', file[0]);
-
-        $.ajax({
-            url: projectname + "/Tariff/Import",
-            type: 'POST',
-            data: { formData: formData },
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                // Handle success here
-                console.log(response);
-            },
-            error: function (error) {
-                // Handle error here
-                console.log(error);
-            }
-        });
-    });
 });
 
 
@@ -317,32 +302,25 @@ function browseForTariff() {
 
 }
 function showImportModel() {
-    var fileInput = document.getElementById("file");
-    fileInput.value = null;
+    //var fileInput = document.getElementById("file");
+    //fileInput.value = null;
     showresponsemodalbyid('import-tariff-file');
 }
 
-var importbutton = $("#importupload");
-importbutton.click(function () {
-    var importupload = $(this).parent().find(".file-upload");
-    importupload.click();
 
-    importupload.change(function () {
-        //togglebtnloader($("#importupload"));
-        var profileid = $("#prname").attr("name")
-
-        importtariff(this)
-
-        importupload.unbind();
-    });
-});
 
 function importtariff(me) {
+    var importupload = $(me).parent().find(".file-upload");
     var thisformData = new FormData();
 
-    var selectedfiles = Getuploadedexcel(me)
-    if (selectedfiles)
+    var $fileInput = $('#file');
+
+    var selectedfiles = Getuploadedexcel($fileInput)
+    if (selectedfiles) {
         thisformData = selectedfiles;
+        thisformData.append("tarPackageid", $("#tarPackageid").val());
+        thisformData.append("tarPlanid", $("#tarPlanid").val());
+    }
     else
         return false;
 
@@ -353,9 +331,8 @@ function importtariff(me) {
         contentType: false,
         type: "POST",
         success: function (data) {
-            console.log(data)
             showresponsemodal(1, 'Tariff Uploaded')
-
+            removebtnloader(me)
         },
         error: function (xhr, status, error) {
             //console.log('Error:'+ xhr.responseText + '. Try Again!'); 
@@ -366,7 +343,8 @@ function importtariff(me) {
 }
 
 function Getuploadedexcel(me) {
-    var files = $(me)[0].files;
+    var files = me.get(0).files;
+    //var files = $(me)[0].files;
     var formData = new FormData();
 
     if (files.length > 0) {
@@ -382,13 +360,13 @@ function Getuploadedexcel(me) {
             formData.append("files", files[i]);
         }
 
-        if (!valid) {
-            removebtnloader($(".btnFileUpload"));
-            $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
+        //if (!valid) {
+        //    removebtnloader($(".btnFileUpload"));
+        //    $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
 
-            removebtnloader($("#importupload"));
-            return;
-        }
+        //    removebtnloader($("#importupload"));
+        //    return;
+        //}
 
 
         return formData;

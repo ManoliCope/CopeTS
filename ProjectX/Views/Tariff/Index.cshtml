@@ -5,35 +5,15 @@
 	<!-- Start Content-->
 	<div class="row page-title">
 		<div class="col-md-11">
-
-			<button id="importupload" type="button" class="btn btn-primary btn-block bglocalcolor addnewbtn float-right" style="width:120px">
-				<span>
-					Import Tariff
-				</span>
-			</button>
-			<div id="thisloader" class="smloader hide"></div>
-			<input type="file" class="file-upload" style="display: none" multiple />
-
-			@*<a class="btn bglocalcolor float-right addnewbtn" data-toggle="modal" data-target="#import-tariff-file" onclick="showImportModel()">
-					<i class="fas fa-plus-circle"></i> Import Tariff
-				</a>*@
-
-
-			<h4 class="mb-0 mt-0 float-left">Tariffs</h4>
-
+			<h4 class="mb-0 mt-0 float-left mr-4">Tariffs</h4>
+			<a class="btn bglocalcolor float-left addnewbtn text-white m-0" data-toggle="modal" data-target="#import-tariff-file" style="width:150px" onclick="showImportModel()">
+				<i class="fas fa-plus-circle"></i> Import Tariff
+			</a>
 		</div>
 		<div class="col-md-1">
-
-
-
-
 			<a class="btn bglocalcolor float-right addnewbtn" href="~/tariff/create/">
 				<i class="fas fa-plus-circle"></i> Add
 			</a>
-
-
-
-
 		</div>
 	</div>
 	<div class="container-fluid " style="padding:10px 0">
@@ -173,20 +153,55 @@
 				{
 					<div class="alert alert-info">@ViewBag.Message</div>
 				}
+				<div class="row">
+					<div class="col-lg-12 mb-lg-0 mb-6">
+						<label for="taridPackage">Package:</label>
+						<select class="form-control isselect2" id="tarPackageid" name="tarPackageid" required>
+							<option value="">Select Package</option>
+							@foreach (var thislist in Model.loadedData.packages)
+							{
+								<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+							}
+
+						</select>
+					</div>
+					<div class="col-lg-12 mb-lg-0 mb-6 pt-2">
+						<label for="taridPlan">Plan:</label>
+						<select class="form-control isselect2" id="tarPlanid" name="tarPlanid" required>
+							<option value="">Select Plan</option>
+							@foreach (var thislist in Model.loadedData.plans)
+							{
+								<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+							}
+
+						</select>
+					</div>
+				</div>
 
 				@using (Html.BeginForm("Upload", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" }))
 				{
-					<div class="form-group">
+					<div class="form-group  pt-2">
 						<label for="file">Select Excel File:</label>
-						<input type="file" name="file" id="file" accept=".xlsx, .xls" class="form-control-file" required />
+						<input type="file" name="file" id="file"  accept=".xlsx, .xls" class="form-control-file file-upload" required />
 					</div>
 				}
+
 
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				@*<button id="importFile" type="button" class="btn btn-danger">Import</button>*@
 				<div id="thisloader" class="smloader hide"></div>
-				<button id="importFile" type="button" class="btn btn-danger">Import</button>
+
+				<button id="importupload" type="button" class="btn btn-primary btn-block bglocalcolor" style="width:120px">
+					<span>
+						Import Tariff
+					</span>
+				</button>
+				@*<div id="thisloader" class="smloader hide"></div>
+				<input type="file" class="file-upload" style="display: none" multiple />*@
+
+
 			</div>
 		</div>
 	</div>

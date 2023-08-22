@@ -159,8 +159,9 @@ namespace ProjectX.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files)
-        {
+
+        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files, int tarPackageid, int tarPlanid)
+        { 
             List<TR_Tariff> tariffs = new List<TR_Tariff>();
             List<int> rowsWithError = new List<int>();
 
@@ -183,7 +184,7 @@ namespace ProjectX.Controllers
                                 {
                                     tariffs.Add(new TR_Tariff
                                     {
-                                        P_Id = Convert.ToInt16(reader.GetValue(0)),
+                                        P_Id = tarPackageid,
                                         T_Start_Age = Convert.ToInt16(reader.GetValue(1)),
                                         T_End_Age = Convert.ToInt16(reader.GetValue(2)),
                                         T_Number_Of_Days = Convert.ToInt16(reader.GetValue(3)),
@@ -192,7 +193,7 @@ namespace ProjectX.Controllers
                                         T_PA_Amount = Convert.ToDouble(reader.GetValue(6)),
                                         T_Tariff_Starting_Date = Convert.ToDateTime(reader.GetValue(7).ToString()),
                                         T_Override_Amount = Convert.ToDouble(reader.GetValue(8)),
-                                        PL_Id = Convert.ToInt16(reader.GetValue(9))
+                                        PL_Id = tarPlanid
                                     });
                                 }
                                 catch (Exception ex)
