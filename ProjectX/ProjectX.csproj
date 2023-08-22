@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\UserController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Profile\Create.cshtml" />
     <None Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
@@ -34,6 +38,13 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Report\Beneficiaries.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

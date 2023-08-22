@@ -12,6 +12,7 @@ using ProjectX.Business.Notifications;
 using ProjectX.Business.Profile;
 using ProjectX.Business.User;
 using ProjectX.Business.BenefitTitle;
+using ProjectX.Business.Report;
 using ProjectX.Entities.AppSettings;
 using ProjectX.Repository.AttachmentRepository;
 using ProjectX.Repository.ZoneRepository;
@@ -23,6 +24,7 @@ using ProjectX.Repository.ProfileRepository;
 using ProjectX.Repository.UserRepository;
 using ProjectX.Repository.CurrencyRateRepository;
 using ProjectX.Repository.BenefitTitleRepository;
+using ProjectX.Repository.ReportRepository;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProjectX.Extension.Jwt;
@@ -155,6 +157,9 @@ public class Startup
 
         services.AddSingleton<IBenTitleBusiness, BenTitleBusiness>();
         services.AddSingleton<IBenTitleRepository, BenTitleRepository>();
+
+        services.AddSingleton<IReportBusiness, ReportBusiness>();
+        services.AddSingleton<IReportRepository, ReportRepository>();
 
 
         services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
