@@ -64,7 +64,7 @@ function drawtable(data) {
                 render: function (data, type, full, meta) {
                     if (type === 'display' || type === 'filter') {
                         // Assuming "IsEditable" is a boolean property
-                        var checkbox = $(`<input type="checkbox" onclick="showresponsemodalbyid('confirm-email-approval',${full.policyID},${meta.row})">`);
+                        var checkbox = $(`<input type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row})">`);
                         if (data) {
                             checkbox.prop('checked', true);
                         }
@@ -177,11 +177,50 @@ function gotopol(me) {
     return
 }
 
+$("#confirmdeletebtn").click(function () {
+    deleteproduction(this);
+});
 
+$("#confirmeditbtn").click(function () {
+    editableProduction(this);
+});
 
+function editableProduction(me) {
+    console.log(me)
+    togglebtnloader(me)
+    var thisid = $(me).closest("#confirm-edit-approval").attr("actid");
+    var isEditable = $(me).closest("#confirmeditbtn").is(':checked');
+    alert(thisid)
+    alert(isEditable)
+    removebtnloader(me);
 
+    return;
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: projectname + "/Production/EditableProduction",
+        data: { id: thisid,isEditable:isEditable },
+        success: function (result) {
 
+            if (result.statusCode.code == 1) {
+               
+                    removebtnloader(me);
+                    showresponsemodal(result.statusCode.code, result.statusCode.message)
+                }
+                else
+                    showresponsemodal(result.statusCode.code, result.statusCode.message, "Production")
 
+           
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
+    });
+}
 
 
 

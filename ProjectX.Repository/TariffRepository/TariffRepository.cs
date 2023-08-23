@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using ProjectX.Entities.Models.Tariff;
 using OfficeOpenXml;
+using System.Reflection;
 
 namespace ProjectX.Repository.TariffRepository
 {
@@ -104,46 +105,57 @@ namespace ProjectX.Repository.TariffRepository
 
             return resp;
         }
-        public TariffResp Import(string filePath)
+        public TariffResp ImportDataTariff(List<TR_Tariff> tariffs, int userid)
         {
-            try
+            DataTable ListTariff = ConvertToDataTable(tariffs);
+            var resp = new TariffResp();
+            int statusCode = 0;
+            int idOut = 0;
+            var param = new DynamicParameters();
+            param.Add("@TariffList", ListTariff.AsTableValuedParameter("TR_Tariff"));
+            //param.Add("IdList", ListTariff, DbType.Object, ParameterDirection.Input);
+            param.Add("@userid", userid);
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+          
+           
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                FileInfo file = new FileInfo(filePath);
+                _db.Execute("TR_Tariff_Import", param, commandType: CommandType.StoredProcedure);
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
+            }
+            resp.statusCode.code = statusCode;
+            resp.id = idOut;
+            return resp;
+        }
+        public static DataTable ConvertToDataTable<T>(IEnumerable<T> list)
+        {
+            DataTable dataTable = new DataTable();
 
+            // Get all the public properties of the class using reflection
+            PropertyInfo[] propertyInfos = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-                using (var package = new ExcelPackage(file))
+            // Create data columns for the DataTable using the property names and types
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                dataTable.Columns.Add(propertyInfo.Name, propertyInfo.PropertyType);
+            }
+
+            // Add data rows to the DataTable
+            foreach (T item in list)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                foreach (PropertyInfo propertyInfo in propertyInfos)
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    int rowCount = worksheet.Dimension.Rows;
-
-                    //using (var dbContext = new YourDbContext()) // Replace with your actual DbContext class
-                    //{
-                    for (int row = 2; row <= rowCount; row++) // Assuming header is in the first row
-                    {
-                        string columnName = worksheet.Cells[row, 1].Value.ToString(); // Replace with actual column index
-                                                                                      // ... Extract other columns ...
-
-                        //YourEntity entity = new YourEntity
-                        //{
-                        //    ColumnName = columnName,
-                        //    // ... Set other properties ...
-                        //};
-
-                        //dbContext.YourEntities.Add(entity);
-                    }
-
-                    //dbContext.SaveChanges();
-                    //}
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item);
                 }
 
-               
+                dataTable.Rows.Add(dataRow);
             }
-            catch (Exception ex)
-            {
-               
-            }
-            return null;
-           
+
+            return dataTable;
         }
     }
 }
