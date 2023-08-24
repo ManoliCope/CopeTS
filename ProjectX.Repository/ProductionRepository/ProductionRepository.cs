@@ -43,6 +43,7 @@ namespace ProjectX.Repository.ProductionRepository
             param.Add("@Pol_Reference", req.Reference);
             param.Add("@Pol_Beneficiary", req.Beneficiarys);
             param.Add("@Pol_Passportno", req.Passportno);
+            param.Add("@status", req.status);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

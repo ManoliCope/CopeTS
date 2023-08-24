@@ -30,13 +30,13 @@
 							<li><a href="#tab1default" data-toggle="tab" class="active">All</a></li>
 							<li><a href="#tab2default" data-toggle="tab">Valid</a></li>
 							<li><a href="#tab3default" data-toggle="tab">Pending</a></li>
-							<li><a href="#tab3default" data-toggle="tab">Cancelled</a></li>
-							<li><a href="#tab3default" data-toggle="tab">Expired</a></li>
+							<li><a href="#tab4default" data-toggle="tab">Cancelled</a></li>
+							<li><a href="#tab5default" data-toggle="tab">Expired</a></li>
 						</ul>
 					</div>
 					<div class="panel-body">
 						<div class="tab-content">
-							<div class="tab-pane fade in active show" id="tab1default">
+							<div class="tab-pane fade in active show" status="1" id="tab1default">
 								<div class="row tablediv">
 									<div class="col-lg-12">
 										<div class="card">
@@ -80,7 +80,7 @@
 													</div>
 												</div>
 
-												<table id="productiontable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+												<table id="productiontable1" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
 												</table>
 
 											</div>
@@ -91,10 +91,213 @@
 
 
 							</div>
-							<div class="tab-pane fade" id="tab2default">Default 2</div>
-							<div class="tab-pane fade" id="tab3default">Default 3</div>
-							<div class="tab-pane fade" id="tab4default">Default 4</div>
-							<div class="tab-pane fade" id="tab5default">Default 5</div>
+							<div class="tab-pane fade" status="2" id="tab2default">
+								<div class="row tablediv">
+									<div class="col-lg-12">
+										<div class="card">
+											<div id="searchform2" class="card-body">
+
+												<div id="searchform2">
+													<div class="row mb-6">
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Reference:</label>
+															<input id="referencename2" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Beneficiary:</label>
+															<input id="beneficiaryname2" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Passport No:</label>
+															<input id="passportno2" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3">
+															<div class="row mt-4">
+																<div class="col-sm-6">
+																	<button class="btn bglocalcolor" id="search2" style="width:100%">
+																		<span>
+																			<i class="la la-search"></i>
+																			<span>Search</span>
+																		</span>
+																	</button>&nbsp;&nbsp;
+																</div>
+																<div class="col-sm-6">
+																	<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+																		<span>
+																			<i class="la la-close"></i>
+																			<span>Reset</span>
+																		</span>
+																	</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+												<table id="productiontable2" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+												</table>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+							<div class="tab-pane fade" status="3" id="tab3default">
+								<div class="row tablediv">
+									<div class="col-lg-12">
+										<div class="card">
+											<div id="searchform3" class="card-body">
+
+												<div id="searchform3">
+													<div class="row mb-6">
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Reference:</label>
+															<input id="referencename3" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Beneficiary:</label>
+															<input id="beneficiaryname3" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Passport No:</label>
+															<input id="passportno3" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3">
+															<div class="row mt-4">
+																<div class="col-sm-6">
+																	<button class="btn bglocalcolor" id="search3" style="width:100%">
+																		<span>
+																			<i class="la la-search"></i>
+																			<span>Search</span>
+																		</span>
+																	</button>&nbsp;&nbsp;
+																</div>
+																<div class="col-sm-6">
+																	<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+																		<span>
+																			<i class="la la-close"></i>
+																			<span>Reset</span>
+																		</span>
+																	</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+												<table id="productiontable3" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+												</table>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							<div class="tab-pane fade" status="4" id="tab4default">
+								<div class="col-lg-12">
+										<div class="card">
+											<div id="searchform4" class="card-body">
+
+												<div id="searchform4">
+													<div class="row mb-6">
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Reference:</label>
+															<input id="referencename4" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Beneficiary:</label>
+															<input id="beneficiaryname4" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Passport No:</label>
+															<input id="passportno4" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3">
+															<div class="row mt-4">
+																<div class="col-sm-6">
+																	<button class="btn bglocalcolor" id="search4" style="width:100%">
+																		<span>
+																			<i class="la la-search"></i>
+																			<span>Search</span>
+																		</span>
+																	</button>&nbsp;&nbsp;
+																</div>
+																<div class="col-sm-6">
+																	<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+																		<span>
+																			<i class="la la-close"></i>
+																			<span>Reset</span>
+																		</span>
+																	</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+												<table id="productiontable4" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+												</table>
+
+											</div>
+										</div>
+									</div>
+									</div>
+							<div class="tab-pane fade" status="5" id="tab5default"><div class="col-lg-12">
+										<div class="card">
+											<div id="searchform5" class="card-body">
+
+												<div id="searchform5">
+													<div class="row mb-6">
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Reference:</label>
+															<input id="referencename5" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Beneficiary:</label>
+															<input id="beneficiaryname5" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Passport No:</label>
+															<input id="passportno5" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
+														</div>
+														<div class="col-lg-3">
+															<div class="row mt-4">
+																<div class="col-sm-6">
+																	<button class="btn bglocalcolor" id="search5" style="width:100%">
+																		<span>
+																			<i class="la la-search"></i>
+																			<span>Search</span>
+																		</span>
+																	</button>&nbsp;&nbsp;
+																</div>
+																<div class="col-sm-6">
+																	<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+																		<span>
+																			<i class="la la-close"></i>
+																			<span>Reset</span>
+																		</span>
+																	</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+												<table id="productiontable5" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+												</table>
+
+											</div>
+										</div>
+									</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -8,7 +8,11 @@ $(document).ready(function () {
     $(".isselect2").select2({
         tokenSeparators: [',', ' ']
     })
+    var stat = sessionStorage.getItem('status');
+    sessionStorage.removeItem('status');
+    if (stat != null && stat > 0) {
 
+    }
     //$('#product_id').on('select2:selecting', function (e) {
     //    // Get the entered text in the search box
     //    const enteredText = $('.select2-search__field').val();
