@@ -97,7 +97,6 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
-
         [HttpPost]
         public TariffResp CreateTariff(TariffReq req)
         {
@@ -203,6 +202,7 @@ namespace ProjectX.Controllers
                             }
                         }
                     }
+                    var importTariff = _tariffBusiness.ImportDataTariff(tariffs, _user.U_Id);
                 }
             }
 
@@ -217,80 +217,6 @@ namespace ProjectX.Controllers
 
             return Ok(tariffs);
         }
-
-
-
-        //[HttpPost]
-        //public ActionResult Import(string filePath)
-        //{
-        //    try
-        //    {
-
-        //        //string filePath = ""; // Set the correct path to the uploaded file
-        //        FileInfo file = new FileInfo(filePath);
-
-
-        //        using (var package = new ExcelPackage(file))
-        //        {
-        //            ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-        //            int rowCount = worksheet.Dimension.Rows;
-
-        //            //using (var dbContext = new YourDbContext()) // Replace with your actual DbContext class
-        //            //{
-        //                for (int row = 2; row <= rowCount; row++) // Assuming header is in the first row
-        //                {
-        //                    string columnName = worksheet.Cells[row, 1].Value.ToString(); // Replace with actual column index
-        //                    // ... Extract other columns ...
-
-        //                    //YourEntity entity = new YourEntity
-        //                    //{
-        //                    //    ColumnName = columnName,
-        //                    //    // ... Set other properties ...
-        //                    //};
-
-        //                    //dbContext.YourEntities.Add(entity);
-        //                }
-
-        //                //dbContext.SaveChanges();
-        //            //}
-        //        }
-
-        //        ViewBag.Message = "Import successful";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Message = "Error during import: " + ex.Message;
-        //    }
-
-        //    return View("Upload");
-        //}
-
-        //[HttpPost]
-        //public IActionResult Import(IFromFile formData)
-        //{
-        //    using (var package = new ExcelPackage(formData.OpenReadStream()))
-        //    {
-        //        var worksheet = package.Workbook.Worksheets[0];
-        //        var rows = worksheet.Dimension.Rows;
-
-        //        //using var connection = _dbConnectionFactory.GetConnection();
-        //        //connection.Open();
-
-        //        //for (int row = 2; row <= rows; row++) // Assuming row 1 is header
-        //        //{
-        //        //    var dataItem = new DataItem
-        //        //    {
-        //        //        Name = worksheet.Cells[row, 1].Value.ToString(),
-        //        //        // Populate other properties...
-        //        //    };
-
-        //        //    // Insert into SQL Server table using Dapper
-        //        //    connection.Execute("INSERT INTO YourTableName (Name, ...) VALUES (@Name, ...)", dataItem);
-        //        //}
-        //    }
-
-        //    return RedirectToAction("Index");
-        //}
 
     }
 

@@ -28,10 +28,11 @@ $(document).ready(function () {
 
 
 
-function drawtable(data) {
-    console.log(data, 'drawtable')
-
-    var table = $('#productiontable').DataTable({
+function drawtable(data,status) {
+    //console.log(data, 'drawtable')
+    if (status == null || status =='undefined')
+        status = 1;
+    var table = $('#productiontable'+status).DataTable({
         "data": data,
         "paging": true,
         "ordering": true,
@@ -64,7 +65,7 @@ function drawtable(data) {
                 render: function (data, type, full, meta) {
                     if (type === 'display' || type === 'filter') {
                         // Assuming "IsEditable" is a boolean property
-                        var checkbox = $(`<input type="checkbox" onclick="showresponsemodalbyid('confirm-email-approval',${full.policyID},${meta.row})">`);
+                        var checkbox = $(`<input type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row})">`);
                         if (data) {
                             checkbox.prop('checked', true);
                         }
@@ -95,7 +96,7 @@ function drawtable(data) {
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     console.log(full)
-                    return `<a   title="Edit" polid="` + full.policyID + `"  class="text-black-50" onclick="gotopol(this)"><i class="fas fa-book"/></a>`;
+                    return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-book"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
@@ -121,8 +122,10 @@ function Search() {
         return;
     }
     showloader("load")
-
+    var status = $('#tab1default').attr('status');
+    //alert(status)
     var filter = {
+        status: status,
         reference: $("#referencename").val().trim(),
         beneficiarys: $("#beneficiaryname").val().trim(),
         passportno: $("#passportno").val().trim(),
@@ -172,22 +175,270 @@ function removerow(me) {
 
 function gotopol(me) {
     showloader("load")
+    sessionStorage.setItem('status', $(me).attr("stat"));
     window.location.href = "/production/edit/" + $(me).attr("polid");
     removeloader();
     return
 }
 
+$("#confirmdeletebtn").click(function () {
+    deleteproduction(this);
+});
+
+$("#confirmeditbtn").click(function () {
+    editableProduction(this);
+});
+
+function editableProduction(me) {
+    console.log(me)
+    togglebtnloader(me)
+    var thisid = $(me).closest("#confirm-edit-approval").attr("actid");
+    var isEditable = $(me).closest("#confirmeditbtn").is(':checked');
+    //alert(thisid)
+    //alert(isEditable)
+    removebtnloader(me);
+
+    return;
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: projectname + "/Production/EditableProduction",
+        data: { id: thisid, isEditable: isEditable },
+        success: function (result) {
+
+            if (result.statusCode.code == 1) {
+
+                removebtnloader(me);
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+            }
+            else
+                showresponsemodal(result.statusCode.code, result.statusCode.message, "Production")
 
 
 
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
+    });
+}
+$("#search2").click(function () {
+    Search2();
+});
+$("#search3").click(function () {
+    Search3();
+});
+$("#search4").click(function () {
+    Search4();
+});
+$("#search5").click(function () {
+    Search5();
+});
+function Search2() {
+    if (validateForm("#searchform2")) {
+        return;
+    }
+    showloader("load")
+    var status = $('#tab2default').attr('status');
+    //alert(status)
+    var filter = {
+        status: status ,
+        reference: $("#referencename2").val().trim(),
+        beneficiarys: $("#beneficiaryname2").val().trim(),
+        passportno: $("#passportno2").val().trim(),
+    }
 
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Production/Search",
+        data: { req: filter },
+        success: function (result) {
+            removeloader();
+            if (result.production)
+                drawtable(result.production,status);
+            else
+                drawtable();
 
+            //if (result.statusCode.code != 1)
+            //    showresponsemodal("error", result.statusCode.message)
+            //else {
+            //    drawtable(result.profiles);
+            //}
 
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
 
+            alert("Error:" + failure);
+        },
+        error: function (xhr, data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
 
+            showresponsemodal("Error", errorMessage)
+        }
+    });
+}
+function Search3() {
+    if (validateForm("#searchform3")) {
+        return;
+    }
+    showloader("load")
+    var status = $('#tab3default').attr('status');
+    var filter = {
+        status: status,
+        reference: $("#referencename3").val().trim(),
+        beneficiarys: $("#beneficiaryname3").val().trim(),
+        passportno: $("#passportno3").val().trim(),
+    }
 
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Production/Search",
+        data: { req: filter },
+        success: function (result) {
+            removeloader();
+            if (result.production)
+                drawtable(result.production,status);
+            else
+                drawtable();
 
+            //if (result.statusCode.code != 1)
+            //    showresponsemodal("error", result.statusCode.message)
+            //else {
+            //    drawtable(result.profiles);
+            //}
 
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            alert("Error:" + failure);
+        },
+        error: function (xhr, data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
+
+            showresponsemodal("Error", errorMessage)
+        }
+    });
+}
+function Search4() {
+    if (validateForm("#searchform4")) {
+        return;
+    }
+    showloader("load")
+    var status = $('#tab4default').attr('status');
+    var filter = {
+        status: status,
+        reference: $("#referencename4").val().trim(),
+        beneficiarys: $("#beneficiaryname4").val().trim(),
+        passportno: $("#passportno4").val().trim(),
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Production/Search",
+        data: { req: filter },
+        success: function (result) {
+            removeloader();
+            if (result.production)
+                drawtable(result.production, status);
+            else
+                drawtable();
+
+            //if (result.statusCode.code != 1)
+            //    showresponsemodal("error", result.statusCode.message)
+            //else {
+            //    drawtable(result.profiles);
+            //}
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            alert("Error:" + failure);
+        },
+        error: function (xhr, data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
+
+            showresponsemodal("Error", errorMessage)
+        }
+    });
+}
+function Search5() {
+    if (validateForm("#searchform5")) {
+        return;
+    }
+    showloader("load")
+
+    var status = $('#tab5default').attr('status');
+    var filter = {
+        status: status,
+        reference: $("#referencename5").val().trim(),
+        beneficiarys: $("#beneficiaryname5").val().trim(),
+        passportno: $("#passportno5").val().trim(),
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Production/Search",
+        data: { req: filter },
+        success: function (result) {
+            removeloader();
+            if (result.production)
+                drawtable(result.production, status);
+            else
+                drawtable();
+
+            //if (result.statusCode.code != 1)
+            //    showresponsemodal("error", result.statusCode.message)
+            //else {
+            //    drawtable(result.profiles);
+            //}
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            alert("Error:" + failure);
+        },
+        error: function (xhr, data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
+
+            showresponsemodal("Error", errorMessage)
+        }
+    });
+}
 
 
 

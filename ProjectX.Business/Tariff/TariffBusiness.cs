@@ -50,9 +50,11 @@ namespace ProjectX.Business.Tariff
             return resp;
            
         }
-        public TariffResp Import(string filePath)
+        public TariffResp ImportDataTariff(List<TR_Tariff> tariffs, int userid)
         {
-            return _tariffRepository.Import(filePath);
+            return _tariffRepository.ImportDataTariff( tariffs,userid);
         }
+
+
     }
 }

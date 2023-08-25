@@ -22,6 +22,7 @@ namespace ProjectX.Entities.bModels
         public bool loadCurrencies { get; set; }
         public bool loadCurrencyRate { get; set; }
         public bool loadBenefitTitle { get; set; }
+        public bool loadProductionTabs { get; set; }
        
         
 

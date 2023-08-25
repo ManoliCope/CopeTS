@@ -12,6 +12,6 @@ namespace ProjectX.Repository.TariffRepository
         public TariffResp ModifyTariff(TariffReq req, string act, int userid);
         public List<TR_Tariff> GetTariffList(TariffSearchReq req);
         public TR_Tariff GetTariff(int IdTariff);
-        public TariffResp Import(string filePath);
+        public TariffResp ImportDataTariff(List<TR_Tariff> tariffs, int userid);
     }
 }

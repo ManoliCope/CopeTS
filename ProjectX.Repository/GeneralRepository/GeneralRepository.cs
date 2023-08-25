@@ -45,6 +45,7 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadCurrencies", loadDataModelSetup.loadCurrencies);
             param.Add("@loadCurrencyRate", loadDataModelSetup.loadCurrencyRate);
             param.Add("@loadBenefitTitle", loadDataModelSetup.loadBenefitTitle);
+            param.Add("@loadProductionTabs", loadDataModelSetup.loadProductionTabs);
 
 
 
@@ -82,6 +83,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.currencyRate = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadBenefitTitle)
                         resp.benefitTitle = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadProductionTabs)
+                        resp.productionTabs = result.Read<LookUpp>().ToList();
                 }
             }
 

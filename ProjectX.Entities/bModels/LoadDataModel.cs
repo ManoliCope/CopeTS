@@ -23,6 +23,7 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> currencies { get; set; }
         public List<LookUpp> currencyRate { get; set; }
         public List<LookUpp> benefitTitle { get; set; }
+        public List<LookUpp> productionTabs { get; set; }
         
     }
 }
