@@ -149,39 +149,38 @@ $(document).ready(function () {
 });
 
 
-async function Printpolicy() {
-    try {
-        const requestData = {
-            PolicyID: 43
-        };
+function Printpolicy() {
+    const requestData = {
+        PolicyID: 43
+    };
 
-        const response = await fetch('/Document/Get', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            //body: JSON.stringify(requestData),
+    fetch('/Production/GeneratePdf', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        //body: JSON.stringify(requestData),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'RazorPdf.pdf';
+            link.click();
+
+            URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'RazorPdf.pdf';
-        link.click();
-
-        URL.revokeObjectURL(url);
-    } catch (error) {
-        console.error('Error:', error);
-    }
 }
-
-
 
 
 
