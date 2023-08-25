@@ -7,13 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\DocumentController.cs" />
+    <Compile Remove="Interfaces\IDocumentService.cs" />
+    <Compile Remove="Interfaces\IRazorRendererHelper.cs" />
+    <Compile Remove="Services\DocumentService.cs" />
+    <Compile Remove="Services\RazorRendererHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0\Select.HtmlToPdf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin\Release\net6.0\Select.HtmlToPdf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Views\Profile\Create.cshtml" />
     <None Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
-    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="EPPlus" Version="6.2.8" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
@@ -33,16 +46,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="libwkhtmltox.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="libwkhtmltox.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="libwkhtmltox.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

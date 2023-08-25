@@ -29,7 +29,9 @@ namespace ProjectX.Services
 
         public byte[] GeneratePdfFromString()
         {
-            var htmlContent = "test";
+            string htmlContent = "<p>This is a sample HTML content.</p>";
+
+            //var htmlContent = "test";
             return GeneratePdf(htmlContent);
         }
 

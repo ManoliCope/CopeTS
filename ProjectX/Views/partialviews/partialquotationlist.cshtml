@@ -40,30 +40,30 @@
 						<tr>
 							<td>Plan</td>
 							<td colspan="2">
-								<select class="form-control plans" >
+								<select class="form-control plans">
 									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == item.Insured))
 									{
 										@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
-											@thislist.PlanName
-										</option>*@
+												@thislist.PlanName
+											</option>*@
 
-									<option value="@thislist.Plan" data-plan="@thislist.Plan"
-											data-price="@thislist.PriceAmount"
-											data-deductible="@thislist.DeductibleFee"
-											data-insured="@thislist.Insured"
-											data-age="@thislist.Age"
-											data-product="@thislist.Product"
-											data-package="@thislist.Package"
-											data-duration="@thislist.Duration"
-											data-tariffid="@thislist.TariffID"
-											data-numberofdays="@thislist.NumberOfDays"
-											data-netpremiumamount="@thislist.NetPremiumAmount"
-											data-paamount="@thislist.PAAmount"
-											data-overrideamount="@thislist.OverrideAmount"
-											data-deductiblefee="@thislist.DeductibleFee"
-											data-sportactivitiesfee="@thislist.SportAcitiviesFee">
-										@thislist.PlanName
-									</option>
+										<option value="@thislist.Plan" data-plan="@thislist.Plan"
+												data-price="@thislist.PriceAmount"
+												data-deductible="@thislist.DeductibleFee"
+												data-insured="@thislist.Insured"
+												data-age="@thislist.Age"
+												data-product="@thislist.Product"
+												data-package="@thislist.Package"
+												data-duration="@thislist.Duration"
+												data-tariffid="@thislist.TariffID"
+												data-numberofdays="@thislist.NumberOfDays"
+												data-netpremiumamount="@thislist.NetPremiumAmount"
+												data-paamount="@thislist.PAAmount"
+												data-overrideamount="@thislist.OverrideAmount"
+												data-deductiblefee="@thislist.DeductibleFee"
+												data-sportactivitiesfee="@thislist.SportAcitiviesFee">
+											@thislist.PlanName
+										</option>
 									}
 								</select>
 							</td>
@@ -72,19 +72,20 @@
 							<td>Additional Benefits</td>
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
-									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == item.Package && x.TariffId == item.TariffID))
-									{
-										<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-											@thislist.B_Title @thislist.B_Benfees
-										</option>
-									}
+									@if (Model.AdditionalBenefits != null)
+										@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == item.Package && x.TariffId == item.TariffID))
+										{
+											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
+												@thislist.B_Title @thislist.B_Benfees
+											</option>
+										}
 
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								Deductible - <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span> 
+								Deductible - <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>
 								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
 							</td>
 							<td>
@@ -133,7 +134,7 @@
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td id="grandtotal"class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
 					</tr>
 				</tbody>
 			</table>

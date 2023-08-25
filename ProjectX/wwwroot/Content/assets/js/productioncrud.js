@@ -155,12 +155,12 @@ async function Printpolicy() {
             PolicyID: 43
         };
 
-        const response = await fetch('/Document/GetPdfFromRazor', {
-            method: 'POST',
+        const response = await fetch('/Document/Get', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(requestData),
+            //body: JSON.stringify(requestData),
         });
 
         if (!response.ok) {
