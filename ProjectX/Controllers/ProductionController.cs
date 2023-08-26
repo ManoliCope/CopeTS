@@ -24,6 +24,7 @@ using ProjectX.Business.Users;
 using ProjectX.Repository.UsersRepository;
 using ProjectX.Business.User;
 using SelectPdf;
+using ProjectX.Entities.Models.Users;
 
 namespace ProjectX.Controllers
 {
@@ -302,8 +303,8 @@ namespace ProjectX.Controllers
         [HttpPost]
         public IActionResult GetPartialViewQuotation(ProductionResp quotereq)
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
-
         }
 
         [HttpPost]

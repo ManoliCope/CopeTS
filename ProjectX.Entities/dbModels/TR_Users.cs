@@ -60,6 +60,8 @@ namespace ProjectX.Entities.dbModels
         public string? U_Full_Name { get; set; }
         public string? U_User_Name { get; set; }
         public bool? U_Is_Admin { get; set; }
+        public decimal? U_CurrencyRate { get; set; }
+        public string U_CurrencySymbol { get; set; }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model ProjectX.Entities.Models.Production.ProductionResp
 @{
 	Layout = null;
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 }
 
 
@@ -118,23 +119,28 @@
 				<tbody>
 					<tr>
 						<td>Initial Premium</td>
-						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
+						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td id="additiononprem" class="text-end">1.00 $</td>
+						<td id="additiononprem" class="text-end">1.00 USD</td>
+						<td id="additiononprem" class="text-end">1.00 USD</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end">0.5 $</td>
+						<td id="taxvat" class="text-end">0.5 USD</td>
+						<td id="taxvat" class="text-end">0.5 USD</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td id="stamps" class="text-end">0.01 $</td>
+						<td id="stamps" class="text-end">0.01 USD</td>
+						<td id="stamps" class="text-end">0.01 USD</td>
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) $</td>
+						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
+						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 					</tr>
 				</tbody>
 			</table>

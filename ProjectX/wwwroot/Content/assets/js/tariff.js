@@ -22,6 +22,13 @@ $(document).ready(function () {
     })
 
 
+    $("#samplefile").click(function () {
+
+        downloadExcel()
+    });
+
+
+
     $("#create").click(function () {
         addnew();
     });
@@ -50,7 +57,18 @@ $(document).ready(function () {
 
 });
 
+function downloadExcel() {
+    var fileName = "tariff.xlsx"; 
+    var baseUrl = window.location.origin;
+    var filePath = baseUrl + "/Samplefile/" + fileName;
 
+    var a = document.createElement("a");
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.href = filePath;
+    a.download = fileName;
+    a.click();
+}
 
 
 
@@ -68,8 +86,8 @@ function drawtable(data) {
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "t_Id" },
             //{ "title": "Package ID", "className": "text-center filter", "orderable": true, "data": "p_Id" },
-            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Id" },
-            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "pL_Id" },
+            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Name" },
+            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "pL_Name" },
             { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "t_Start_Age" },
             { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "t_End_Age" },
             { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "t_Number_Of_Days" },
