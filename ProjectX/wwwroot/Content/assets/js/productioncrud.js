@@ -154,35 +154,22 @@ $(document).ready(function () {
 
 
 function Printpolicy() {
-    const requestData = {
-        PolicyID: 43
-    };
+    const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
 
-    fetch('/Production/GeneratePdf', {
-        method: 'GET',
+    fetch('/Production/ConvertHtmlToPdf', {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        //body: JSON.stringify(requestData),
+        body: JSON.stringify(htmlContent)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.blob();
-        })
+        .then(response => response.blob())
         .then(blob => {
             const url = URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'RazorPdf.pdf';
-            link.click();
-
-            URL.revokeObjectURL(url);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted.pdf';
+            a.click();
         });
 }
 

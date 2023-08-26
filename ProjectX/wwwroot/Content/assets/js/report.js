@@ -2,154 +2,100 @@
 var projectname = checkurlserver();
 
 $(document).ready(function () {
+    $('#generateproduction').click(function () {
+        generateproduction();
+    });
 
+    $('#generatebenefits').click(function () {
+        generatebenefits();
+    });
+    $('#generatebeneficiaries').click(function () {
+        generatebeneficiaries();
+    });
 });
 
-
-
-$('#generateproduction').click(function () {
-    generateproduction();
-});
-
-$('#generatebenefits').click(function () {
-    generatebenefits();
-});
-$('#generatebeneficiaries').click(function () {
-    generatebeneficiaries();
-});
 function generatebenefits() {
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateBenefits",
         //data: { req: request },
-        success: function (result) {
-            console.log(result)
-            if (result.statusCode.code == 1) {
-                const myJSON = JSON.stringify(result.reportData);
-                var req = {
-                    data: myJSON,
-                    filename: 'BenefitsReport'
-                }
-                var url = projectname + "/Report/GenerateReport";
-
-                //$.redirect(url, req, "POST", "_blank");
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: { req: req },
-                    success: function (result) {
-                        alert('done')
-                    }
-                });
-            }
-            else {
-                showresponsemodal(0, result.statusCode.message)
-            }
-
-            removeloader();
+        xhrFields: {
+            responseType: 'blob'
         },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-            //alert("Error:" + failure);
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'report.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
         },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
-        }
-    });
-
-}
-function generatebeneficiaries() {
-    $.ajax({
-        type: 'POST',
-        url: projectname + "/Report/GenerateBeneficiaries",
-       //data: { req: request },
-        success: function (result) {
-            console.log(result)
-            if (result.statusCode.code == 1) {
-                const myJSON = JSON.stringify(result.reportData);
-                var req = {
-                    data: myJSON,
-                    filename: 'BeneficiariesReport'
-                }
-                var url = projectname + "/Report/GenerateReport";
-
-                //$.redirect(url, req, "POST", "_blank");
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: { req: req },
-                    success: function (result) {
-                        alert('done')
-                    }
-                });
-            }
-            else {
-                showresponsemodal(0, result.statusCode.message)
-            }
-
-            removeloader();
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-
-            //alert("Error:" + failure);
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+        error: function (error) {
+            console.error("Error generating report:", error);
         }
     });
 }
+
 function generateproduction() {
-   
-
     var request = $("#prodId").val();
-       
-    
 
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateProduction",
         data: { req: request },
-        success: function (result) {
-            console.log(result)
-            if (result.statusCode.code == 1) {
-                const myJSON = JSON.stringify(result.reportData);
-                var req = {
-                    data: myJSON,
-                    filename: 'ProductionReport'
-                }
-                var url = projectname + "/Report/GenerateReport";
-                
-                //$.redirect(url, req, "POST", "_blank");
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: { req: req },
-                    success: function (result) {
-                        alert('done')
-                    }
-                });
-            }
-            else {
-                showresponsemodal(0, result.statusCode.message)
-            }
-
-            removeloader();
+        xhrFields: {
+            responseType: 'blob'
         },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-            //alert("Error:" + failure);
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'report.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
         },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            //alert("fail");
+        error: function (error) {
+            console.error("Error generating report:", error);
         }
     });
 
+
+}
+
+function generatebeneficiaries() {
+    var request = $("#prodId").val();
+
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Report/GenerateBeneficiaries",
+        data: { req: request },
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'report.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
+        },
+        error: function (error) {
+            console.error("Error generating report:", error);
+        }
+    });
 
 }
 

@@ -39,7 +39,7 @@ namespace ProjectX.Controllers
 
         private IWebHostEnvironment _env;
 
-        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness usersBusiness, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness ,IWebHostEnvironment env)
+        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness usersBusiness, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _productionBusiness = productionBusiness;
@@ -71,7 +71,7 @@ namespace ProjectX.Controllers
                 loadPlans = true,
                 loadTariffs = true
 
-            });            
+            });
             return View(response);
         }
 
@@ -157,7 +157,7 @@ namespace ProjectX.Controllers
         public ProductionSearchResp Search(ProductionSearchReq req)
         {
             ProductionSearchResp response = new ProductionSearchResp();
-            response.Production = _productionBusiness.GetPoliciesList( req, _user.U_Id);
+            response.Production = _productionBusiness.GetPoliciesList(req, _user.U_Id);
 
             return response;
         }
@@ -310,6 +310,31 @@ namespace ProjectX.Controllers
         public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
+        }
+
+
+        [HttpPost]
+        public IActionResult ConvertHtmlToPdf([FromBody] string htmlContent)
+        {
+            // Create a new HTML to PDF converter object
+            HtmlToPdf converter = new HtmlToPdf();
+
+            // Convert HTML to PDF
+            PdfDocument doc = converter.ConvertHtmlString(htmlContent);
+
+            // Save the PDF as a byte array
+            byte[] pdfBytes;
+            using (MemoryStream pdfStream = new MemoryStream())
+            {
+                doc.Save(pdfStream);
+                pdfBytes = pdfStream.ToArray();
+            }
+
+            // Close the PDF document
+            doc.Close();
+
+            // Return the PDF as a file
+            return File(pdfBytes, "application/pdf", "converted.pdf");
         }
     }
 }

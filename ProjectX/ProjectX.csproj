@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="ClosedXML" Version="0.102.1" />
     <PackageReference Include="EPPlus" Version="6.2.8" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
@@ -25,6 +26,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="sautinsoft.pdffocus" Version="8.0.6.21" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="23.1.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
