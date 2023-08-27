@@ -129,7 +129,19 @@ namespace ProjectX.Business.Users
                     Multi_Lang_Policy = true,
                     Hide_Premium_Info = true,
                     Active = true,
-                    Is_Admin = true
+                    Is_Admin = true,
+
+                    Commission = users.U_Commission,
+                    Stamp = users.U_Stamp,
+                    Addional_Fees = users.U_Additional_Fees,
+                    Max_Additional_Fees = users.U_Max_Additional_Fees,
+                    VAT = users.U_VAT,
+                    Tax = users.U_Tax,
+                    Tax_Type = users.U_Tax_Format,
+
+                    Currency = users.U_Currency,
+                    CurrencySymbol = users.U_CurrencySymbol,
+                    CurrencyRate = users.U_CurrencyRate
                 };
             }
             else
@@ -154,8 +166,11 @@ namespace ProjectX.Business.Users
                     Max_Additional_Fees = users.U_Max_Additional_Fees,
                     VAT = users.U_VAT,
                     Tax = users.U_Tax,
-                    Tax_Type = users.U_Tax_Format
+                    Tax_Type = users.U_Tax_Format,
 
+                    Currency = users.U_Currency,
+                    CurrencySymbol = users.U_CurrencySymbol,
+                    CurrencyRate = users.U_CurrencyRate
                 };
             }
              

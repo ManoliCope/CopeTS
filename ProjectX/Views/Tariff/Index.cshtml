@@ -182,13 +182,16 @@
 				{
 					<div class="form-group  pt-2">
 						<label for="file">Select Excel File:</label>
-						<input type="file" name="file" id="file"  accept=".xlsx, .xls" class="form-control-file file-upload" required />
+						<input type="file" name="file" id="file" accept=".xlsx, .xls" class="form-control-file file-upload" required />
 					</div>
 				}
 
 
 			</div>
 			<div class="modal-footer">
+				<a id="downloadLink" class="btn  bglocalcolor border mr-auto pt-1" href="/Samplefile/tariff.xlsx" download>Download Excel</a>
+
+
 				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
 				@*<button id="importFile" type="button" class="btn btn-danger">Import</button>*@
 				<div id="thisloader" class="smloader hide"></div>
@@ -199,8 +202,7 @@
 					</span>
 				</button>
 				@*<div id="thisloader" class="smloader hide"></div>
-				<input type="file" class="file-upload" style="display: none" multiple />*@
-
+					<input type="file" class="file-upload" style="display: none" multiple />*@
 
 			</div>
 		</div>

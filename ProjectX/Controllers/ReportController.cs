@@ -11,6 +11,7 @@ using ProjectX.Entities.Models.General;
 using ProjectX.Entities.Models.Report;
 using System.Data;
 using System.Text;
+using ClosedXML.Excel;
 
 namespace ProjectX.Controllers
 {
@@ -40,54 +41,52 @@ namespace ProjectX.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public void GenerateReport(request req)
+
+        static DataTable ConvertToDataTable(List<dynamic> dynamicList)
         {
-            DataTable dt = (DataTable)JsonConvert.DeserializeObject(req.data, (typeof(DataTable)));
-            ExporttoExcel(dt,req.filename);
+            DataTable dataTable = new DataTable();
+
+            if (dynamicList.Count > 0)
+            {
+                foreach (var property in ((IDictionary<string, object>)dynamicList[0]).Keys)
+                {
+                    dataTable.Columns.Add(property, typeof(object));
+                }
+
+                foreach (var item in dynamicList)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    foreach (var property in ((IDictionary<string, object>)item).Keys)
+                    {
+                        dataRow[property] = ((IDictionary<string, object>)item)[property];
+                    }
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+
+            return dataTable;
         }
-        //public IActionResult ExporttoExcel(DataTable dt,string filename)
-        //{
-        //    var content = new StringBuilder();
-        //    content.AppendLine(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.0 Transitional//EN"">");
-        //    content.AppendLine("<html><body>");
-        //    content.AppendLine("<font style='font-size:10.0pt; font-family:Calibri;'>");
-        //    content.AppendLine("<BR><BR><BR>");
-        //    content.AppendLine("<Table border='1' bgColor='#ffffff' " +
-        //                         "borderColor='#000000' cellSpacing='0' cellPadding='0' " +
-        //                         "style='font-size:10.0pt; font-family:Calibri; background:white;'> <TR>");
+        public IActionResult ExporttoExcel(DataTable dataTable, string filename)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Report");
+                worksheet.Cell(1, 1).InsertTable(dataTable);
 
-        //    int columnscount = dt.Columns.Count;
+                using (var memoryStream = new System.IO.MemoryStream())
+                {
+                    workbook.SaveAs(memoryStream);
+                    memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
 
-        //    for (int j = 0; j < columnscount; j++)
-        //    {
-        //        content.AppendLine("<Td style='background:#16478e !important;color:white !important; text-align:center'>");
-        //        content.AppendLine("<B>");
-        //        content.AppendLine(dt.Columns[j].Caption.ToString());
-        //        content.AppendLine("</B>");
-        //        content.AppendLine("</Td>");
-        //    }
-        //    content.AppendLine("</TR>");
+                    return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename+".xlsx");
+                }
+            }
+        }
 
-        //    foreach (DataRow row in dt.Rows)
-        //    {
-        //        content.AppendLine("<TR>");
-        //        for (int i = 0; i < dt.Columns.Count; i++)
-        //        {
-        //            content.AppendLine("<Td>");
-        //            content.AppendLine(row[i].ToString());
-        //            content.AppendLine("</Td>");
-        //        }
-        //        content.AppendLine("</TR>");
-        //    }
 
-        //    content.AppendLine("</Table>");
-        //    content.AppendLine("</font>");
-        //    content.AppendLine("</body></html>");
 
-        //    var bytes = Encoding.UTF8.GetBytes(content.ToString());
-        //    return PhysicalFile(bytes, "application/ms-excel", filename);
-        //}
+
+        
         public ActionResult Production()
         {
             
@@ -97,54 +96,7 @@ namespace ProjectX.Controllers
             });
             return View(response);
         }
-        [HttpPost]
-        public GetReportResp GenerateProduction(int req)
-        {
-            GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateProduction(req,_user.U_Id);
-            result.statusCode.code = 1;
-            return result;
-        }
-        public IActionResult ExporttoExcel(DataTable dt, string filename)
-        {
-
-            var sb = new StringBuilder();
-            sb.AppendLine("<table border='1' style='border-collapse: collapse;'>");
-
-            // Add header row
-            sb.AppendLine("<tr>");
-            foreach (DataColumn column in dt.Columns)
-            {
-                sb.AppendLine($"<th style='background-color: #16478e; color: white; text-align: center;'>{column.ColumnName}</th>");
-            }
-            sb.AppendLine("</tr>");
-
-            // Add data rows
-            foreach (DataRow row in dt.Rows)
-            {
-                sb.AppendLine("<tr>");
-                foreach (var item in row.ItemArray)
-                {
-                    sb.AppendLine($"<td>{item}</td>");
-                }
-                sb.AppendLine("</tr>");
-            }
-
-            sb.AppendLine("</table>");
-
-            var content = sb.ToString();
-            var bytes = Encoding.UTF8.GetBytes(content);
-
-            using (var memoryStream = new MemoryStream())
-            {
-                // Create a memory stream with the Excel content
-                memoryStream.Write(bytes, 0, bytes.Length);
-
-                // Return the memory stream as a downloadable file
-                
-                return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
-            }
-        }
+      
         public ActionResult Benefits()
         {
 
@@ -163,21 +115,32 @@ namespace ProjectX.Controllers
             });
             return View(response);
         }
+
         [HttpPost]
-        public GetReportResp GenerateBenefits()
+        public IActionResult GenerateProduction(int req)
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
+        }
+        [HttpPost]
+        public IActionResult GenerateBenefits()
         {
             GetReportResp result = new GetReportResp();
             result.reportData = _reportBusiness.GenerateBenefits(_user.U_Id);
-            result.statusCode.code = 1;
-            return result;
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
         }
+
         [HttpPost]
-        public GetReportResp GenerateBeneficiaries()
+        public IActionResult GenerateBeneficiaries()
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateBeneficiaries( _user.U_Id);
-            result.statusCode.code = 1;
-            return result;
+            result.reportData = _reportBusiness.GenerateBeneficiaries(_user.U_Id);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
         }
+      
     }
 }

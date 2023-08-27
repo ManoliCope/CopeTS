@@ -155,6 +155,19 @@
 										<span class="menu-title">Benefits</span>
 									</a>
 								</li>
+
+								<li class="menu-item @(controllerName == "benefittitle" ? "active" : "")">
+									<a href="~/benefittitle/">
+										
+										<span class="menu-title">Benefit Title</span>
+									</a>
+								</li>
+								@*<li class="menu-item @(controllerName == "currencyrate" ? "active" : "")">
+									<a href="~/currencyrate/">
+										<span class="menu-title">Currency Rates</span>
+									</a>
+
+								</li>*@
 							</ul>
 						</div>
 					</li>
@@ -194,7 +207,7 @@
 						</a>
 
 					</li>
-					<li class="menu-item @(controllerName == "benefittitle" ? "active" : "")">
+					@*<li class="menu-item @(controllerName == "benefittitle" ? "active" : "")">
 						<a href="~/benefittitle/">
 							<span class="menu-icon">
 								<i class="fa fa-university text-gray"></i>
@@ -202,7 +215,7 @@
 							<span class="menu-title">Benefit Title</span>
 						</a>
 
-					</li>
+					</li>*@
 					<li class="menu-item @(controllerName == "report" ? "active" : "")">
 						<a href="~/report/">
 							<span class="menu-icon">

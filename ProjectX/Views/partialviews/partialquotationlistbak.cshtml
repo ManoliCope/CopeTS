@@ -4,12 +4,13 @@
 	Layout = null;
 	var benefitlist = ViewData["benefitlist"] as List<ProjectX.Entities.dbModels.TR_Benefit>;
 	var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 }
 
 
 
 <div class="card mt-2 mb-0">
-	<div class="card-body" style="font-size:13px">
+	<div class="card-body @(!Model.IsEditable ? "disable-click":"")" style="font-size:13px">
 		<div>
 			<b>Destination(s)</b>
 			<span class="float-end dest">@DestinationNames</span>
@@ -65,7 +66,7 @@
 									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
 									{
 										<option data-benprice="@thislist.Price" value="@thislist.AB_ID" selected>
-											@thislist.Name @thislist.Price
+											@thislist.Name - @thislist.Price USD
 										</option>
 									}
 
@@ -78,7 +79,7 @@
 										if (thislist.TariffId == item.Tariff && !benefitExists)
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-												@thislist.B_Title @thislist.B_Benfees
+												@thislist.B_Title - @thislist.B_Benfees USD
 											</option>
 										}
 									}
@@ -87,15 +88,15 @@
 						</tr>
 						<tr>
 							<td>
-								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>
+								Deductible (USD <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>) <br />
 								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.Deductible ? "checked" : "" ) />
 							</td>
 							<td>
-								Sports Activities - <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>
+								Sports Activities (USD <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>)  <br />
 								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivities ? "checked" : "" ) />
 							</td>
 							<td>
-								Price	<br />
+								Price (USD)	<br />
 								<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
 							</td>
 						</tr>
@@ -103,11 +104,11 @@
 							<td>
 							</td>
 							<td>
-								Discount <br />
+								Discount (USD) <br />
 								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount">
 							</td>
 							<td>
-								Final <br />
+								Final (USD) <br />
 								<span id="finalprice" class="finalprice" data-fprice="@item.FinalPrice"> @item.FinalPrice</span>
 							</td>
 						</tr>
@@ -117,27 +118,37 @@
 			}
 
 
+
 			<table class="table table-bordered  mt-3 totaltable">
 				<tbody>
 					<tr>
 						<td>Initial Premium</td>
-						<td id="initpremtotal" class="text-end">@Model.InitialPremium $</td>
+						<td id="initpremtotal" class="text-end">@Model.InitialPremium USD</td>
+						<td id="initpremtotal" class="text-end">
+							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
+						</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td id="additiononprem" class="text-end">@Model.AdditionalValue $</td>
+						<td id="additiononprem" class="text-end">@Model.AdditionalValue USD</td>
+						<td id="additiononprem" class="text-end">@Model.AdditionalValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end">@Model.TaxVATValue $</td>
+						<td id="taxvat" class="text-end">@Model.TaxVATValue USD</td>
+						<td id="taxvat" class="text-end">@Model.TaxVATValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td id="stamps" class="text-end">@Model.StampsValue $</td>
+						<td id="stamps" class="text-end">@Model.StampsValue USD</td>
+						<td id="stamps" class="text-end">@Model.StampsValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td id="grandtotal" class="text-end">@Model.GrandTotal $</td>
+						<td id="grandtotal" class="text-end">@Model.GrandTotal USD</td>
+						<td id="grandtotal" class="text-end">
+							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
+						</td>
 					</tr>
 				</tbody>
 			</table>

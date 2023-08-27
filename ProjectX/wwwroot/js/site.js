@@ -178,43 +178,42 @@ function triggerfiltertablebackup(datatable, tablename) {
 
 
 function triggerfiltertable(datatable, tablename) {
+    //$("#" + tablename + "_wrapper").find("#" + tablename + "_length").append(`
+    //        <div class="btn-group dropright">
+    //              <span  class="dropdown align-self-center profile-dropdown-menu pl-4 noselect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='cursor:pointer'>
+    //                             <i id="filtericon" class="fas fa-filter" aria-hidden="true"></i> <span>Filter</span>
+    //              </span>
+    //              <div id='datatablefilterlist' class="dropdown-menu profile-dropdown " ">
+    //              </div>
+    //        </div>
+    //`);
+    //$('#' + tablename + ' thead tr th').each(function (i) {
+    //    var title = $(this).text();
+    //    // alert(title);
+    //    if ($('#' + tablename + ' thead tr th:eq(' + i + ')').hasClass("filter")) {
+    //        $("#datatablefilterlist").append('<div class="row p-1"><div class="col-md-4" style="text-align: center;padding-top: 5px"><span>' + title + '</span></div><div class="col-md-8"><input type="text" name=' + i + ' class="form-control datatable-input" placeholder="Search ' + title + '" /></div></div>');
+    //    }
+    //});
+    //$("#datatablefilterlist").append('<div class="row p-1"><div class="col-md-4" ></div><div class="col-md-8" > <button id="resettablefilters" class= "btn btn-info" id = "kt_reset" style = "width:100%" ><span>Reset</span></button></div ></div>');
 
-    $("#" + tablename + "_wrapper").find("#" + tablename + "_length").append(`
-            <div class="btn-group dropright">
-                  <span  class="dropdown align-self-center profile-dropdown-menu pl-4 noselect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='cursor:pointer'>
-                                 <i id="filtericon" class="fas fa-filter" aria-hidden="true"></i> <span>Filter</span>
-                  </span>
-                  <div id='datatablefilterlist' class="dropdown-menu profile-dropdown " ">
-                  </div>
-            </div>
-    `);
-    $('#' + tablename + ' thead tr th').each(function (i) {
-        var title = $(this).text();
-        // alert(title);
-        if ($('#' + tablename + ' thead tr th:eq(' + i + ')').hasClass("filter")) {
-            $("#datatablefilterlist").append('<div class="row p-1"><div class="col-md-4" style="text-align: center;padding-top: 5px"><span>' + title + '</span></div><div class="col-md-8"><input type="text" name=' + i + ' class="form-control datatable-input" placeholder="Search ' + title + '" /></div></div>');
-        }
-    });
-    $("#datatablefilterlist").append('<div class="row p-1"><div class="col-md-4" ></div><div class="col-md-8" > <button id="resettablefilters" class= "btn btn-info" id = "kt_reset" style = "width:100%" ><span>Reset</span></button></div ></div>');
 
+    //$('input', '#datatablefilterlist').on('keyup change', function () {
+    //    $("#filtericon").css("color", "red");
+    //    if (datatable.column(this.name).search() !== this.value) {
+    //        datatable
+    //            .column(this.name)
+    //            .search(this.value)
+    //            .draw();
+    //    }
+    //});
 
-    $('input', '#datatablefilterlist').on('keyup change', function () {
-        $("#filtericon").css("color", "red");
-        if (datatable.column(this.name).search() !== this.value) {
-            datatable
-                .column(this.name)
-                .search(this.value)
-                .draw();
-        }
-    });
-
-    $('#resettablefilters').on('click', function () {
-        $(this).closest('#datatablefilterlist').find('input').val('');
-        $("#filtericon").css("color", "inherit");
-        datatable
-            .columns().search("")
-            .draw();
-    });
+    //$('#resettablefilters').on('click', function () {
+    //    $(this).closest('#datatablefilterlist').find('input').val('');
+    //    $("#filtericon").css("color", "inherit");
+    //    datatable
+    //        .columns().search("")
+    //        .draw();
+    //});
 
     var buttonsContainer = datatable.buttons().container();
     var filterElement = $('.dataTables_filter');

@@ -3940,6 +3940,11 @@ body.authentication-bg {
     user-select: none; /* Standard */
 }
 
+.disable-click {
+    pointer-events: none;
+}
+
+
 /*# sourceMappingURL=app.min.css.map */
 body {
     padding-bottom: 0px !important;

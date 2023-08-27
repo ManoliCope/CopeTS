@@ -23,6 +23,8 @@ using System.IO.Packaging;
 using ProjectX.Business.Users;
 using ProjectX.Repository.UsersRepository;
 using ProjectX.Business.User;
+using SelectPdf;
+using ProjectX.Entities.Models.Users;
 
 namespace ProjectX.Controllers
 {
@@ -54,6 +56,11 @@ namespace ProjectX.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            var html = "<b>test</b>";
+            //string haswd = _productionBusiness.printp(html);
+            ViewData["thispring"] = html;
+
+
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
@@ -65,9 +72,53 @@ namespace ProjectX.Controllers
                 loadPlans = true,
                 loadTariffs = true
 
-            });            
+            });
             return View(response);
         }
+
+        //public IActionResult DownloadPdf()
+        //{
+        //    string html = "<p>This is a sample HTML content.</p>";
+        //    string title = "Sample PDF";
+        //    string paperSize = "A4";
+        //    double margins = 1.25;
+        //    bool landscape = false;
+
+        //    PaperSize size;
+
+        //    switch (paperSize.ToLower())
+        //    {
+        //        case "a4":
+        //            size = PaperSize.A4;
+        //            break;
+        //        case "a5":
+        //            size = PaperSize.A5;
+        //            break;
+        //        default:
+        //            size = PaperSize.A4;
+        //            break;
+        //    }
+
+        //    var PDFDocument = Pdf.From(html)
+        //                        .OfSize(size)
+        //                        .WithTitle(title)
+        //                        .WithoutOutline()
+        //                        .WithMargins(margins.Centimeters());
+
+        //    byte[] result;
+
+        //    if (!landscape)
+        //    {
+        //        result = PDFDocument.Portrait().Comressed().Content();
+        //    }
+        //    else
+        //    {
+        //        result = PDFDocument.Landscape().Comressed().Content();
+        //    }
+
+        //    return File(result, "application/pdf", "downloaded.pdf");
+        //}
+
 
         // GET: ProductionController/Details/5
         public ActionResult Details(int id)
@@ -77,6 +128,7 @@ namespace ProjectX.Controllers
 
             return View();
         }
+
 
 
         public ActionResult Create()
@@ -106,7 +158,7 @@ namespace ProjectX.Controllers
         public ProductionSearchResp Search(ProductionSearchReq req)
         {
             ProductionSearchResp response = new ProductionSearchResp();
-            response.Production = _productionBusiness.GetPoliciesList( req, _user.U_Id);
+            response.Production = _productionBusiness.GetPoliciesList(req, _user.U_Id);
 
             return response;
         }
@@ -251,14 +303,39 @@ namespace ProjectX.Controllers
         [HttpPost]
         public IActionResult GetPartialViewQuotation(ProductionResp quotereq)
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
-
         }
 
         [HttpPost]
         public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
+        }
+
+
+        [HttpPost]
+        public IActionResult ConvertHtmlToPdf([FromBody] string htmlContent)
+        {
+            // Create a new HTML to PDF converter object
+            HtmlToPdf converter = new HtmlToPdf();
+
+            // Convert HTML to PDF
+            PdfDocument doc = converter.ConvertHtmlString(htmlContent);
+
+            // Save the PDF as a byte array
+            byte[] pdfBytes;
+            using (MemoryStream pdfStream = new MemoryStream())
+            {
+                doc.Save(pdfStream);
+                pdfBytes = pdfStream.ToArray();
+            }
+
+            // Close the PDF document
+            doc.Close();
+
+            // Return the PDF as a file
+            return File(pdfBytes, "application/pdf", "converted.pdf");
         }
     }
 }

@@ -58,31 +58,6 @@ namespace ProjectX.Services
             }
         }
 
-
-        public string RenderPartialToStringwithout(string partialName)
-        {
-            var actionContext = GetActionContext();
-            var partial = FindView(actionContext, partialName);
-
-            using (var output = new StringWriter())
-            {
-                var viewContext = new ViewContext(
-                    actionContext,
-                    partial,
-                    new ViewDataDictionary(
-                        metadataProvider: new EmptyModelMetadataProvider(),
-                        modelState: new ModelStateDictionary()),
-                    new TempDataDictionary(
-                        actionContext.HttpContext,
-                        _tempDataProvider),
-                    output,
-                    new HtmlHelperOptions()
-                );
-
-                partial.RenderAsync(viewContext).ConfigureAwait(false);
-                return output.ToString();
-            }
-        }
         private IView FindView(ActionContext actionContext, string partialName)
         {
             var getPartialResult = _viewEngine.GetView(null, partialName, false);

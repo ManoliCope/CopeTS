@@ -17,5 +17,6 @@ namespace ProjectX.Business.Production
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid);
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
+        //public string printp(string html);
     }
 }

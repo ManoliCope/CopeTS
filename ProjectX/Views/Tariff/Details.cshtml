@@ -23,8 +23,8 @@
 								<div class="row">
 									<div class="form-group mb-3 col-lg-4">
 										<label for="idPackage">Package</label>
-										<select class="form-control" id="idPackage" name="idPackage" @Model.idPackage>
-											<option>Select Package</option>
+										<select class="form-control" id="idPackage" name="idPackage" required>
+											<option value="">Select Package</option>
 
 											@foreach (var thislist in filldata.loadedData.packages)
 											{
@@ -44,8 +44,8 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="idPackage">Plan</label>
-										<select class="form-control" id="idPlan" name="idPlan" @Model.idPackage>
-											<option>Select Plan</option>
+										<select class="form-control" id="idPlan" name="idPlan" required>
+											<option value="">Select Plan</option>
 											@foreach (var thislist in filldata.loadedData.plans)
 											{
 												@if (thislist.LK_ID == Model.planId)
@@ -97,7 +97,7 @@
 									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="tariff_starting_date">Starting Date</label>
-										<input type="date" class="form-control" id="tariff_starting_date" name="tariff_starting_date" value="@Model.tariff_starting_date.ToString("dd-MM-yyyy")" required>
+										<input type="date" class="form-control" id="tariff_starting_date" name="tariff_starting_date" value="@Model.tariff_starting_date.ToString("yyyy-MM-dd")" required>
 									</div>
 
 

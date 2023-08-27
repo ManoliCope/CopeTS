@@ -27,6 +27,8 @@ namespace ProjectX.Entities.Models.Users
         public double? VAT { get; set; }
         public double? Tax { get; set; }
         public int? Tax_Type { get; set; }
-
+        public int? Currency { get; set; }
+        public string CurrencySymbol { get; set; }
+        public decimal? CurrencyRate { get; set; }
     }
 }

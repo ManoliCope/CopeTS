@@ -1,6 +1,8 @@
 ﻿@*@model ProjectX.Entities.Models.General.LoadDataResp*@
 @{
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+
+	string thisproing = ViewData["thispring"] as string;
 }
 
 <div class="content">
@@ -21,7 +23,6 @@
 		</div>
 	</div>
 	<div class="container-fluid " style="padding:10px 0">
-
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel with-nav-tabs panel-default">
@@ -365,7 +366,7 @@
 				Are you sure you want to make this record editable?
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<button id="closeconfirmeditbtn" type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
 				<div id="thisloader" class="smloader hide"></div>
 				<button id="confirmeditbtn" type="button" class="btn btn-danger">Proceed</button>
 			</div>
