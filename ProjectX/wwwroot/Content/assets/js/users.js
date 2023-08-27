@@ -20,7 +20,9 @@ $(document).ready(function () {
     });
 
     resetPassScreen();
-
+    $("#confirmdeleteuser").click(function () {
+        deleteuser(this)
+    });
 
 });
 function drawtable(data) {
@@ -72,9 +74,8 @@ function drawtable(data) {
             }, {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
-                "render": function (data, type, full) {
-                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="deleteuser(this)"><i class="fas fa-trash"/></a>`;
-                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+                "render": function (data, type, full, meta) {
+                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
                 }
             }
         ],
@@ -277,9 +278,11 @@ function deleteuser(me) {
     if (validateForm(".container-fluid")) {
         return;
     }
+    console.log(me)
     togglebtnloader(me)
-    var thisid = $(me).attr("userid")
-
+    //var thisid = $(me).attr("userid")
+    var thisid = $(me).closest("#confirm-delete-user").attr("actid")
+    //var thisid = $("#userstable").closest("row").attr("userid")
 
     $.ajax({
         type: 'post',

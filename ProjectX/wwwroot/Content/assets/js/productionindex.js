@@ -25,9 +25,6 @@ $(document).ready(function () {
     var isadmin = $(".prodadm").attr("prodadm")
     //alert(isadmin)
 });
-
-
-
 function drawtable(data,status) {
     //console.log(data, 'drawtable')
     if (status == null || status =='undefined')
@@ -116,7 +113,6 @@ function drawtable(data,status) {
 
     triggerfiltertable(table, "profile")
 }
-
 function Search() {
     if (validateForm("#searchform")) {
         return;
@@ -168,11 +164,9 @@ function Search() {
         }
     });
 }
-
 function removerow(me) {
     $(me).closest("tr").remove();
 }
-
 function gotopol(me) {
     showloader("load")
     sessionStorage.setItem('status', $(me).attr("stat"));
@@ -180,15 +174,12 @@ function gotopol(me) {
     removeloader();
     return
 }
-
 $("#confirmdeletebtn").click(function () {
     deleteproduction(this);
 });
-
 $("#confirmeditbtn").click(function () {
     editableProduction(this);
 });
-
 function editableProduction(me) {
     console.log(me)
     togglebtnloader(me)
