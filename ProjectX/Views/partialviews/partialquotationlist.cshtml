@@ -13,11 +13,11 @@
 		</div>
 		<div>
 			<b>Inception Date</b>
-			<span class="float-end incdate">@Model.QuotationResp.First().TariffStartingDate</span>
+			<span class="float-end incdate">@Model.QuotationResp.First().TariffStartingDate.ToString("dd-MM-yyyy")</span>
 		</div>
 		<div>
 			<b>Expiry Date</b>
-			<span class="float-end expdate">@Model.QuotationResp.First().TariffStartingDate</span>
+			<span class="float-end expdate">@Model.QuotationResp.First().TariffStartingDate.ToString("dd-MM-yyyy")</span>
 		</div>
 		<div>
 			<b>Duration</b>
@@ -77,7 +77,7 @@
 										@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == item.Package && x.TariffId == item.TariffID))
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-												@thislist.B_Title @thislist.B_Benfees
+												@thislist.B_Title - @thislist.B_Benfees USD
 											</option>
 										}
 
@@ -86,15 +86,15 @@
 						</tr>
 						<tr>
 							<td>
-								Deductible - <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>
+								Deductible (USD <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>)  <br />
 								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
 							</td>
 							<td>
-								Sports Activities - <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>
+								Sports Activities (USD <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>)<br />
 								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
 							</td>
 							<td>
-								Price	<br />
+								Price (USD)	<br />
 								<span class="planprice" data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
 							</td>
 						</tr>
@@ -102,11 +102,11 @@
 							<td>
 							</td>
 							<td>
-								Discount <br />
+								Discount (USD) <br />
 								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off">
 							</td>
 							<td>
-								Final <br />
+								Final (USD) <br />
 								<span id="finalprice" class="finalprice" data-fprice="@item.PriceAmount"> @item.PriceAmount</span>
 							</td>
 						</tr>

@@ -9,6 +9,6 @@ namespace ProjectX.Interfaces
     {
         byte[] GeneratePdfFromString();
 
-        byte[] GeneratePdfFromRazorView(dynamic model);
+        byte[] GeneratePdfFromRazorView();
     }
 }

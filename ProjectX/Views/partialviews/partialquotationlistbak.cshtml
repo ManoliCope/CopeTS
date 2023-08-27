@@ -17,11 +17,11 @@
 		</div>
 		<div>
 			<b>Inception Date</b>
-			<span class="float-end incdate">@Model.FromDate.ToString("yyyy-MM-dd")</span>
+			<span class="float-end incdate">@Model.FromDate.ToString("dd-MM-yyyy")</span>
 		</div>
 		<div>
 			<b>Expiry Date</b>
-			<span class="float-end expdate">@Model.ToDate.ToString("yyyy-MM-dd")</span>
+			<span class="float-end expdate">@Model.ToDate.ToString("dd-MM-yyyy")</span>
 		</div>
 		<div>
 			<b>Duration</b>
@@ -66,7 +66,7 @@
 									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
 									{
 										<option data-benprice="@thislist.Price" value="@thislist.AB_ID" selected>
-											@thislist.Name @thislist.Price
+											@thislist.Name - @thislist.Price USD
 										</option>
 									}
 
@@ -79,7 +79,7 @@
 										if (thislist.TariffId == item.Tariff && !benefitExists)
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-												@thislist.B_Title @thislist.B_Benfees
+												@thislist.B_Title - @thislist.B_Benfees USD
 											</option>
 										}
 									}
@@ -88,15 +88,15 @@
 						</tr>
 						<tr>
 							<td>
-								Deductible - <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>
+								Deductible (USD <span data-dedprice="@item.DeductiblePrice">@item.DeductiblePrice</span>) <br />
 								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.Deductible ? "checked" : "" ) />
 							</td>
 							<td>
-								Sports Activities - <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>
+								Sports Activities (USD <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>)  <br />
 								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivities ? "checked" : "" ) />
 							</td>
 							<td>
-								Price	<br />
+								Price (USD)	<br />
 								<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
 							</td>
 						</tr>
@@ -104,11 +104,11 @@
 							<td>
 							</td>
 							<td>
-								Discount <br />
+								Discount (USD) <br />
 								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount">
 							</td>
 							<td>
-								Final <br />
+								Final (USD) <br />
 								<span id="finalprice" class="finalprice" data-fprice="@item.FinalPrice"> @item.FinalPrice</span>
 							</td>
 						</tr>

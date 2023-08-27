@@ -28,11 +28,12 @@ $(document).ready(function () {
 
 
 
-function drawtable(data,status) {
-    //console.log(data, 'drawtable')
-    if (status == null || status =='undefined')
+function drawtable(data, status) {
+    console.log(data, 'drawtable')
+
+    if (status == null || status == 'undefined')
         status = 1;
-    var table = $('#productiontable'+status).DataTable({
+    var table = $('#productiontable' + status).DataTable({
         "data": data,
         "paging": true,
         "ordering": true,
@@ -60,15 +61,17 @@ function drawtable(data,status) {
                 title: "Editable",
                 className: "text-center filter",
                 orderable: true,
-                visible: true, // add condition if admin then true else false 
+                visible: status == 1 || status == 3,
                 data: "isEditable",
                 render: function (data, type, full, meta) {
                     if (type === 'display' || type === 'filter') {
                         // Assuming "IsEditable" is a boolean property
-                        var checkbox = $(`<input type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row})">`);
                         if (data) {
-                            checkbox.prop('checked', true);
+                            var checkbox = $(`<input id="testhere" type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row}); triggerclose(this)" checked>`);
                         }
+                        else
+                            var checkbox = $(`<input id="testhere" type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row});triggerclose(this)">`);
+
                         return checkbox[0].outerHTML;
                     }
                     return data; // For other types, return the original data
@@ -95,14 +98,17 @@ function drawtable(data,status) {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    console.log(full)
-                    return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-book"/></a>`;
+                    var icon = "";
+                    if (status == 1 || status == 3) icon = "book"; else icon = "eye"
+
+                    return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
+                visible: status == 1 || status == 3,
                 "render": function (data, type, full, meta) {
                     return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
@@ -116,6 +122,19 @@ function drawtable(data,status) {
 
     triggerfiltertable(table, "profile")
 }
+
+function triggerclose(me) {
+    $('#closeconfirmeditbtn').click(function () {
+        var status = $(me).is(':checked');
+        if (status) {
+            $(me).prop("checked", false)
+        }
+        else {
+            $(me).prop("checked", true)
+        }
+    });
+}
+
 
 function Search() {
     if (validateForm("#searchform")) {
@@ -245,7 +264,7 @@ function Search2() {
     var status = $('#tab2default').attr('status');
     //alert(status)
     var filter = {
-        status: status ,
+        status: status,
         reference: $("#referencename2").val().trim(),
         beneficiarys: $("#beneficiaryname2").val().trim(),
         passportno: $("#passportno2").val().trim(),
@@ -258,7 +277,7 @@ function Search2() {
         success: function (result) {
             removeloader();
             if (result.production)
-                drawtable(result.production,status);
+                drawtable(result.production, status);
             else
                 drawtable();
 
@@ -308,7 +327,7 @@ function Search3() {
         success: function (result) {
             removeloader();
             if (result.production)
-                drawtable(result.production,status);
+                drawtable(result.production, status);
             else
                 drawtable();
 

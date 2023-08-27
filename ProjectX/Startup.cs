@@ -44,7 +44,12 @@ using ProjectX.Business.Beneficiary;
 using ProjectX.Repository.BeneficiaryRepository;
 using ProjectX.Business.Users;
 using ProjectX.Repository.UsersRepository;
-
+using ProjectX.Interfaces;
+using ProjectX.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
+using ProjectX.Interfaces;
+using ProjectX.Services;
 
 public class Startup
 {
@@ -159,7 +164,11 @@ public class Startup
         services.AddSingleton<IReportRepository, ReportRepository>();
 
 
+        services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         services.AddMvc().AddControllersAsServices();
+
+        services.AddTransient<IDocumentService, DocumentService>();
+        services.AddTransient<IRazorRendererHelper, RazorRendererHelper>();
 
 
         services.AddDistributedMemoryCache();

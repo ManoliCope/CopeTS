@@ -42,9 +42,7 @@ $(document).ready(function () {
     searchbeneficiary()
 
     $('#printButton').click(function () {
-
-        Printpolicy();
-
+        generatePdf();
 
     });
 
@@ -153,7 +151,46 @@ $(document).ready(function () {
 });
 
 
-function Printpolicy() {
+function generatePdf() {
+    //var xhr = new XMLHttpRequest();
+    //xhr.open("POST", "@Url.Action("GeneratePdf", "Pdf")", true);
+    //xhr.responseType = "blob";
+
+    //xhr.onload = function () {
+    //    if (xhr.status === 200) {
+    //        var blob = xhr.response;
+    //        var link = document.createElement("a");
+    //        link.href = window.URL.createObjectURL(blob);
+    //        link.download = "output.pdf";
+    //        link.click();
+    //    }
+    //};
+
+    //xhr.send();
+
+
+    const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
+
+    fetch('/Pdf/Get', {
+        method: 'Get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        //body: JSON.stringify(htmlContent)
+    })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted.pdf';
+            a.click();
+        });
+
+
+}
+
+function Printpolicy2() {
     const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
 
     fetch('/Production/ConvertHtmlToPdf', {
@@ -993,7 +1030,18 @@ function getQuotationData() {
     return quotationData;
 }
 
+function convertDateFormat(inputDate) {
+    var parts = inputDate.split('-');
+    if (parts.length !== 3) {
+        throw new Error('Invalid date format');
+    }
 
+    var year = parts[0];
+    var month = parts[1];
+    var day = parts[2];
+
+    return `${day}-${month}-${year}`;
+}
 function loadQuotePartialView(response) {
     //console.log(response)
 
@@ -1002,11 +1050,11 @@ function loadQuotePartialView(response) {
         type: 'POST',
         data: { quotereq: response },
         success: function (data) {
-
+            console.log(travelinfo.from)
             $('.quotecontainer').html(data);
-            $('.quotecontainer .incdate').html(travelinfo.from);
-            $('.quotecontainer .expdate').html(travelinfo.to);
-            $('.quotecontainer .duration').html(travelinfo.duration + ' days');
+            $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
+            $('.quotecontainer .expdate').html(convertDateFormat(travelinfo.to));
+            $('.quotecontainer .duration').html(travelinfo.duration + ' Days');
             $('.quotecontainer .dest').html(travelinfo.selectedDestinations);
 
             var sendButton = document.getElementById('sendButton');
