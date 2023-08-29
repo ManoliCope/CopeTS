@@ -181,6 +181,13 @@ namespace ProjectX.Business.Users
         {
             return _usersRepository.getUserPass(userid);
         }
-
+        public UsProResp ModifyUsersProduct(UsProReq req)
+        {
+            return _usersRepository.ModifyUsersProduct(req);
+        }
+        public List<TR_UsersProduct> GetUsersProduct(int userid)
+        {
+            return _usersRepository.GetUsersProduct(userid);
+        }
     }
 }

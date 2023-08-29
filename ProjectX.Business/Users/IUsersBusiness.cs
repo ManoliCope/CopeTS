@@ -16,5 +16,7 @@ namespace ProjectX.Business.Users
         public UsersResp GetUser(int userid);
         public ResetPass resetPass(ResetPass res);
         public string getUserPass(int userid);
+        public UsProResp ModifyUsersProduct(UsProReq req);
+        public List<TR_UsersProduct> GetUsersProduct(int userid);
     }
 }

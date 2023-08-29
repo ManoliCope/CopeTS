@@ -231,6 +231,39 @@ namespace ProjectX.Controllers
                 return _usersBusiness.getUserPass(userid);
           
         }
+        public IActionResult AssignProduct(int userid)
+        {
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadProducts = true
+            });
+           
+            ViewData["loadData"] = response;
+            ViewData["userid"] = userid.ToString(); ;
+            return View();
+        }
+        [HttpPost]
+        public UsProResp assignUsersProduct(UsProReq req)
+        {
+            
+            return _usersBusiness.ModifyUsersProduct(req);
+        } 
+        public UsProResp deleteUsersProduct(int userid)
+        {
+            var req = new UsProReq();
+            req.Action = "Delete";
+            req.UsersId = userid;
+            return _usersBusiness.ModifyUsersProduct(req);
+        } 
+        public UsProSearchResp getUsersProduct(int userid)
+        {
+            var response = new UsProSearchResp();
+            response.usersproduct = _usersBusiness.GetUsersProduct(userid);
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+
+            return response;
+        }
+
     }
 }
 

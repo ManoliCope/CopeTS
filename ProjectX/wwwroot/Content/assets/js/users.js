@@ -74,6 +74,18 @@ function drawtable(data) {
             }, {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    if (generate == '1') {
+
+                        return `<a  href="#" title="Assign Product" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="gotoAssignProduct(` + full.u_Id.toString() + `)"><i class="fas fa-briefcase"/></a>`;
+                    } else {
+                        return '';
+                    }
+                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+                }
+            }, {
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
                     return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
                 }
@@ -85,7 +97,6 @@ function drawtable(data) {
 
     triggerfiltertable(table, "users")
 }
-
 function resetpassword() {
     var oldPass = $("#old-password").val();
     var newPass = $("#new-password").val();
@@ -190,7 +201,6 @@ function saveUser() {
         }
     });
 }
-
 $("#kt_reset").click(function () {
     var divname = $(this).closest(".card-body").attr("id")
     resetAllValues(divname);
@@ -313,7 +323,7 @@ function deleteuser(me) {
     });
 }
 function gotouser(me) {
-    console.log(me)
+    //console.log(me)
     var userId = $(me).attr('userid');
     //sessionStorage.setItem('userid', userId);
     window.location.href = '/users/details?userid=' + userId;
@@ -365,5 +375,7 @@ function resetPassScreen() {
     if (pass != null)
         $("#old-password").val(pass);
 }
-
+function gotoAssignProduct(userid) {
+    window.location.href = '/users/assignproduct?userid=' + userid;
+}
 
