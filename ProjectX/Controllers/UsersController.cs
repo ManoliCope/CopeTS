@@ -248,11 +248,11 @@ namespace ProjectX.Controllers
             
             return _usersBusiness.ModifyUsersProduct(req);
         } 
-        public UsProResp deleteUsersProduct(int userid)
+        public UsProResp deleteUsersProduct(int upid)
         {
             var req = new UsProReq();
             req.Action = "Delete";
-            req.UsersId = userid;
+            req.Id = upid;
             return _usersBusiness.ModifyUsersProduct(req);
         } 
         public UsProSearchResp getUsersProduct(int userid)

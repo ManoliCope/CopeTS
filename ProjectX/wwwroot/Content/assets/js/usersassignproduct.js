@@ -35,7 +35,7 @@ function drawwtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="ViewFiles" onclick="deleteUsersProduct(` + full.u_Id.toString() + `)"  class="red-star" ><i class="fas fa-trash"/></a>`;
+                    return `<a  href="#" title="ViewFiles" onclick="deleteUsersProduct(` + full.uP_Id.toString() + `)"  class="red-star" ><i class="fas fa-trash"/></a>`;
                 }
             }
         ],
@@ -119,12 +119,12 @@ function Search() {
         }
     });
 }
-function deleteUsersProduct(userid) {
+function deleteUsersProduct(upid) {
     showloader("load");
     $.ajax({
         type: 'POST',
         url: projectname + "/Users/deleteUsersProduct",
-        data: { userid: userid },
+        data: { upid: upid },
         success: function (result) {
             removeloader();
 
