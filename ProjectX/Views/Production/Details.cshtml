@@ -8,6 +8,13 @@
 
 }
 
+<style>
+	.table-responsive {
+		overflow-x: auto;
+		min-width: 100%;
+	}
+</style>
+
 <div class="content editscreen prodadm" pgtype="view" pol-id="@Model.PolicyID" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="row" data-select2-id="20">
@@ -125,84 +132,32 @@
 											<div class="row thisbeneficiary">
 												<div class="col-md-12">
 													<div class="row">
-														<div class="form-group col-md-6">
+														<div class="form-group col-md-6 mr-3">
 															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
 															<div class="search-dropdown">
 																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
 																<div id="searchDropdownContent" class="search-dropdown-content"></div>
 															</div>
 														</div>
-
-														<div class="form-group col-md-6 xlsxupload" style="display: none;">
-															<a class="text-danger" style="font-size: 12px;">Sample File</a>
-															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
+														<div class="form-group col-md-3 div-beneficiary ">
 														</div>
-														<div class="form-group col-md-12">
-															<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
-															<div class="row">
-																<div class="col-md-2">
-																	<div class="we-checkbox">
-																		<input type="radio" id="male" name="sgender" value="M" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "" : "checked")>
-																		<label for="male">Male</label>
-																	</div>
-																</div>
-																<div class="col-md-2">
-																	<div class="we-checkbox">
-																		<input type="radio" id="female" name="sgender" value="F" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
-																		@*@if (Model.IsIndividual)
-																			{
-																				<input type="radio" id="female" name="sgender" value="F" @(Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
-																			}
-																			else
-																			{
-																				<input type="radio" id="female" name="sgender" value="F">
-																			}*@
-																		<label for="female">Female</label>
-																	</div>
-																</div>
+														<div class="form-group col-md-2 div-beneficiary ">
+															<div class="btn btn-md btn-third btn-block text-left w-100 togglebenpopup" style="cursor: pointer; @(Model.IsIndividual ? "display:none" : "")">
+																<i class="fa fa-plus" aria-hidden="true"></i> New
 															</div>
 														</div>
-													</div>
-													<div class="row">
-														<div class="form-group col-md-4">
-															<label>First Name <span class="text-danger">*</span></label>
-															<input id="first_name" type="text" class="form-control first_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="first_name" autocomplete="off" thisid="@Model.PolicyDetails.First().InsuredId" required>
-														</div>
-														<div class="form-group col-md-4">
-															<label>Middle Name</label>
-															<input type="text" class="form-control middle_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="middle_name" autocomplete="off">
-														</div>
-														<div class="form-group col-md-4">
-															<label>Last Name <span class="text-danger">*</span></label>
-															<input id="last_name" type="text" class="form-control last_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().LastName : "")" name="last_name" autocomplete="off" required>
-														</div>
-													</div>
-													<div class="row">
-														<div class="form-group col-md-4 passport_no_form">
-															<label>Passport No. <span class="isrequired text-danger">*</span></label>
-															<input id="passport_no" type="text" class="form-control passport_no" value="@(Model.IsIndividual ? Model.PolicyDetails.First().PassportNo : "")" name="passport_no" autocomplete="off" required>
-														</div>
-														<div class="form-group col-md-4">
-															<label>Date Of Birth <span class="text-danger">*</span> <span class="age">(@Model.PolicyDetails.First().Age)</span></label>
-															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth.ToString("yyyy-MM-dd") : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
-														</div>
 
-														<div class="form-group col-md-4 div-beneficiary ">
-															<label>&nbsp;</label>
-															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100 " style="cursor: pointer; @(Model.IsIndividual ? "display:none" : "")">
-																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
-															</div>
-														</div>
 													</div>
+
 													<div class="table-responsive">
-														<table class="table table-sm table-bordered mt-3 beneficiary-table " style="@(Model.IsIndividual ? "display:none" : "")">
-															<thead>
+														<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="@(Model.IsIndividual ? "display:none" : "")">
+															@*<thead>
 																<tr class="thead-light">
+																	<th >ID</th>
 																	<th>First Name</th>
 																	<th>Last Name</th>
 																	<th>Date Of Birth</th>
 																	<th>Age</th>
-																	<th>Passport No.</th>
 																	<th>Sex</th>
 																	<th style="width:90px;" data-orderable="false">Actions</th>
 																</tr>
@@ -213,19 +168,22 @@
 																	@foreach (var tdrow in Model.PolicyDetails)
 																	{
 																		<tr>
+																			<td >@tdrow.InsuredId</td>
 																			<td insuredid="@tdrow.InsuredId">@tdrow.FirstName</td>
 																			<td>@tdrow.LastName</td>
 																			<td>@tdrow.DateOfBirth.ToString("dd-MM-yyyy")</td>
 																			<td>@tdrow.Age</td>
-																			<td>@tdrow.PassportNo</td>
 																			<td>@tdrow.Gender</td>
-																			<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>
+																			<td class="actions">
+																				<button type="button" thisid="@tdrow.InsuredId" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color:gray"></i></button>
+																				<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button>
+																			</td>
 																		</tr>
 																	}
 																}
-															</tbody>
+															</tbody>*@
 														</table>
-														<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
+														@*<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">*@
 													</div>
 												</div>
 											</div>
@@ -400,6 +358,88 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="beneficiary-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Beneficiary</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body container-fluid">
+				<div class="row">
+					<div class="form-group col-md-4">
+						<label>First Name <span class="text-danger">*</span></label>
+						<input id="first_name" type="text" class="form-control first_name" name="first_name" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Middle Name</label>
+						<input id="middle_name" type="text" class="form-control middle_name" name="middle_name" autocomplete="off">
+					</div>
+					<div class="form-group col-md-4">
+						<label>Last Name <span class="text-danger">*</span></label>
+						<input id="last_name" type="text" class="form-control last_name" name="last_name" autocomplete="off" required>
+					</div>
+
+					<div class="form-group col-md-4 passport_no_form">
+						<label>Passport No. <span class="isrequired text-danger">*</span></label>
+						<input id="passport_no" type="text" class="form-control passport_no" name="passport_no" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+						<input type="date" class="form-control dob" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+					</div>
+
+					<div class="form-group col-md-4">
+						<label for="nationality">
+							Nationality <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="nationality" name="nationality">
+							<option value=""> </option>
+							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="countryofresidence">
+							Country of Residence <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="countryofresidence" name="countryofresidence">
+							<option value=""> </option>
+							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="male" name="sgender" value="M">
+							<label for="male">Male</label>
+						</div>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="female" name="sgender" value="F">
+							<label for="female">Female</label>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button type="button" class="btn btn-danger btn-beneficiary">Save</button>
 			</div>
 		</div>
 	</div>

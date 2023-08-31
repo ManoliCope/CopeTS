@@ -18,6 +18,7 @@ namespace ProjectX.Repository.ProductionRepository
         public ProductionResp getProductionDetails(List<ProductionReq> req, int userid);
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid);
+        public List<TR_Beneficiary> GetPolicyBeneficiaries(int IdPolicy, int userid);
         
     }
 }

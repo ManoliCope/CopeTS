@@ -1,6 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Beneficiary.BeneficiaryResp
 @{
-	//var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 
 }
 
@@ -70,6 +70,43 @@
 									<div class="form-group mb-3 col-lg-4">
 										<label for="dateOfBirth">Date of Birth</label>
 										<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")">
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="Nationalityid">Nationality</label>
+										<select class="form-control isselect2" id="Nationalityid" name="Nationalityid" required>
+											<option  value="">Select Nationality</option>
+
+											@foreach (var thislist in filldata.loadedData.destinations)
+											{
+												@if (thislist.D_Id == Model.Nationalityid)
+												{
+													<option value="@thislist.D_Id" selected> @thislist.D_Destination</option>
+												}
+												else
+												{
+													<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+												}
+											}
+
+										</select>
+									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="CountryResidenceid">Country of Residence</label>
+										<select class="form-control isselect2" id="CountryResidenceid" name="CountryResidenceid" required>
+											<option value="">Select Country</option>
+											@foreach (var thislist in filldata.loadedData.destinations)
+											{
+												@if (thislist.D_Id == Model.CountryResidenceid)
+												{
+													<option value="@thislist.D_Id" selected> @thislist.D_Destination</option>
+												}
+												else
+												{
+													<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+												}
+											}
+										</select>
 									</div>
 								</div>
 							</div>

@@ -55,6 +55,11 @@ namespace ProjectX.Business.Production
             return _prodRepository.GetPoliciesList(req, userid);
         }
 
+        public List<TR_Beneficiary> GetPolicyBeneficiaries(int id, int userid)
+        {
+            return _prodRepository.GetPolicyBeneficiaries(id, userid);
+        }
+
 
         //public string printp(string html)
         //{

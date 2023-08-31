@@ -317,6 +317,25 @@ namespace ProjectX.Repository.ProductionRepository
 
             return resp;
         }
+        public List<TR_Beneficiary> GetPolicyBeneficiaries(int IdPolicy, int userid)
+        {
+            List<TR_Beneficiary> policyreponse = new List<TR_Beneficiary>();
+
+            var param = new DynamicParameters();
+            param.Add("@PolicyID", IdPolicy);
+            param.Add("@Userid", userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_GetPolicyBeneficiaries", param, commandType: CommandType.StoredProcedure))
+                {
+                    policyreponse = result.Read<TR_Beneficiary>().ToList();
+                  
+                }
+            }
+
+            return policyreponse;
+        }
 
 
 

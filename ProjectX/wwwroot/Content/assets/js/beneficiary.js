@@ -143,7 +143,9 @@ function addnew() {
         "lastName": $("#lastName").val(),
         "sex": $("#sex").val(),
         "passportNumber": $("#passportNumber").val(),
-        "dateOfBirth": $("#dateOfBirth").val()
+        "dateOfBirth": $("#dateOfBirth").val(),
+        "CountryResidenceid": $("#CountryResidenceid").val(),
+        "Nationalityid": $("#Nationalityid").val(),
     };
 
     $.ajax({
@@ -186,7 +188,9 @@ function edit() {
         "lastName": $("#lastName").val(),
         "sex": $("#sex").val(),
         "passportNumber": $("#passportNumber").val(),
-        "dateOfBirth": $("#dateOfBirth").val()
+        "dateOfBirth": $("#dateOfBirth").val(),
+        "CountryResidenceid": $("#CountryResidenceid").val(),
+        "Nationalityid": $("#Nationalityid").val(),
     };
 
     $.ajax({

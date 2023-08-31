@@ -2,7 +2,15 @@
 var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
+    $('.togglebenpopup').click(function () {
+        triggerbenbtn()
+        showresponsemodalbyid('beneficiary-popup', 0)
+    })
+
+
     var polIdValue = $(".editscreen").attr("pol-id");
+    triggerasdatatable("#beneficiary-table")
+
     var isadmin = $(".prodadm").attr("prodadm")
 
     $(".isselect2").select2({
@@ -37,7 +45,7 @@ $(document).ready(function () {
     populatezones();
     populateproducts();
     populatedestinations()
-    populatebeneficiary()
+    //populatebeneficiary()
     settofrom()
     searchbeneficiary()
 
@@ -248,6 +256,7 @@ function updateAge() {
 
 
 function searchbeneficiary() {
+
     $('#searchbeneficiary').keyup(function () {
         var query = $(this).val();
 
@@ -279,6 +288,11 @@ function searchbeneficiary() {
                         dropdownContent.append(item);
                     }
                     dropdownContent.show();
+
+
+
+                    $('#searchDropdownContent a').off('click');
+
                     $(document).on('click', '#searchDropdownContent a', function () {
                         $('#searchbeneficiary').val("");
 
@@ -287,6 +301,31 @@ function searchbeneficiary() {
                             return b.bE_Id == beneficiaryId;
                         });
 
+                        addtotable(beneficiary)
+
+                        //var row = '<tr>' +
+                        //    '<td insuredId=' + $('.first_name').attr("thisid") + ' >' + firstName + '</td>' +
+                        //    '<td>' + lastName + '</td>' +
+                        //    '<td>' + dateOfBirth + '</td>' +
+                        //    '<td>' + age + '</td>' +
+                        //    '<td>' + passportNo + '</td>' +
+                        //    '<td>' + selectedSexOption + '</td>' +
+                        //    '<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>' +
+                        //    '</tr>';
+
+                        //table.row.add([
+                        //    beneficiary.bE_FirstName,
+                        //    beneficiary.bE_MiddleName,
+                        //    beneficiary.bE_MiddleName,
+                        //    beneficiary.bE_MiddleName,
+                        //    '',
+                        //    beneficiary.bE_LastName,
+                        //    beneficiary.bE_PassportNumber
+                        //]).draw();
+
+                        $('#searchDropdownContent a').off('click');
+
+                        return
                         //console.log(beneficiary)
                         if (beneficiary) {
                             $('.thisbeneficiary .first_name').attr("thisid", beneficiary.bE_Id);
@@ -321,10 +360,6 @@ function searchbeneficiary() {
                         dropdownContent.hide();
                     });
                 }
-
-
-
-
             },
             error: function () {
                 $('#searchDropdownContent').empty().hide();
@@ -344,58 +379,257 @@ function searchbeneficiary() {
         }
     });
 }
-function populatebeneficiary() {
+
+function populatebeneficiarydatatable(tablename, data) {
+    var table = $(tablename).DataTable({
+        "data": data,
+        "paging": true,
+        "ordering": true,
+        "filter": true,
+        "destroy": true,
+        "columns": [
+            {
+                "title": "id",
+                "data": "bE_Id",
+                "className": "dt-center"
+            },
+            {
+                "title": "sex",
+                "data": "bE_Sex",
+                "className": "dt-center"
+            },
+
+            {
+                "title": "first name",
+                "data": "bE_FirstName",
+                "className": "dt-center"
+            },
+            {
+                "title": "middle name",
+                "data": "bE_MiddleName",
+                "className": "dt-center"
+            },
+            {
+                "title": "last name",
+                "data": "bE_LastName",
+                "className": "dt-center"
+            },
+            {
+                "title": "sex",
+                "data": "bE_SexName",
+                "className": "dt-center"
+            },
+            {
+                "title": "DOB",
+                "data": "bE_DOB",
+                "className": "dt-center",
+                "render": function (data, type, full) {
+                    return data ? new Date(data).toLocaleDateString() : "";
+                }
+            },
+            {
+                "title": "passport number",
+                "data": "bE_PassportNumber",
+                "className": "dt-center"
+            },
+            {
+                "title": "maiden name",
+                "data": "bE_MaidenName",
+                "className": "dt-center"
+            },
+
+            {
+                "title": "nationality id",
+                "data": "bE_Nationalityid",
+                "className": "dt-center"
+            },
+            {
+                "title": "country residence id",
+                "data": "bE_CountryResidenceid",
+                "className": "dt-center"
+            },
+            {
+                "title": "Actions",
+                "data": null,
+                "className": "dt-center",
+                "render": function (data, type, full, meta) {
+                    var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
+                    var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
+                    return editButton + ' ' + deleteButton;
+                }
+            }
+        ],
+        "columnDefs": [
+            {
+                "targets": [0, 1, 3, 7, 8, 9, 10],
+                "visible": false,
+            }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+
+}
+
+function triggerasdatatable(tablename) {
+    var polid = $(".editscreen").attr("pol-id");
+    if (polid > 0) {
+        $.ajax({
+            url: projectname + '/Production/GetPolicyBeneficiaries',
+            method: 'Get',
+            data: { id: polid },
+            success: function (response) {
+                populatebeneficiarydatatable(tablename, response)
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    else {
+        populatebeneficiarydatatable(tablename, null)
+    }
+}
+
+function addtotable(thisrow) {
+    console.log(thisrow, 'addtotable')
+
+    if (thisrow == undefined) {
+        var thissex = 0
+        if ($('#male').prop('checked')) {
+            thissex = 1;
+        } else if ($('#female').prop('checked')) {
+            thissex = 2;
+        }
+
+        var thisrow =
+        {
+            "bE_Id": 0,
+            "bE_Sex": 1,
+            "bE_SexName": "Male",
+            "bE_FirstName": $("#beneficiary-popup #first_name").val(),
+            "bE_MaidenName": '',
+            "bE_MiddleName": $("#beneficiary-popup #middle_name").val(),
+            "bE_LastName": $("#beneficiary-popup #last_name").val(),
+            "bE_DOB": $("#beneficiary-popup #date_of_birth").val(),
+            "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
+            "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
+            "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
+        }
+
+        var thistable = $('#beneficiary-table').DataTable();
+        thistable.row.add(thisrow).draw();
+    }
+    else {
+        alert('fix edit')
+        var thistable = $('#beneficiary-table').DataTable();
+        //var allRows = thistable.rows().data()
+        thistable.row.add(thisrow).draw();
+    }
+
+}
+function triggerbenbtn() {
     $('.btn-beneficiary').click(function () {
-        if (validateForm(".thisbeneficiary")) {
-            return;
+        //if (validateForm("#beneficiary-popup .container-fluid")) {
+        //    return;
+        //}
+
+        if ($(this).closest(".modal").attr("actid") && $(this).closest(".modal").attr("actid") > 0) {
+            editbeneficiary(this)
         }
-
-        var firstName = $('.first_name').val();
-        var lastName = $('.last_name').val();
-        var dateOfBirth = formatDate_DdMmYyyy($('.dob').val());
-
-        var passportNo = $('.passport_no').val();
-        var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
-        var sexValue;
-        if (selectedSexOption === 'M') {
-            sexValue = 1;
-        } else if (selectedSexOption === 'F') {
-            sexValue = 2;
+        else {
+            addtotable()
         }
+        return
 
-
-        if (firstName === '' || lastName === '' || dateOfBirth === '' || sexValue === '' || passportNo === '') {
-            return;
-        }
-        var age = $('.age').text().replace(/\(|\)/g, '');
-
-        var beneficiaryList = $('.beneficiary-list');
-        var row = '<tr>' +
-            '<td insuredId=' + $('.first_name').attr("thisid") + ' >' + firstName + '</td>' +
-            '<td>' + lastName + '</td>' +
-            '<td>' + dateOfBirth + '</td>' +
-            '<td>' + age + '</td>' +
-            '<td>' + passportNo + '</td>' +
-            '<td>' + selectedSexOption + '</td>' +
-            '<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>' +
-            '</tr>';
-
-        beneficiaryList.append(row);
-
-        $('.first_name').removeAttr("thisid").val('');
-
-        $('.middle_name').val('');
-        $('.last_name').val('');
-        $('.dob').val('');
-        $('.passport_no').val('');
-        $('.age').text('');
         //var beneficiaryTable = $('#beneficiaryTable').DataTable();
         //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
         //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
 
         getQuotation()
-
         //createBeneficiaryData()
+    });
+
+
+}
+
+function editrow(me) {
+    var benid = $(me).attr("thisid")
+    $.ajax({
+        url: projectname + '/Beneficiary/getbeneficiary',
+        method: 'Get',
+        data: { id: benid },
+        success: function (response) {
+            console.log(response)
+            $('#beneficiary-popup #first_name').val(response.firstName);
+            $('#beneficiary-popup #middle_name').val(response.middleName);
+            $('#beneficiary-popup #last_name').val(response.lastName);
+            $('#beneficiary-popup #passport_no').val(response.passportNumber);
+            $('#beneficiary-popup #date_of_birth').val(response.dateOfBirth);
+            //$('#beneficiary-popup #date_of_birth').val(response.dateOfBirth.split('T')[0]);
+
+            $('#beneficiary-popup #nationality').val(response.nationalityid);
+            $('#beneficiary-popup #countryofresidence').val(response.countryResidenceid);
+            // Set the gender radio button based on the 'Sex' value
+            if (response.sex == 1) {
+                $('#male').prop('checked', true);
+            } else if (response.sex == 2) {
+                $('#female').prop('checked', true);
+            }
+
+            //$(".btn-beneficiary").attr("thisid", benid)
+            triggerbenbtn()
+            showresponsemodalbyid('beneficiary-popup', benid)
+
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+
+}
+
+
+function editbeneficiary(me) {
+    togglebtnloader(me)
+
+    var thissex = 0
+    if ($('#male').prop('checked')) {
+        thissex = 1;
+    } else if ($('#female').prop('checked')) {
+        thissex = 2;
+    } else {
+    }
+
+    var benid = $(me).closest(".modal").attr("actid")
+    var beneficiaryReq = {
+        "id": benid,
+        "firstName": $("#beneficiary-popup #first_name").val(),
+        "middleName": $("#beneficiary-popup #middle_name").val(),
+        "lastName": $("#beneficiary-popup #last_name").val(),
+        "sex": thissex,
+        "passportNumber": $("#beneficiary-popup #passport_no").val(),
+        "dateOfBirth": $("#beneficiary-popup #date_of_birth").val(),
+        "CountryResidenceid": $("#beneficiary-popup #countryofresidence").val(),
+        "Nationalityid": $("#beneficiary-popup #nationality").val(),
+    };
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: projectname + "/Beneficiary/EditBeneficiary",
+        data: { req: beneficiaryReq },
+        success: function (result) {
+            addtotable(beneficiaryReq)
+            removebtnloader(me)
+            removeloader();
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
     });
 }
 
@@ -466,11 +700,11 @@ function populateproducts() {
             type = 3
 
         if (selectedType === 'is_family' || selectedType === 'is_group') {
-            addBeneficiaryButton.show(); // Show Add Beneficiary button for Family or Group
-            beneficiaryTable.show(); // Show beneficiary table for Family or Group
+            addBeneficiaryButton.show();
+            beneficiaryTable.show();
         } else {
-            addBeneficiaryButton.hide(); // Hide Add Beneficiary button for Single
-            beneficiaryTable.hide(); // Hide beneficiary table for Single
+            addBeneficiaryButton.hide();
+            beneficiaryTable.hide();
         }
 
         //$("#destinationtbl tbody tr").empty();
