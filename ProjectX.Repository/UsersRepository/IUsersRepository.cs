@@ -16,6 +16,8 @@ namespace ProjectX.Repository.UsersRepository
         public ResetPass resetPass(ResetPass res);
         public TR_Users GetUserRights(int userid);
         public string getUserPass(int userid);
+        public UsProResp ModifyUsersProduct(UsProReq req);
+        public List<TR_UsersProduct> GetUsersProduct(int userid);
 
     }
 }

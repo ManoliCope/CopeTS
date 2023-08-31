@@ -76,6 +76,10 @@
 	{
 		<link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
 	}
+	else if (controllerName == "users" && actionName == "assignproduct")
+	{
+		<link href="~/Content/assets/css/product.css" rel="stylesheet" asp-append-version="true" />
+	}
 	else if (controllerName == "plan")
 	{
 		<link href="~/Content/assets/css/plan.css" rel="stylesheet" asp-append-version="true" />
@@ -267,6 +271,14 @@
 	@if (controllerName == "users")
 	{
 		<script src="~/Content/assets/js/users.js" asp-append-version="true"></script>
+	}
+	@if (controllerName == "users" && actionName == "index")
+	{
+		<script src="~/Content/assets/js/users.js" asp-append-version="true"></script>
+	}
+	@if (controllerName == "users" && actionName == "assignproduct")
+	{
+		<script src="~/Content/assets/js/usersassignproduct.js" asp-append-version="true"></script>
 	}
 	@if (controllerName == "benefittitle")
 	{

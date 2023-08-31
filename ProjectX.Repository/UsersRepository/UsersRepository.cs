@@ -281,5 +281,49 @@ namespace ProjectX.Repository.UsersRepository
 
             return resp;
         }
+        public UsProResp ModifyUsersProduct(UsProReq req)
+        {
+            var resp = new UsProResp();
+            int statusCode = 0;
+            int idOut = 0;
+            var param = new DynamicParameters();
+            param.Add("@action", req.Action);
+
+            param.Add("@UP_Id", req.Id);
+            param.Add("@PR_Id", req.ProductId);
+            param.Add("@U_Id", req.UsersId);
+            param.Add("@UP_IssuingFees", req.IssuingFees);
+ 
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                _db.Execute("TR_UsersProduct_CRUD", param, commandType: CommandType.StoredProcedure);
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
+            }
+            resp.statusCode.code = statusCode;
+            resp.Id = idOut;
+            return resp;
+        }
+        public List<TR_UsersProduct> GetUsersProduct(int userid)
+        {
+            var resp = new List<TR_UsersProduct>();
+            var param = new DynamicParameters();
+            param.Add("@U_Id", userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_UsersProduct_GetbyID", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.Read<TR_UsersProduct>().ToList();
+                }
+            }
+
+            return resp;
+        }
+
     }
 }
