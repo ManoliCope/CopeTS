@@ -297,7 +297,7 @@ namespace ProjectX.Controllers
 
         [HttpPost]
         public ProductionResp GetQuotation(List<ProductionReq> quotereq)
-        {
+         {
             return _productionBusiness.getProductionDetails(quotereq, _user.U_Id);
         }
 

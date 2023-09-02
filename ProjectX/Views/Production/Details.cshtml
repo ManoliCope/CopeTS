@@ -8,12 +8,6 @@
 
 }
 
-<style>
-	.table-responsive {
-		overflow-x: auto;
-		min-width: 100%;
-	}
-</style>
 
 <div class="content editscreen prodadm" pgtype="view" pol-id="@Model.PolicyID" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
 	<div class="container-fluid" style="padding:10px 0">
@@ -46,7 +40,7 @@
 																<input type="radio" id="is_individual" name="type" @(Model.IsIndividual ? "checked" : "")>
 
 																<label for="is_individual">Individual</label>
-																<i class="fa fa-question-circle" title="Single"></i>
+																<i class="fa fa-question-circle" title="Individual"></i>
 															</div>
 														</div>
 														<div class="col-md-4 family" style="">
@@ -139,51 +133,21 @@
 																<div id="searchDropdownContent" class="search-dropdown-content"></div>
 															</div>
 														</div>
-														<div class="form-group col-md-3 div-beneficiary ">
+
+														<div class="form-group col-md-4 div-beneficiary ">
+															<button class="btn btn-md btn-third btn-block text-left w-100 togglebenpopup" style="cursor: pointer;">
+																<i class="fa fa-plus" aria-hidden="true"></i> New Beneficiary
+															</button>
 														</div>
 														<div class="form-group col-md-2 div-beneficiary ">
-															<div class="btn btn-md btn-third btn-block text-left w-100 togglebenpopup" style="cursor: pointer; @(Model.IsIndividual ? "display:none" : "")">
-																<i class="fa fa-plus" aria-hidden="true"></i> New
-															</div>
 														</div>
 
 													</div>
 
 													<div class="table-responsive">
-														<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="@(Model.IsIndividual ? "display:none" : "")">
-															@*<thead>
-																<tr class="thead-light">
-																	<th >ID</th>
-																	<th>First Name</th>
-																	<th>Last Name</th>
-																	<th>Date Of Birth</th>
-																	<th>Age</th>
-																	<th>Sex</th>
-																	<th style="width:90px;" data-orderable="false">Actions</th>
-																</tr>
-															</thead>
-															<tbody class="beneficiary-list">
-																@if (!Model.IsIndividual)
-																{
-																	@foreach (var tdrow in Model.PolicyDetails)
-																	{
-																		<tr>
-																			<td >@tdrow.InsuredId</td>
-																			<td insuredid="@tdrow.InsuredId">@tdrow.FirstName</td>
-																			<td>@tdrow.LastName</td>
-																			<td>@tdrow.DateOfBirth.ToString("dd-MM-yyyy")</td>
-																			<td>@tdrow.Age</td>
-																			<td>@tdrow.Gender</td>
-																			<td class="actions">
-																				<button type="button" thisid="@tdrow.InsuredId" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color:gray"></i></button>
-																				<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button>
-																			</td>
-																		</tr>
-																	}
-																}
-															</tbody>*@
+														<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="width:100%; " >
+														
 														</table>
-														@*<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">*@
 													</div>
 												</div>
 											</div>
@@ -204,8 +168,8 @@
 													<div class="col-md-12">
 														<div class="row">
 															<div class="form-group col-md-12">
-																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
-																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple>
+																<label for="destination_id">Destination(s) </label>
+																<select class="form-control isselect2 " id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																		{
@@ -244,31 +208,10 @@
 																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="2">
 															</div>
 
-															@*<div class="form-group col-md-3 mt-3 pt-1">
-																	<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
-																</div>*@
+														
 														</div>
 													</div>
-													<!--<div class="col-md-12">
-													<div class="form-group">
-														<div class="table-responsive">
-															<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
-																<thead>
-																	<tr class="thead-light">
-																		<th hidden>Destination ID</th>
-																		<th>Destination(s)</th>
-																		<th>From</th>
-																		<th>To</th>
-																		<th>Duration</th>
-																		<th style="width:90px;" data-orderable="false">Actions</th>
-																	</tr>
-																</thead>-->
-													@*<tbody class="travel-list small">
-														</tbody>*@
-													<!--</table>
-															</div>
-														</div>
-													</div>-->
+												
 												</div>
 											</div>
 										</div>
@@ -290,7 +233,6 @@
 							<div class="card-body result ">
 								<div class="quotecontainer ">
 									<partial name="~/Views/partialviews/partialquotationlistbak.cshtml" model="@Model" />
-
 
 									@*<div class="card mt-2">
 											<div class="card-body" style="font-size:13px">
@@ -422,7 +364,7 @@
 					</div>
 					<div class="col-md-3 mt-4">
 						<div class="we-checkbox">
-							<input type="radio" id="male" name="sgender" value="M">
+							<input type="radio" id="male" name="sgender" value="M" checked>
 							<label for="male">Male</label>
 						</div>
 					</div>

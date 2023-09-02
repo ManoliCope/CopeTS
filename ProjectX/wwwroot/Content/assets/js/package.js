@@ -18,8 +18,11 @@ $(document).ready(function () {
     });
     $(".isselect2").select2({
         tags: true,
-        tokenSeparators: [',', ' ']
+        //tokenSeparators: [',', ' '],
+        closeOnSelect: false
     })
+
+
     $("#create").click(function () {
         addnew();
     });
