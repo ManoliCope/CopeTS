@@ -2,6 +2,9 @@
 @{
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+
+	DateTime today = DateTime.Today;
+
 }
 
 <style>
@@ -239,8 +242,8 @@
 														<div class="col-md-12">
 															<div class="row">
 																<div class="form-group col-md-12">
-																	<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
-																	<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple disabled>
+																	<label for="destination_id">Destination(s)</label>
+																	<select class="form-control isselect2 " id="destination_id" name="destination_id" multiple disabled>
 																		@*<option value="">Select Destinations</option>*@
 																		@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																			{
@@ -256,11 +259,11 @@
 																</div>
 																<div class="form-group col-md-4">
 																	<label>From <span class="text-danger">*</span></label>
-																	<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="" data-gtm-form-interact-field-id="1">
+																	<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value=""  min="@today.ToString("yyyy-MM-dd")">
 																</div>
 																<div class="form-group col-md-4">
 																	<label>To <span class="text-danger">*</span></label>
-																	<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="" data-gtm-form-interact-field-id="2">
+																	<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="" min="@today.ToString("yyyy-MM-dd")">
 																</div>
 
 																@*<div class="form-group col-md-3 mt-3 pt-1">

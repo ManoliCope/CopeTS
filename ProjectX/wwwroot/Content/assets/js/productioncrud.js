@@ -1,8 +1,11 @@
 ﻿var projectname = checkurlserver();
 var travelinfo = {}
 var addbenefits = []
+var selectedfieldlist = [];
 var editedglobalrow = null
 $(document).ready(function () {
+
+
     $('.togglebenpopup').click(function () {
         $(".btn-beneficiary").attr("thisid", 0)
         triggerbenbtn()
@@ -25,6 +28,7 @@ $(document).ready(function () {
     }
 
 
+    getselectedfields()
     triggercalculationfields()
 
 
@@ -60,24 +64,13 @@ $(document).ready(function () {
         }
     });
 
-    
+
     $('.trgrthis.isselect2').on('select2:close', function () {
         getQuotation();
     });
-    $('input[name="sgender"]').change(function () {
-        var selectedGender = $(this).val();
-        var maidenNameField = $('.maiden-field');
 
-        if (selectedGender === 'F') {
-            maidenNameField.show(); // Show maiden name field for Female
-        } else {
-            maidenNameField.hide(); // Hide maiden name field for Male
-        }
-    });
 
     $('#date_of_birth').on('focusout', updateAge);
-
-
 
 });
 
@@ -175,7 +168,7 @@ function searchbeneficiary() {
         } else {
             $('#searchDropdownContent').empty().hide();
         }
-     
+
     });
     function searchben(query) {
         $.ajax({
@@ -356,6 +349,8 @@ function triggerasdatatable(tablename) {
             method: 'Get',
             data: { id: polid },
             success: function (response) {
+
+                //console.log(response,'table data')
                 populatebeneficiarydatatable(tablename, response)
             },
             error: function (xhr, status, error) {
@@ -462,7 +457,7 @@ function setDateOfBirthField(originalDate) {
 }
 function editrow(me) {
     var benid = $(me).attr("thisid")
-    
+
     var thistable = $('#beneficiary-table').DataTable();
     var thistr = $(me).closest('tr')
     var rowData = thistable.row(thistr).data();
@@ -486,7 +481,7 @@ function editrow(me) {
     triggerbenbtn()
     editedglobalrow = me;
     showresponsemodalbyid('beneficiary-popup', benid)
-   
+
 }
 function editnewbeneficiary() {
 
@@ -570,7 +565,11 @@ function editbeneficiary(me) {
 }
 
 function removerow(me) {
-    $(me).closest("tr").remove();
+    var table = $("#beneficiary-table").DataTable()
+
+    var row = table.row($(me).closest("tr"));
+    row.remove().draw();
+
     getQuotation()
 }
 function settofrom() {
@@ -730,7 +729,7 @@ function createGeneralInformationData() {
 
 function createBeneficiaryData() {
     var beneficiaryList = [];
-   
+
     var thistable = $('#beneficiary-table').DataTable();
     var thisage = [];
 
@@ -828,11 +827,11 @@ function gathertravelinfo() {
     var duration = $('#duration').val();
 
 
-    // Validate fields
-    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
-        toDate.trim() === '' || duration.trim() === '') {
-        return false; 
-    }
+    //// Validate fields
+    //if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+    //    toDate.trim() === '' || duration.trim() === '') {
+    //    return false; 
+    //}
 
     return {
         "from": fromDate,
@@ -898,6 +897,7 @@ function populateBenefits(thistable, tariffId) {
 }
 
 function recalculateTotalPrice(table) {
+
     var selectedBenefits = table.find('.benplus option:selected');
     var totalAdditionalPrice = 0;
 
@@ -931,11 +931,6 @@ function recalculateTotalPrice(table) {
     var totalinsuredprem = 0;
 
 
-
-
-
-
-
     insuredstotal.each(function () {
         totalinsuredprem += parseFloat($(this).text());
     });
@@ -953,7 +948,6 @@ function recalculateTotalPrice(table) {
     if (isNaN(stampsValue)) stampsValue = 0;
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
-    console.log(grandTotal)
     $('#grandtotal').text(grandTotal.toFixed(2) + "$");
 }
 
@@ -1031,12 +1025,15 @@ function getQuotationData() {
     var thistable = $('#beneficiary-table').DataTable();
     var thisage = [];
 
+
+    console.log(thistable.rows().data(),'quotation')
+
     thistable.rows().every(function (index) {
         var rowData = this.data();
         var dateOfBirth = calculateAge(rowData.bE_DOB); // Assuming dateOfBirth is a property of your row data
-        console.log(rowData)
         quotationData.push({
             Insured: index + 1,
+            Insuredid: rowData.bE_Id,
             Ages: dateOfBirth,
             Product: selectedProduct,
             Zone: selectedZone,
@@ -1052,7 +1049,8 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            console.log(response, 'quotationData')
+            //console.log(selectedfieldlist, 'selectedfieldlist')
+            //console.log(response, 'quotationData')
 
 
             if (response.quotationResp.length > 0) {
@@ -1100,7 +1098,6 @@ function loadQuotePartialView(response) {
         type: 'POST',
         data: { quotereq: response },
         success: function (data) {
-            console.log(travelinfo.from)
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
             $('.quotecontainer .expdate').html(convertDateFormat(travelinfo.to));
@@ -1117,9 +1114,8 @@ function loadQuotePartialView(response) {
             })
 
             triggercalculationfields()
+            setselectedfields()
             $(".result").removeClass("load")
-            setTimeout(function () {
-            }, 2000);
 
         },
         error: function (error) {
@@ -1241,3 +1237,37 @@ function removescreenloader() {
     //$(".modal-backdrop").remove();
 }
 
+function getselectedfields() {
+    selectedfieldlist = [];
+    const mainDiv = $('.quotecontainer');
+    mainDiv.find('table.quoatetable').each(function (index) {
+        const table = $(this);
+
+        const variableFields = {};
+        variableFields['insuredId'] = table.attr('ins');
+        variableFields['planId'] = table.find('.form-control.plans option:selected').data('plan');
+        variableFields['additionalBenefitsIds'] = table.find('.form-control.isselect2.benplus option[selected]').map(function () {
+            return $(this).val();
+        }).get();
+
+        variableFields['deductible'] = table.find('input[type="checkbox"][data-dedprice]').prop('checked');
+        variableFields['sportsActivities'] = table.find('input[type="checkbox"][data-sportsprice]').prop('checked');
+
+        variableFields['discount'] = parseFloat(table.find('#discount').val());
+        selectedfieldlist.push(variableFields);
+    });
+}
+
+
+function setselectedfields() {
+    selectedfieldlist.forEach((item, index) => {
+        const table = $(`.quoatetable[ins="${item.insuredId}"]`);
+        table.find('.form-control.plans').val(item.planId);
+        const additionalBenefitsSelect = table.find('.form-control.isselect2.benplus');
+        additionalBenefitsSelect.val(item.additionalBenefitsIds).trigger('change');
+        table.find('input[data-dedprice]').prop('checked', item.deductible);
+        table.find('input[data-sportsprice]').prop('checked', item.sportsActivities);
+        table.find('#discount').val(item.discount);
+        recalculateTotalPrice(table);
+    });
+}

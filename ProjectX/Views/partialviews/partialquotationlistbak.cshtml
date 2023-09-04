@@ -37,7 +37,7 @@
 		<div class="my-3 mb-1">
 			@foreach (var item in Model.PolicyDetails)
 			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId">
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
 					<tbody>
 						<tr class="card-header">
 							<td>Full Name  </td>

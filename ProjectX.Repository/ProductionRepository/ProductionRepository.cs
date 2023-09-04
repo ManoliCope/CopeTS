@@ -203,8 +203,13 @@ namespace ProjectX.Repository.ProductionRepository
             string thisresult = "";
             var query = "";
 
+            DataTable Selectediddestinations = new DataTable();
+            if (IssuanceReq.selectedDestinationIds != null)
+                 Selectediddestinations = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
+            else
+                Selectediddestinations.Columns.Add("Value", typeof(int));
 
-            DataTable test = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
+
             DataTable additionalDT = new DataTable();
             if (IssuanceReq.additionalBenefits != null)
                 additionalDT = ConvertToDataTable(IssuanceReq.additionalBenefits);
@@ -228,7 +233,7 @@ namespace ProjectX.Repository.ProductionRepository
                     BeneficiaryData = ConvertToDataTable(IssuanceReq.beneficiaryData),
                     AdditionalBenefit = additionalDT,
 
-                    SelectedDestinationIds = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds),
+                    SelectedDestinationIds = Selectediddestinations,
                     SelectedDestinations = IssuanceReq.selectedDestinations,
 
                     PolicyId = IssuanceReq.policyId,
@@ -330,7 +335,7 @@ namespace ProjectX.Repository.ProductionRepository
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_GetPolicyBeneficiaries", param, commandType: CommandType.StoredProcedure))
                 {
                     policyreponse = result.Read<TR_Beneficiary>().ToList();
-                  
+
                 }
             }
 
