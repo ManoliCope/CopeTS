@@ -154,16 +154,16 @@
     <value>Profile Linked To GOP</value>
   </data>
   <data name="1200" xml:space="preserve">
-    <value>No Call Detected</value>
+    <value>Negative Values not allowed</value>
   </data>
   <data name="1201" xml:space="preserve">
-    <value>Case Closed</value>
+    <value>Individual Policy - only one beneficiary allowed</value>
   </data>
   <data name="1202" xml:space="preserve">
-    <value>Cannot Proceed Not Accepted Case</value>
+    <value>Backdating policies is not allowed</value>
   </data>
   <data name="1203" xml:space="preserve">
-    <value>Cannot Open Non-Closed Case</value>
+    <value>Multiple use of same beneficiary</value>
   </data>
   <data name="1204" xml:space="preserve">
     <value>Audit Not Allowed</value>

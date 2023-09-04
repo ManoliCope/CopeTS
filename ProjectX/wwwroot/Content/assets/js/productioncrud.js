@@ -8,6 +8,7 @@ $(document).ready(function () {
 
     $('.togglebenpopup').click(function () {
         $(".btn-beneficiary").attr("thisid", 0)
+        resetbenpopup()
         triggerbenbtn()
         showresponsemodalbyid('beneficiary-popup', -1)
     })
@@ -429,9 +430,9 @@ function addtotable(thisrow, search) {
 function triggerbenbtn() {
     $('.btn-beneficiary').off('click').on('click', function () {
 
-        //if (validateForm("#beneficiary-popup .container-fluid")) {
-        //    return;
-        //}
+        if (validateForm("#beneficiary-popup .container-fluid")) {
+            return;
+        }
 
         if ($(this).closest(".modal").attr("actid") && $(this).closest(".modal").attr("actid") > 0) {
             editbeneficiary(this)
@@ -455,7 +456,20 @@ function setDateOfBirthField(originalDate) {
     var formattedDate = dateParts[0] + '-' + dateParts[2] + '-' + dateParts[1];
     $('#beneficiary-popup #date_of_birth').val(formattedDate);
 }
+
+function resetbenpopup() {
+    $('#beneficiary-popup #first_name').val('');
+    $('#beneficiary-popup #middle_name').val('');
+    $('#beneficiary-popup #last_name').val('');
+    $('#beneficiary-popup #passport_no').val('');
+    $('#beneficiary-popup #date_of_birth').val('');
+    $('#beneficiary-popup #nationality').val('');
+    $('#beneficiary-popup #countryofresidence').val('');
+    $('#male').prop('checked', true);
+    $('#female').prop('checked', false);
+}
 function editrow(me) {
+    resetbenpopup()
     var benid = $(me).attr("thisid")
 
     var thistable = $('#beneficiary-table').DataTable();
@@ -936,6 +950,8 @@ function recalculateTotalPrice(table) {
     });
 
     $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "$");
+    var exchangerate = $(".quotecontainer").attr('cr')
+    var exchangesymbol = $(".quotecontainer").attr('crs')
 
     var initialPremium = parseFloat($('#initpremtotal').text());
     var additionalValue = parseFloat($('#additiononprem').text());
@@ -949,6 +965,20 @@ function recalculateTotalPrice(table) {
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
     $('#grandtotal').text(grandTotal.toFixed(2) + "$");
+
+    var initialPremiumForeign = initialPremium * exchangerate;
+    var additionalValueForeign = additionalValue * exchangerate;
+    var taxVATValueForeign = taxVATValue * exchangerate;
+    var stampsValueForeign = stampsValue * exchangerate;
+    var grandTotalForeign = grandTotal * exchangerate;
+
+
+    $('#initpremtotalforeign').text(initialPremiumForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#additiononpremforeign').text(additionalValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#taxvatforeign').text(taxVATValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#stampsforeign').text(stampsValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#grandtotalforeign').text(grandTotalForeign.toFixed(2) + ' ' + exchangesymbol);
+
 }
 
 function getbeneficiarydetails() {
@@ -1026,7 +1056,7 @@ function getQuotationData() {
     var thisage = [];
 
 
-    console.log(thistable.rows().data(),'quotation')
+    console.log(thistable.rows().data(), 'quotation')
 
     thistable.rows().every(function (index) {
         var rowData = this.data();
@@ -1107,6 +1137,8 @@ function loadQuotePartialView(response) {
             var sendButton = document.getElementById('sendButton');
             if (sendButton) {
                 sendButton.addEventListener('click', sendDataIssuance);
+                if (window.location.href.indexOf("edit") !== -1) 
+                    sendButton.textContent = 'Save/Update';
             }
             $(".isselect2").select2({
                 //tags: true,

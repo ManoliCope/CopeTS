@@ -25,6 +25,9 @@ namespace ProjectX.Entities
         SqlTimeout = 3,
         CheckAttactment = 1504,
 
+
+
+
         //System
         InvalidCredentials = 101,
 
@@ -46,11 +49,13 @@ namespace ProjectX.Entities
         LinkedToCase = 1106,
         LinkedToGop = 1107,
 
-        //Case
-        NoCallDetected = 1200,
-        CaseClosed = 1201,
-        CannotProceedNotAcceptedCase = 1202,
-        CannotReOpenNotClosedCase = 1203,
+        //Production
+        NegativeValues = 1200,
+        IndividualMax = 1201,
+        Backdate = 1202,
+        DuplicateBeneficiary = 1203,
+
+
         AuditNotAllowed = 1204,
         NoApprovalNeeded = 1205,
         MedicalReportRequired = 1206,

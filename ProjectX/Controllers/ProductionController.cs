@@ -297,7 +297,7 @@ namespace ProjectX.Controllers
 
         [HttpPost]
         public ProductionResp GetQuotation(List<ProductionReq> quotereq)
-         {
+        {
             return _productionBusiness.getProductionDetails(quotereq, _user.U_Id);
         }
 
@@ -318,6 +318,16 @@ namespace ProjectX.Controllers
         [HttpPost]
         public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
+            ProductionSaveResp response = new ProductionSaveResp();
+
+            DateTime currentDate = DateTime.Now.Date; 
+            DateTime fromdate = Convert.ToDateTime(IssuanceReq.from).Date; 
+            if (fromdate < currentDate && (_user.U_Is_Admin == false))
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.Backdate);
+                return response;
+            }
+
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
         }
 
