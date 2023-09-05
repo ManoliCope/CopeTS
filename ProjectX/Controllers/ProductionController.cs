@@ -25,6 +25,7 @@ using ProjectX.Repository.UsersRepository;
 using ProjectX.Business.User;
 using SelectPdf;
 using ProjectX.Entities.Models.Users;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace ProjectX.Controllers
 {
@@ -306,10 +307,27 @@ namespace ProjectX.Controllers
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
         }
+        public List<TR_Beneficiary> GetPolicyBeneficiaries(int id)
+        {
+            List<TR_Beneficiary> policyreponse = new List<TR_Beneficiary>();
+            policyreponse = _productionBusiness.GetPolicyBeneficiaries(id, _user.U_Id);
+
+            return policyreponse;
+        }
 
         [HttpPost]
         public ProductionSaveResp IssuePolicy(IssuanceReq IssuanceReq)
         {
+            ProductionSaveResp response = new ProductionSaveResp();
+
+            DateTime currentDate = DateTime.Now.Date; 
+            DateTime fromdate = Convert.ToDateTime(IssuanceReq.from).Date; 
+            if (fromdate < currentDate && (_user.U_Is_Admin == false))
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.Backdate);
+                return response;
+            }
+
             return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
         }
 

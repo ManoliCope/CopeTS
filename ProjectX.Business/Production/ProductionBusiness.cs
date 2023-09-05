@@ -43,6 +43,26 @@ namespace ProjectX.Business.Production
         }
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
         {
+            ProductionSaveResp response = new ProductionSaveResp();
+            var duplicateBeneficiary = req.beneficiaryData.GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
+            if (duplicateBeneficiary != null)
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.DuplicateBeneficiary);
+                return response;
+            }
+
+            if (req.GrandTotal < 0)
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.NegativeValues);
+                return response;
+            }
+
+            if (req.Is_Individual && req.beneficiaryData.Count() > 1)
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.IndividualMax);
+                return response;
+            }
+
             return _prodRepository.SaveIssuance(req, userid);
         }
         public ProductionPolicy GetPolicy(int IdPolicy, int userid)
@@ -53,6 +73,11 @@ namespace ProjectX.Business.Production
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid)
         {
             return _prodRepository.GetPoliciesList(req, userid);
+        }
+
+        public List<TR_Beneficiary> GetPolicyBeneficiaries(int id, int userid)
+        {
+            return _prodRepository.GetPolicyBeneficiaries(id, userid);
         }
 
 

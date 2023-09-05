@@ -1,13 +1,13 @@
 ﻿@model ProjectX.Entities.Models.Beneficiary.BeneficiaryGetResp
 @{
-    //var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
 
 <div class="content" pgtype="view">
-    <div class="container-fluid" style="padding:10px 0">
-        <div class="row mb-3">
-            <div class="col-md-12 ">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row mb-3">
+			<div class="col-md-12 ">
 				<div class="card h-100 ">
 					<div class="card-header custom">
 						<h4 class="card-title ">
@@ -29,9 +29,9 @@
 										<input type="text" class="form-control" id="middleName" name="middleName">
 									</div>
 									@*<div class="form-group mb-3 col-lg-4">
-							<label for="middleName">Maiden Name</label>
-							<input type="text" class="form-control" id="maidenName" name="maidenName">
-						</div>*@
+											<label for="middleName">Maiden Name</label>
+											<input type="text" class="form-control" id="maidenName" name="maidenName">
+										</div>*@
 									<div class="form-group mb-3 col-lg-4">
 										<label for="lastName">Last Name</label>
 										<input type="text" class="form-control" id="lastName" name="lastName" required>
@@ -52,38 +52,57 @@
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
-										<label for="dateOfBirth">Date of Birth</label>
-										<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+										<label for="Nationalityid">Nationality</label>
+										<select class="form-control isselect2" id="Nationalityid" name="Nationalityid" required>
+											<option>Select Nationality</option>
+											@foreach (var thislist in filldata.loadedData.destinations)
+											{
+												<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+											}
+										</select>
 									</div>
+
+									<div class="form-group mb-3 col-lg-4">
+										<label for="CountryResidenceid">Country of Residence</label>
+										<select class="form-control isselect2" id="CountryResidenceid" name="CountryResidenceid" required>
+											<option>Select Country</option>
+											@foreach (var thislist in filldata.loadedData.destinations)
+											{
+												<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+											}
+										</select>
+									</div>
+
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-lg-8">
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                </div>
-                                <div class="col-lg-4">
-                                    <button id="create" class="btn btn-primary w-100 bglocalcolor" type="submit">
-                                        <span> Add </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-body">
+					<div class="row">
+						<div class="col-lg-8">
+						</div>
+						<div class="col-lg-4">
+							<div class="row">
+								<div class="col-lg-8">
+								</div>
+								<div class="col-lg-4">
+									<button id="create" class="btn btn-primary w-100 bglocalcolor" type="submit">
+										<span> Add </span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

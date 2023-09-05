@@ -10,6 +10,7 @@ namespace ProjectX.Entities.Models.Production
     {
         public int RowId { get; set; }
         public int Insured { get; set; }
+        public int InsuredId { get; set; }
         public string Fullname { get; set; }
         public int Age { get; set; }
         public int Product { get; set; }

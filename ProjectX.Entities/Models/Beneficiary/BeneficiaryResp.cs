@@ -16,5 +16,7 @@ namespace ProjectX.Entities.Models.Beneficiary
         public string MaidenName { get; set; }
         public string PassportNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public int Nationalityid { get; set; }
+        public int CountryResidenceid { get; set; }
     }
 }

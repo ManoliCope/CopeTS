@@ -33,14 +33,21 @@ namespace ProjectX.Business.Beneficiary
         {
             TR_Beneficiary repores = _beneficiaryRepository.GetBeneficiary(IdBeneficiary);
             BeneficiaryResp resp = new BeneficiaryResp();
-            resp.Id = repores.BE_Id;
-            resp.Sex = repores.BE_Sex;
-            resp.FirstName = repores.BE_FirstName;
-            resp.MiddleName = repores.BE_MiddleName;
-            resp.LastName = repores.BE_LastName;
-            resp.MaidenName = repores.BE_MaidenName;
-            resp.DateOfBirth = repores.BE_DOB;
-            resp.PassportNumber = repores.BE_PassportNumber;
+            if (repores == null)
+                return resp;
+            else
+            {
+                resp.Id = repores.BE_Id;
+                resp.Sex = repores.BE_Sex;
+                resp.FirstName = repores.BE_FirstName;
+                resp.MiddleName = repores.BE_MiddleName;
+                resp.LastName = repores.BE_LastName;
+                resp.MaidenName = repores.BE_MaidenName;
+                resp.DateOfBirth = repores.BE_DOB;
+                resp.PassportNumber = repores.BE_PassportNumber;
+                resp.CountryResidenceid = repores.BE_CountryResidenceid;
+                resp.Nationalityid = repores.BE_Nationalityid;
+            }
 
 
             return resp;

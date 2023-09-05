@@ -32,7 +32,7 @@
 		<div class="my-3 mb-1">
 			@foreach (var item in Model.QuotationResp.Where(x => x.RowId == 1))
 			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.Insured">
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
 					<tbody>
 						<tr class="card-header">
 							<td>Full Name </td>
@@ -120,27 +120,27 @@
 					<tr>
 						<td>Initial Premium</td>
 						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
-						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
+						<td id="initpremtotalforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td id="additiononprem" class="text-end">1.00 USD</td>
-						<td id="additiononprem" class="text-end">1.00 USD</td>
+						<td id="additiononprem" class="text-end">0.00 USD</td>
+						<td id="additiononpremforeign" class="text-end">0.00 USD</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end">0.5 USD</td>
-						<td id="taxvat" class="text-end">0.5 USD</td>
+						<td id="taxvat" class="text-end">0.00 USD</td>
+						<td id="taxvatforeign" class="text-end">0.00 USD</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td id="stamps" class="text-end">0.01 USD</td>
-						<td id="stamps" class="text-end">0.01 USD</td>
+						<td id="stamps" class="text-end">0.00 USD</td>
+						<td id="stampsforeign" class="text-end">0.00 USD</td>
 					</tr>
 					<tr>
 						<td>Total</td>
 						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
-						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
+						<td id="grandtotalforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 					</tr>
 				</tbody>
 			</table>
@@ -192,6 +192,4 @@
 			</div>*@
 	</div>
 </div>
-
-
 <button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>

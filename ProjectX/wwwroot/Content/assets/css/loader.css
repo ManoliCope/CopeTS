@@ -27,7 +27,7 @@
     animation: spin 1s linear infinite;
 }
 
-#loader {
+#loader, #quoteloader {
     position: absolute;
     left: calc(50% + 120px);
     top: 50%;
@@ -103,7 +103,7 @@
 
 
 @media (max-width: 767px) {
-    #loader {
+    #loader, #quoteloader {
         left: 55%;
         top: 50%;
     }
@@ -111,7 +111,7 @@
 
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    #loader {
+    #loader, #quoteloader {
         left: calc(50% + 35px);
         top: 38%;
     }
@@ -120,7 +120,7 @@
 
 
 @media (min-width: 1024px) {
-    #loader {
+    #loader, #quoteloader {
         left: calc(50% + 25px);
         top: 50%;
     }

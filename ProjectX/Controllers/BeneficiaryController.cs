@@ -62,8 +62,14 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-            LoadDataResp response = new LoadDataResp();
-            response.loadedData = new LoadDataModel();
+
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+
+            });
+
             ViewData["filldata"] = response;
 
             BeneficiaryGetResp ttt = new BeneficiaryGetResp();
@@ -88,9 +94,15 @@ namespace ProjectX.Controllers
 
         public ActionResult Edit(int id)
         {
+            LoadDataResp filldata = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadDestinations = true,
+            });
+
+            ViewData["filldata"] = filldata;
+
             BeneficiaryResp response = new BeneficiaryResp();
             response = _beneficiaryBusiness.GetBeneficiary(id);
-
             return View("details", response);
         }
 
@@ -152,6 +164,14 @@ namespace ProjectX.Controllers
             }
 
             return beneficiaries;
+        }
+
+        public BeneficiaryResp getbeneficiary(int id)
+        {
+            //id = 74;
+            BeneficiaryResp response = new BeneficiaryResp();
+            response = _beneficiaryBusiness.GetBeneficiary(id);
+            return response;
         }
 
 

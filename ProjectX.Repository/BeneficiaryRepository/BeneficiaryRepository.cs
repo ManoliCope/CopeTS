@@ -39,6 +39,8 @@ namespace ProjectX.Repository.BeneficiaryRepository
             param.Add("@BE_MaidenName", req.LastName);
             param.Add("@BE_PassportNumber", req.PassportNumber);
             param.Add("@BE_DOB", req.DateOfBirth);
+            param.Add("@BE_CountryResidenceid", req.CountryResidenceid);
+            param.Add("@BE_Nationalityid", req.Nationalityid);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 

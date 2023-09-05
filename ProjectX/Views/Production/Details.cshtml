@@ -5,8 +5,9 @@
 	var zonelist = ViewData["zonelist"] as List<ProjectX.Entities.dbModels.TR_Zone>;
 	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
-
+	DateTime today = DateTime.Today;
 }
+
 
 <div class="content editscreen prodadm" pgtype="view" pol-id="@Model.PolicyID" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
 	<div class="container-fluid" style="padding:10px 0">
@@ -39,7 +40,7 @@
 																<input type="radio" id="is_individual" name="type" @(Model.IsIndividual ? "checked" : "")>
 
 																<label for="is_individual">Individual</label>
-																<i class="fa fa-question-circle" title="Single"></i>
+																<i class="fa fa-question-circle" title="Individual"></i>
 															</div>
 														</div>
 														<div class="col-md-4 family" style="">
@@ -121,11 +122,19 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<h3>Beneficiaries</h3><hr>
+											<h3 style="display: inline-block; vertical-align: middle;">Beneficiaries</h3>
+
+											@if (Model.IsEditable)
+											{
+												<button class="btn btn-md btn-third btn-block text-left togglebenpopup">
+													<i class="fa fa-plus" aria-hidden="true"></i> New
+												</button>
+											}
+											<hr>
 											<div class="row thisbeneficiary">
 												<div class="col-md-12">
 													<div class="row">
-														<div class="form-group col-md-6">
+														<div class="form-group col-md-6 mr-3">
 															@*<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">*@
 															<div class="search-dropdown">
 																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
@@ -133,99 +142,15 @@
 															</div>
 														</div>
 
-														<div class="form-group col-md-6 xlsxupload" style="display: none;">
-															<a class="text-danger" style="font-size: 12px;">Sample File</a>
-															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
-														</div>
-														<div class="form-group col-md-12">
-															<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
-															<div class="row">
-																<div class="col-md-2">
-																	<div class="we-checkbox">
-																		<input type="radio" id="male" name="sgender" value="M" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "" : "checked")>
-																		<label for="male">Male</label>
-																	</div>
-																</div>
-																<div class="col-md-2">
-																	<div class="we-checkbox">
-																		<input type="radio" id="female" name="sgender" value="F" @(Model.IsIndividual && Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
-																		@*@if (Model.IsIndividual)
-																			{
-																				<input type="radio" id="female" name="sgender" value="F" @(Model.PolicyDetails.First().Gender == "F" ? "checked" : "")>
-																			}
-																			else
-																			{
-																				<input type="radio" id="female" name="sgender" value="F">
-																			}*@
-																		<label for="female">Female</label>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="form-group col-md-4">
-															<label>First Name <span class="text-danger">*</span></label>
-															<input id="first_name" type="text" class="form-control first_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="first_name" autocomplete="off" thisid="@Model.PolicyDetails.First().InsuredId" required>
-														</div>
-														<div class="form-group col-md-4">
-															<label>Middle Name</label>
-															<input type="text" class="form-control middle_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().FirstName : "")" name="middle_name" autocomplete="off">
-														</div>
-														<div class="form-group col-md-4">
-															<label>Last Name <span class="text-danger">*</span></label>
-															<input id="last_name" type="text" class="form-control last_name" value="@(Model.IsIndividual ? Model.PolicyDetails.First().LastName : "")" name="last_name" autocomplete="off" required>
-														</div>
-													</div>
-													<div class="row">
-														<div class="form-group col-md-4 passport_no_form">
-															<label>Passport No. <span class="isrequired text-danger">*</span></label>
-															<input id="passport_no" type="text" class="form-control passport_no" value="@(Model.IsIndividual ? Model.PolicyDetails.First().PassportNo : "")" name="passport_no" autocomplete="off" required>
-														</div>
-														<div class="form-group col-md-4">
-															<label>Date Of Birth <span class="text-danger">*</span> <span class="age">(@Model.PolicyDetails.First().Age)</span></label>
-															<input type="date" class="form-control datepickeryear dob" value="@(Model.IsIndividual ? Model.PolicyDetails.First().DateOfBirth.ToString("yyyy-MM-dd") : "")" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
-														</div>
 
-														<div class="form-group col-md-4 div-beneficiary ">
-															<label>&nbsp;</label>
-															<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100 " style="cursor: pointer; @(Model.IsIndividual ? "display:none" : "")">
-																<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
-															</div>
-														</div>
+														@*<div class="form-group col-md-2 div-beneficiary ">
+															</div>*@
+
 													</div>
+
 													<div class="table-responsive">
-														<table class="table table-sm table-bordered mt-3 beneficiary-table " style="@(Model.IsIndividual ? "display:none" : "")">
-															<thead>
-																<tr class="thead-light">
-																	<th>First Name</th>
-																	<th>Last Name</th>
-																	<th>Date Of Birth</th>
-																	<th>Age</th>
-																	<th>Passport No.</th>
-																	<th>Sex</th>
-																	<th style="width:90px;" data-orderable="false">Actions</th>
-																</tr>
-															</thead>
-															<tbody class="beneficiary-list">
-																@if (!Model.IsIndividual)
-																{
-																	@foreach (var tdrow in Model.PolicyDetails)
-																	{
-																		<tr>
-																			<td insuredid="@tdrow.InsuredId">@tdrow.FirstName</td>
-																			<td>@tdrow.LastName</td>
-																			<td>@tdrow.DateOfBirth.ToString("dd-MM-yyyy")</td>
-																			<td>@tdrow.Age</td>
-																			<td>@tdrow.PassportNo</td>
-																			<td>@tdrow.Gender</td>
-																			<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>
-																		</tr>
-																	}
-																}
-															</tbody>
+														<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="width:100%; ">
 														</table>
-														<input type="hidden" class="beneficiary_details" name="beneficiary_details" value="">
 													</div>
 												</div>
 											</div>
@@ -246,8 +171,8 @@
 													<div class="col-md-12">
 														<div class="row">
 															<div class="form-group col-md-12">
-																<label for="destination_id">Destination(s) <span class="text-danger">*</span></label>
-																<select class="form-control isselect2 trgrthis" id="destination_id" name="destination_id" multiple>
+																<label for="destination_id">Destination(s) </label>
+																<select class="form-control isselect2 " id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 																		{
@@ -279,38 +204,17 @@
 															</div>
 															<div class="form-group col-md-4">
 																<label>From <span class="text-danger">*</span></label>
-																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="@Model.FromDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="1">
+																<input type="date" id="from" class="form-control datepickermonth trgrthis" name="from" value="@Model.FromDate.ToString("yyyy-MM-dd")" min="@today.ToString("yyyy-MM-dd")">
 															</div>
 															<div class="form-group col-md-4">
 																<label>To <span class="text-danger">*</span></label>
-																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("yyyy-MM-dd")" data-gtm-form-interact-field-id="2">
+																<input type="date" id="to" class="form-control datepickermonth trgrthis" name="to" value="@Model.ToDate.ToString("yyyy-MM-dd")" min="@today.ToString("yyyy-MM-dd")">
 															</div>
 
-															@*<div class="form-group col-md-3 mt-3 pt-1">
-																	<button type="button" class="mt-2 btn btn-sm form-control btn-secondary add-travel"> <i class="fa fa-plus" aria-hidden="true"></i> Add Travel</button>
-																</div>*@
+
 														</div>
 													</div>
-													<!--<div class="col-md-12">
-													<div class="form-group">
-														<div class="table-responsive">
-															<table id="destinationtbl" class="table table-sm table-bordered table-travel mt-3" style="width:100%">
-																<thead>
-																	<tr class="thead-light">
-																		<th hidden>Destination ID</th>
-																		<th>Destination(s)</th>
-																		<th>From</th>
-																		<th>To</th>
-																		<th>Duration</th>
-																		<th style="width:90px;" data-orderable="false">Actions</th>
-																	</tr>
-																</thead>-->
-													@*<tbody class="travel-list small">
-														</tbody>*@
-													<!--</table>
-															</div>
-														</div>
-													</div>-->
+
 												</div>
 											</div>
 										</div>
@@ -330,76 +234,96 @@
 								</h4>
 							</div>
 							<div class="card-body result ">
-								<div class="quotecontainer ">
+								<div class="quotecontainer " cr="@UserRights.CurrencyRate" crs="@UserRights.CurrencySymbol">
 									<partial name="~/Views/partialviews/partialquotationlistbak.cshtml" model="@Model" />
-
-
-									@*<div class="card mt-2">
-											<div class="card-body" style="font-size:13px">
-												<div>
-													<b>Destination(s) </b>
-													<span class="float-end">
-														Aruba,
-													</span>
-												</div>
-												<div>
-													<b>Inception Date </b>
-													<span class="float-end">08-07-2023  </span>
-												</div>
-												<div>
-													<b>Expiry Date</b>
-													<span class="float-end">08-07-2023  </span>
-												</div>
-												<div>
-													<b>Duration </b>
-													<span class="float-end">1 Days </span>
-												</div>
-												<div>
-
-													<span class="float-end total_price" data-currency="USD"> </span>
-												</div>
-												<div class="table-responsive">
-													<table class="table table-sm table-bordered mt-3">
-														<thead>
-															<tr class="thead-light text-center">
-																<th>Full Name</th>
-																<th>Cons. / Cumul. Days</th>
-																<th>Base Price</th>
-																<th>Discount</th>
-																<th>Final Price </th>
-															</tr>
-														</thead>
-														<tbody class="quotation-list">
-															<tr class="text-center">
-																<td>SAHAR </td>
-																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">Abc</option></select></td>
-																<td>0</td>
-																<td>0</td>
-																<td>12 USD</td>
-															</tr>
-															<tr class="text-center">
-																<td>Mussa Basma</td>
-																<td><select class="form-control1 cum_con_days" name="plans_price[1][]"><option value="43036" data-bprice="20.00" data-fprice="20" data-price0="25 %" data-deductible="false">F1</option></select></td>
-																<td class="base_price" data-price="11.00">14.00 USD</td>
-																<td class="discount" data-discount="0">0 % <input type="hidden" class="discount" name="plans_discount[0][]" value="0"></td>
-																<td><span class="final_price" data-price="11">14 USD</span></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-										</div>
-										<div class="my-3" style="height: 32px;">
-											<div class="btn btn-third float-end grand_total">14.00 USD</div>
-											<div class="btn btn-third float-right mr-2">Grand Total</div>
-										</div>
-										<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>*@
 								</div>
-								<div class="loadersize"><div id="loader"></div></div>
+								<div class="loadersize"><div id="quoteloader"></div></div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="beneficiary-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Beneficiary</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body container-fluid">
+				<div class="row">
+					<div class="form-group col-md-4">
+						<label>First Name <span class="text-danger">*</span></label>
+						<input id="first_name" type="text" class="form-control first_name" name="first_name" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Middle Name</label>
+						<input id="middle_name" type="text" class="form-control middle_name" name="middle_name" autocomplete="off">
+					</div>
+					<div class="form-group col-md-4">
+						<label>Last Name <span class="text-danger">*</span></label>
+						<input id="last_name" type="text" class="form-control last_name" name="last_name" autocomplete="off" required>
+					</div>
+
+					<div class="form-group col-md-4 passport_no_form">
+						<label>Passport No. <span class="isrequired text-danger">*</span></label>
+						<input id="passport_no" type="text" class="form-control passport_no" name="passport_no" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+						<input type="date" class="form-control dob" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+					</div>
+
+					<div class="form-group col-md-4">
+						<label for="nationality">
+							Nationality <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="nationality" name="nationality" required>
+							<option value=""> </option>
+							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="countryofresidence">
+							Country of Residence <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="countryofresidence" name="countryofresidence" required>
+							<option value=""> </option>
+							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="male" name="sgender" value="M" checked>
+							<label for="male">Male</label>
+						</div>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="female" name="sgender" value="F">
+							<label for="female">Female</label>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button type="button" class="btn btn-danger btn-beneficiary">Save</button>
 			</div>
 		</div>
 	</div>

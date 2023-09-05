@@ -1,4 +1,5 @@
-﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
+﻿
+@model ProjectX.Entities.Models.Production.ProductionPolicy
 
 @{
 	Layout = null;
@@ -36,7 +37,7 @@
 		<div class="my-3 mb-1">
 			@foreach (var item in Model.PolicyDetails)
 			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId">
+				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
 					<tbody>
 						<tr class="card-header">
 							<td>Full Name  </td>
@@ -124,29 +125,29 @@
 					<tr>
 						<td>Initial Premium</td>
 						<td id="initpremtotal" class="text-end">@Model.InitialPremium USD</td>
-						<td id="initpremtotal" class="text-end">
+						<td id="initpremtotalforeign" class="text-end">
 							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
 						</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
 						<td id="additiononprem" class="text-end">@Model.AdditionalValue USD</td>
-						<td id="additiononprem" class="text-end">@Model.AdditionalValue @UserRights.CurrencySymbol</td>
+						<td id="additiononpremforeign" class="text-end">@Model.AdditionalValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
 						<td id="taxvat" class="text-end">@Model.TaxVATValue USD</td>
-						<td id="taxvat" class="text-end">@Model.TaxVATValue @UserRights.CurrencySymbol</td>
+						<td id="taxvatforeign" class="text-end">@Model.TaxVATValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
 						<td id="stamps" class="text-end">@Model.StampsValue USD</td>
-						<td id="stamps" class="text-end">@Model.StampsValue @UserRights.CurrencySymbol</td>
+						<td id="stampsforeign" class="text-end">@Model.StampsValue @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Total</td>
 						<td id="grandtotal" class="text-end">@Model.GrandTotal USD</td>
-						<td id="grandtotal" class="text-end">
+						<td id="grandtotalforeign" class="text-end">
 							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
 						</td>
 					</tr>

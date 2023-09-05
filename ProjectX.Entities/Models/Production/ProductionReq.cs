@@ -13,6 +13,7 @@ namespace ProjectX.Entities.Models.Production
     public class ProductionReq
     {
         public int Insured { get; set; }
+        public int InsuredId { get; set; }
         public int Ages { get; set; }
         public int Product { get; set; }
         public int Zone { get; set; }

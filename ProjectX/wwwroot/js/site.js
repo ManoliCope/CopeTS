@@ -221,7 +221,10 @@ function triggerfiltertable(datatable, tablename) {
     buttonsContainer.prependTo(filterElement).addClass('dt-buttons-left').addClass('float-left').find('button').addClass('btn btn-info'); // Adjust positioning for left side
 }
 
-
+function closepopup() {
+    $("body").find(".modal").modal("hide");
+    $(".close").click();
+}
 function triggerresonseclick(PageName, action, parameter) {
 
     $("#responsemodal button").click(function () {

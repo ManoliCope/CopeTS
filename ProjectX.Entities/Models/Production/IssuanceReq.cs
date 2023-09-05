@@ -60,11 +60,14 @@ namespace ProjectX.Entities.Models.Production
         public int Insured { get; set; }
         public int insuredId { get; set; }
         public string firstName { get; set; }
+        public string middleName { get; set; }
         public string lastName { get; set; }
         public string dateOfBirth { get; set; }
         public int age { get; set; }
         public string passportNo { get; set; }
         public string gender { get; set; }
+        public int nationalityid { get; set; }
+        public int countryResidenceid { get; set; }
     }
 
    

@@ -1,8 +1,22 @@
 ﻿var projectname = checkurlserver();
 var travelinfo = {}
 var addbenefits = []
+var selectedfieldlist = [];
+var editedglobalrow = null
 $(document).ready(function () {
+
+
+    $('.togglebenpopup').click(function () {
+        $(".btn-beneficiary").attr("thisid", 0)
+        resetbenpopup()
+        triggerbenbtn()
+        showresponsemodalbyid('beneficiary-popup', -1)
+    })
+
+
     var polIdValue = $(".editscreen").attr("pol-id");
+    triggerasdatatable("#beneficiary-table")
+
     var isadmin = $(".prodadm").attr("prodadm")
 
     $(".isselect2").select2({
@@ -13,17 +27,9 @@ $(document).ready(function () {
     if (stat != null && stat > 0) {
 
     }
-    //$('#product_id').on('select2:selecting', function (e) {
-    //    // Get the entered text in the search box
-    //    const enteredText = $('.select2-search__field').val();
 
-    //    // Check if there's no option containing the entered text
-    //    if ($('#product_id').find("option:contains('" + enteredText + "')").length === 0) {
-    //        e.preventDefault(); // Prevent the selection
-    //        alert('Option not found!'); // Show an alert or any other indication
-    //    }
-    //});
 
+    getselectedfields()
     triggercalculationfields()
 
 
@@ -31,13 +37,12 @@ $(document).ready(function () {
         closeOnSelect: false
     });
 
-    //$("#destinationtbl").DataTable()
 
 
     populatezones();
     populateproducts();
     populatedestinations()
-    populatebeneficiary()
+    //populatebeneficiary()
     settofrom()
     searchbeneficiary()
 
@@ -45,72 +50,6 @@ $(document).ready(function () {
         generatePdf();
 
     });
-
-    //$('.add-travel').click(function () {
-    //    var selectedOptions = $('#destination_id option:selected');
-    //    var selectedDestinations = selectedOptions.map(function () {
-    //        return $(this).text();
-    //    }).get();
-    //    var selectedDestinationIds = selectedOptions.map(function () {
-    //        return $(this).val();
-    //    }).get();
-
-
-    //    var fromDate = $('#from').val();
-    //    var toDate = $('#to').val();
-    //    var duration = $('#duration').val();
-    //    alert(fromDate)
-
-    //    // Validate fields
-    //    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
-    //        toDate.trim() === '' || duration.trim() === '') {
-    //        return false; // Prevent adding the row if any field is empty
-    //    }
-
-    //    if ($.fn.DataTable.isDataTable('#destinationtbl')) {
-    //        $('#destinationtbl').DataTable().destroy();
-    //    }
-
-    //    var table = $('#destinationtbl').DataTable({
-    //        searching: false,
-    //        paging: false,
-    //        info: false
-    //    });
-    //    table.on('draw', function () {
-    //        table.column(0).nodes().each(function (cell, index) {
-    //            var destinations = $(cell).text().split(',').map(function (destination) {
-    //                return destination.trim();
-    //            }).join('<br>');
-
-    //            $(cell).html(destinations);
-    //        });
-    //    });
-
-
-    //    table.row.add([
-    //        selectedDestinationIds,
-    //        selectedDestinations.join(','), // Display destination text
-    //        fromDate,
-    //        toDate,
-    //        duration,
-    //        `<i class="fa fa-trash text-danger delete-travel" aria-hidden="true"></i>`
-    //    ]).draw();
-
-    //    $('#destination_id').val('').trigger('change');
-    //    $('#from').val('');
-    //    $('#to').val('');
-    //    $('#duration').val('');
-
-    //    $('#destinationtbl').on('click', '.delete-travel', function () {
-    //        table.row($(this).closest('tr')).remove().draw();
-    //    });
-
-    //    var columnIndex = 0; // Adjust the index if the column position changes
-    //    table.column(columnIndex).visible(false);
-
-    //    var allRows = $('#destinationtbl').DataTable().rows().data().toArray();
-
-    //});
 
     $('.trgrthis').focusout(function () {
         getQuotation()
@@ -126,27 +65,13 @@ $(document).ready(function () {
         }
     });
 
-    //$('.thisbeneficiary :input[required]').change(function () {
-    //    showresponsemodal("0", "Modifying beneficiary information will result in creation of a new beneficiary!!")
-    //});
 
     $('.trgrthis.isselect2').on('select2:close', function () {
         getQuotation();
     });
-    $('input[name="sgender"]').change(function () {
-        var selectedGender = $(this).val();
-        var maidenNameField = $('.maiden-field');
 
-        if (selectedGender === 'F') {
-            maidenNameField.show(); // Show maiden name field for Female
-        } else {
-            maidenNameField.hide(); // Hide maiden name field for Male
-        }
-    });
 
     $('#date_of_birth').on('focusout', updateAge);
-
-
 
 });
 
@@ -215,21 +140,7 @@ function Printpolicy2() {
 
 
 
-// Function to update the age text on date change
 function updateAge() {
-    //function calculateAge(date) {
-    //    const birthDate = new Date(date);
-    //    const now = new Date();
-    //    let age = now.getFullYear() - birthDate.getFullYear();
-    //    const monthDiff = now.getMonth() - birthDate.getMonth();
-    //    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
-    //        age--;
-    //    }
-    //    if (age < 0) {
-    //        return 0;
-    //    }
-    //    return age;
-    //}
     const dateOfBirthInput = $('#date_of_birth');
     const ageText = $('.age');
 
@@ -248,6 +159,7 @@ function updateAge() {
 
 
 function searchbeneficiary() {
+
     $('#searchbeneficiary').keyup(function () {
         var query = $(this).val();
 
@@ -257,11 +169,7 @@ function searchbeneficiary() {
         } else {
             $('#searchDropdownContent').empty().hide();
         }
-        //if (query !== '') {
-        //    search(query);
-        //} else {
-        //    $('#searchResults').empty();
-        //}
+
     });
     function searchben(query) {
         $.ajax({
@@ -269,6 +177,7 @@ function searchbeneficiary() {
             method: 'GET',
             data: { prefix: query },
             success: function (data) {
+
                 //console.log(data.beneficiary)
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
@@ -279,7 +188,7 @@ function searchbeneficiary() {
                         dropdownContent.append(item);
                     }
                     dropdownContent.show();
-                    $(document).on('click', '#searchDropdownContent a', function () {
+                    $('#searchDropdownContent a').off('click').on('click', function () {
                         $('#searchbeneficiary').val("");
 
                         var beneficiaryId = $(this).attr('thisid');
@@ -287,29 +196,14 @@ function searchbeneficiary() {
                             return b.bE_Id == beneficiaryId;
                         });
 
-                        //console.log(beneficiary)
-                        if (beneficiary) {
-                            $('.thisbeneficiary .first_name').attr("thisid", beneficiary.bE_Id);
-                            $('.thisbeneficiary .first_name').val(beneficiary.bE_FirstName);
-                            $('.thisbeneficiary .middle_name').val(beneficiary.bE_MiddleName);
-                            $('.thisbeneficiary .maiden_name').val('');
-                            $('.thisbeneficiary .last_name').val(beneficiary.bE_LastName);
-                            $('.thisbeneficiary .passport_no').val(beneficiary.bE_PassportNumber);
-                            //$('.thisbeneficiary .dob').val(beneficiary.bE_DOB);
-                            var formattedDate = '';
-                            if (beneficiary.bE_DOB) {
-                                var dateObj = new Date(beneficiary.bE_DOB);
-                                formattedDate = dateObj.toISOString().split('T')[0];
-                                $('.thisbeneficiary .dob').val(formattedDate);
-                            }
-                            if (beneficiary.bE_Sex === 1) {
-                                $('#male').prop('checked', true);
-                            } else if (beneficiary.bE_Sex === 2) {
-                                $('#female').prop('checked', true);
-                            }
-                            updateAge()
+                        addtotable(beneficiary, true)
 
-                        }
+                        $('#searchDropdownContent a').off('click');
+                        updateAge()
+
+                        return
+                        //console.log(beneficiary)
+
                         $('#searchDropdownContent a').off('click');
                     });
 
@@ -321,10 +215,6 @@ function searchbeneficiary() {
                         dropdownContent.hide();
                     });
                 }
-
-
-
-
             },
             error: function () {
                 $('#searchDropdownContent').empty().hide();
@@ -344,63 +234,356 @@ function searchbeneficiary() {
         }
     });
 }
-function populatebeneficiary() {
-    $('.btn-beneficiary').click(function () {
-        if (validateForm(".thisbeneficiary")) {
+
+function populatebeneficiarydatatable(tablename, data) {
+    var table = $(tablename).DataTable({
+        "data": data,
+        "ordering": false,
+        "filter": false,
+        "paging": false,
+        "info": false,
+        "destroy": true,
+        "columns": [
+            {
+                "title": "id",
+                "data": "bE_Id",
+                "className": "dt-center"
+            },
+            {
+                "title": "Gender",
+                "data": "bE_Sex",
+                "className": "dt-center"
+            },
+
+            {
+                "title": "First Name",
+                "data": "bE_FirstName",
+                "className": "dt-center"
+            },
+            {
+                "title": "middle name",
+                "data": "bE_MiddleName",
+                "className": "dt-center"
+            },
+            {
+                "title": "Last Name",
+                "data": "bE_LastName",
+                "className": "dt-center"
+            },
+            {
+                "title": "Gender",
+                "data": "bE_Sex",
+                "className": "dt-center",
+                "render": function (data, type, full) {
+                    if (type === 'display' || type === 'filter') {
+                        return data === 1 ? 'Male' : 'Female';
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            {
+                "title": "DOB",
+                "data": "bE_DOB",
+                "className": "dt-center",
+                "render": function (data, type, full) {
+                    if (type === 'display' || type === 'filter') {
+                        // Format the date as "dd-mm-yyyy"
+                        var date = new Date(data);
+                        var day = date.getDate().toString().padStart(2, '0');
+                        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+                        var year = date.getFullYear();
+
+                        return `${day}-${month}-${year}`;
+                    }
+                }
+            },
+            {
+                "title": "passport number",
+                "data": "bE_PassportNumber",
+                "className": "dt-center"
+            },
+            {
+                "title": "maiden name",
+                "data": "bE_MaidenName",
+                "className": "dt-center"
+            },
+
+            {
+                "title": "nationality id",
+                "data": "bE_Nationalityid",
+                "className": "dt-center"
+            },
+            {
+                "title": "country residence id",
+                "data": "bE_CountryResidenceid",
+                "className": "dt-center"
+            },
+            {
+                "title": "Actions",
+                "data": null,
+                "className": "dt-center",
+                "render": function (data, type, full, meta) {
+                    var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
+                    var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
+                    return editButton + ' ' + deleteButton;
+                }
+            },
+        ],
+        "columnDefs": [
+            {
+                "targets": [0, 1, 3, 7, 8, 9, 10],
+                "visible": false,
+            }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+
+}
+
+function triggerasdatatable(tablename) {
+    var polid = $(".editscreen").attr("pol-id");
+    if (polid > 0) {
+        $.ajax({
+            url: projectname + '/Production/GetPolicyBeneficiaries',
+            method: 'Get',
+            data: { id: polid },
+            success: function (response) {
+
+                //console.log(response,'table data')
+                populatebeneficiarydatatable(tablename, response)
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    else {
+        populatebeneficiarydatatable(tablename, null)
+    }
+}
+
+function addtotable(thisrow, search) {
+
+    console.log('on change of product.. dont hide table')
+    if (thisrow == undefined) {
+        var thissex = 0
+        if ($('#male').prop('checked')) {
+            thissex = 1;
+        } else if ($('#female').prop('checked')) {
+            thissex = 2;
+        }
+
+
+        var thisrow =
+        {
+            "bE_Id": 0,
+            "bE_Sex": 1,
+            "bE_SexName": "Male",
+            "bE_FirstName": $("#beneficiary-popup #first_name").val(),
+            "bE_MaidenName": '',
+            "bE_MiddleName": $("#beneficiary-popup #middle_name").val(),
+            "bE_LastName": $("#beneficiary-popup #last_name").val(),
+            "bE_DOB": $("#beneficiary-popup #date_of_birth").val(),
+            "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
+            "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
+            "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
+        }
+        var thistable = $('#beneficiary-table').DataTable();
+        thistable.row.add(thisrow).draw();
+        closepopup()
+    }
+    else {
+        var thistable = $('#beneficiary-table').DataTable();
+        //var allRows = thistable.rows().data()
+
+        if (search) {
+            var thistable = $('#beneficiary-table').DataTable();
+            thistable.row.add(thisrow).draw();
+        }
+        else {
+            var editedrow =
+            {
+                "bE_Id": thisrow.id,
+                "bE_Sex": thisrow.sex,
+                "bE_SexName": thisrow.sexname,
+                "bE_FirstName": thisrow.firstName,
+                "bE_MaidenName": '',
+                "bE_MiddleName": thisrow.middleName,
+                "bE_LastName": thisrow.lastName,
+                "bE_DOB": thisrow.dateOfBirth,
+                "bE_PassportNumber": thisrow.passportNumber,
+                "bE_Nationalityid": thisrow.Nationalityid,
+                "bE_CountryResidenceid": thisrow.CountryResidenceid
+            }
+            console.log(editedrow)
+            var row = thistable.row("#" + editedrow.bE_Id);
+            thistable.row($(editedglobalrow).closest("tr")).data(editedrow).draw();
+        }
+        editedglobalrow = null;
+        closepopup()
+    }
+    var allRows = thistable.rows().data()
+    console.log(allRows)
+}
+function triggerbenbtn() {
+    $('.btn-beneficiary').off('click').on('click', function () {
+
+        if (validateForm("#beneficiary-popup .container-fluid")) {
             return;
         }
 
-        var firstName = $('.first_name').val();
-        var lastName = $('.last_name').val();
-        var dateOfBirth = formatDate_DdMmYyyy($('.dob').val());
-
-        var passportNo = $('.passport_no').val();
-        var selectedSexOption = document.querySelector('input[name="sgender"]:checked').value;
-        var sexValue;
-        if (selectedSexOption === 'M') {
-            sexValue = 1;
-        } else if (selectedSexOption === 'F') {
-            sexValue = 2;
+        if ($(this).closest(".modal").attr("actid") && $(this).closest(".modal").attr("actid") > 0) {
+            editbeneficiary(this)
         }
+        else if ($(this).closest(".modal").attr("actid") && $(this).closest(".modal").attr("actid") == 0) {
+            editnewbeneficiary()
 
-
-        if (firstName === '' || lastName === '' || dateOfBirth === '' || sexValue === '' || passportNo === '') {
-            return;
+        } else {
+            addtotable()
         }
-        var age = $('.age').text().replace(/\(|\)/g, '');
-
-        var beneficiaryList = $('.beneficiary-list');
-        var row = '<tr>' +
-            '<td insuredId=' + $('.first_name').attr("thisid") + ' >' + firstName + '</td>' +
-            '<td>' + lastName + '</td>' +
-            '<td>' + dateOfBirth + '</td>' +
-            '<td>' + age + '</td>' +
-            '<td>' + passportNo + '</td>' +
-            '<td>' + selectedSexOption + '</td>' +
-            '<td><button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color:red"></i></button></td>' +
-            '</tr>';
-
-        beneficiaryList.append(row);
-
-        $('.first_name').removeAttr("thisid").val('');
-
-        $('.middle_name').val('');
-        $('.last_name').val('');
-        $('.dob').val('');
-        $('.passport_no').val('');
-        $('.age').text('');
-        //var beneficiaryTable = $('#beneficiaryTable').DataTable();
-        //beneficiaryTable.destroy(); // Destroy the existing DataTable if needed
-        //beneficiaryTable = $('#beneficiaryTable').DataTable(); // Initialize the DataTable
+        return
 
         getQuotation()
+    });
 
-        //createBeneficiaryData()
+
+}
+
+function setDateOfBirthField(originalDate) {
+    var dateParts = originalDate.split('T')[0].split(','); // Split the date parts
+    var formattedDate = dateParts[0] + '-' + dateParts[2] + '-' + dateParts[1];
+    $('#beneficiary-popup #date_of_birth').val(formattedDate);
+}
+
+function resetbenpopup() {
+    $('#beneficiary-popup #first_name').val('');
+    $('#beneficiary-popup #middle_name').val('');
+    $('#beneficiary-popup #last_name').val('');
+    $('#beneficiary-popup #passport_no').val('');
+    $('#beneficiary-popup #date_of_birth').val('');
+    $('#beneficiary-popup #nationality').val('');
+    $('#beneficiary-popup #countryofresidence').val('');
+    $('#male').prop('checked', true);
+    $('#female').prop('checked', false);
+}
+function editrow(me) {
+    resetbenpopup()
+    var benid = $(me).attr("thisid")
+
+    var thistable = $('#beneficiary-table').DataTable();
+    var thistr = $(me).closest('tr')
+    var rowData = thistable.row(thistr).data();
+
+    $('#beneficiary-popup #first_name').val(rowData.bE_FirstName);
+    $('#beneficiary-popup #middle_name').val(rowData.bE_MiddleName);
+    $('#beneficiary-popup #last_name').val(rowData.bE_LastName);
+    $('#beneficiary-popup #passport_no').val(rowData.bE_PassportNumber);
+    if (rowData.bE_DOB)
+        $('#beneficiary-popup #date_of_birth').val(rowData.bE_DOB.split('T')[0]);
+
+    $('#beneficiary-popup #nationality').val(rowData.bE_Nationalityid);
+    $('#beneficiary-popup #countryofresidence').val(rowData.bE_CountryResidenceid);
+    if (rowData.bE_Sex == 1) {
+        $('#male').prop('checked', true);
+    } else if (rowData.bE_Sex == 2) {
+        $('#female').prop('checked', true);
+    }
+
+    $(".btn-beneficiary").attr("thisid", benid)
+    triggerbenbtn()
+    editedglobalrow = me;
+    showresponsemodalbyid('beneficiary-popup', benid)
+
+}
+function editnewbeneficiary() {
+
+    var thissex = 0
+    var thissexname = "male"
+    if ($('#male').prop('checked')) {
+        thissex = 1;
+        thissexname = "Male"
+    } else if ($('#female').prop('checked')) {
+        thissex = 2;
+        thissexname = "Female"
+    } else {
+    }
+
+    var thisrow =
+    {
+        "bE_Id": 0,
+        "bE_Sex": thissex,
+        "bE_SexName": thissexname,
+        "bE_FirstName": $("#beneficiary-popup #first_name").val(),
+        "bE_MaidenName": '',
+        "bE_MiddleName": $("#beneficiary-popup #middle_name").val(),
+        "bE_LastName": $("#beneficiary-popup #last_name").val(),
+        "bE_DOB": $("#beneficiary-popup #date_of_birth").val(),
+        "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
+        "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
+        "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
+    }
+    var thistable = $('#beneficiary-table').DataTable();
+    thistable.row($(editedglobalrow).closest("tr")).data(thisrow).draw();
+    var allRows = thistable.rows().data()
+
+    closepopup()
+
+}
+function editbeneficiary(me) {
+    togglebtnloader(me)
+
+    var thissexname = "male"
+    var thissex = 0
+    if ($('#male').prop('checked')) {
+        thissexname = "Male"
+        thissex = 1;
+    } else if ($('#female').prop('checked')) {
+        thissexname = "Female"
+        thissex = 2;
+    } else {
+    }
+
+    var benid = $(me).closest(".modal").attr("actid")
+    var beneficiaryReq = {
+        "id": benid,
+        "firstName": $("#beneficiary-popup #first_name").val(),
+        "middleName": $("#beneficiary-popup #middle_name").val(),
+        "lastName": $("#beneficiary-popup #last_name").val(),
+        "sex": thissex,
+        "sexname": thissexname,
+        "passportNumber": $("#beneficiary-popup #passport_no").val(),
+        "dateOfBirth": $("#beneficiary-popup #date_of_birth").val(),
+        "CountryResidenceid": $("#beneficiary-popup #countryofresidence").val(),
+        "Nationalityid": $("#beneficiary-popup #nationality").val(),
+    };
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: projectname + "/Beneficiary/EditBeneficiary",
+        data: { req: beneficiaryReq },
+        success: function (result) {
+            addtotable(beneficiaryReq)
+            removebtnloader(me)
+            removeloader();
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
     });
 }
 
 function removerow(me) {
-    $(me).closest("tr").remove();
+    var table = $("#beneficiary-table").DataTable()
+
+    var row = table.row($(me).closest("tr"));
+    row.remove().draw();
+
     getQuotation()
 }
 function settofrom() {
@@ -437,19 +620,6 @@ function settofrom() {
             }
         }
     });
-
-    //$('#duration').change(function () {
-    //    var fromDate = new Date($('#from').val());
-    //    var duration = parseInt($(this).val());
-
-    //    if (fromDate && duration) {
-    //        var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
-    //        var formattedToDate = toDate.toISOString().split('T')[0];
-    //        $('#to').val(formattedToDate);
-    //    } else {
-    //        $('#to').val('');
-    //    }
-    //});
 }
 function populateproducts() {
     $('.typeradio .we-checkbox input[type="radio"]').on('change', function () {
@@ -465,15 +635,6 @@ function populateproducts() {
         else
             type = 3
 
-        if (selectedType === 'is_family' || selectedType === 'is_group') {
-            addBeneficiaryButton.show(); // Show Add Beneficiary button for Family or Group
-            beneficiaryTable.show(); // Show beneficiary table for Family or Group
-        } else {
-            addBeneficiaryButton.hide(); // Hide Add Beneficiary button for Single
-            beneficiaryTable.hide(); // Hide beneficiary table for Single
-        }
-
-        //$("#destinationtbl tbody tr").empty();
         const table = $('#destinationtbl').DataTable();
         table.clear().draw();
 
@@ -565,10 +726,6 @@ if (sendButton) {
 }
 
 
-// Step 1: Add event listener to the button or trigger
-
-
-// Step 2: Create JavaScript objects representing the data
 function createGeneralInformationData() {
     var selectedtype = document.querySelector('input[name="type"]:checked');
     var typeId = selectedtype ? selectedtype.id : '';
@@ -586,55 +743,41 @@ function createGeneralInformationData() {
 
 function createBeneficiaryData() {
     var beneficiaryList = [];
-    var selectedtype = document.querySelector('input[name="type"]:checked');
-    var typeId = selectedtype ? selectedtype.id : '';
 
-    if (typeId === 'is_family' || typeId === 'is_group') {
-        $('.beneficiary-list tr').each(function (index, row) {
-            var thisinsuredId = $(row).find('td:eq(0)').attr('insuredid');
-            thisinsuredId = thisinsuredId !== undefined ? thisinsuredId : 0;
+    var thistable = $('#beneficiary-table').DataTable();
+    var thisage = [];
 
-            var beneficiary = {
-                Insured: index + 1,
-                insuredId: thisinsuredId,
-                firstName: $(row).find('td:eq(0)').text(),
-                lastName: $(row).find('td:eq(1)').text(),
-                dateOfBirth: $(row).find('td:eq(2)').text(),
-                age: parseInt($(row).find('td:eq(3)').text()),
-                passportNo: $(row).find('td:eq(4)').text(),
-                gender: $(row).find('td:eq(5)').text()
-            };
-            beneficiaryList.push(beneficiary);
-        });
-    }
-    else {
-        var thisinsuredId = $('#first_name').attr('thisid');
-        thisinsuredId = thisinsuredId != "undefined" ? thisinsuredId : 0;
+    thistable.rows().every(function (index) {
+        var rowData = this.data();
 
         var beneficiary = {
-            Insured: 1,
-            insuredId: thisinsuredId,
-            firstName: $('#first_name').val(),
-            middleName: $('.middle_name').val(),
-            lastName: $('#last_name').val(),
-            dateOfBirth: $('#date_of_birth').val(),
-            age: calculateAge($('#date_of_birth').val()),
-            passportNo: $('#passport_no').val(),
-            gender: $('input[name="sgender"]:checked').val(),
+            Insured: index + 1,
+            insuredId: rowData.bE_Id,
+            firstName: rowData.bE_FirstName,
+            middleName: rowData.bE_MiddleName,
+            lastName: rowData.bE_LastName,
+            dateOfBirth: rowData.bE_DOB,
+            age: calculateAge(rowData.bE_DOB),
+            passportNo: rowData.bE_PassportNumber,
+            gender: rowData.bE_Sex,
+            nationalityid: rowData.bE_Nationalityid,
+            countryResidenceid: rowData.bE_CountryResidenceid
+
+
         };
         beneficiaryList.push(beneficiary);
-    }
 
+    });
     return beneficiaryList;
+
+
 }
 
 
-// Step 3: Convert objects to JSON strings
 function convertToJSON(data) {
     return JSON.stringify(data);
 }
 
-// Step 4: Send the JSON strings to the server using AJAX call
 function validatequatation() {
     var inputValues = [];
     var requiredFields = $('.trgrthis');
@@ -645,13 +788,6 @@ function validatequatation() {
 
         var id = $(this).attr("id");
 
-        //if (field == undefined || field == '') {
-        //    $(this).css('border-color', 'red');
-        //    $(this).parent().find(".select2-container").addClass("select2-borderred");
-        //} else {
-        //    $(this).css('border-color', '#e2e7f1');
-        //    $(this).parent().find(".select2-container").removeClass("select2-borderred");
-        //}
     });
 
     var selectedtype = document.querySelector('input[name="type"]:checked');
@@ -682,28 +818,7 @@ function getQuotation() {
 
     $(".result").addClass("load")
 
-
     getQuotationData()
-    //console.log(getQuotationData())
-
-
-    ///  saving policy if quotation accepted..
-    var generalInfoData = createGeneralInformationData();
-    var beneficiaryData = createBeneficiaryData();
-    var travelData = gathertravelinfo();
-
-
-    //console.log(generalInfoData)
-    //console.log(beneficiaryData)
-    //console.log(travelData)
-
-
-    return false;
-    var generalInfoJSON = convertToJSON(generalInfoData);
-    var beneficiaryJSON = convertToJSON(beneficiaryData);
-    var travelJSON = convertToJSON(travelData);
-
-
 
 }
 
@@ -726,11 +841,11 @@ function gathertravelinfo() {
     var duration = $('#duration').val();
 
 
-    // Validate fields
-    if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
-        toDate.trim() === '' || duration.trim() === '') {
-        return false; // Prevent adding the row if any field is empty
-    }
+    //// Validate fields
+    //if (selectedDestinations.length === 0 || fromDate.trim() === '' ||
+    //    toDate.trim() === '' || duration.trim() === '') {
+    //    return false; 
+    //}
 
     return {
         "from": fromDate,
@@ -754,9 +869,6 @@ function calculateAge(dateOfBirth) {
 }
 
 function triggercalculationfields() {
-    //$('.benplus').on('change', recalculateTotalPrice);
-    //$('input[data-dedprice]').on('change', recalculateTotalPrice);
-    //$('input[data-sportsprice]').on('change', recalculateTotalPrice);
     $('.quoatetable').on('change', function () {
         recalculateTotalPrice($(this));
     });
@@ -799,6 +911,7 @@ function populateBenefits(thistable, tariffId) {
 }
 
 function recalculateTotalPrice(table) {
+
     var selectedBenefits = table.find('.benplus option:selected');
     var totalAdditionalPrice = 0;
 
@@ -832,16 +945,13 @@ function recalculateTotalPrice(table) {
     var totalinsuredprem = 0;
 
 
-
-
-
-
-
     insuredstotal.each(function () {
         totalinsuredprem += parseFloat($(this).text());
     });
 
     $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "$");
+    var exchangerate = $(".quotecontainer").attr('cr')
+    var exchangesymbol = $(".quotecontainer").attr('crs')
 
     var initialPremium = parseFloat($('#initpremtotal').text());
     var additionalValue = parseFloat($('#additiononprem').text());
@@ -854,8 +964,21 @@ function recalculateTotalPrice(table) {
     if (isNaN(stampsValue)) stampsValue = 0;
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
-    console.log(grandTotal)
     $('#grandtotal').text(grandTotal.toFixed(2) + "$");
+
+    var initialPremiumForeign = initialPremium * exchangerate;
+    var additionalValueForeign = additionalValue * exchangerate;
+    var taxVATValueForeign = taxVATValue * exchangerate;
+    var stampsValueForeign = stampsValue * exchangerate;
+    var grandTotalForeign = grandTotal * exchangerate;
+
+
+    $('#initpremtotalforeign').text(initialPremiumForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#additiononpremforeign').text(additionalValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#taxvatforeign').text(taxVATValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#stampsforeign').text(stampsValueForeign.toFixed(2) + ' ' + exchangesymbol);
+    $('#grandtotalforeign').text(grandTotalForeign.toFixed(2) + ' ' + exchangesymbol);
+
 }
 
 function getbeneficiarydetails() {
@@ -922,16 +1045,6 @@ function getQuotationData() {
     var quotationData = []
 
     travelinfo = gathertravelinfo();
-    //console.log('this', travelinfo)
-    // Retrieve ages of beneficiaries
-
-    // Retrieve durations in the travel section
-    //var travelList = createTravelData();
-    //var durations = travelList.map(function (travel) {
-    //    return travel.Duration;
-    //});
-
-
 
     var selectedProduct = document.getElementById('product_id').value;
     var selectedDuration = $("#duration").val()
@@ -939,62 +1052,26 @@ function getQuotationData() {
 
 
 
+    var thistable = $('#beneficiary-table').DataTable();
+    var thisage = [];
 
-    var selectedtype = document.querySelector('input[name="type"]:checked');
-    var typeId = selectedtype ? selectedtype.id : '';
-    if (typeId === 'is_family' || typeId === 'is_group') {
-        var beneficiaryRows = $('.beneficiary-table tbody tr');
-        beneficiaryRows.each(function (index, row) {
-            var cells = $(row).find('td');
-            var thisage = $(cells[3]).text(); // Assuming birthdate is in the fourth column
 
-            quotationData.push({
-                Insured: index + 1,
-                Ages: thisage,
-                Product: selectedProduct,
-                Zone: selectedZone,
-                Durations: selectedDuration,
-            })
-        });
-    }
-    else {
-        var dateOfBirthInput = document.getElementById('date_of_birth').value;
-        var thisage = calculateAge(dateOfBirthInput);
+    console.log(thistable.rows().data(), 'quotation')
+
+    thistable.rows().every(function (index) {
+        var rowData = this.data();
+        var dateOfBirth = calculateAge(rowData.bE_DOB); // Assuming dateOfBirth is a property of your row data
         quotationData.push({
-            Insured: 1,
-            Ages: thisage,
+            Insured: index + 1,
+            Insuredid: rowData.bE_Id,
+            Ages: dateOfBirth,
             Product: selectedProduct,
             Zone: selectedZone,
             Durations: selectedDuration,
         })
-    }
 
-
-    //var quotationData =
-    //    [
-    //        {
-    //            Insured: 1,
-    //            Ages: 10,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [25]
-    //        },
-    //        {
-    //            Insured: 2,
-    //            Ages: 28,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [5]
-    //        },
-    //        {
-    //            Insured: 3,
-    //            Ages: 10,
-    //            Product: 682,
-    //            Zone: 270,
-    //            Durations: [5]
-    //        },
-    //    ]
-
+        thisage.push(dateOfBirth);
+    });
 
 
     $.ajax({
@@ -1002,7 +1079,8 @@ function getQuotationData() {
         method: 'POST',
         data: { quotereq: quotationData },
         success: function (response) {
-            console.log(response, 'quotationData')
+            //console.log(selectedfieldlist, 'selectedfieldlist')
+            //console.log(response, 'quotationData')
 
 
             if (response.quotationResp.length > 0) {
@@ -1050,7 +1128,6 @@ function loadQuotePartialView(response) {
         type: 'POST',
         data: { quotereq: response },
         success: function (data) {
-            console.log(travelinfo.from)
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
             $('.quotecontainer .expdate').html(convertDateFormat(travelinfo.to));
@@ -1060,16 +1137,17 @@ function loadQuotePartialView(response) {
             var sendButton = document.getElementById('sendButton');
             if (sendButton) {
                 sendButton.addEventListener('click', sendDataIssuance);
+                if (window.location.href.indexOf("edit") !== -1) 
+                    sendButton.textContent = 'Save/Update';
             }
             $(".isselect2").select2({
                 //tags: true,
-                tokenSeparators: [',', ' '],
+                //tokenSeparators: [',', ' '],
             })
 
             triggercalculationfields()
+            setselectedfields()
             $(".result").removeClass("load")
-            setTimeout(function () {
-            }, 2000);
 
         },
         error: function (error) {
@@ -1191,3 +1269,37 @@ function removescreenloader() {
     //$(".modal-backdrop").remove();
 }
 
+function getselectedfields() {
+    selectedfieldlist = [];
+    const mainDiv = $('.quotecontainer');
+    mainDiv.find('table.quoatetable').each(function (index) {
+        const table = $(this);
+
+        const variableFields = {};
+        variableFields['insuredId'] = table.attr('ins');
+        variableFields['planId'] = table.find('.form-control.plans option:selected').data('plan');
+        variableFields['additionalBenefitsIds'] = table.find('.form-control.isselect2.benplus option[selected]').map(function () {
+            return $(this).val();
+        }).get();
+
+        variableFields['deductible'] = table.find('input[type="checkbox"][data-dedprice]').prop('checked');
+        variableFields['sportsActivities'] = table.find('input[type="checkbox"][data-sportsprice]').prop('checked');
+
+        variableFields['discount'] = parseFloat(table.find('#discount').val());
+        selectedfieldlist.push(variableFields);
+    });
+}
+
+
+function setselectedfields() {
+    selectedfieldlist.forEach((item, index) => {
+        const table = $(`.quoatetable[ins="${item.insuredId}"]`);
+        table.find('.form-control.plans').val(item.planId);
+        const additionalBenefitsSelect = table.find('.form-control.isselect2.benplus');
+        additionalBenefitsSelect.val(item.additionalBenefitsIds).trigger('change');
+        table.find('input[data-dedprice]').prop('checked', item.deductible);
+        table.find('input[data-sportsprice]').prop('checked', item.sportsActivities);
+        table.find('#discount').val(item.discount);
+        recalculateTotalPrice(table);
+    });
+}
