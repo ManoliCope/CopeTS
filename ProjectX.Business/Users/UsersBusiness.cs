@@ -194,5 +194,9 @@ namespace ProjectX.Business.Users
         {
             return _usersRepository.GetUsersChildren(userid);
         }
+        public List<TR_Users> GetListedUserWithChildren(int userid)
+        {
+            return _usersRepository.GetListedUserWithChildren(userid);
+        }
     }
 }

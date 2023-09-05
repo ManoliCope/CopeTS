@@ -336,6 +336,20 @@ namespace ProjectX.Repository.UsersRepository
             }
             return resp;
         }
-       
+        public List<TR_Users> GetListedUserWithChildren(int userid)
+        {
+            List<TR_Users> resp = new List<TR_Users>();
+            var param = new DynamicParameters();
+            param.Add("@U_Id", userid);
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_UserGetChildUsers", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.Read<TR_Users>().ToList();
+                }
+            }
+            return resp;
+        }
+
     }
 }
