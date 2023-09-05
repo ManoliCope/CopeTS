@@ -93,7 +93,6 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
-            param.Add("@U_Parent_Id", req.Parent_Id);
 
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
@@ -161,7 +160,6 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
-            param.Add("@U_Parent_Id", req.Parent_Id);
 
 
 
@@ -324,6 +322,20 @@ namespace ProjectX.Repository.UsersRepository
 
             return resp;
         }
-
+        public List<LookUpp> GetUsersChildren(int userid)
+        {
+            List<LookUpp> resp = new List<LookUpp>();
+            var param = new DynamicParameters();
+            param.Add("@U_Id", userid);
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_GetSuperAgentChildren", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                {
+                        resp = result.Read<LookUpp>().ToList();
+                }
+            }
+            return resp;
+        }
+       
     }
 }

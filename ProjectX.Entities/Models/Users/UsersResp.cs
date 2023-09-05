@@ -51,7 +51,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? hide_Premium_Info { get; set; }
         public bool? active { get; set; }
         public bool? have_Parents { get; set; }
-        public int? parent_Id { get; set; }
+        //public int? parent_Id { get; set; }
         public double? max_Additional_Fees { get; set; }
         public DateTime creation_Date { get; set; }
 

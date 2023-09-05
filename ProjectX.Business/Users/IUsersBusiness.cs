@@ -1,4 +1,5 @@
-﻿using ProjectX.Entities.dbModels;
+﻿using ProjectX.Entities.bModels;
+using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace ProjectX.Business.Users
         public string getUserPass(int userid);
         public UsProResp ModifyUsersProduct(UsProReq req);
         public List<TR_UsersProduct> GetUsersProduct(int userid);
+        public List<LookUpp> GetUsersChildren(int userid);
     }
 }

@@ -18,6 +18,7 @@ namespace ProjectX.Repository.UsersRepository
         public string getUserPass(int userid);
         public UsProResp ModifyUsersProduct(UsProReq req);
         public List<TR_UsersProduct> GetUsersProduct(int userid);
+        public List<LookUpp> GetUsersChildren(int userid);
 
     }
 }

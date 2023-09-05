@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
+using ProjectX.Entities.bModels;
+
 namespace ProjectX.Business.Users
 { 
     public class UsersBusiness : IUsersBusiness
@@ -89,7 +91,6 @@ namespace ProjectX.Business.Users
             resp.tax_Invoice = repores.U_Tax_Invoice;
             resp.hide_Premium_Info = repores.U_Hide_Premium_Info;
             resp.active = repores.U_Active;
-            resp.parent_Id = repores.U_Parent_Id;
             resp.max_Additional_Fees = repores.U_Max_Additional_Fees;
             resp.creation_Date = repores.U_Creation_Date;
             resp.have_Parents = repores.U_Have_Parents;
@@ -188,6 +189,10 @@ namespace ProjectX.Business.Users
         public List<TR_UsersProduct> GetUsersProduct(int userid)
         {
             return _usersRepository.GetUsersProduct(userid);
+        }
+        public List<LookUpp> GetUsersChildren(int userid)
+        {
+            return _usersRepository.GetUsersChildren(userid);
         }
     }
 }

@@ -72,9 +72,10 @@ namespace ProjectX.Controllers
                 loadUserCategory = true,
                 loadRoundingRule = true,
                 loadDestinations = true,
-                loadSuperAgents = true,
+                //loadSuperAgents = true,
                 loadCurrencyRate=true
             });
+            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(userid);
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = userid.ToString();
 
@@ -115,8 +116,8 @@ namespace ProjectX.Controllers
         public UsersResp createNewUser(UsersReq req)
         {
             var response = new UsersResp();
-            if (req.Parent_Id == null)
-                req.Parent_Id = _user.U_Id;
+            if (req.Super_Agent_Id == null)
+                req.Super_Agent_Id = _user.U_Id;
             if (req != null)
             {
                  response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
@@ -138,9 +139,9 @@ namespace ProjectX.Controllers
             var user = new UsersSearchReq();
             user.First_Name = name;
             if (parentid == null)
-                user.Parent_Id = _user.U_Id;
+                user.Super_Agent_Id = _user.U_Id;
             else 
-                user.Parent_Id = parentid;
+                user.Super_Agent_Id = parentid;
             var response = new UsersSearchResp();
             response.users = _usersBusiness.GetUsersList(user);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
@@ -171,9 +172,10 @@ namespace ProjectX.Controllers
                 loadUserCategory = true,
                 loadRoundingRule = true,
                 loadDestinations = true,
-                loadSuperAgents = true,
+                //loadSuperAgents = true,
                 loadCurrencyRate = true
             });
+            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(userid);
             var user = _usersBusiness.GetUser(userid);
             ViewData["loadDataCreate"] = response;
             //ViewData["userid"] = userid.ToString();

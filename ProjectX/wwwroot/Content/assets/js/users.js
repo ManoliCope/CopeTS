@@ -166,7 +166,7 @@ function saveUser() {
         var parentid = sessionStorage.getItem('parentid');
         sessionStorage.removeItem('parentid');
         if (parentid != null)
-            user.Parent_Id = parentid;
+            user.Super_Agent_Id = parentid;
         url = "/Users/createNewUser";
 
     }
@@ -341,7 +341,6 @@ function formatDate(data) {
 
 }
 function getUserPass(userid) {
-    showresponsemodalbyid('openPasswordView')
 
     $.ajax({
         type: 'GET',
@@ -351,6 +350,7 @@ function getUserPass(userid) {
         success: function (result) {
 
             $('#inputPassword').val(result);
+            showresponsemodalbyid('openPasswordView');
 
         }
     });
@@ -362,7 +362,7 @@ $('#changePassword').click(function () {
 });
 function createChildUser(parentid) {
     sessionStorage.setItem('parentid', parentid);
-    window.location.href = '/users/create';
+    window.location.href = '/users/create?userid=' + parentid;
 }
 function showChildren(parentid) {
     sessionStorage.setItem('parid', parentid);
