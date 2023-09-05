@@ -1,6 +1,5 @@
 ﻿using ProjectX.Business.Jwt;
 using ProjectX.Entities.AppSettings;
-using ProjectX.Repository.UserRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -9,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities;
-using ProjectX.Business.User;
 using ProjectX.Entities.Resources;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,5 @@
 ﻿using ProjectX.Business.Jwt;
 using ProjectX.Entities.AppSettings;
-using ProjectX.Repository.UserRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;

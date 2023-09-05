@@ -2,6 +2,8 @@
 @{
 	var filldata = ViewData["loadDataCreate"] as ProjectX.Entities.Models.General.LoadDataResp;
 	var userId = ViewData["userid"] as string;
+	var mainuser=filldata.loadedData.superAgents.Where(a=>a.LK_ID==Convert.ToInt16(userId)).FirstOrDefault();
+	filldata.loadedData.superAgents.Remove(mainuser);
 }
 
 
@@ -9,7 +11,7 @@
 <div class="content" pgtype="view">
     <div class="container-fluid" style="padding:10px 0">
         <div class="card-body">
-            <form class="needs-validation" novalidate="" id="addUserForm" userid="@userId" autocomplete="off">
+            <form class="needs-validation" novalidate="" id="addUserForm" autocomplete="off">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -96,7 +98,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="superAgentId">Super-Agent <span class="red-star"> *</span></label>
                             <select class=" form-control" required field-name="super_Agent_Id">
-                                <option data-select2-id="2">Select Super Agent (Mother Account)</option>
+                                @*<option data-select2-id="2">Select Super Agent (Mother Account)</option>*@
+                                <option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
                                  @foreach (var thislist in filldata.loadedData.superAgents)
 											        {
 											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>

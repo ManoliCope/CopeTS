@@ -1,6 +1,5 @@
 ﻿using ProjectX.Entities.AppSettings;
 using ProjectX.Entities.JwtModels;
-using ProjectX.Repository.UserRepository;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;

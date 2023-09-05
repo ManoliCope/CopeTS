@@ -66,6 +66,8 @@ namespace ProjectX.Controllers
 
         public IActionResult Create(int userid)
         {
+            if (userid == 0)
+                userid = _user.U_Id;
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadFormats = true,

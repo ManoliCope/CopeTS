@@ -1,5 +1,4 @@
 ﻿using ProjectX.Entities.JwtModels;
-using ProjectX.Repository.UserRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;

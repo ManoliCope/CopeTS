@@ -10,7 +10,6 @@ using ProjectX.Business.General;
 using ProjectX.Business.Jwt;
 using ProjectX.Business.Notifications;
 using ProjectX.Business.Profile;
-using ProjectX.Business.User;
 using ProjectX.Business.BenefitTitle;
 using ProjectX.Business.Report;
 using ProjectX.Entities.AppSettings;
@@ -21,7 +20,6 @@ using ProjectX.Repository.EmailRepository;
 using ProjectX.Repository.GeneralRepository;
 using ProjectX.Repository.NotificationsRepository;
 using ProjectX.Repository.ProfileRepository;
-using ProjectX.Repository.UserRepository;
 using ProjectX.Repository.CurrencyRateRepository;
 using ProjectX.Repository.BenefitTitleRepository;
 using ProjectX.Repository.ReportRepository;
@@ -133,8 +131,6 @@ public class Startup
         services.AddSingleton<IUsersBusiness, UsersBusiness>();
         services.AddSingleton<IUsersRepository, UsersRepository>();
 
-        services.AddSingleton<IUserBusiness, UserBusiness>();
-        services.AddSingleton<IUserRepository, UserRepository>();
 
         services.AddSingleton<IPlanRepository, PlanRepository>();
         services.AddSingleton<IPlanBusiness, PlanBusiness>();
