@@ -74,7 +74,21 @@ $(document).ready(function () {
     $('#date_of_birth').on('focusout', updateAge);
 
 });
+function printPDF(pdfData) {
+    var blob = new Blob([pdfData], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'converted.pdf';
+    a.click();
+    return
 
+    //var url = window.URL.createObjectURL(blob);
+    //var printWindow = window.open(url, "_blank");
+    //printWindow.print();
+
+
+}
 
 function generatePdf() {
     //var xhr = new XMLHttpRequest();
@@ -93,15 +107,30 @@ function generatePdf() {
 
     //xhr.send();
 
+    var polId = $(".editscreen").attr("pol-id");
 
-    const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
+    $.ajax({
+        type: "POST",
+        url: projectname + "/Pdf/GetPdfFromRazor",
+        data: { policyid: polId },
+        success: function (data) {
+            
+            printPDF(data);
+        },
+        error: function (error) {
+            console.error("Error:", error);
+        }
+    });
+    return
 
-    fetch('/Pdf/Get', {
-        method: 'Get',
+
+
+    fetch('/Pdf/GetPdfFromRazor', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        //body: JSON.stringify(htmlContent)
+        body: JSON.stringify(requestData)
     })
         .then(response => response.blob())
         .then(blob => {
@@ -289,7 +318,11 @@ function populatebeneficiarydatatable(tablename, data) {
                 "render": function (data, type, full) {
                     if (type === 'display' || type === 'filter') {
                         // Format the date as "dd-mm-yyyy"
+                        if (data == null)
+                            return ''
+
                         var date = new Date(data);
+                        console.log(date)
                         var day = date.getDate().toString().padStart(2, '0');
                         var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
                         var year = date.getFullYear();
@@ -366,7 +399,6 @@ function triggerasdatatable(tablename) {
 
 function addtotable(thisrow, search) {
 
-    console.log('on change of product.. dont hide table')
     if (thisrow == undefined) {
         var thissex = 0
         if ($('#male').prop('checked')) {
@@ -424,8 +456,10 @@ function addtotable(thisrow, search) {
         editedglobalrow = null;
         closepopup()
     }
-    var allRows = thistable.rows().data()
-    console.log(allRows)
+
+    getQuotation()
+    //var allRows = thistable.rows().data()
+    //console.log(allRows)
 }
 function triggerbenbtn() {
     $('.btn-beneficiary').off('click').on('click', function () {
@@ -445,7 +479,6 @@ function triggerbenbtn() {
         }
         return
 
-        getQuotation()
     });
 
 
@@ -467,6 +500,11 @@ function resetbenpopup() {
     $('#beneficiary-popup #countryofresidence').val('');
     $('#male').prop('checked', true);
     $('#female').prop('checked', false);
+
+    var allfields = $('#beneficiary-popup .modal-body :input');
+    allfields.each(function () {
+        $(this).css('border-color', '#e2e7f1');
+    });
 }
 function editrow(me) {
     resetbenpopup()
@@ -526,7 +564,8 @@ function editnewbeneficiary() {
     }
     var thistable = $('#beneficiary-table').DataTable();
     thistable.row($(editedglobalrow).closest("tr")).data(thisrow).draw();
-    var allRows = thistable.rows().data()
+    //var allRows = thistable.rows().data()
+    getQuotation()
 
     closepopup()
 
@@ -568,6 +607,7 @@ function editbeneficiary(me) {
             addtotable(beneficiaryReq)
             removebtnloader(me)
             removeloader();
+
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -1137,7 +1177,7 @@ function loadQuotePartialView(response) {
             var sendButton = document.getElementById('sendButton');
             if (sendButton) {
                 sendButton.addEventListener('click', sendDataIssuance);
-                if (window.location.href.indexOf("edit") !== -1) 
+                if (window.location.href.indexOf("edit") !== -1)
                     sendButton.textContent = 'Save/Update';
             }
             $(".isselect2").select2({

@@ -55,16 +55,17 @@ namespace ProjectX.Repository.ProductionRepository
             return resp;
         }
 
-        public List<TR_Product> GetProductsByType(int idType)
+        public List<TR_Product> GetProductsByType(int idType,int userId)
         {
             List<TR_Product> response = new List<TR_Product>();
             //var resp = new TR_Product();
             var param = new DynamicParameters();
             param.Add("@type", idType);
+            param.Add("@userid", userId);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Products_GetbyType", param, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Product_GetbyType", param, commandType: CommandType.StoredProcedure))
                 {
                     response = result.Read<TR_Product>().ToList();
                 }

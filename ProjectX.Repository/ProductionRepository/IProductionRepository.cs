@@ -11,7 +11,7 @@ namespace ProjectX.Repository.ProductionRepository
     public interface IProductionRepository
     {
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
-        public List<TR_Product> GetProductsByType(int id);
+        public List<TR_Product> GetProductsByType(int id, int userId);
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
         public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff);

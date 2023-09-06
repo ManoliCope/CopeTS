@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using ProjectX.Interfaces;
 
 namespace ProjectX.Controllers
@@ -18,11 +19,10 @@ namespace ProjectX.Controllers
             var pdfFile = _documentService.GeneratePdfFromString();
             return File(pdfFile, "application/octet-stream", "SimplePdf.pdf");
         }
-
-        [HttpGet("GetPdfFromRazor")]
-        public IActionResult GetPdfFromRazor()
+        [HttpPost]
+        public IActionResult GetPdfFromRazor(int policyid)
         {
-            var pdfFile = _documentService.GeneratePdfFromRazorView();
+            var pdfFile = _documentService.GeneratePdfFromRazorView( policyid);
             return File(pdfFile, "application/octet-stream", "RazorPdf.pdf");
         }
 

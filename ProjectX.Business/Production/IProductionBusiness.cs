@@ -9,7 +9,7 @@ namespace ProjectX.Business.Production
 {
     public interface IProductionBusiness
     {
-        public List<TR_Product> GetProductsByType(int id);
+        public List<TR_Product> GetProductsByType(int id, int userId);
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
         public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff);

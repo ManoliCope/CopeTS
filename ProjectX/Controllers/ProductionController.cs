@@ -137,13 +137,15 @@ namespace ProjectX.Controllers
             {
                 loadPackages = true,
                 loadBenefits = true,
-                loadProducts = true,
                 loadDestinations = true,
                 loadPlans = true,
                 loadTariffs = true,
                 loadZones = true
 
             });
+
+
+
 
             ViewData["filldata"] = response;
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
@@ -274,7 +276,7 @@ namespace ProjectX.Controllers
         public List<TR_Product> GetProdutctsByType(int id) //individual,family,group
         {
             List<TR_Product> response = new List<TR_Product>();
-            return _productionBusiness.GetProductsByType(id);
+            return _productionBusiness.GetProductsByType(id, _user.U_Id);
         }
         public List<TR_Zone> GetZonesByProduct(int id) //individual,family,group
         {

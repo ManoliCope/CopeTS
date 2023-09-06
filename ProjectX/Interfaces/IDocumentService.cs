@@ -8,7 +8,7 @@ namespace ProjectX.Interfaces
     public interface IDocumentService
     {
         byte[] GeneratePdfFromString();
+        byte[] GeneratePdfFromRazorView(int policyid);
 
-        byte[] GeneratePdfFromRazorView();
     }
 }

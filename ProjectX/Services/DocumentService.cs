@@ -1,5 +1,9 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using ProjectX.Business.Production;
+using ProjectX.Entities.dbModels;
+using ProjectX.Entities.Models.Production;
 using ProjectX.Interfaces;
 using ProjectX.Models;
 using System;
@@ -12,14 +16,17 @@ namespace ProjectX.Services
     {
         private readonly IConverter _converter;
         private readonly IRazorRendererHelper _razorRendererHelper;
-        
+        private TR_Users _user;
+        private IProductionBusiness _productionBusiness;
 
-        public DocumentService(
-            IConverter converter,
+        public DocumentService(IHttpContextAccessor httpContextAccessor,
+            IConverter converter, IProductionBusiness productionBusiness,
             IRazorRendererHelper razorRendererHelper)
         {
             _converter = converter;
             _razorRendererHelper = razorRendererHelper;
+            _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
+            _productionBusiness = productionBusiness;
         }
 
         public byte[] GeneratePdfFromString()
@@ -44,12 +51,14 @@ namespace ProjectX.Services
             return GeneratePdf(htmlContent);
         }
 
-        public byte[] GeneratePdfFromRazorView()
+        public byte[] GeneratePdfFromRazorView(int policyid)
         {
-            var invoiceViewModel = GetInvoiceModel();
+            ProductionPolicy policyreponse = new ProductionPolicy();
+            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id);
+
             var partialName = "/Views/PdfTemplate/test.cshtml";
-            var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, invoiceViewModel);
-            
+            var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
+
             return GeneratePdf(htmlContent);
         }
 
