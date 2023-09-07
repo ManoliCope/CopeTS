@@ -51,6 +51,49 @@ $(document).ready(function () {
 
     });
 
+
+    //$('#confirmdeletebtn').click(function () {
+    //    confirmdeletebtn(this);
+
+    //});
+
+    //function confirmdeletebtn(me) {
+    //    if (validateForm(".container-fluid")) {
+    //        return;
+    //    }
+    //    console.log(me)
+    //    togglebtnloader(me)
+    //    //var thisid = $(me).attr("userid")
+    //    var thisid = $(me).closest("#confirm-delete-user").attr("actid")
+    //    //var thisid = $("#userstable").closest("row").attr("userid")
+
+    //    $.ajax({
+    //        type: 'post',
+    //        dataType: 'json',
+    //        url: projectname + "/Users/DeleteUsers",
+    //        data: { id: thisid },
+    //        success: function (result) {
+
+    //            if (result.statusCode.code == 1)
+    //            {
+    //                removebtnloader(me);
+    //                showresponsemodal(result.statusCode.code, result.statusCode.message)
+    //                Search();      ///////1557///////    why do u need to get all users after deleting?
+    //            }
+    //            else
+    //                showresponsemodal(result.statusCode.code, result.statusCode.message)
+
+    //        },
+    //        failure: function (data, success, failure) {
+    //            showresponsemodal("Error", "Bad Request")
+    //        },
+    //        error: function (data) {
+    //            showresponsemodal("Error", "Bad Request")
+    //        }
+    //    });
+    //}
+
+
     $('.trgrthis').focusout(function () {
         getQuotation()
     });

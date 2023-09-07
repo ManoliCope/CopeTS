@@ -168,7 +168,6 @@ function saveUser() {
         if (parentid != null)
             user.Super_Agent_Id = parentid;
         url = "/Users/createNewUser";
-
     }
     console.log(user);
     $.ajax({
