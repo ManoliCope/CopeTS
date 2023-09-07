@@ -44,6 +44,7 @@ namespace ProjectX.Repository.ProductionRepository
             param.Add("@Pol_Beneficiary", req.Beneficiarys);
             param.Add("@Pol_Passportno", req.Passportno);
             param.Add("@status", req.status);
+            param.Add("@userid", userid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -55,7 +56,7 @@ namespace ProjectX.Repository.ProductionRepository
             return resp;
         }
 
-        public List<TR_Product> GetProductsByType(int idType,int userId)
+        public List<TR_Product> GetProductsByType(int idType, int userId)
         {
             List<TR_Product> response = new List<TR_Product>();
             //var resp = new TR_Product();
@@ -206,7 +207,7 @@ namespace ProjectX.Repository.ProductionRepository
 
             DataTable Selectediddestinations = new DataTable();
             if (IssuanceReq.selectedDestinationIds != null)
-                 Selectediddestinations = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
+                Selectediddestinations = ConvertIntListToDataTable(IssuanceReq.selectedDestinationIds);
             else
                 Selectediddestinations.Columns.Add("Value", typeof(int));
 
@@ -300,7 +301,7 @@ namespace ProjectX.Repository.ProductionRepository
         //    public string idLanguage { get; set; } = "1";
         //}
 
-        public ProductionPolicy GetPolicy(int IdPolicy, int userid)
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid, bool isprint)
         {
             var resp = new ProductionPolicy();
             var param = new DynamicParameters();
@@ -317,6 +318,10 @@ namespace ProjectX.Repository.ProductionRepository
                         resp.PolicyDetails = result.Read<PolicyDetail>().ToList();
                         resp.AdditionalBenefits = result.Read<PolicyAdditionalBenefit>().ToList();
                         resp.Destinations = result.Read<PolicyDestination>().ToList();
+                        if (isprint)
+                            resp.Benefits = result.Read<TR_Benefit>().ToList();
+                        else
+                            resp.Benefits = new List<TR_Benefit>();
                     }
                 }
             }

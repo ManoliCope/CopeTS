@@ -86,11 +86,11 @@
 						</tr>
 						<tr>
 							<td>
-								Deductible (USD <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>)  <br />
+								Remove Deductible <br /> (USD <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>)  
 								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
 							</td>
 							<td>
-								Sports Activities (USD <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>)<br />
+								Add Sports Activities <br /> (USD <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>)
 								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
 							</td>
 							<td>
@@ -103,7 +103,7 @@
 							</td>
 							<td>
 								Discount (USD) <br />
-								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off">
+								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" @((UserRights.Is_Admin == true) ? "": "readonly")>
 							</td>
 							<td>
 								Final (USD) <br />

@@ -54,9 +54,9 @@ namespace ProjectX.Services
         public byte[] GeneratePdfFromRazorView(int policyid)
         {
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id);
+            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id,true);
 
-            var partialName = "/Views/PdfTemplate/test.cshtml";
+            var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
 
             return GeneratePdf(htmlContent);
@@ -77,8 +77,8 @@ namespace ProjectX.Services
                 PagesCount = true,
                 HtmlContent = htmlContent,
                 WebSettings = { DefaultEncoding = "utf-8" },
-                HeaderSettings = { FontSize = 10, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = { FontSize = 8, Center = "PDF demo from JeminPro", Line = true },
+                //HeaderSettings = { FontSize = 10, Right = "Page [page] of [toPage]", Line = true },
+                //FooterSettings = { FontSize = 8, Center = "PDF demo from JeminPro", Line = true },
             };
 
             var htmlToPdfDocument = new HtmlToPdfDocument()

@@ -212,7 +212,7 @@ namespace ProjectX.Controllers
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id);
+            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id,false);
 
             if (policyreponse != null)
             {

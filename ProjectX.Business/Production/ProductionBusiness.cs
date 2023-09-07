@@ -65,9 +65,9 @@ namespace ProjectX.Business.Production
 
             return _prodRepository.SaveIssuance(req, userid);
         }
-        public ProductionPolicy GetPolicy(int IdPolicy, int userid)
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid , bool isprint)
         {
-            return _prodRepository.GetPolicy(IdPolicy, userid);
+            return _prodRepository.GetPolicy(IdPolicy, userid, isprint);
         }
 
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid)
