@@ -208,7 +208,7 @@ function deletecurrencyrate(me) {
             showresponsemodal("Error", "Bad Request")
         },
         error: function (data) {
-            showresponsemodal("Error", "Bad Request")
+            showresponsemodal("Error", "Bad Request - Currency Linked")
         }
     });
 }

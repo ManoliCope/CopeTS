@@ -3,17 +3,17 @@ var userRights = [];
 
 
 
-$(document).ready(function () {                     
+$(document).ready(function () {
     // var usersid = sessionStorage.getItem('userid');
-   // var usid = $('#addUserForm').attr('userid');
+    // var usid = $('#addUserForm').attr('userid');
 
     ////sessionStorage.removeItem('userid');
     //if (usid != null && usid >= 0) {                    ///////1557/////// for creation its 0 so >=
-        //getUserRights(usid);                          ///////1557/////// do u need it?
-        //fillUser(usid);
+    //getUserRights(usid);                          ///////1557/////// do u need it?
+    //fillUser(usid);
     //}
     //else
-        Search();
+    Search();
 
     $("#searchprofile").click(function () {
         Search();
@@ -124,11 +124,11 @@ function resetpassword() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-        
+
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-      
+
         }
     });
 
@@ -177,15 +177,15 @@ function saveUser() {
         data: { req: user },
         success: function (result) {
             removeloader();
-            console.log(result)
 
             if (result.statusCode.code != 1)
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
             else {
-
                 showresponsemodal(1, result.statusCode.message)
-                //window.location.href = '/users/';
-
+                if (!userid > 0)
+                    $("#responsemodal button").click(function () {
+                        window.location.href = '/users/details?userid=' + result.id;
+                    });
                 //drawtable(result);
             }
 
@@ -193,11 +193,11 @@ function saveUser() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-      
+
         },
         error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-          
+            showresponsemodal("Error", "Bad Request - Username Exists")
+
         }
     });
 }
@@ -234,11 +234,11 @@ function Search() {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
 
-         
+
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-           
+
         }
     });
 }
