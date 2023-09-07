@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectX.Entities.dbModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,9 @@ namespace ProjectX.Entities.Models.Production
         public DateTime ToDate { get; set; }
         public DateTime FromDate { get; set; }
         public int ProductID { get; set; }
+        public string ProductName { get; set; }
         public int ZoneID { get; set; }
+        public string ZoneName { get; set; }
         public bool IsIndividual { get; set; }
         public bool IsFamily { get; set; }
         public bool IsGroup { get; set; }
@@ -31,6 +34,7 @@ namespace ProjectX.Entities.Models.Production
         public List<PolicyDetail> PolicyDetails { get; set; }
         public List<PolicyAdditionalBenefit> AdditionalBenefits { get; set; }
         public List<PolicyDestination> Destinations { get; set; }
+        public List<TR_Benefit> Benefits { get; set; }
     }
 
     public class PolicyDetail
@@ -56,6 +60,8 @@ namespace ProjectX.Entities.Models.Production
         public int Age { get; set; }
         public string PassportNo { get; set; }
         public string Gender { get; set; }
+        public string Nationality { get; set; }
+        public string CountryResidence { get; set; }
         public int Tariff { get; set; }
         public decimal TariffPrice { get; set; }
     }

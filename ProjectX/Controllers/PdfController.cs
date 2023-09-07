@@ -14,15 +14,15 @@ namespace ProjectX.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int polid)
         {
             var pdfFile = _documentService.GeneratePdfFromString();
             return File(pdfFile, "application/octet-stream", "SimplePdf.pdf");
         }
-        [HttpPost]
-        public IActionResult GetPdfFromRazor(int policyid)
-        {
-            var pdfFile = _documentService.GeneratePdfFromRazorView( policyid);
+        [HttpGet]
+        public ActionResult GeneratePdfFromRazorView(int policyId)
+        { 
+            var pdfFile = _documentService.GeneratePdfFromRazorView(policyId);
             return File(pdfFile, "application/octet-stream", "RazorPdf.pdf");
         }
 

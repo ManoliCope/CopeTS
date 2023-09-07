@@ -27,7 +27,7 @@
 									<div class="form-group col-lg-4">
 										<label for="title">Title</label>
 										<select class="form-control isselect2" id="titleId" name="titleId" required>
-											<option>Select Title</option>
+											<option value="">Select Title</option>
 											@foreach (var thislist in filldata.loadedData.benefitTitle)
 											{
 												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
@@ -37,7 +37,7 @@
 
 									<div class="form-group col-lg-4">
 										<label for="limit">Limit</label>
-										<input type="number" class="form-control" id="limit" name="limit" step="0.01" required>
+										<input type="text" class="form-control" id="limit" name="limit"  required>
 									</div>
 									<div class="form-group col-lg-4">
 										<label for="packageId">Package</label>

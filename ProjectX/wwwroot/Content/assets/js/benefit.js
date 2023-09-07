@@ -129,7 +129,7 @@ function addnew() {
         "title": $("#title").val(),
         "packageId": $("#packageId").val(),
         "is_Plus": $("#is_Plus").prop('checked'),
-        "limit": parseFloat($("#limit").val()),
+        "limit": $("#limit").val(),
         "additionalBenefits": isNaN(parseFloat($('#additional_benefits').val())) ? $("#additional_benefits").val() : parseFloat($("#additional_benefits").val()),
         "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
         "titleId": $('#titleId').val()
@@ -171,7 +171,7 @@ function edit() {
         "title": $("#title").val(),
         "packageId": $("#packageId").val(),
         "is_Plus": $("#is_Plus").prop('checked'),
-        "limit": parseFloat($("#limit").val()),
+        "limit": $("#limit").val(),
         "additionalBenefits": parseFloat($('#additional_benefits').val()),
         "additionalBenefitsFormat": parseFloat($('#additional_benefits_format').val()),
         "titleId": $('#titleId').val()
@@ -188,7 +188,7 @@ function edit() {
         success: function (result) {
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-            showresponsemodal(1, result.statusCode.message)
+            showresponsemodal(result.statusCode.code, result.statusCode.message)
             //triggerresonseclick("benefit", "Edit", result.id)
         },
         failure: function (data, success, failure) {

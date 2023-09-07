@@ -6,6 +6,10 @@
 	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 	DateTime today = DateTime.Today;
+	if (UserRights.Is_Admin == true)
+	{
+		today = new DateTime(1950, 1, 1);
+	}
 }
 
 

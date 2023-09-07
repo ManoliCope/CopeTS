@@ -17,7 +17,7 @@ namespace ProjectX.Repository.ProductionRepository
         public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff);
         public ProductionResp getProductionDetails(List<ProductionReq> req, int userid);
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
-        public ProductionPolicy GetPolicy(int IdPolicy, int userid);
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid, bool isprint);
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int IdPolicy, int userid);
         
     }

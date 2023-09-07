@@ -8,7 +8,7 @@ namespace ProjectX.Entities.dbModels
     {
         public int B_Id { get; set; }
         public string B_Title { get; set; }
-        public double B_Limit { get; set; }
+        public string B_Limit { get; set; }
         public int P_Id { get; set; }
         public int BT_Id { get; set; }
         public string P_Name { get; set; }
@@ -18,6 +18,7 @@ namespace ProjectX.Entities.dbModels
         public int B_Additional_Benefits_Format { get; set; }
         public double B_Benfees { get; set; }
         public double TariffId { get; set; }
+        public int B_Insuredid { get; set; }
 
     }
 }

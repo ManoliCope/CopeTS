@@ -117,95 +117,54 @@ $(document).ready(function () {
     $('#date_of_birth').on('focusout', updateAge);
 
 });
-function printPDF(pdfData) {
-    var blob = new Blob([pdfData], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted.pdf';
-    a.click();
-    return
-
-    //var url = window.URL.createObjectURL(blob);
-    //var printWindow = window.open(url, "_blank");
-    //printWindow.print();
-
-
-}
 
 function generatePdf() {
-    //var xhr = new XMLHttpRequest();
-    //xhr.open("POST", "@Url.Action("GeneratePdf", "Pdf")", true);
-    //xhr.responseType = "blob";
+    var policyId = $(".editscreen").attr("pol-id");
 
-    //xhr.onload = function () {
-    //    if (xhr.status === 200) {
-    //        var blob = xhr.response;
-    //        var link = document.createElement("a");
-    //        link.href = window.URL.createObjectURL(blob);
-    //        link.download = "output.pdf";
-    //        link.click();
-    //    }
-    //};
-
-    //xhr.send();
-
-    var polId = $(".editscreen").attr("pol-id");
-
-    $.ajax({
-        type: "POST",
-        url: projectname + "/Pdf/GetPdfFromRazor",
-        data: { policyid: polId },
-        success: function (data) {
-            
-            printPDF(data);
-        },
-        error: function (error) {
-            console.error("Error:", error);
-        }
-    });
-    return
-
-
-
-    fetch('/Pdf/GetPdfFromRazor', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
+    fetch(`/pdf/GeneratePdfFromRazorView?policyId=${policyId}`, {
+        method: "GET",
+        responseType: "blob",
     })
-        .then(response => response.blob())
-        .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'converted.pdf';
-            a.click();
-        });
+        .then(response => response.arrayBuffer()) // Convert response to arrayBuffer
+        .then(arrayBuffer => {
+            const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            var printWindow = window.open(url, "_blank");
+            //printWindow.print();
 
+            //todownload
+            //.then(response => response.blob())
+            //    .then(blob => {
+            //        const url = URL.createObjectURL(blob);
+            //        const a = document.createElement('a');
+            //        a.href = url;
+            //        a.download = 'converted.pdf';
+            //        a.click();
+            //    });
+        })
+        .catch(error => console.error("Error generating PDF:", error));
 
 }
 
-function Printpolicy2() {
-    const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
+//function Printpolicy2() {
+//    const htmlContent = "<html><body><h1>Hello, PDF!</h1></body></html>";
 
-    fetch('/Production/ConvertHtmlToPdf', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(htmlContent)
-    })
-        .then(response => response.blob())
-        .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'converted.pdf';
-            a.click();
-        });
-}
+//    fetch('/Production/ConvertHtmlToPdf', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/json'
+//        },
+//        body: JSON.stringify(htmlContent)
+//    })
+//        .then(response => response.blob())
+//        .then(blob => {
+//            const url = URL.createObjectURL(blob);
+//            const a = document.createElement('a');
+//            a.href = url;
+//            a.download = 'converted.pdf';
+//            a.click();
+//        });
+//}
 
 
 

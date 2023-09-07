@@ -130,10 +130,10 @@
     <value>Invalid Username or Password</value>
   </data>
   <data name="1100" xml:space="preserve">
-    <value>Invalid Profile Name</value>
+    <value>Invalid Name</value>
   </data>
   <data name="1101" xml:space="preserve">
-    <value>Invalid Profile Type</value>
+    <value>Invalid Type</value>
   </data>
   <data name="1102" xml:space="preserve">
     <value>Invalid Contact Name</value>
