@@ -31,6 +31,7 @@ namespace ProjectX.Entities.dbModels
         public double? U_Unique_Admin_Tax { get; set; }
         public double? U_Commission { get; set; }
         public double? U_Stamp { get; set; }
+        public double? U_Retention { get; set; }
         public double? U_Additional_Fees { get; set; }
         public double? U_VAT { get; set; }
         public double? U_Max_Additional_Fees { get; set; }

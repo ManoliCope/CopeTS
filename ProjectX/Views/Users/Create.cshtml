@@ -1,5 +1,6 @@
 ﻿
 @{
+	var is_admin = ViewData["isAdmin"] as string;
 	var filldata = ViewData["loadDataCreate"] as ProjectX.Entities.Models.General.LoadDataResp;
 	var userId = ViewData["userid"] as string;
 	var mainuser=filldata.loadedData.superAgents.Where(a=>a.LK_ID==Convert.ToInt16(userId)).FirstOrDefault();
@@ -119,115 +120,125 @@
                             <input type="text" class="form-control" id="insno" field-name="insured_Number" required>
                         </div>
                     </div>*@
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            
-                            <label class="form-control-label" for="tax">Tax (% and #)</label>
+					@if (is_admin == "1")
+					{
 
-							<div class="input-group mb-3">
-								<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" >
-								<div class="input-group-prepend">
-									<select class="form-control" id="tax_Type" name="tax_type" field-name="tax_Type" >
-										<option>Select Type</option>
-										@foreach (var thislist in filldata.loadedData.format)
-										{
-											<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-										}
-										@*<option value="1">%</option>
+						<div class="col-md-3">
+							<div class="form-group">
+
+								<label class="form-control-label" for="tax">Tax (% and #)</label>
+
+								<div class="input-group mb-3">
+									<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" >
+									<div class="input-group-prepend">
+										<select class="form-control" id="tax_Type" name="tax_type" field-name="tax_Type" >
+											<option>Select Type</option>
+											@foreach (var thislist in filldata.loadedData.format)
+											{
+												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											}
+											@*<option value="1">%</option>
 									<option value="2">Fixed</option>*@
-									</select>
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
 
 
 
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="currencyId">Currency <span class="red-star"> *</span></label>
-							<select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
-								<option></option>
-								 @foreach (var thislist in filldata.loadedData.currencyRate)
-											        {
-											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											        }
-							</select>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="currencyId">Currency <span class="red-star"> *</span></label>
+								<select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
+									<option></option>
+									@foreach (var thislist in filldata.loadedData.currencyRate)
+									{
+										<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+									}
+								</select>
+							</div>
 						</div>
-					</div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="form-control-label" for="roundingRule">Rounding Rule</label>
-                            <select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" >
-                                <option></option>
-                                @foreach (var thislist in filldata.loadedData.roundingRule)
-											        {
-											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											        }
-                            </select>
-                        </div>
-                    </div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="roundingRule">Rounding Rule</label>
+								<select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule" >
+									<option></option>
+									@foreach (var thislist in filldata.loadedData.roundingRule)
+									{
+										<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+									}
+								</select>
+							</div>
+						</div>
 
-					@*  <div class="col-md-3">
+						@*  <div class="col-md-3">
 					<div class="form-group">
 						<label class="form-control-label" for="uniqueTax">Unique Tax</label>
 						<input class="form-control" onclick="removeRedColor(this)" field-name="unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
 					</div>
 				</div>*@
-					@*  <div class="col-md-3">
+						@*  <div class="col-md-3">
 					<div class="form-group">
 						<label class="form-control-label" for="uniqueTaxAdmin">Unique Admin Tax</label>
 						<input class="form-control" onclick="removeRedColor(this)" field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
 					</div>
 				</div>*@
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="commPerc">Commission %</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" >
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="commPerc">Commission %</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" >
+							</div>
 						</div>
-					</div>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="stampPerc">Stamp %</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0" >
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="stampPerc">Stamp %</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0" >
+							</div>
 						</div>
-					</div>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="additionalFees">Addional Fees</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="0" >
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="retentionPerc">Retention %</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="0" >
+							</div>
 						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="0" >
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="additionalFees">Addional Fees</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="0" >
+							</div>
 						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="vat">VAT</label>
-							<input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0" >
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="0" >
+							</div>
 						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="form-control-label" for="creationDate">Creation Date</label>
-							<label class="form-control" field-name="creation_Date" id="creationDate"></label>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="vat">VAT</label>
+								<input class="form-control" onclick="removeRedColor(this)" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0" >
+							</div>
 						</div>
-					</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label" for="creationDate">Creation Date</label>
+								<label class="form-control" field-name="creation_Date" id="creationDate"></label>
+							</div>
+						</div>
 
 
 
 
 
-					<div class="row">
-						@*   <div class="col-md-3">
+						<div class="row">
+							@*   <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="isSyria" id="isSyria" field-name="for_Syria">
@@ -235,7 +246,7 @@
 							</label>
 						</div>
 					</div>*@
-						@* <div class="col-md-3">
+							@* <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="showComm" id="showComm" field-name="show_Commission" value="">
@@ -243,15 +254,15 @@
 							</label>
 						</div>
 					</div>*@
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" value="">
-									<label class="form-control-label" for="isAdditionalFeeFixed">Fixed Additional Fees</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" value="">
+										<label class="form-control-label" for="isAdditionalFeeFixed">Fixed Additional Fees</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						@* <div class="col-md-3">
+							@* <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="toRound" id="toRound"  field-name="apply_Rounding">
@@ -260,15 +271,15 @@
 						</div>
 					</div>*@
 
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="cancellationAllowed" id="cancellationAllowed" field-name="allow_Cancellation" value="">
-									<label class="form-control-label" for="cancellationAllowed">Allow Cancellation</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="cancellationAllowed" id="cancellationAllowed" field-name="allow_Cancellation" value="">
+										<label class="form-control-label" for="cancellationAllowed">Allow Cancellation</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						@*<div class="col-md-3">
+							@*<div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="showCertificate" id="showCertificate"  field-name="show_Certificate" value="">
@@ -276,38 +287,38 @@
 							</label>
 						</div>
 					</div>   *@                                     <div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed" field-name="cancellation_SubAgent" value="">
-									<label class="form-control-label" for="subAgentCanAllowed">Cancellation for Sub-Agent</label>
-								</label>
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed" field-name="cancellation_SubAgent" value="">
+										<label class="form-control-label" for="subAgentCanAllowed">Cancellation for Sub-Agent</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="showTotalOnly" id="showTotalOnly" field-name="preview_Total_Only" value="">
-									<label class="form-control-label" for="showTotalOnly">Preview Total Only</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="showTotalOnly" id="showTotalOnly" field-name="preview_Total_Only" value="">
+										<label class="form-control-label" for="showTotalOnly">Preview Total Only</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="showNetTotal" id="showNetTotal" field-name="preview_Net" value="">
-									<label class="form-control-label" for="showNetTotal">Preview Net</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="showNetTotal" id="showNetTotal" field-name="preview_Net" value="">
+										<label class="form-control-label" for="showNetTotal">Preview Net</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="canCreateAgents" id="canCreateAgents" field-name="agents_Creation" value="">
-									<label class="form-control-label" for="canCreateAgents">Agents Creation</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="canCreateAgents" id="canCreateAgents" field-name="agents_Creation" value="">
+										<label class="form-control-label" for="canCreateAgents">Agents Creation</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						@* <div class="col-md-3">
+							@* <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="userCreationApproval" id="userCreationApproval" field-name="agents_Creation_Approval" value="">
@@ -315,24 +326,24 @@
 							</label>
 						</div>
 					</div>*@
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="viewCommAgentRpt" id="viewCommAgentRpt" field-name="agents_Commission_ReportView" value="">
-									<label class="form-control-label" for="viewCommAgentRpt">Agent Commission ReportView</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="viewCommAgentRpt" id="viewCommAgentRpt" field-name="agents_Commission_ReportView" value="">
+										<label class="form-control-label" for="viewCommAgentRpt">Agent Commission ReportView</label>
+									</label>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="viewCommSubAgentRpt" id="viewCommSubAgentRpt" field-name="subAgents_Commission_ReportView" value="">
-									<label class="form-control-label" for="viewCommSubAgentRpt">SubAgent Commission ReportView</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="viewCommSubAgentRpt" id="viewCommSubAgentRpt" field-name="subAgents_Commission_ReportView" value="">
+										<label class="form-control-label" for="viewCommSubAgentRpt">SubAgent Commission ReportView</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						@* <div class="col-md-3">
+							@* <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="printClientVoucher" id="printClientVoucher"    field-name="print_Client_Voucher" value="">
@@ -340,15 +351,15 @@
 							</label>
 						</div>
 					</div>*@
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="multiLanguage" id="multiLanguage" field-name="multi_Lang_Policy" value="">
-									<label class="form-control-label" for="multiLanguage">Multi Language Policy</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="multiLanguage" id="multiLanguage" field-name="multi_Lang_Policy" value="">
+										<label class="form-control-label" for="multiLanguage">Multi Language Policy</label>
+									</label>
+								</div>
 							</div>
-						</div>
-						@*  <div class="col-md-3">
+							@*  <div class="col-md-3">
 						<div class="form-check-inline ">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" name="enableTaxInvoice" id="enableTaxInvoice"    field-name="tax_Invoice" value="">
@@ -356,24 +367,32 @@
 							</label>
 						</div>
 					</div>*@
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="wthPremiumInfo" field-name="hide_Premium_Info" id="wthPremiumInfo" value="">
-									<label class="form-control-label" for="wthPremiumInfo">Hide Premium Info.</label>
-								</label>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="wthPremiumInfo" field-name="hide_Premium_Info" id="wthPremiumInfo" value="">
+										<label class="form-control-label" for="wthPremiumInfo">Hide Premium Info.</label>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="is_admin" id="is_admin" field-name="is_admin" value="">
+										<label class="form-control-label" for="is_admin">Admin</label>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="active" id="active" field-name="active" value="">
+										<label class="form-control-label" for="active">Active</label>
+									</label>
+								</div>
 							</div>
 						</div>
-						<div class="col-md-3">
-							<div class="form-check-inline ">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" name="active" id="active" field-name="active" value="">
-									<label class="form-control-label" for="active">Active</label>
-								</label>
-							</div>
-						</div>
-					</div>
-					@*<div class="col-md-4 hide" id="logoDivId">
+						@*<div class="col-md-4 hide" id="logoDivId">
 						<div class="form-group">
 							<label class="form-control-label" for="example3cols1Input">Logo</label>
 							<br>
@@ -395,21 +414,24 @@
 
 						</div>
 					</div>*@
+					}
 				</div>
 			</form>
 
 
             <div class="row">
-                <div class="col-md-2">
-                    @if (userId != null && Convert.ToInt16(userId)>0)
+				
+					<div class="col-md-2">
+                    @*@if (userId != null && Convert.ToInt16(userId)>0 && is_admin=="1")
                     {
                     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#openPasswordView" onclick="getUserPass(@userId)">Show Password</button>
                         
-                    }
+                    }*@
                        @* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
                    
-                </div>
-                <div class="col-md-8 ">
+					</div>
+				
+				<div class="col-md-8 ">
                 </div>
                 <div class="col-md-2 text-center">
                     <div class="form-group">

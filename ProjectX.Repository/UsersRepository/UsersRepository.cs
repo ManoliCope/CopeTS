@@ -72,6 +72,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Unique_Admin_Tax", req.Unique_Admin_Tax);
             param.Add("@U_Commission", req.Commission);
             param.Add("@U_Stamp", req.Stamp);
+            param.Add("@U_Retention", req.Retention);
             param.Add("@U_Additional_Fees", req.Additional_Fees);
             param.Add("@U_Max_Additional_Fees", req.Max_Additional_Fees);
             param.Add("@U_VAT", req.VAT);
@@ -93,6 +94,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
+            param.Add("@U_Is_Admin", req.Is_Admin);
 
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
@@ -139,6 +141,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Unique_Admin_Tax", req.Unique_Admin_Tax);
             param.Add("@U_Commission", req.Commission);
             param.Add("@U_Stamp", req.Stamp);
+            param.Add("@U_Retention", req.Retention);
             param.Add("@U_Additional_Fees", req.Additional_Fees);
             param.Add("@U_Max_Additional_Fees", req.Max_Additional_Fees);
             param.Add("@U_VAT", req.VAT);
@@ -160,6 +163,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Tax_Invoice", req.Tax_Invoice);
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
+            param.Add("@U_Is_Admin", req.Is_Admin);
 
 
 
@@ -221,7 +225,6 @@ namespace ProjectX.Repository.UsersRepository
             resp.statusCode.message = statusMessage;
             resp.userId = idOut;
             return resp;
-
         }
         //public User GetUserAuth(int idUser)
         //{

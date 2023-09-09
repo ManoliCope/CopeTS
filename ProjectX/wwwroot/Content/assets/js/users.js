@@ -113,6 +113,7 @@ function drawtable(data) {
     triggerfiltertable(table, "users")
 }
 function resetpassword() {
+    var userid = $("#old-password").attr("userid");
     var oldPass = $("#old-password").val();
     var newPass = $("#new-password").val();
     var conPass = $("#confirm-password").val();
@@ -121,6 +122,7 @@ function resetpassword() {
     pass["oldPass"] = oldPass;
     pass["newPass"] = newPass;
     pass["conPass"] = conPass;
+    pass["userId"] = userid;
     console.log(pass);
     $.ajax({
         type: 'POST',
@@ -371,7 +373,12 @@ function getUserPass(userid) {
 }
 $('#changePassword').click(function () {
     var pass = $('#inputPassword').val();
-    sessionStorage.setItem('pass', pass);
+    var userid = $('#inputPassword').attr("userid");
+    var passuser = {
+        password: pass,
+        id: userid
+    };
+    sessionStorage.setItem('pass', JSON.stringify(passuser));
     window.location.href = "/Users/Reset";
 });
 function createChildUser(parentid) {
@@ -384,10 +391,13 @@ function showChildren(parentid) {
     Search();
 }
 function resetPassScreen() {
-    var pass = sessionStorage.getItem('pass');
+    var pass = JSON.parse(sessionStorage.getItem('pass'));
     sessionStorage.removeItem('pass');
-    if (pass != null)
-        $("#old-password").val(pass);
+    if (pass != null) {
+        $("#old-password").val(pass['password']);
+        $("#old-password").attr('userid', pass['id']);
+    }
+        
 }
 function gotoAssignProduct(userid) {
     window.location.href = '/users/assignproduct?userid=' + userid;
