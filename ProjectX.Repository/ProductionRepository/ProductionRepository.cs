@@ -20,6 +20,7 @@ using System.Collections;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
+using ProjectX.Entities.Models.CurrencyRate;
 
 namespace ProjectX.Repository.ProductionRepository
 {
@@ -318,6 +319,8 @@ namespace ProjectX.Repository.ProductionRepository
                         resp.PolicyDetails = result.Read<PolicyDetail>().ToList();
                         resp.AdditionalBenefits = result.Read<PolicyAdditionalBenefit>().ToList();
                         resp.Destinations = result.Read<PolicyDestination>().ToList();
+                        resp.CurrencyRate = result.Read<CurrResp>().First();
+
                         if (isprint)
                             resp.Benefits = result.Read<TR_Benefit>().ToList();
                         else

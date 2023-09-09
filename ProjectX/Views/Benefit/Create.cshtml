@@ -42,7 +42,7 @@
 									<div class="form-group col-lg-4">
 										<label for="packageId">Package</label>
 										<select class="form-control isselect2" id="packageId" name="packageId" required>
-											<option>Select Package</option>
+											<option value="">Select Package</option>
 											@foreach (var thislist in filldata.loadedData.packages)
 											{
 												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>

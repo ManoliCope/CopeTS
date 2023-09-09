@@ -9,6 +9,7 @@ namespace ProjectX.Entities.Models.CurrencyRate
     {
         public int Id { get; set; }
         public string Currency { get; set; }
+        public string CurrencySymbol { get; set; }
         public int Currency_Id { get; set; }
         public double Rate { get; set; }
         public DateTime Creation_Date { get; set; }

@@ -1,4 +1,5 @@
 ﻿using ProjectX.Entities.dbModels;
+using ProjectX.Entities.Models.CurrencyRate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace ProjectX.Entities.Models.Production
         public List<PolicyAdditionalBenefit> AdditionalBenefits { get; set; }
         public List<PolicyDestination> Destinations { get; set; }
         public List<TR_Benefit> Benefits { get; set; }
+        public CurrResp CurrencyRate { get; set; }
     }
 
     public class PolicyDetail

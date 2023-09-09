@@ -48,10 +48,24 @@ function drawtable(data) {
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
+            { "title": "UserName", "className": "text-center filter", "orderable": true, "data": "u_User_Name" },
             { "title": "Name", "className": "text-center filter", "orderable": true, "data": "u_Full_Name" },
-            { "title": "Insured Number", "className": "text-center filter", "orderable": true, "data": "u_Insured_Number" },
-            { "title": "Phone Number", "className": "text-center filter", "orderable": true, "data": "u_Telephone" },
             { "title": "Email", "className": "text-center filter", "orderable": true, "data": "u_Email" },
+            {
+                "title": "Created On", "className": "text-center filter", "orderable": true, "data": "u_Creation_Date", "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        // Assuming "u_Creation_Date" is in ISO date format (e.g., "2023-09-09T12:34:56.789Z")
+                        var date = new Date(data);
+                        var day = date.getDate().toString().padStart(2, '0'); // Get day and pad with leading zeros
+                        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based) and pad
+                        var year = date.getFullYear(); // Get full year
+
+                        var formattedDate = `${day}/${month}/${year}`;
+                        return formattedDate;
+                    }
+                    return data; // Return the raw data for other types (sorting, etc.)
+                },
+            },
             {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
@@ -83,13 +97,14 @@ function drawtable(data) {
                     }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
-            }, {
-                'data': 'u_Id',
-                className: "dt-center editor-edit",
-                "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
-                }
             }
+            //, {
+            //    'data': 'u_Id',
+            //    className: "dt-center editor-edit",
+            //    "render": function (data, type, full, meta) {
+            //        return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
+            //    }
+            //}
         ],
         orderCellsTop: true,
         fixedHeader: true
