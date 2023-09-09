@@ -356,5 +356,17 @@ namespace ProjectX.Controllers
             // Return the PDF as a file
             return File(pdfBytes, "application/pdf", "converted.pdf");
         }
+
+        [HttpPost]
+        public ProductionResp CancelProduction(int polId)
+        {
+            return _productionBusiness.CancelProduction(polId,  _user.U_Id);
+        }
+        [HttpPost]
+        public ProductionResp EditableProduction(int polId, int isEditable)
+        {
+            var editable=isEditable == 1?false:true;
+            return _productionBusiness.EditableProduction(polId,  _user.U_Id, editable);
+        }
     }
 }

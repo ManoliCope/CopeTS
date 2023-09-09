@@ -18,7 +18,8 @@ namespace ProjectX.Business.Production
         public ProductionPolicy GetPolicy(int IdPolicy, int userid,bool isprint);
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int id, int userid);
-
+        public ProductionResp CancelProduction(int polId, int userid);
+        public ProductionResp EditableProduction(int polId, int userid, bool isEditable);
         //public string printp(string html);
     }
 }

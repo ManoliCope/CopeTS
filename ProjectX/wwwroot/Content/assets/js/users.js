@@ -14,12 +14,12 @@ $(document).ready(function () {
     //}
     //else
     Search();
+    
+    resetPassScreen();
 
     $("#searchprofile").click(function () {
         Search();
     });
-
-    resetPassScreen();
     $("#confirmdeleteuser").click(function () {
         deleteuser(this)
     });
@@ -114,6 +114,7 @@ function resetpassword() {
         url: projectname + "/Users/ResetPassword",
         data: pass,
         success: function (result) {
+            alert('here')
             removeloader();
 
             if (result.statusCode.code != 1)
@@ -357,6 +358,7 @@ function getUserPass(userid) {
     });
 }
 $('#changePassword').click(function () {
+    
     var pass = $('#inputPassword').val();
     var userid = $('#inputPassword').attr("userid");
     var passuser = {
@@ -364,6 +366,7 @@ $('#changePassword').click(function () {
         id: userid
     };
     sessionStorage.setItem('pass', JSON.stringify(passuser));
+  
     window.location.href = "/Users/Reset";
 });
 function createChildUser(parentid) {
@@ -377,12 +380,13 @@ function showChildren(parentid) {
 }
 function resetPassScreen() {
     var pass = JSON.parse(sessionStorage.getItem('pass'));
-    sessionStorage.removeItem('pass');
-    if (pass != null) {
-        $("#old-password").val(pass['password']);
-        $("#old-password").attr('userid', pass['id']);
-    }
-        
+    if (pass) {
+        sessionStorage.removeItem('pass');
+        if (pass != null) {
+            $("#old-password").val(pass['password']);
+            $("#old-password").attr('userid', pass['id']);
+        }
+    }   
 }
 function gotoAssignProduct(userid) {
     window.location.href = '/users/assignproduct?userid=' + userid;

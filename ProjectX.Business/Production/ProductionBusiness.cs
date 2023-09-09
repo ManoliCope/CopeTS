@@ -79,7 +79,14 @@ namespace ProjectX.Business.Production
         {
             return _prodRepository.GetPolicyBeneficiaries(id, userid);
         }
-
+        public ProductionResp CancelProduction(int polId, int userid)
+        {
+            return _prodRepository.CancelProduction(polId, userid);
+        }
+        public ProductionResp EditableProduction(int polId, int userid, bool isEditable)
+        {
+            return _prodRepository.EditableProduction(polId, userid, isEditable);
+        }
 
         //public string printp(string html)
         //{

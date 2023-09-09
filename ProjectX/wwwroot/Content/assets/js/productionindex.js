@@ -67,10 +67,10 @@ function drawtable(data, status) {
                     if (type === 'display' || type === 'filter') {
                         // Assuming "IsEditable" is a boolean property
                         if (data) {
-                            var checkbox = $(`<input id="testhere" type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row}); triggerclose(this)" checked>`);
+                            var checkbox = $(`<input id="chckbox`+full.policyID+`" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
                         }
                         else
-                            var checkbox = $(`<input id="testhere" type="checkbox" onclick="showresponsemodalbyid('confirm-edit-approval',${full.policyID},${meta.row});triggerclose(this)">`);
+                            var checkbox = $(`<input id="chckbox` + full.policyID +`" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
 
                         return checkbox[0].outerHTML;
                     }
@@ -110,7 +110,7 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 visible: status == 1 || status == 3,
                 "render": function (data, type, full, meta) {
-                    return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+                    return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
 
                 }
@@ -123,18 +123,37 @@ function drawtable(data, status) {
     triggerfiltertable(table, "profile")
 }
 
-function triggerclose(me) {
-    $('#closeconfirmeditbtn').click(function () {
-        var status = $(me).is(':checked');
-        if (status) {
-            $(me).prop("checked", false)
-        }
-        else {
-            $(me).prop("checked", true)
-        }
-    });
-}
+$('#closeconfirmeditbtn').click(function () {
+    returncheckbox(this);
+    
+});
+function returncheckbox(me) {
+    var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
+    var polid = $(me).closest("#confirm-edit-approval").attr("actid");
+    var rowid = '#chckbox' + polid;
+    if (isEditable == '0') {
 
+        $(rowid).prop("checked", false)
+    } else {
+        $(rowid).prop("checked", true)
+        }
+}
+//function triggerclose(me) {
+
+//    $('#closeconfirmeditbtn').click(function () {
+//        var status = $(me).is(':checked');
+//        if (status) {
+//            $(me).prop("checked", false)
+//        }
+//        else {
+//            $(me).prop("checked", true)
+//        }
+//    });
+//}
+function responsemodalcheckbox(popupid, thisid, trindex,chkbx) {
+    showresponsemodalbyid(popupid, thisid, trindex)
+    $('#' + popupid).attr('chckbox', chkbx);
+}
 
 function Search() {
     if (validateForm("#searchform")) {
@@ -198,26 +217,23 @@ function gotopol(me) {
     return
 }
 $("#confirmdeletebtn").click(function () {
-    deleteproduction(this);
+    cancelproduction(this);
 });
 $("#confirmeditbtn").click(function () {
     editableProduction(this);
 });
 function editableProduction(me) {
-    console.log(me)
     togglebtnloader(me)
     var thisid = $(me).closest("#confirm-edit-approval").attr("actid");
-    var isEditable = $(me).closest("#confirmeditbtn").is(':checked');
-    //alert(thisid)
-    //alert(isEditable)
+    var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
+
     removebtnloader(me);
 
-    return;
     $.ajax({
         type: 'post',
         dataType: 'json',
         url: projectname + "/Production/EditableProduction",
-        data: { id: thisid, isEditable: isEditable },
+        data: { polId: thisid, isEditable: isEditable },
         success: function (result) {
 
             if (result.statusCode.code == 1) {
@@ -227,8 +243,6 @@ function editableProduction(me) {
             }
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message, "Production")
-
-
 
         },
         failure: function (data, success, failure) {
@@ -453,7 +467,41 @@ function Search5() {
         }
     });
 }
+function cancelproduction(me) {
+    if (validateForm(".container-fluid")) {
+        return;
+    }
+    console.log(me)
+  
+    togglebtnloader(me)
+    //var thisid = $(me).attr("userid")
+    var thisid = $(me).closest("#confirm-delete-production").attr("actid")
+    //var thisid = $("#userstable").closest("row").attr("userid")
 
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: projectname + "/Production/CancelProduction",
+        data: { polId: thisid },
+        success: function (result) {
+
+            if (result.statusCode.code == 1) {
+                removebtnloader(me);
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                Search();      ///////1557///////    why do u need to get all users after deleting?
+            }
+            else
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
+    });
+}
 
 
 

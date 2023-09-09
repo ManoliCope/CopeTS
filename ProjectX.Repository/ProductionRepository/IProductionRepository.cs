@@ -19,6 +19,7 @@ namespace ProjectX.Repository.ProductionRepository
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid, bool isprint);
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int IdPolicy, int userid);
-        
+        public ProductionResp CancelProduction(int polId, int userid);
+        public ProductionResp EditableProduction(int polId, int userid, bool isEditable);
     }
 }
