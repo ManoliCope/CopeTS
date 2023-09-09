@@ -32,7 +32,7 @@ namespace ProjectX.Repository.BenefitTitleRepository
             param.Add("@action", act);
             param.Add("@user_id", userid);
             param.Add("@BT_Id", req.id);
-            param.Add("@BT_Title", req.title.Trim());
+            param.Add("@BT_Title", req.title?.Trim());
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 

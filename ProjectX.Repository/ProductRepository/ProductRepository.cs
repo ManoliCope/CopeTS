@@ -34,7 +34,7 @@ namespace ProjectX.Repository.ProductRepository
             param.Add("@action", act);
             param.Add("@user_id", userid);
             param.Add("@id", req.id);
-            param.Add("@title", req.title.Trim());
+            param.Add("@title", req.title?.Trim());
             param.Add("@description", req.description);
             param.Add("@is_family", req.is_family);
             param.Add("@pr_activation_date", req.activation_date);
