@@ -51,7 +51,7 @@ namespace ProjectX.Repository.ZoneRepository
             param.Add("@action", act);
             param.Add("@user_id", userid);
             param.Add("@Z_Id", req.id);
-            param.Add("@Z_Title", req.title);
+            param.Add("@Z_Title", req.title?.Trim());
             //param.Add("@Z_DestinationId", req.destinationId);
             param.Add("@Z_DestinationId", dtDestinations.AsTableValuedParameter("TR_IntegerID"));
 

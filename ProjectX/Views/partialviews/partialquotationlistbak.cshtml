@@ -126,29 +126,29 @@
 						<td>Initial Premium</td>
 						<td id="initpremtotal" class="text-end">@Model.InitialPremium USD</td>
 						<td id="initpremtotalforeign" class="text-end">
-							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
+							@(Model.InitialPremium * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
 						</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
 						<td id="additiononprem" class="text-end">@Model.AdditionalValue USD</td>
-						<td id="additiononpremforeign" class="text-end">@Model.AdditionalValue @UserRights.CurrencySymbol</td>
+						<td id="additiononpremforeign" class="text-end">@Model.AdditionalValue @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
 						<td id="taxvat" class="text-end">@Model.TaxVATValue USD</td>
-						<td id="taxvatforeign" class="text-end">@Model.TaxVATValue @UserRights.CurrencySymbol</td>
+						<td id="taxvatforeign" class="text-end">@Model.TaxVATValue @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
 						<td id="stamps" class="text-end">@Model.StampsValue USD</td>
-						<td id="stampsforeign" class="text-end">@Model.StampsValue @UserRights.CurrencySymbol</td>
+						<td id="stampsforeign" class="text-end">@Model.StampsValue @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Total</td>
 						<td id="grandtotal" class="text-end">@Model.GrandTotal USD</td>
 						<td id="grandtotalforeign" class="text-end">
-							@(Model.InitialPremium * UserRights.CurrencyRate) @UserRights.CurrencySymbol
+							@(Model.InitialPremium * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
 						</td>
 					</tr>
 				</tbody>

@@ -32,7 +32,7 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@action", act);
             param.Add("@user_id", userid);
             param.Add("@P_Id", req.Id);
-            param.Add("@P_Name", req.Name);
+            param.Add("@P_Name", req.Name?.Trim());
             param.Add("@PR_Id", req.ProductId);
             param.Add("@P_ZoneID", req.ZoneID);
             param.Add("@P_Remove_deductable", req.Remove_deductable);

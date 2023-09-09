@@ -27,7 +27,7 @@
 									<div class="form-group col-lg-4">
 										<label for="title">Title</label>
 										<select class="form-control isselect2" id="titleId" name="titleId" required>
-											<option>Select Title</option>
+											<option value="">Select Title</option>
 											@foreach (var thislist in filldata.loadedData.benefitTitle)
 											{
 												@if (thislist.LK_ID == Model.titleId)
@@ -49,7 +49,7 @@
 									<div class="form-group col-lg-4">
 										<label for="packageId">Package</label>
 										<select class="form-control isselect2" id="packageId" name="packageId" required>
-											<option>Select Package</option>
+											<option value="">Select Package</option>
 											@foreach (var thislist in filldata.loadedData.packages)
 											{
 												@if (thislist.LK_ID == Model.packageId)
