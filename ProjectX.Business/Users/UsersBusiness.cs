@@ -72,6 +72,7 @@ namespace ProjectX.Business.Users
             resp.unique_Admin_Tax = repores.U_Unique_Admin_Tax;
             resp.commission = repores.U_Commission;
             resp.stamp = repores.U_Stamp;
+            resp.retention = repores.U_Retention;
             resp.additional_Fees = repores.U_Additional_Fees;
             resp.vat = repores.U_VAT;
             resp.for_Syria = repores.U_For_Syria;
@@ -94,6 +95,7 @@ namespace ProjectX.Business.Users
             resp.max_Additional_Fees = repores.U_Max_Additional_Fees;
             resp.creation_Date = repores.U_Creation_Date;
             resp.have_Parents = repores.U_Have_Parents;
+            resp.is_Admin = repores.U_Is_Admin;
 
 
             return resp;
@@ -134,6 +136,7 @@ namespace ProjectX.Business.Users
 
                     Commission = users.U_Commission,
                     Stamp = users.U_Stamp,
+                    Retention = users.U_Retention,
                     Addional_Fees = users.U_Additional_Fees,
                     Max_Additional_Fees = users.U_Max_Additional_Fees,
                     VAT = users.U_VAT,
@@ -163,6 +166,7 @@ namespace ProjectX.Business.Users
                     Is_Admin = users.U_Is_Admin,
                     Commission = users.U_Commission,
                     Stamp = users.U_Stamp,
+                    Retention = users.U_Retention,
                     Addional_Fees = users.U_Additional_Fees,
                     Max_Additional_Fees = users.U_Max_Additional_Fees,
                     VAT = users.U_VAT,

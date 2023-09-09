@@ -22,6 +22,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? Is_Admin { get; set; }
         public double? Commission { get; set; }
         public double? Stamp { get; set; }
+        public double? Retention { get; set; }
         public double? Addional_Fees { get; set; }
         public double? Max_Additional_Fees { get; set; }
         public double? VAT { get; set; }

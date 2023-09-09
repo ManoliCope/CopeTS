@@ -30,6 +30,7 @@ namespace ProjectX.Entities.Models.Users
         public double? Unique_Admin_Tax { get; set; }
         public double? Commission { get; set; }
         public double? Stamp { get; set; }
+        public double? Retention { get; set; }
         public double? Additional_Fees { get; set; }
         public double? VAT { get; set; }
         public bool? For_Syria { get; set; }
@@ -50,6 +51,8 @@ namespace ProjectX.Entities.Models.Users
         public bool? Tax_Invoice { get; set; }
         public bool? Hide_Premium_Info { get; set; }
         public bool? Active { get; set; }
+        public bool? Is_Admin { get; set; }
+
         public bool? have_Parents { get; set; }
         //public int? Parent_Id { get; set; }
         public double? Max_Additional_Fees { get; set; }

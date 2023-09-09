@@ -80,6 +80,7 @@ namespace ProjectX.Controllers
             response.loadedData.superAgents = _usersBusiness.GetUsersChildren(userid);
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = userid.ToString();
+            ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
 
 
             return View();
@@ -110,7 +111,7 @@ namespace ProjectX.Controllers
         [HttpPost]
         public ResetPass resetPassword(ResetPass pass)
         {
-                pass.userId = _user.U_Id;
+                //pass.userId = _user.U_Id;
                 var resp= _usersBusiness.resetPass(pass);
                 return resp;
         }
@@ -123,7 +124,6 @@ namespace ProjectX.Controllers
             if (req != null)
             {
                  response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
-
             }
             else
             {
@@ -177,10 +177,11 @@ namespace ProjectX.Controllers
                 //loadSuperAgents = true,
                 loadCurrencyRate = true
             });
-            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(userid);
+            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(_user.U_Id);
             var user = _usersBusiness.GetUser(userid);
+            ViewData["isAdmin"] = _user.U_Is_Admin==true?"1":"0";
             ViewData["loadDataCreate"] = response;
-            //ViewData["userid"] = userid.ToString();
+            ViewData["userid"] = _user.U_Id.ToString();
 
             
             return View(user);
