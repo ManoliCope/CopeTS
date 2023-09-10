@@ -121,6 +121,8 @@ namespace ProjectX.Controllers
             var response = new UsersResp();
             if (req.Super_Agent_Id == null)
                 req.Super_Agent_Id = _user.U_Id;
+            if (req.Active == null)
+                req.Active =true;
             if (req != null)
             {
                  response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
