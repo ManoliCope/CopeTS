@@ -53,7 +53,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_First_Name", req.First_Name);
             param.Add("@U_Middle_Name", req.Middle_Name);
             param.Add("@U_Last_Name", req.Last_Name);
-            param.Add("@U_User_Name", req.User_Name);
+            param.Add("@U_User_Name", req.User_Name.Trim().Replace(" ", ""));
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);

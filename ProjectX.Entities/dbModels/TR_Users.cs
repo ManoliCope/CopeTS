@@ -63,6 +63,7 @@ namespace ProjectX.Entities.dbModels
         public bool? U_Is_Admin { get; set; }
         public decimal? U_CurrencyRate { get; set; }
         public string U_CurrencySymbol { get; set; }
+        public string U_Password { get; set; }
 
     }
 }
