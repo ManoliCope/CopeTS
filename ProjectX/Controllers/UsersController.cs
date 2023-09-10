@@ -115,6 +115,14 @@ namespace ProjectX.Controllers
                 var resp= _usersBusiness.resetPass(pass);
                 return resp;
         }
+
+        public List<TR_Users> credentialbyuser(int iduser)
+        {
+            //pass.userId = _user.U_Id;
+            var resp = _usersBusiness.GetListedUserWithChildren(iduser);
+            return resp;
+        }
+
         [HttpPost]
         public UsersResp createNewUser(UsersReq req)
         {

@@ -14,7 +14,7 @@ $(document).ready(function () {
     //}
     //else
     Search();
-    
+
     resetPassScreen();
 
     $("#searchprofile").click(function () {
@@ -54,11 +54,10 @@ function drawtable(data) {
             {
                 "title": "Created On", "className": "text-center filter", "orderable": true, "data": "u_Creation_Date", "render": function (data, type, row) {
                     if (type === 'display' || type === 'filter') {
-                        // Assuming "u_Creation_Date" is in ISO date format (e.g., "2023-09-09T12:34:56.789Z")
                         var date = new Date(data);
-                        var day = date.getDate().toString().padStart(2, '0'); // Get day and pad with leading zeros
-                        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month (zero-based) and pad
-                        var year = date.getFullYear(); // Get full year
+                        var day = date.getDate().toString().padStart(2, '0');
+                        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                        var year = date.getFullYear();
 
                         var formattedDate = `${day}/${month}/${year}`;
                         return formattedDate;
@@ -97,6 +96,19 @@ function drawtable(data) {
                     }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
+            },
+            {
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full) {
+                    if (generate == '1') {
+
+                        return `<a  href="#" title="Credentials" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="getuserscredentials(this,` + full.u_Id.toString() + `)"><i class="fas fa-key"/></a>`;
+                    } else {
+                        return '';
+                    }
+                    //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
+                }
             }
             //, {
             //    'data': 'u_Id',
@@ -111,6 +123,46 @@ function drawtable(data) {
     });
 
     triggerfiltertable(table, "users")
+}
+
+
+function drawusercredentialstable(data) {
+
+    var table = $('#userscrendentials').DataTable({
+        "data": data,
+        "paging": false,
+        "searching": false,
+        "info": false,
+        "destroy": true,
+        "columns": [
+
+            { "title": "UserName", "className": "text-center filter", "orderable": true, "data": "u_User_Name" },
+            { "title": "Name", "className": "text-center filter", "orderable": true, "data": "u_Full_Name" },
+            { "title": "Password", "className": "text-center filter", "orderable": true, "data": "u_Password" },
+        ],
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+}
+
+function getuserscredentials(me, userid) {
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Users/credentialbyuser",
+        data: { iduser: userid },
+        success: function (result) {
+            console.log(result)
+            drawusercredentialstable(result)
+            showresponsemodalbyid('view-credentials');
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+        }
+    });
+
 }
 function resetpassword() {
     var userid = $("#old-password").attr("userid");
@@ -356,7 +408,7 @@ function formatDate(data) {
 
 
 }
-function getUserPass(me,userid) {
+function getUserPass(me, userid) {
     togglebtnloader(me)
 
     $.ajax({
@@ -372,7 +424,7 @@ function getUserPass(me,userid) {
     });
 }
 $('#changePassword').click(function () {
-    
+
     var pass = $('#inputPassword').val();
     var userid = $('#inputPassword').attr("userid");
     var passuser = {
@@ -399,7 +451,7 @@ function resetPassScreen() {
             $("#old-password").val(pass['password']);
             $("#old-password").attr('userid', pass['id']);
         }
-    }   
+    }
 }
 function gotoAssignProduct(userid) {
     window.location.href = '/users/assignproduct?userid=' + userid;
