@@ -61,11 +61,24 @@ $('#saveUsersProd').click(function () {
     req['IssuingFees'] = $('#issuingFees').val();
     req['UsersId'] = $('#assprodtable').attr('userid');
 
+
+    //test file upload
+
+    var fileInput = $('#uploadFile')[0].files[0];
+
+    if (fileInput) {
+        var formData = new FormData();
+        formData.append('file', fileInput);
+
+
+
+
+
     showloader("load");
     $.ajax({
         type: 'POST',
         url: projectname + "/Users/assignUsersProduct",
-        data: { req: req },
+        data: { req: req, formData: formData },
         success: function (result) {
             removeloader();
             console.log(result)
@@ -91,6 +104,31 @@ $('#saveUsersProd').click(function () {
     });
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Search() {
     var userid = $('#assprodtable').attr('userid');

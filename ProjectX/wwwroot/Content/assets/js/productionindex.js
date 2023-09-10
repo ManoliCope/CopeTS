@@ -67,7 +67,7 @@ function drawtable(data, status) {
                 visible: isAdmin == 'True' && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
-                    //if (isAdmin == 'True') {
+                    if (full.status == 3) {
                         if (type === 'display' || type === 'filter') {
                             // Assuming "IsEditable" is a boolean property
                             if (data) {
@@ -79,8 +79,8 @@ function drawtable(data, status) {
                             return checkbox[0].outerHTML;
                         }
                         return data; // For other types, return the original data
-                    //}
-                    //return '';
+                    }
+                    return '';
                 }
             },
            
@@ -102,7 +102,7 @@ function drawtable(data, status) {
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
-                visible: status == 1 || status == 3,
+                visible: isAdmin == 'True' &&( status == 1 || status == 3),
                 "render": function (data, type, full, meta) {
                     if (full.status == 3)
                         return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;

@@ -199,7 +199,7 @@ public class Startup
         app.UseJwtMiddleware();
         app.UseExcptionMiddleware();
 
-
+        app.UseStaticFiles();
 
         app.UseEndpoints(endpoints =>
         {
