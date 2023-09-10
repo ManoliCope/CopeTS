@@ -129,13 +129,12 @@ function resetpassword() {
         url: projectname + "/Users/ResetPassword",
         data: pass,
         success: function (result) {
-            alert('here')
             removeloader();
 
             if (result.statusCode.code != 1)
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
             else {
-                showresponsemodal(1, result.statusCode.message)
+                showresponsemodal(1, "Password Changed")
             }
 
         },
@@ -357,18 +356,18 @@ function formatDate(data) {
 
 
 }
-function getUserPass(userid) {
+function getUserPass(me,userid) {
+    togglebtnloader(me)
 
     $.ajax({
         type: 'GET',
         data: { userid: userid },
         url: projectname + "/Users/getUserPass",
-
         success: function (result) {
 
             $('#inputPassword').val(result);
             showresponsemodalbyid('openPasswordView');
-
+            removebtnloader(me)
         }
     });
 }
@@ -381,7 +380,6 @@ $('#changePassword').click(function () {
         id: userid
     };
     sessionStorage.setItem('pass', JSON.stringify(passuser));
-  
     window.location.href = "/Users/Reset";
 });
 function createChildUser(parentid) {
