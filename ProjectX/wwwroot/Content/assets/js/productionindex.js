@@ -15,8 +15,10 @@ $(document).ready(function () {
 
     $(".resetdiv").click(function () {
         var divname = $(this).closest(".card-body").attr("id")
+        var tablename = $(this).closest(".tab-pane").find('table').attr("id")
         resetAllValues(divname);
-        resetdatatable("#productiontable");
+        if ($('#' + tablename + ' tbody tr').length > 0)
+            resetdatatable("#" + tablename);
     });
 
     Search();
@@ -30,12 +32,12 @@ $(document).ready(function () {
 
 function drawtable(data, status) {
     console.log(data, 'drawtable')
-   
+
     if (status == null || status == 'undefined')
         status = 1;
     var tableid = '#productiontable' + status;
     var isAdmin = $(tableid).attr('admn');
-    
+
     var table = $(tableid).DataTable({
         "data": data,
         "paging": true,
@@ -68,22 +70,22 @@ function drawtable(data, status) {
                 data: "isEditable",
                 render: function (data, type, full, meta) {
                     //if (isAdmin == 'True') {
-                        if (type === 'display' || type === 'filter') {
-                            // Assuming "IsEditable" is a boolean property
-                            if (data) {
-                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
-                            }
-                            else
-                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
-
-                            return checkbox[0].outerHTML;
+                    if (type === 'display' || type === 'filter') {
+                        // Assuming "IsEditable" is a boolean property
+                        if (data) {
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
                         }
-                        return data; // For other types, return the original data
+                        else
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
+
+                        return checkbox[0].outerHTML;
+                    }
+                    return data; // For other types, return the original data
                     //}
                     //return '';
                 }
             },
-           
+
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
@@ -120,7 +122,7 @@ function drawtable(data, status) {
 
 $('#closeconfirmeditbtn').click(function () {
     returncheckbox(this);
-    
+
 });
 function returncheckbox(me) {
     var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
@@ -131,7 +133,7 @@ function returncheckbox(me) {
         $(rowid).prop("checked", false)
     } else {
         $(rowid).prop("checked", true)
-        }
+    }
 }
 //function triggerclose(me) {
 
@@ -145,7 +147,7 @@ function returncheckbox(me) {
 //        }
 //    });
 //}
-function responsemodalcheckbox(popupid, thisid, trindex,chkbx) {
+function responsemodalcheckbox(popupid, thisid, trindex, chkbx) {
     showresponsemodalbyid(popupid, thisid, trindex)
     $('#' + popupid).attr('chckbox', chkbx);
 }
@@ -467,7 +469,7 @@ function cancelproduction(me) {
         return;
     }
     console.log(me)
-  
+
     togglebtnloader(me)
     //var thisid = $(me).attr("userid")
     var thisid = $(me).closest("#confirm-delete-production").attr("actid")
