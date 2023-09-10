@@ -30,10 +30,13 @@ $(document).ready(function () {
 
 function drawtable(data, status) {
     console.log(data, 'drawtable')
-
+   
     if (status == null || status == 'undefined')
         status = 1;
-    var table = $('#productiontable' + status).DataTable({
+    var tableid = '#productiontable' + status;
+    var isAdmin = $(tableid).attr('admn');
+    
+    var table = $(tableid).DataTable({
         "data": data,
         "paging": true,
         "ordering": true,
@@ -61,47 +64,38 @@ function drawtable(data, status) {
                 title: "Editable",
                 className: "text-center filter",
                 orderable: true,
-                visible: status == 1 || status == 3,
+                visible: isAdmin == 'True' && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
-                    if (type === 'display' || type === 'filter') {
-                        // Assuming "IsEditable" is a boolean property
-                        if (data) {
-                            var checkbox = $(`<input id="chckbox`+full.policyID+`" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
-                        }
-                        else
-                            var checkbox = $(`<input id="chckbox` + full.policyID +`" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
+                    //if (isAdmin == 'True') {
+                        if (type === 'display' || type === 'filter') {
+                            // Assuming "IsEditable" is a boolean property
+                            if (data) {
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
+                            }
+                            else
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
 
-                        return checkbox[0].outerHTML;
-                    }
-                    return data; // For other types, return the original data
+                            return checkbox[0].outerHTML;
+                        }
+                        return data; // For other types, return the original data
+                    //}
+                    //return '';
                 }
             },
-            //{ "title": "Duration", "className": "text-center filter", "orderable": true, "data": "duration" },
-            //{
-            //    "title": "Type",
-            //    className: "dt-center editor-edit",
-            //    "render": function (data, type, full) {
-            //        let typeLabel = "";
-
-            //        if (full.isIndividual) {
-            //            typeLabel = "Individual";
-            //        } else if (full.isGroup) {
-            //            typeLabel = "Group";
-            //        } else if (full.isFamily) {
-            //            typeLabel = "Family";
-            //        }
-            //        return `<label>${typeLabel}</label>`;
-            //    }
-            //},
+           
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     var icon = "";
                     if (status == 1 || status == 3) icon = "book"; else icon = "eye"
-
-                    return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                    {
+                        if (full.status == 3) icon = "book"; else icon = "eye"
+                        {
+                            return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                        }
+                    }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
@@ -110,8 +104,9 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 visible: status == 1 || status == 3,
                 "render": function (data, type, full, meta) {
-                    return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
+                    if (full.status == 3)
+                        return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+                    else return '';
 
                 }
             }

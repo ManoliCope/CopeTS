@@ -31,6 +31,7 @@ namespace ProjectX.Entities.dbModels
         public string mainname { get; set; }
         public string nbofclients { get; set; }
         public bool IsEditable { get; set; }
+        public int Status { get; set; }
 
     }
 

@@ -128,7 +128,7 @@
 										<div class="form-group">
 											<h3 style="display: inline-block; vertical-align: middle;">Beneficiaries</h3>
 
-											@if (Model.IsEditable)
+											@if (Model.IsEditable && Model.Status==3)
 											{
 												<button class="btn btn-md btn-third btn-block text-left togglebenpopup">
 													<i class="fa fa-plus" aria-hidden="true"></i> New

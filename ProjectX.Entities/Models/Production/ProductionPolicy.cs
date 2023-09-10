@@ -31,6 +31,7 @@ namespace ProjectX.Entities.Models.Production
         public decimal TaxVATValue { get; set; }
         public decimal StampsValue { get; set; }
         public decimal GrandTotal { get; set; }
+        public int Status { get; set; }
 
         public List<PolicyDetail> PolicyDetails { get; set; }
         public List<PolicyAdditionalBenefit> AdditionalBenefits { get; set; }
