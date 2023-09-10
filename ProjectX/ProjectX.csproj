@@ -64,6 +64,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="wwwroot\usersproduct\" />
     <Folder Include="wwwroot\Samplefile\" />
   </ItemGroup>
 

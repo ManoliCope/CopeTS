@@ -69,20 +69,20 @@ function drawtable(data, status) {
                 visible: isAdmin == 'True' && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
-                    //if (isAdmin == 'True') {
-                    if (type === 'display' || type === 'filter') {
-                        // Assuming "IsEditable" is a boolean property
-                        if (data) {
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
-                        }
-                        else
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
+                    if (full.status == 3) {
+                        if (type === 'display' || type === 'filter') {
+                            // Assuming "IsEditable" is a boolean property
+                            if (data) {
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
+                            }
+                            else
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
 
-                        return checkbox[0].outerHTML;
+                            return checkbox[0].outerHTML;
+                        }
+                        return data; // For other types, return the original data
                     }
-                    return data; // For other types, return the original data
-                    //}
-                    //return '';
+                    return '';
                 }
             },
 
@@ -104,7 +104,7 @@ function drawtable(data, status) {
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
-                visible: status == 1 || status == 3,
+                visible: isAdmin == 'True' &&( status == 1 || status == 3),
                 "render": function (data, type, full, meta) {
                     if (full.status == 3)
                         return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;

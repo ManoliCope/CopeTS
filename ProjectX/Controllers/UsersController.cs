@@ -31,13 +31,13 @@ namespace ProjectX.Controllers
         private readonly TrAppSettings _appSettings;
         private TR_Users _user;
         private IJwtBusiness _jwtBusiness;
-
+        private readonly IConfiguration _configuration;
         private IWebHostEnvironment _env;
   
 
         public UsersController(IHttpContextAccessor httpContextAccessor, 
             IOptions<TrAppSettings> appIdentitySettingsAccessor, 
-            IGeneralBusiness generalBusiness, IJwtBusiness jwtBusiness, IWebHostEnvironment env,IUsersBusiness usersBusiness)
+            IGeneralBusiness generalBusiness, IJwtBusiness jwtBusiness, IWebHostEnvironment env,IUsersBusiness usersBusiness, IConfiguration configuration)
         {
             _httpContextAccessor = httpContextAccessor;
             //_profileBusiness = profileBusiness;
@@ -47,7 +47,7 @@ namespace ProjectX.Controllers
             _env = env;
             _usersBusiness = usersBusiness;
             _jwtBusiness = jwtBusiness;
-
+            _configuration = configuration;
 
         }
 
@@ -129,6 +129,8 @@ namespace ProjectX.Controllers
             var response = new UsersResp();
             if (req.Super_Agent_Id == null)
                 req.Super_Agent_Id = _user.U_Id;
+            if (req.Active == null)
+                req.Active =true;
             if (req != null)
             {
                  response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
@@ -256,7 +258,7 @@ namespace ProjectX.Controllers
             return View();
         }
         [HttpPost]
-        public UsProResp assignUsersProduct(UsProReq req)
+        public UsProResp assignUsersProduct(UsProReq req, dynamic formData)
         {
             
             return _usersBusiness.ModifyUsersProduct(req);
@@ -276,7 +278,39 @@ namespace ProjectX.Controllers
 
             return response;
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadFile()
+        {
+            try
+            {
+                var uploadsDirectory = "wwwroot/usersproduct"; // Replace with your desired directory path
+                var file = Request.Form.Files[0]; // Assuming you have only one file input
 
+                if (file != null && file.Length > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(uploadsDirectory, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    // Save the file path to the database as needed
+                    // Your database code goes here
+
+                    return Json("File uploaded successfully.");
+                }
+                else
+                {
+                    return Json("No file selected.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json($"Error: {ex.Message}");
+            }
+        }
     }
 }
 
