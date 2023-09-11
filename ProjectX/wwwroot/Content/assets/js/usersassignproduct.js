@@ -52,18 +52,6 @@ function openAssignView() {
 }
 
 $('#saveUsersProd').click(function () {
-    //if (validateForm(".container-fluid")) {
-    //    return;
-    //}
-    //var req = {};
-    //req['Action'] = 'Create';
-    //req['ProductId'] = $('#productId').val();
-    //req['IssuingFees'] = $('#issuingFees').val();
-    //req['UsersId'] = $('#assprodtable').attr('userid');
-
-
-    //test file upload
-
 
     var thisformData = new FormData();
     var $fileInput = $('#uploadFile');
@@ -78,7 +66,6 @@ $('#saveUsersProd').click(function () {
     }
     else
         return false;
-
 
 
     showloader("load");
@@ -115,8 +102,6 @@ $('#saveUsersProd').click(function () {
 });
 
 
-
-
 function Getuploadedpdf(me) {
     var files = me.get(0).files;
     //var files = $(me)[0].files;
@@ -134,40 +119,11 @@ function Getuploadedpdf(me) {
 
             formData.append("files", files[i]);
         }
-
-        //if (!valid) {
-        //    removebtnloader($(".btnFileUpload"));
-        //    $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
-
-        //    removebtnloader($("#importupload"));
-        //    return;
-        //}
-
-
         return formData;
     } else {
         return formData;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function Search() {

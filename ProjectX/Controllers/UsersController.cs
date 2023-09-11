@@ -257,12 +257,7 @@ namespace ProjectX.Controllers
             ViewData["userid"] = userid.ToString(); ;
             return View();
         }
-        //[HttpPost]
-        //public UsProResp assignUsersProduct(UsProReq req, dynamic formData)
-        //{//see tariff upload and make it like it.. make the popup as form
-            
-        //    return _usersBusiness.ModifyUsersProduct(req);
-        //} 
+   
         public UsProResp deleteUsersProduct(int upid)
         {
             var req = new UsProReq();
