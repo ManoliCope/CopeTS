@@ -9,7 +9,7 @@ $(document).ready(function () {
     Search();
 });
 
-function drawwtable(data) {
+function drawwtable(data, directory) {
     console.log(data)
     var table = $('#assprodtable').DataTable({
         "data": data,
@@ -27,7 +27,7 @@ function drawwtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="#" title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
+                    return `<a  href="~` + directory + `\\` + full.uP_UploadedFile +`" title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
                 }
             },
             {
@@ -55,30 +55,39 @@ $('#saveUsersProd').click(function () {
     //if (validateForm(".container-fluid")) {
     //    return;
     //}
-    var req = {};
-    req['Action'] = 'Create';
-    req['ProductId'] = $('#productId').val();
-    req['IssuingFees'] = $('#issuingFees').val();
-    req['UsersId'] = $('#assprodtable').attr('userid');
+    //var req = {};
+    //req['Action'] = 'Create';
+    //req['ProductId'] = $('#productId').val();
+    //req['IssuingFees'] = $('#issuingFees').val();
+    //req['UsersId'] = $('#assprodtable').attr('userid');
 
 
     //test file upload
 
-    var fileInput = $('#uploadFile')[0].files[0];
 
-    if (fileInput) {
-        var formData = new FormData();
-        formData.append('file', fileInput);
+    var thisformData = new FormData();
+    var $fileInput = $('#uploadFile');
 
-
+    var selectedfiles = Getuploadedpdf($fileInput)
+    if (selectedfiles) {
+        thisformData = selectedfiles;
+        thisformData.append("Action","Create");
+        thisformData.append("ProductId", $("#productId").val());
+        thisformData.append("IssuingFees", $("#issuingFees").val());
+        thisformData.append("UsersId", $("#assprodtable").attr('userid'));
+    }
+    else
+        return false;
 
 
 
     showloader("load");
     $.ajax({
-        type: 'POST',
         url: projectname + "/Users/assignUsersProduct",
-        data: { req: req, formData: formData },
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
         success: function (result) {
             removeloader();
             console.log(result)
@@ -108,7 +117,38 @@ $('#saveUsersProd').click(function () {
 
 
 
+function Getuploadedpdf(me) {
+    var files = me.get(0).files;
+    //var files = $(me)[0].files;
+    var formData = new FormData();
 
+    if (files.length > 0) {
+        var allowedExtensions = ['pdf'];
+        var valid = true;
+        for (var i = 0; i != files.length; i++) {
+            var path = files[i].name.split('.');
+            var extension = path[path.length - 1]
+            if ($.inArray(extension.toLowerCase(), allowedExtensions) < 0)
+                if ($.inArray(extension, allowedExtensions) < 0)
+                    valid = false;
+
+            formData.append("files", files[i]);
+        }
+
+        //if (!valid) {
+        //    removebtnloader($(".btnFileUpload"));
+        //    $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
+
+        //    removebtnloader($("#importupload"));
+        //    return;
+        //}
+
+
+        return formData;
+    } else {
+        return formData;
+    }
+}
 
 
 
@@ -142,7 +182,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawwtable(result.usersproduct);
+                drawwtable(result.usersproduct,result.directory);
             }
 
         },

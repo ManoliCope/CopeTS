@@ -8,6 +8,7 @@ namespace ProjectX.Entities.Models.Users
     public class UsProSearchResp : GlobalResponse
     {
         public List<TR_UsersProduct> usersproduct { get; set; }
+        public string Directory { get; set; }
     }
 
 }

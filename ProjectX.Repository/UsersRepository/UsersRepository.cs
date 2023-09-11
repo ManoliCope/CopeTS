@@ -294,6 +294,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@PR_Id", req.ProductId);
             param.Add("@U_Id", req.UsersId);
             param.Add("@UP_IssuingFees", req.IssuingFees);
+            param.Add("@UP_UploadedFile", req.UploadedFile);
  
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);

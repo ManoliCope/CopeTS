@@ -257,12 +257,12 @@ namespace ProjectX.Controllers
             ViewData["userid"] = userid.ToString(); ;
             return View();
         }
-        [HttpPost]
-        public UsProResp assignUsersProduct(UsProReq req, dynamic formData)
-        {
+        //[HttpPost]
+        //public UsProResp assignUsersProduct(UsProReq req, dynamic formData)
+        //{//see tariff upload and make it like it.. make the popup as form
             
-            return _usersBusiness.ModifyUsersProduct(req);
-        } 
+        //    return _usersBusiness.ModifyUsersProduct(req);
+        //} 
         public UsProResp deleteUsersProduct(int upid)
         {
             var req = new UsProReq();
@@ -274,22 +274,27 @@ namespace ProjectX.Controllers
         {
             var response = new UsProSearchResp();
             response.usersproduct = _usersBusiness.GetUsersProduct(userid);
+            response.Directory = Path.Combine(_appSettings.UploadUsProduct.UploadsDirectory, userid.ToString());
+
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
         }
         [HttpPost]
-        public async Task<IActionResult> UploadFile()
-        {
-            try
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> assignUsersProduct([FromForm(Name = "files")] IFormFileCollection files,
+            string Action, int ProductId, double IssuingFees,int UsersId)
+        {//see tariff upload and make it like it.. make the popup as form
+            //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
+            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+            foreach (IFormFile file in files)
             {
-                var uploadsDirectory = "wwwroot/usersproduct"; // Replace with your desired directory path
-                var file = Request.Form.Files[0]; // Assuming you have only one file input
-
                 if (file != null && file.Length > 0)
                 {
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
+                    createNewFolder(userFullPath);
                     var fileName = Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(uploadsDirectory, fileName);
+                    var filePath = Path.Combine(userFullPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -298,18 +303,25 @@ namespace ProjectX.Controllers
 
                     // Save the file path to the database as needed
                     // Your database code goes here
-
-                    return Json("File uploaded successfully.");
+                    var req = new UsProReq {
+                    UsersId=UsersId,ProductId= ProductId,
+                        IssuingFees= IssuingFees,Action= Action,
+                        UploadedFile=fileName
+                    };
+                    var response =_usersBusiness.ModifyUsersProduct(req);
+                    return Ok(response);
                 }
                 else
                 {
                     return Json("No file selected.");
                 }
             }
-            catch (Exception ex)
-            {
-                return Json($"Error: {ex.Message}");
-            }
+                return null;
+        }
+        public void createNewFolder(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
         }
     }
 }

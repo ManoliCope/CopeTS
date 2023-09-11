@@ -11,6 +11,7 @@ namespace ProjectX.Entities.AppSettings
         public WebsiteLogging WebsiteLogging { get; set; }
         public WwwRoot WwwRoot { get; set; }
         public EmailXMLSettings EmailXMLSettings { get; set; }
+        public UploadUsProduct UploadUsProduct { get; set; }
     }
 
     public class Jwt
@@ -21,6 +22,10 @@ namespace ProjectX.Entities.AppSettings
         public string ExpiryInMinutes { get; set; }
     }
 
+    public class UploadUsProduct
+    {
+        public string UploadsDirectory { get; set; }
+    }
     public class ConnectionStrings
     {
         public string ccContext { get; set; }
