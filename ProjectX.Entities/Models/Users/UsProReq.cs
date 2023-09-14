@@ -13,5 +13,6 @@ namespace ProjectX.Entities.Models.Users
         public double? IssuingFees { get; set; }
         public DateTime? CreationDate { get; set; }
         public string Action { get; set; }
+        public string UploadedFile { get; set; }
     }
 }
