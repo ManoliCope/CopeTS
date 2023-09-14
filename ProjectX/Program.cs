@@ -1,9 +1,11 @@
+using NLog.Web;
 using ProjectX.Entities.AppSettings;
 
 public class Program
 {
     public static void Main(string[] args)
     {
+        var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
         CreateHostBuilder(args).Build().Run();
     }
     public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -23,8 +25,14 @@ public class Program
             services.Configure<TrAppSettings>(hostContext.Configuration.GetSection("AppSettings"));
 
         })
+        .ConfigureLogging(logging =>
+        {
+            logging.ClearProviders();
+            logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+        })
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
+            webBuilder.UseNLog();
         });
 }

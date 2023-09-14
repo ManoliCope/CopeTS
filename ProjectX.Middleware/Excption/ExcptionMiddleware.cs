@@ -120,7 +120,6 @@ namespace ProjectX.Middleware.Excption
 
                 if (_ex != null)
                 {
-
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = "application/json";
 
@@ -130,8 +129,6 @@ namespace ProjectX.Middleware.Excption
                     };
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
-
-
 
                     _logger.LogError(_ex, "REQUEST/RESPONSE");
                     //context.Response.Redirect(@"/error");

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using ProjectX.Entities.Models.Users;
 using ProjectX.Entities;
+using ProjectX.Entities.dbModels;
 
 namespace ProjectX.Controllers
 {
@@ -25,7 +26,7 @@ namespace ProjectX.Controllers
             _appSettings = appIdentitySettingsAccessor.Value;
             _jwtBusiness = jwtBusiness;
         }
-       
+
         public ActionResult Index(string cid)
         {
             //string avayaTempData = string.Concat(cid);
@@ -44,23 +45,30 @@ namespace ProjectX.Controllers
         {
             LoginResp response = _userBusiness.Login(req);
 
-            if (response.user != null)
+            try
             {
-                response.statusCode.code = 1;
-                CookieUser user = new CookieUser
+                if (response.user != null)
                 {
-                    UserId = response.user.U_Id,
-                    UserFullName = response.user.U_Full_Name,
-                    Username = response.user.U_User_Name,
-                };
+                    response.statusCode.code = 1;
+                    CookieUser user = new CookieUser
+                    {
+                        UserId = response.user.U_Id,
+                        UserFullName = response.user.U_Full_Name,
+                        Username = response.user.U_User_Name,
+                    };
 
-                CookieOptions options = new CookieOptions();
-                options.Secure = false;
-                options.Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_appSettings.jwt.ExpiryInMinutes));
+                    CookieOptions options = new CookieOptions();
+                    options.Secure = false;
+                    options.Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_appSettings.jwt.ExpiryInMinutes));
 
-                string userProfile = JsonConvert.SerializeObject(user);
-                string token = _jwtBusiness.generateJwtToken(userProfile);
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("token", token, options);
+                    string userProfile = JsonConvert.SerializeObject(user);
+                    string token = _jwtBusiness.generateJwtToken(userProfile);
+                    _httpContextAccessor.HttpContext.Response.Cookies.Append("token", token, options);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.statusCode.message = ex.Message;
             }
 
             return response;

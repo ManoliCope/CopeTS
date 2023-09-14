@@ -33,4 +33,10 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="C:\Users\it4\.nuget\packages\select.htmltopdf.netcore\23.1.0\contentFiles\any\any\Select.Html.dep">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

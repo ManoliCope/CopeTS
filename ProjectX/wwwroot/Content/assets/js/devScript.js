@@ -41,6 +41,8 @@ function LogintoCMS() {
             data: model,
 
             success: function (result) {
+                //console.log(result)
+                //return
                 setTimeout(function () {
                     if (result.statusCode) {
                         if (result.statusCode.code == 1) {
@@ -79,6 +81,20 @@ function LogintoCMS() {
                     }
 
                 }, 1000);
+            },
+            error: function (xhr, status, error) {
+                // Log the error details
+                console.log("AJAX Error:");
+                console.log("Status:", status);
+                console.log("Error:", error);
+
+                // You can also access more details from the xhr object
+                console.log("Response Text:", xhr.responseText);
+                console.log("Response Status:", xhr.status);
+                console.log("Response Status Text:", xhr.statusText);
+
+
+                alert("An error occurred while making the request. Please try again later.");
             }
         });
     }

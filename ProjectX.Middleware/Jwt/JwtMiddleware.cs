@@ -41,7 +41,6 @@ namespace ProjectX.Middleware.Jwt
             //    context.Response.Redirect(context.);
             //}
 
-
             string Controller = string.Empty;
             string Action = string.Empty;
             try
@@ -95,7 +94,7 @@ namespace ProjectX.Middleware.Jwt
                                     context.Response.Cookies.Append("token", cookieUser.refreshedtoken, options);
                                     context.Items["User"] = user;
                                     context.Items["Userid"] = user.U_Id;
-                                    context.Items["Username"] = user.U_First_Name + " "+ user.U_Last_Name;
+                                    context.Items["Username"] = user.U_First_Name + " " + user.U_Last_Name;
 
                                 }
                                 else
@@ -124,7 +123,7 @@ namespace ProjectX.Middleware.Jwt
                         }
 
 
-              
+
 
                         await _next(context);
                     }

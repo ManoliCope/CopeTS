@@ -180,7 +180,6 @@ namespace ProjectX.Controllers
 
         // POST: ProductionController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -243,7 +242,6 @@ namespace ProjectX.Controllers
 
         // POST: ProductionController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
@@ -259,7 +257,6 @@ namespace ProjectX.Controllers
 
         // POST: ProductionController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

@@ -103,7 +103,8 @@ function drawtable(data) {
                 "render": function (data, type, full) {
                     if (generate == '1') {
 
-                        return `<a  href="#" title="Credentials" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="getuserscredentials(this,` + full.u_Id.toString() + `)"><i class="fas fa-key"/></a>`;
+                        return `<div id="thisloader" class="xsmloader hide"></div>
+                                <a  href="#" title="Credentials" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="getuserscredentials(this,` + full.u_Id.toString() + `)"><i class="fas fa-key"/></a>`;
                     } else {
                         return '';
                     }
@@ -146,6 +147,7 @@ function drawusercredentialstable(data) {
 }
 
 function getuserscredentials(me, userid) {
+    togglebtnloader(me)
     $.ajax({
         type: 'POST',
         url: projectname + "/Users/credentialbyuser",
@@ -154,12 +156,15 @@ function getuserscredentials(me, userid) {
             console.log(result)
             drawusercredentialstable(result)
             showresponsemodalbyid('view-credentials');
+            removebtnloader(me)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me)
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me)
         }
     });
 
@@ -380,13 +385,15 @@ function deleteuser(me) {
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
 
-
+            removebtnloader(me)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         }
     });
 }
@@ -420,6 +427,13 @@ function getUserPass(me, userid) {
             $('#inputPassword').val(result);
             showresponsemodalbyid('openPasswordView');
             removebtnloader(me)
+        }, failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         }
     });
 }

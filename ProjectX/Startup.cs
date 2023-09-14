@@ -96,6 +96,11 @@ public class Startup
 
         services.AddAuthorization();
 
+        //services.addantiforgery(options =>
+        //{
+        //    options.suppressxframeoptionsheader = true;
+        //    options.cookie.name = "customantiforgery"; 
+        //});
 
         //services.AddControllers();
         services.AddControllersWithViews().AddRazorRuntimeCompilation();

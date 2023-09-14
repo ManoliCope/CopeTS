@@ -22,6 +22,10 @@ $(document).ready(function () {
     });
 
     Search();
+    Search2();
+    Search3();
+    Search4();
+    Search5();
 
 
     var isadmin = $(".prodadm").attr("prodadm")
