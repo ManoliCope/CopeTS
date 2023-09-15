@@ -10,7 +10,6 @@ function getreporturl() {
         return "https://localhost:44378";
     }
     else {
-        return "https://www.securiteapps.com/ProjectXreport";
     }
 }
 

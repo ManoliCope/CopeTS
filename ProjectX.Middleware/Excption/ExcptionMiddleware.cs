@@ -17,6 +17,8 @@ using NLog;
 using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json;
+using ProjectX.Entities.bModels;
+using ProjectX.Business.General;
 
 namespace ProjectX.Middleware.Excption
 {
@@ -25,13 +27,15 @@ namespace ProjectX.Middleware.Excption
         private readonly TrAppSettings _appSettings;
         private readonly RequestDelegate _next;
         private readonly ILogger<ExcptionMiddleware> _logger;
+        private IGeneralBusiness _generalBusiness;
         private Stopwatch stopwatch;
         private string IP = string.Empty;
         public TR_Users _user;
 
-        public ExcptionMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, ILogger<ExcptionMiddleware> logger)
+        public ExcptionMiddleware(RequestDelegate next, IGeneralBusiness generalBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, ILogger<ExcptionMiddleware> logger)
         {
             _next = next;
+            _generalBusiness = generalBusiness;
             _logger = logger;
             _appSettings = appIdentitySettingsAccessor.Value;
         }
@@ -97,6 +101,24 @@ namespace ProjectX.Middleware.Excption
             {
                 int errorCode = ex.HResult;
 
+                string Controller = context.GetRouteValue("controller")?.ToString();
+                string Action = context.GetRouteValue("action")?.ToString();
+
+                var logData = new LogData
+                {
+                    Timestamp = DateTime.UtcNow,
+                    Controller = Controller,
+                    Action = Action,
+                    ErrorMessage = ex.Message,
+                    Type = "Error",
+                    Message = "Additional error message",
+                    RequestPath = context.Request.Path,
+                    Response = "Response content",
+                    Exception = ex.ToString(),
+                    ExecutionTime = 0,
+                    Userid = ((TR_Users)context.Items["User"]).U_Id
+                };
+                _generalBusiness.LogErrorToDatabase(logData);
 
                 _ex = ex;
                 MappedDiagnosticsLogicalContext.Set("Exception", ex.Message + Environment.NewLine + ex.StackTrace);

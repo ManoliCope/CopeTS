@@ -29,13 +29,7 @@ namespace ProjectX.Controllers
 
         public ActionResult Index(string cid)
         {
-            //string avayaTempData = string.Concat(cid);
-            //if (TempData.ContainsKey(avayaTempData))
-            //{
-            //    AvayaCallReq callinfo = JsonConvert.DeserializeObject<AvayaCallReq>(TempData[avayaTempData].ToString());
-            //    TempData.Remove(avayaTempData);
-            //}
-
+ 
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("token");
             return View();
         }

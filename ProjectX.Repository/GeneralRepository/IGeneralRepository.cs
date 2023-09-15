@@ -19,5 +19,7 @@ namespace ProjectX.Repository.GeneralRepository
 
         IList<TextReplacement> GetTextReplacements();
         DataTable ToDataTable(List<int> list);
+
+        void LogErrorToDatabase(LogData logData);
     }
 }

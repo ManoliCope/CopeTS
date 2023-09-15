@@ -56,11 +56,6 @@ namespace ProjectX.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var html = "<b>test</b>";
-            //string haswd = _productionBusiness.printp(html);
-            ViewData["thispring"] = html;
-
-
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
@@ -76,51 +71,6 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
-        //public IActionResult DownloadPdf()
-        //{
-        //    string html = "<p>This is a sample HTML content.</p>";
-        //    string title = "Sample PDF";
-        //    string paperSize = "A4";
-        //    double margins = 1.25;
-        //    bool landscape = false;
-
-        //    PaperSize size;
-
-        //    switch (paperSize.ToLower())
-        //    {
-        //        case "a4":
-        //            size = PaperSize.A4;
-        //            break;
-        //        case "a5":
-        //            size = PaperSize.A5;
-        //            break;
-        //        default:
-        //            size = PaperSize.A4;
-        //            break;
-        //    }
-
-        //    var PDFDocument = Pdf.From(html)
-        //                        .OfSize(size)
-        //                        .WithTitle(title)
-        //                        .WithoutOutline()
-        //                        .WithMargins(margins.Centimeters());
-
-        //    byte[] result;
-
-        //    if (!landscape)
-        //    {
-        //        result = PDFDocument.Portrait().Comressed().Content();
-        //    }
-        //    else
-        //    {
-        //        result = PDFDocument.Landscape().Comressed().Content();
-        //    }
-
-        //    return File(result, "application/pdf", "downloaded.pdf");
-        //}
-
-
-        // GET: ProductionController/Details/5
         public ActionResult Details(int id)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);

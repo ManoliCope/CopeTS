@@ -29,8 +29,7 @@ namespace ProjectX.Repository.EmailRepository
         public Exception SendMailNew(string subject, string body, List<MailAttachment> Attachments, string sender, string displayName, string receivers,
        string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail,int emailID)
         {
-            //receivers = "mohammad.tormos@securiteassurance.com";
-            //ccEmail = "mohammad.tormos@securiteassurance.com";
+           
             Exception _ex = null;
             System.Net.Mail.Attachment attachment = null;
             try
@@ -115,8 +114,7 @@ namespace ProjectX.Repository.EmailRepository
         //    //    }
         //    //}
 
-        //    //receivers = "moussa.basma@securiteassurance.com";
-        //    //ccEmail = "moussa.basma@securiteassurance.com";
+      
         //    //displayName = "";
 
         //    var param = new DynamicParameters();

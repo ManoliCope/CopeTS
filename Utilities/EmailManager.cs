@@ -137,7 +137,6 @@ namespace Utilities
 
 
 
-            //receivers = "Hussein.Hachem@securiteassurance.com";
             Exception _ex = null;
             System.Net.Mail.MailMessage mailmsg = null;
             System.Net.Mail.Attachment attachment = null;
@@ -193,17 +192,16 @@ namespace Utilities
                 smtpclient.Port = 25;
                 //smtpclient.EnableSsl = true;
                 //smtpclient.UseDefaultCredentials = false;
-                smtpclient.Credentials = new NetworkCredential("securiteassuran/mail.it", "emoticons?");
+                smtpclient.Credentials = new NetworkCredential("test/mail.it", "emoticons?");
                 //smtpclient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtpclient.Timeout = 200000;
 
 
-                //smtpclient.Host = "mail.securiteassurance.com";
+                //smtpclient.Host = "mail.test.com";
                 //smtpclient.Port = 25;
                 //smtpclient.EnableSsl = true;
 
                 //smtpclient.UseDefaultCredentials = false;
-                //smtpclient.Credentials = new NetworkCredential("it.test@securiteassurance.com", "Password@123");
                 //smtpclient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 //smtpclient.Timeout = 200000;
 
@@ -240,7 +238,6 @@ namespace Utilities
         public static Exception SendMailNewbackup(string subject, string body, List<MailAttachment> Attachments, string sender, string displayName, string receivers,
             string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail)
         {
-            //receivers = "Hussein.Hachem@securiteassurance.com";
             Exception _ex = null;
             System.Net.Mail.MailMessage mailmsg = null;
             System.Net.Mail.Attachment attachment = null;
@@ -296,17 +293,17 @@ namespace Utilities
                 smtpclient.Port = 25;
                 //smtpclient.EnableSsl = true;
                 //smtpclient.UseDefaultCredentials = false;
-                smtpclient.Credentials = new NetworkCredential("securiteassuran/mail.it", "emoticons?");
+                smtpclient.Credentials = new NetworkCredential("test/mail.it", "emoticons?");
                 //smtpclient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtpclient.Timeout = 200000;
 
 
-                //smtpclient.Host = "mail.securiteassurance.com";
+                //smtpclient.Host = "mail.test.com";
                 //smtpclient.Port = 25;
                 //smtpclient.EnableSsl = true;
 
                 //smtpclient.UseDefaultCredentials = false;
-                //smtpclient.Credentials = new NetworkCredential("it.test@securiteassurance.com", "Password@123");
+                //smtpclient.Credentials = new NetworkCredential("it.test@test.com", "Password@123");
                 //smtpclient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 //smtpclient.Timeout = 200000;
 

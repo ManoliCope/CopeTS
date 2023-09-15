@@ -3,13 +3,14 @@ using ProjectX.Entities.bModels;
 using ProjectX.Entities.dbModels;
 using Dapper;
 using Microsoft.Extensions.Options;
-using System; 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace ProjectX.Repository.GeneralRepository
 {
@@ -154,6 +155,32 @@ namespace ProjectX.Repository.GeneralRepository
                 dataTable.Rows.Add(item);
             }
             return dataTable;
+        }
+
+        public void LogErrorToDatabase(LogData logData)
+        {
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                _db.Open();
+
+                var param = new DynamicParameters();
+                param.Add("@Timestamp", logData.Timestamp);
+                param.Add("@Controller", logData.Controller);
+                param.Add("@Action", logData.Action);
+                param.Add("@ErrorMessage", logData.ErrorMessage);
+                param.Add("@Type", logData.Type);
+                param.Add("@Message", logData.Message);
+                param.Add("@RequestPath", logData.RequestPath);
+                param.Add("@Response", logData.Response);
+                param.Add("@Exception", logData.Exception);
+                param.Add("@ExecutionTime", logData.ExecutionTime);
+                param.Add("@Userid", logData.Userid);
+
+                _db.Execute(
+                    "TR_LogError",param,commandType: CommandType.StoredProcedure
+                );
+            }
+
         }
 
     }

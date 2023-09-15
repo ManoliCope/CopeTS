@@ -32,5 +32,9 @@ namespace ProjectX.Business.General
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success);
             return response;
         }
+        public void LogErrorToDatabase(LogData logData)
+        {
+            _generalRepository.LogErrorToDatabase(logData);
+        }
     }
 }

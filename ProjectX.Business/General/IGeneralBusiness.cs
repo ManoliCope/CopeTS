@@ -10,5 +10,6 @@ namespace ProjectX.Business.General
     public interface IGeneralBusiness
     {
         LoadDataResp loadData(LoadDataModelSetup loadDataModelSetup);
+        void LogErrorToDatabase(LogData logData);
     }
 }

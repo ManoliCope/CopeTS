@@ -13,6 +13,8 @@ using ProjectX.Entities.Resources;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
+using ProjectX.Entities.bModels;
+using ProjectX.Business.General;
 
 namespace ProjectX.Middleware.Jwt
 {
@@ -22,13 +24,15 @@ namespace ProjectX.Middleware.Jwt
         private readonly RequestDelegate _next;
         private IJwtBusiness _jwtbusiness;
         private IUsersBusiness _userBusiness;
+        private IGeneralBusiness _generalBusiness;
         private readonly ILogger<JwtMiddleware> _logger;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, IJwtBusiness jwtbusiness, IUsersBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
+        public JwtMiddleware(RequestDelegate next, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IJwtBusiness jwtbusiness, IUsersBusiness userBusiness/*, IRouter router*/, ILogger<JwtMiddleware> logger)
         {
             _next = next;
             _jwtbusiness = jwtbusiness;
             _userBusiness = userBusiness;
+            _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _logger = logger;
         }
@@ -138,6 +142,24 @@ namespace ProjectX.Middleware.Jwt
             catch (Exception ex)
             {
                 _logger.LogError(ex, "REQUEST/RESPONSE");
+
+                var logData = new LogData
+                {
+                    Timestamp = DateTime.UtcNow,
+                    Controller = Controller,
+                    Action = Action,
+                    ErrorMessage = ex.Message,
+                    Type = "Error", 
+                    Message = "Additional error message",
+                    RequestPath = context.Request.Path,
+                    Response = "Response content",
+                    Exception = ex.ToString(), 
+                    ExecutionTime = 0, 
+                    Userid = ((TR_Users)context.Items["User"]).U_Id 
+                };
+
+                _generalBusiness.LogErrorToDatabase(logData);
+
 
                 context.Response.StatusCode = -1000;
 
