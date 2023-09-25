@@ -11,6 +11,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using ProjectX.Entities.Models;
+//using NLog;
+//using Microsoft.Extensions.Logging;
 
 namespace ProjectX.Repository.GeneralRepository
 {
@@ -18,6 +21,7 @@ namespace ProjectX.Repository.GeneralRepository
     {
         private SqlConnection _db;
         private readonly TrAppSettings _appSettings;
+        //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public GeneralRepository(IOptions<TrAppSettings> appIdentitySettingsAccessor)
         {
@@ -104,13 +108,26 @@ namespace ProjectX.Repository.GeneralRepository
 
         public IList<AppConfig> GetAppConfigs()
         {
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            try
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_app_config_get", null, commandType: CommandType.StoredProcedure))
+                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
                 {
-                    return result.Read<AppConfig>().ToList();
+                    using (SqlMapper.GridReader result = _db.QueryMultiple("tr_app_config_get", null, commandType: CommandType.StoredProcedure))
+                    {
+                        return result.Read<AppConfig>().ToList();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                loggertest logger = new loggertest();
+                logger.Log("Error: " + ex.Message);
+                logger.Log("Error: " + ex.StackTrace.ToString());
+
+                return null;
+            }
+
+           
         }
 
         public IList<FileDirectory> GetFileDirectories()

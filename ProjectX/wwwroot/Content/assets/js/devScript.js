@@ -23,7 +23,6 @@ function LogintoCMS() {
     }
 
 
-
     if (valid == true) {
         $("#loginbutton").removeClass("show");
         $("#loginbutton").addClass("hide");

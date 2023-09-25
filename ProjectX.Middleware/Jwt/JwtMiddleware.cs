@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
 using ProjectX.Entities.bModels;
 using ProjectX.Business.General;
+using ProjectX.Entities.Models;
 
 namespace ProjectX.Middleware.Jwt
 {
@@ -141,7 +142,11 @@ namespace ProjectX.Middleware.Jwt
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "REQUEST/RESPONSE");
+                //_logger.LogError(ex, "REQUEST/RESPONSE");
+
+                loggertest logger = new loggertest();
+                logger.Log("Error middleware: " + ex.Message);
+                logger.Log("Error middleware: " + ex.StackTrace.ToString());
 
                 var logData = new LogData
                 {

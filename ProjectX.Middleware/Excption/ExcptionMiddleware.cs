@@ -19,6 +19,7 @@ using System.Net;
 using Newtonsoft.Json;
 using ProjectX.Entities.bModels;
 using ProjectX.Business.General;
+using ProjectX.Entities.Models;
 
 namespace ProjectX.Middleware.Excption
 {
@@ -151,6 +152,11 @@ namespace ProjectX.Middleware.Excption
                     };
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
+
+                    loggertest logger = new loggertest();
+                    logger.Log("Error exception_middleware: " + _ex.Message);
+                    logger.Log("Error exception_middleware: " + _ex.StackTrace.ToString());
+
 
                     _logger.LogError(_ex, "REQUEST/RESPONSE");
                     //context.Response.Redirect(@"/error");
