@@ -48,6 +48,7 @@ using DinkToPdf;
 using DinkToPdf.Contracts;
 using ProjectX.Interfaces;
 using ProjectX.Services;
+using Microsoft.Extensions.FileProviders;
 
 public class Startup
 {
@@ -204,7 +205,13 @@ public class Startup
         app.UseJwtMiddleware();
         app.UseExcptionMiddleware();
 
-        app.UseStaticFiles();
+        //app.UseStaticFiles();
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(@"C:\Users\it4\OneDrive - Securite Assurance\Desktop\usafile"),
+            RequestPath = "/static" // The URL path where the static files will be served.
+        });
+
 
         app.UseEndpoints(endpoints =>
         {
