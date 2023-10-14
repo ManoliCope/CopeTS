@@ -43,5 +43,9 @@ namespace ProjectX.Business.Benefit
 
             return resp;
         }
+        public BenResp ImportDataBenefits(List<TR_Benefit> benefits, int userid)
+        {
+           return _benefitRepository.ImportDataBenefits(benefits, userid);
+        }
     }
 }
