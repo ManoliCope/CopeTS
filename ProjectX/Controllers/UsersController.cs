@@ -313,6 +313,42 @@ namespace ProjectX.Controllers
             }
                 return null;
         }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files,int UsersId)
+        {//see tariff upload and make it like it.. make the popup as form
+            //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
+            var uploadsDirectory = _appSettings.UploadLogo.UploadsDirectory;
+            foreach (IFormFile file in files)
+            {
+                if (file != null && file.Length > 0)
+                {
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
+                    createNewFolder(userFullPath);
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(userFullPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    // Save the file path to the database as needed
+                    // Your database code goes here
+                    var req = new UsProReq {
+                    UsersId=UsersId,
+                        UploadedFile=fileName
+                    };
+                    var response =_usersBusiness.SaveUploadedLogo(req);
+                    return Ok(response);
+                }
+                else
+                {
+                    return Json("No file selected.");
+                }
+            }
+                return null;
+        }
         public void createNewFolder(string folderPath)
         {
             if (!Directory.Exists(folderPath))

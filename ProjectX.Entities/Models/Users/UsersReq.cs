@@ -57,6 +57,7 @@ namespace ProjectX.Entities.Models.Users
         //public int? Parent_Id { get; set; }
         public double? Max_Additional_Fees { get; set; }
         public DateTime Creation_Date { get; set; }
+        public string logo { get; set; }
 
     }
 }

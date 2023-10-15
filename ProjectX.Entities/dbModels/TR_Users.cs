@@ -64,6 +64,7 @@ namespace ProjectX.Entities.dbModels
         public decimal? U_CurrencyRate { get; set; }
         public string U_CurrencySymbol { get; set; }
         public string U_Password { get; set; }
+        public string U_Logo { get; set; }
 
     }
 }

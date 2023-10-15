@@ -21,5 +21,6 @@ namespace ProjectX.Business.Users
         public List<TR_UsersProduct> GetUsersProduct(int userid);
         public List<LookUpp> GetUsersChildren(int userid);
         public List<TR_Users> GetListedUserWithChildren(int userid);
+        public UsProResp SaveUploadedLogo(UsProReq req);
     }
 }

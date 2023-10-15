@@ -96,6 +96,7 @@ namespace ProjectX.Business.Users
             resp.creation_Date = repores.U_Creation_Date;
             resp.have_Parents = repores.U_Have_Parents;
             resp.is_Admin = repores.U_Is_Admin;
+            resp.logo = repores.U_Logo;
 
 
             return resp;
@@ -189,6 +190,10 @@ namespace ProjectX.Business.Users
         public UsProResp ModifyUsersProduct(UsProReq req)
         {
             return _usersRepository.ModifyUsersProduct(req);
+        }
+        public UsProResp SaveUploadedLogo(UsProReq req)
+        {
+            return _usersRepository.SaveUploadedLogo(req);
         }
         public List<TR_UsersProduct> GetUsersProduct(int userid)
         {

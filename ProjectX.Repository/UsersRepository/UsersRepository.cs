@@ -354,6 +354,29 @@ namespace ProjectX.Repository.UsersRepository
             }
             return resp;
         }
+        public UsProResp SaveUploadedLogo(UsProReq req)
+        {
+            var resp = new UsProResp();
+            int statusCode = 0;
+            int idOut = 0;
+            var param = new DynamicParameters();
 
+            param.Add("@U_Id", req.UsersId);
+            param.Add("@U_Logo", req.UploadedFile);
+
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                _db.Execute("TR_User_Logo_Upload", param, commandType: CommandType.StoredProcedure);
+                statusCode = param.Get<int>("@Status");
+                idOut = param.Get<int>("@Returned_ID");
+            }
+            resp.statusCode.code = statusCode;
+            resp.Id = idOut;
+            return resp;
+        }
     }
 }

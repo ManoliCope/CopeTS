@@ -12,6 +12,7 @@ namespace ProjectX.Entities.AppSettings
         public WwwRoot WwwRoot { get; set; }
         public EmailXMLSettings EmailXMLSettings { get; set; }
         public UploadUsProduct UploadUsProduct { get; set; }
+        public UploadLogo UploadLogo { get; set; }
     }
 
     public class Jwt
@@ -23,6 +24,10 @@ namespace ProjectX.Entities.AppSettings
     }
 
     public class UploadUsProduct
+    {
+        public string UploadsDirectory { get; set; }
+    }
+    public class UploadLogo
     {
         public string UploadsDirectory { get; set; }
     }

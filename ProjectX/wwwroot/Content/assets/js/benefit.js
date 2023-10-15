@@ -343,4 +343,20 @@ function showImportModel() {
     showresponsemodalbyid('import-benefits-file');
 }  
 
+$("#samplefile").click(function () {
 
+    downloadExcel()
+});
+
+function downloadExcel() {
+    var fileName = "benefits.xlsx";
+    var baseUrl = window.location.origin;
+    var filePath = baseUrl + "/Samplefile/" + fileName;
+
+    var a = document.createElement("a");
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.href = filePath;
+    a.download = fileName;
+    a.click();
+}
