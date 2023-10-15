@@ -65,7 +65,7 @@ function drawtable(data) {
             { "title": "Active", "className": "text-center filter", "orderable": true, "data": "pR_Is_Active" },
             //{ "title": "Is_Deductible", "className": "text-center filter", "orderable": true, "data": "pR_Is_Deductible" },
             //{ "title": "Sports Activities", "className": "text-center filter", "orderable": true, "data": "pR_Sports_Activities" },
-            { "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
+            //{ "title": "Additional Benefits", "className": "text-center filter", "orderable": true, "data": "pR_Additional_Benefits" },
             {
                 'data': 'PR_Id',
                 className: "dt-center editor-edit",

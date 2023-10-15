@@ -205,11 +205,14 @@ public class Startup
         app.UseJwtMiddleware();
         app.UseExcptionMiddleware();
 
+        TrAppSettings appSettings = _configuration.GetSection("AppSettings").Get<TrAppSettings>();
+        var uploadsDirectory = appSettings.UploadUsProduct.UploadsDirectory;
+
         //app.UseStaticFiles();
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(@"C:\Users\it4\OneDrive - Securite Assurance\Desktop\usafile"),
-            RequestPath = "/static" // The URL path where the static files will be served.
+            FileProvider = new PhysicalFileProvider(uploadsDirectory),
+            RequestPath = "/" + appSettings.ExternalFolder.Staticpathname
         });
 
 

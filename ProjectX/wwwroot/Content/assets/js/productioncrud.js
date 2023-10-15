@@ -1263,8 +1263,7 @@ function sendDataIssuance() {
         "grandTotal": parseFloat($('#grandtotal').text()),
     };
 
-    console.log($(".editscreen").attr("pol-id"))
-
+    //console.log($(".editscreen").attr("pol-id"))
     showscreenloader("load")
     $.ajax({
         url: projectname + '/Production/IssuePolicy',
@@ -1274,11 +1273,12 @@ function sendDataIssuance() {
             removescreenloader();
 
             if (result.statusCode.code == 1) {
-                if ($(".editscreen").attr("pol-id") == undefined)
+                if ($(".editscreen").attr("pol-id") == undefined) {
                     $("#responsemodal button").click(function () {
                         gotopage("production", "Edit", result.policyID);
                     });
-                showresponsemodal("1", result.statusCode.message)
+                    showresponsemodal("1", result.statusCode.message)
+                }
             }
             else {
                 showresponsemodal("0", result.statusCode.message)
