@@ -12,5 +12,6 @@ namespace ProjectX.Repository.BenefitRepository
         public BenResp ModifyBenefit(BenReq req, string act, int userid);
         public List<TR_Benefit> GetBenefitList(BenSearchReq req);
         public TR_Benefit GetBenefit(int IdBenifit);
+        public BenResp ImportDataBenefits(List<TR_Benefit> benefits, int userid);
     }
 }

@@ -47,6 +47,7 @@ namespace ProjectX.Controllers
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
+                loadBenefitTitle = true
             });
 
 
@@ -147,5 +148,76 @@ namespace ProjectX.Controllers
             BenResp response = new BenResp();
             return _benefitBusiness.ModifyBenefit(req, "Delete", _user.U_Id);
         }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+
+        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files, int packageid, int titleid)
+        {
+            List<TR_Benefit> benefits = new List<TR_Benefit>();
+            List<int> rowsWithError = new List<int>();
+
+            foreach (IFormFile formFile in files)
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = new System.IO.MemoryStream())
+                {
+                    formFile.CopyTo(stream);
+                    stream.Position = 0;
+                    int rowNumber = 1;
+                    using (var reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream))
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.Depth != 0)
+                            {
+                                rowNumber++;
+                                try
+                                {
+                                    var ben = new TR_Benefit();
+
+
+                                    ben.P_Id = packageid;
+                                        ben.B_Limit = reader.GetValue(1).ToString()??"";
+                                        ben.B_Is_Plus=reader.GetValue(2).ToString()=="yes"?true:false;
+                                        ben.B_Additional_Benefits = Convert.ToInt16(reader.GetValue(3));
+                                    try
+                                    {
+                                        ben.B_Additional_Benefits_Format=(reader.GetValue(4).ToString() == "%") ? 1 : (reader.GetValue(4).ToString() == "#" ? 2 : 0);
+
+                                    }
+                                    catch
+                                    {
+                                        ben.B_Additional_Benefits_Format = 0;
+                                    }
+                                        ben.BT_Id = titleid;
+                                    
+
+                                    benefits.Add(ben);
+                                }
+                                catch (Exception ex)
+                                {
+                                    rowsWithError.Add(rowNumber);
+                                }
+                            }
+                        }
+                    }
+                    var importTariff = _benefitBusiness.ImportDataBenefits(benefits, _user.U_Id);
+                }
+            }
+
+            if (rowsWithError.Count > 0)
+            {
+                string numbersString = string.Join(",", rowsWithError);
+                return BadRequest(numbersString);
+            }
+
+            ///  after no error detected
+            ///  call business and insert to db and change below return ok to text success
+
+            return Ok(benefits);
+        }
+
+
     }
 }
