@@ -12,6 +12,7 @@ namespace ProjectX.Entities.AppSettings
         public WwwRoot WwwRoot { get; set; }
         public EmailXMLSettings EmailXMLSettings { get; set; }
         public UploadUsProduct UploadUsProduct { get; set; }
+        public UploadLogo UploadLogo { get; set; }
         public ExternalFolder ExternalFolder { get; set; }
     }
 
@@ -26,11 +27,6 @@ namespace ProjectX.Entities.AppSettings
     public class UploadUsProduct
     {
         public string UploadsDirectory { get; set; }
-    } 
-    
-    public class ExternalFolder
-    {
-        public string Staticpathname { get; set; }
     }
     public class ConnectionStrings
     {

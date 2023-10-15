@@ -74,8 +74,8 @@
     <Folder Include="wwwroot\Content\logsfile\Error\" />
     <Folder Include="wwwroot\Content\logsfile\Info\" />
     <Folder Include="wwwroot\logs\" />
+    <Folder Include="wwwroot\LogoUploads\" />
     <Folder Include="wwwroot\usersproduct\" />
-    <Folder Include="wwwroot\Samplefile\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -25,6 +25,7 @@ $(document).ready(function () {
     });
 
 });
+
 function drawtable(data) {
     console.log(data)
     var generate = $('#userstable').attr('generate');
@@ -125,8 +126,6 @@ function drawtable(data) {
 
     triggerfiltertable(table, "users")
 }
-
-
 function drawusercredentialstable(data) {
 
     var table = $('#userscrendentials').DataTable({
@@ -145,7 +144,6 @@ function drawusercredentialstable(data) {
         fixedHeader: true
     });
 }
-
 function getuserscredentials(me, userid) {
     togglebtnloader(me)
     $.ajax({
@@ -470,4 +468,77 @@ function resetPassScreen() {
 function gotoAssignProduct(userid) {
     window.location.href = '/users/assignproduct?userid=' + userid;
 }
+$('#saveUploadedLogo').click(function () {
 
+    var thisformData = new FormData();
+    var $fileInput = $('#uploadFile');
+
+    var selectedfiles = Getuploadedlogo($fileInput)
+    if (selectedfiles) {
+        thisformData = selectedfiles;
+        thisformData.append("UsersId", $("#addUserForm").attr('userid'));
+    }
+    else
+        return false;
+
+
+    showloader("load");
+    $.ajax({
+        url: projectname + "/Users/saveUploadedLogo",
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (result) {
+            removeloader();
+            console.log(result)
+
+            if (result.statusCode.code != 1)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+            else {
+                Search();
+                showresponsemodal(1, result.statusCode.message)
+
+            }
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+
+        }
+    });
+
+});
+
+function Getuploadedlogo(me) {
+    var files = me.get(0).files;
+    //var files = $(me)[0].files;
+    var formData = new FormData();
+
+    if (files.length > 0) {
+        var allowedExtensions = ['png','jpg','jpeg','pnb'];
+        var valid = true;
+        for (var i = 0; i != files.length; i++) {
+            var path = files[i].name.split('.');
+            var extension = path[path.length - 1]
+            if ($.inArray(extension.toLowerCase(), allowedExtensions) < 0)
+                if ($.inArray(extension, allowedExtensions) < 0)
+                    valid = false;
+
+            formData.append("files", files[i]);
+        }
+        return formData;
+    } else {
+        return formData;
+    }
+}
+$('#logo').click(function (me) {
+    togglebtnloader(me)
+    showresponsemodalbyid('openLogoUpload');
+    removebtnloader(me)
+});

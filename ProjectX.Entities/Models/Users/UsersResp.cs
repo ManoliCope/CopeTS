@@ -56,6 +56,7 @@ namespace ProjectX.Entities.Models.Users
         public double? max_Additional_Fees { get; set; }
         public DateTime creation_Date { get; set; }
         public bool? is_Admin { get; set; }
+        public string logo { get; set; }
 
     }
 }
