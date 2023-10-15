@@ -20,6 +20,8 @@ using Newtonsoft.Json;
 using ProjectX.Business.General;
 using ProjectX.Entities.Models.Users;
 using ProjectX.Business.Users;
+using DocumentFormat.OpenXml.InkML;
+using System.Security.Policy;
 
 namespace ProjectX.Controllers
 {
@@ -269,17 +271,18 @@ namespace ProjectX.Controllers
         {
             var response = new UsProSearchResp();
             response.usersproduct = _usersBusiness.GetUsersProduct(userid);
-            response.Directory = Path.Combine(_appSettings.UploadUsProduct.UploadsDirectory, userid.ToString());
+
+            string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, userid.ToString()).Replace("\\", "/");
 
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
-
             return response;
         }
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> assignUsersProduct([FromForm(Name = "files")] IFormFileCollection files,
             string Action, int ProductId, double IssuingFees,int UsersId)
-        {//see tariff upload and make it like it.. make the popup as form
+        {
             //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             foreach (IFormFile file in files)
@@ -296,8 +299,6 @@ namespace ProjectX.Controllers
                         await file.CopyToAsync(stream);
                     }
 
-                    // Save the file path to the database as needed
-                    // Your database code goes here
                     var req = new UsProReq {
                     UsersId=UsersId,ProductId= ProductId,
                         IssuingFees= IssuingFees,Action= Action,

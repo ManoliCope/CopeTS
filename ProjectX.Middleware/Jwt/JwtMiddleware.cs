@@ -100,7 +100,6 @@ namespace ProjectX.Middleware.Jwt
                                     context.Items["User"] = user;
                                     context.Items["Userid"] = user.U_Id;
                                     context.Items["Username"] = user.U_First_Name + " " + user.U_Last_Name;
-
                                 }
                                 else
                                 {
@@ -133,10 +132,13 @@ namespace ProjectX.Middleware.Jwt
                         await _next(context);
                     }
                 }
+                else if(context.Request.Path.ToString().Contains("/Files/"))
+                {
+                    await _next(context);
+                }
                 else
                 {
-                    //context.Response.Redirect(@"/login");
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     return;
                 }
             }
@@ -148,22 +150,22 @@ namespace ProjectX.Middleware.Jwt
                 logger.Log("Error middleware: " + ex.Message);
                 logger.Log("Error middleware: " + ex.StackTrace.ToString());
 
-                var logData = new LogData
-                {
-                    Timestamp = DateTime.UtcNow,
-                    Controller = Controller,
-                    Action = Action,
-                    ErrorMessage = ex.Message,
-                    Type = "Error", 
-                    Message = "Additional error message",
-                    RequestPath = context.Request.Path,
-                    Response = "Response content",
-                    Exception = ex.ToString(), 
-                    ExecutionTime = 0, 
-                    Userid = ((TR_Users)context.Items["User"]).U_Id 
-                };
+                //var logData = new LogData
+                //{
+                //    Timestamp = DateTime.UtcNow,
+                //    Controller = Controller,
+                //    Action = Action,
+                //    ErrorMessage = ex.Message,
+                //    Type = "Error", 
+                //    Message = "Additional error message",
+                //    RequestPath = context.Request.Path,
+                //    Response = "Response content",
+                //    Exception = ex.ToString(), 
+                //    ExecutionTime = 0, 
+                //    Userid = ((TR_Users)context.Items["User"]).U_Id 
+                //};
 
-                _generalBusiness.LogErrorToDatabase(logData);
+                //_generalBusiness.LogErrorToDatabase(logData);
 
 
                 context.Response.StatusCode = -1000;

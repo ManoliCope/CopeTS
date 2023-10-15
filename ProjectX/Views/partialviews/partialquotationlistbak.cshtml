@@ -6,6 +6,7 @@
 	var benefitlist = ViewData["benefitlist"] as List<ProjectX.Entities.dbModels.TR_Benefit>;
 	var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+
 }
 
 
@@ -48,8 +49,8 @@
 							<td colspan="2">
 								<select class="form-control plans">
 									@*<option value="@item..Plan" data-plan="@item.Plan">
-											@item.PlanName
-										</option>*@
+						@item.PlanName
+					</option>*@
 
 									<option value="@item.Plan" data-plan="@item.Plan"
 											data-insured="@item.Insured"
@@ -60,14 +61,15 @@
 								</select>
 							</td>
 						</tr>
-						<tr>
+
+						<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count>0)? "":"hidden")">
 							<td>Additional Benefits</td>
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
 									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
 									{
 										<option data-benprice="@thislist.Price" value="@thislist.AB_ID" selected>
-											@thislist.Name - @thislist.Price USD
+											@thislist.Name: @thislist.Price USD
 										</option>
 									}
 
@@ -93,7 +95,7 @@
 								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.Deductible ? "checked" : "" ) />
 							</td>
 							<td>
-								Add Sports Activities <br /> (USD <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>) 
+								Add Sports Activities <br /> (USD <span data-sportsprice="@item.SportsActivitiesPrice">@item.SportsActivitiesPrice</span>)
 								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivities ? "checked" : "" ) />
 							</td>
 							<td>
@@ -101,12 +103,12 @@
 								<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
 							</td>
 						</tr>
-						<tr>
+						<tr class="@((UserRights.Is_Admin ==true)? "":"hidden")">
 							<td>
 							</td>
 							<td>
 								Discount (USD) <br />
-								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount" @((UserRights.Is_Admin == true) ? "": "readonly")>
+								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount" @((UserRights.Is_Admin == true) ? "" : "readonly")>
 							</td>
 							<td>
 								Final (USD) <br />
@@ -157,7 +159,7 @@
 	</div>
 </div>
 
-@if (Model.IsEditable && Model.Status==3)
+@if (Model.IsEditable && Model.Status == 3)
 {
 	<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>
 }
