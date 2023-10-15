@@ -27,7 +27,7 @@ function drawwtable(data, directory) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  href="~` + directory + `\\` + full.uP_UploadedFile +`" title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
+                    return `<a onclick="testhere()"  title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
                 }
             },
             {
@@ -44,6 +44,13 @@ function drawwtable(data, directory) {
     });
 
     triggerfiltertable(table, "usersProduct")
+}
+function testhere() {
+    // URL you want to open in a new tab
+    var urlToOpen = "file:///C:/Users/it4/OneDrive%20-%20Securite%20Assurance/Desktop/usafile/25/WhatsApp%20Image%202023-09-11%20at%209.32.56%20AM.pdf";
+
+    // Open the URL in a new tab
+    //var newTab = window.open(urlToOpen, '_blank');
 }
 
 function openAssignView() {
