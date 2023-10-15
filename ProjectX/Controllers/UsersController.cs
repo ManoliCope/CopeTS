@@ -319,7 +319,7 @@ namespace ProjectX.Controllers
         public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files,int UsersId)
         {//see tariff upload and make it like it.. make the popup as form
             //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
-            var uploadsDirectory = _appSettings.UploadLogo.UploadsDirectory;
+            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             foreach (IFormFile file in files)
             {
                 if (file != null && file.Length > 0)

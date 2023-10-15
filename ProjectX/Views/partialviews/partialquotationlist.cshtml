@@ -129,13 +129,13 @@
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end">0.00 USD</td>
-						<td id="taxvatforeign" class="text-end">0.00 USD</td>
+						<td id="taxvat" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT)/100)) USD</td>
+						<td id="taxvatforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT)/100)) USD</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td id="stamps" class="text-end">0.00 USD</td>
-						<td id="stampsforeign" class="text-end">0.00 USD</td>
+						<td id="stamps" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
+						<td id="stampsforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
 					</tr>
 					<tr>
 						<td>Total</td>

@@ -212,6 +212,7 @@ function saveUser() {
 
     showloader("load")
 
+
     // Array to store all the fields
     var user = {};
     var url = '';
