@@ -991,22 +991,38 @@ function recalculateTotalPrice(table) {
         totalinsuredprem += parseFloat($(this).text());
     });
 
-    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "$");
+
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "USD");
     var exchangerate = $(".quotecontainer").attr('cr')
     var exchangesymbol = $(".quotecontainer").attr('crs')
 
     var initialPremium = parseFloat($('#initpremtotal').text());
     var additionalValue = parseFloat($('#additiononprem').text());
+   
+    var vatperc = parseFloat($('#taxvat').attr("vt"));
+    var stperc = parseFloat($('#stamps').attr("st"));
+
+    $('#taxvat').text((initialPremium * (vatperc/100)).toFixed(2) + "USD")
+    $('#stamps').text((initialPremium * (stperc /100)).toFixed(2) + "USD")
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "USD");
+
+
     var taxVATValue = parseFloat($('#taxvat').text());
     var stampsValue = parseFloat($('#stamps').text());
 
-    if (isNaN(initialPremium)) initialPremium = 0;
-    if (isNaN(additionalValue)) additionalValue = 0;
-    if (isNaN(taxVATValue)) taxVATValue = 0;
-    if (isNaN(stampsValue)) stampsValue = 0;
+
+    if (isNaN(initialPremium))
+        initialPremium = 0;
+    if (isNaN(additionalValue))
+        additionalValue = 0;
+    if (isNaN(taxVATValue))
+        taxVATValue = 0;
+    if (isNaN(stampsValue))
+        stampsValue = 0;
+ 
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
-    $('#grandtotal').text(grandTotal.toFixed(2) + "$");
+    $('#grandtotal').text(grandTotal.toFixed(2) + "USD");
 
     var initialPremiumForeign = initialPremium * exchangerate;
     var additionalValueForeign = additionalValue * exchangerate;
