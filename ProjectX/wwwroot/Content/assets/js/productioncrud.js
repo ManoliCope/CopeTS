@@ -911,8 +911,9 @@ function calculateAge(dateOfBirth) {
 }
 
 function triggercalculationfields() {
-    $('.quoatetable').on('change', function () {
-        recalculateTotalPrice($(this));
+    $('.quoatetable,#additiononprem').on('change', function () {
+        recalculateTotalPrice($('.quoatetable'));
+        //recalculateTotalPrice($(this));
     });
 
     $('.plans').on('change', function () {
@@ -992,19 +993,19 @@ function recalculateTotalPrice(table) {
     });
 
 
-    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "USD");
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + " USD");
     var exchangerate = $(".quotecontainer").attr('cr')
     var exchangesymbol = $(".quotecontainer").attr('crs')
 
     var initialPremium = parseFloat($('#initpremtotal').text());
-    var additionalValue = parseFloat($('#additiononprem').text());
+    var additionalValue = parseFloat($('#additiononprem').val());
    
     var vatperc = parseFloat($('#taxvat').attr("vt"));
     var stperc = parseFloat($('#stamps').attr("st"));
 
-    $('#taxvat').text((initialPremium * (vatperc/100)).toFixed(2) + "USD")
-    $('#stamps').text((initialPremium * (stperc /100)).toFixed(2) + "USD")
-    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + "USD");
+    $('#taxvat').text((initialPremium * (vatperc/100)).toFixed(2) + " USD")
+    $('#stamps').text((initialPremium * (stperc /100)).toFixed(2) + " USD")
+    $('#initpremtotal').text(totalinsuredprem.toFixed(2) + " USD");
 
 
     var taxVATValue = parseFloat($('#taxvat').text());
@@ -1022,7 +1023,7 @@ function recalculateTotalPrice(table) {
  
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
-    $('#grandtotal').text(grandTotal.toFixed(2) + "USD");
+    $('#grandtotal').text(grandTotal.toFixed(2) + " USD");
 
     var initialPremiumForeign = initialPremium * exchangerate;
     var additionalValueForeign = additionalValue * exchangerate;
@@ -1273,7 +1274,7 @@ function sendDataIssuance() {
         "zoneId": GeneralData.zoneId,
 
         "initialPremium": parseFloat($('#initpremtotal').text()),
-        "additionalValue": parseFloat($('#additiononprem').text()),
+        "additionalValue": parseFloat($('#additiononprem').val()),
         "taxVATValue": parseFloat($('#taxvat').text()),
         "stampsValue": parseFloat($('#stamps').text()),
         "grandTotal": parseFloat($('#grandtotal').text()),

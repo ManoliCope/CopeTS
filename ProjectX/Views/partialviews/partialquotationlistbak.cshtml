@@ -9,7 +9,8 @@
 
 }
 
-
+<style>
+</style>
 
 <div class="card mt-2 mb-0">
 	<div class="card-body @(!Model.IsEditable ? "disable-click":"")" style="font-size:13px">
@@ -49,8 +50,8 @@
 							<td colspan="2">
 								<select class="form-control plans">
 									@*<option value="@item..Plan" data-plan="@item.Plan">
-						@item.PlanName
-					</option>*@
+											@item.PlanName
+										</option>*@
 
 									<option value="@item.Plan" data-plan="@item.Plan"
 											data-insured="@item.Insured"
@@ -62,7 +63,7 @@
 							</td>
 						</tr>
 
-						<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count>0)? "":"hidden")">
+						<tr class="@((benefitlist != null && benefitlist.Count>0)? "":"hidden")">
 							<td>Additional Benefits</td>
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
@@ -82,7 +83,7 @@
 										if (thislist.TariffId == item.Tariff && !benefitExists)
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-												@thislist.B_Title - @thislist.B_Benfees USD
+												@thislist.B_Title: @thislist.B_Benfees USD
 											</option>
 										}
 									}
@@ -128,29 +129,32 @@
 						<td>Initial Premium</td>
 						<td id="initpremtotal" class="text-end">@Model.InitialPremium USD</td>
 						<td id="initpremtotalforeign" class="text-end">
-							@(Model.InitialPremium * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
+							@String.Format("{0:0.00}", Model.InitialPremium * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
 						</td>
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td id="additiononprem" class="text-end">@Model.AdditionalValue USD</td>
-						<td id="additiononpremforeign" class="text-end">@Model.AdditionalValue @Model.CurrencyRate.CurrencySymbol</td>
+						<td class="text-end">
+							<input type="number" id="additiononprem" name="additiononprem" step="0.01" class="borderless-input" value="@Model.AdditionalValue">
+						</td>
+						<td id="additiononpremforeign" class="text-end">@String.Format("{0:0.00}", Model.AdditionalValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
 						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)"> @Model.TaxVATValue USD</td>
-						<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)"> @(Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol</td>
+						<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)"> @String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
 						<td id="stamps" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)"> @Model.StampsValue USD</td>
-						<td id="stampsforeign" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)"> @(Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol</td>
+						<td id="stampsforeign" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)"> @String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Total</td>
 						<td id="grandtotal" class="text-end">@Model.GrandTotal USD</td>
 						<td id="grandtotalforeign" class="text-end">
-							@(Model.InitialPremium * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
+							@*@(Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))*@
+							@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol
 						</td>
 					</tr>
 				</tbody>
