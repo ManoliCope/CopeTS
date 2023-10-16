@@ -152,7 +152,7 @@ namespace ProjectX.Controllers
         [HttpPost]
         [Consumes("multipart/form-data")]
 
-        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files, int packageid, int titleid)
+        public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files, int packageid)
         {
             List<TR_Benefit> benefits = new List<TR_Benefit>();
             List<int> rowsWithError = new List<int>();
@@ -178,19 +178,20 @@ namespace ProjectX.Controllers
 
 
                                     ben.P_Id = packageid;
-                                        ben.B_Limit = reader.GetValue(1).ToString()??"";
-                                        ben.B_Is_Plus=reader.GetValue(2).ToString()=="yes"?true:false;
-                                        ben.B_Additional_Benefits = Convert.ToInt16(reader.GetValue(3));
-                                    try
-                                    {
-                                        ben.B_Additional_Benefits_Format=(reader.GetValue(4).ToString() == "%") ? 1 : (reader.GetValue(4).ToString() == "#" ? 2 : 0);
+                                    ben.B_Title= reader.GetValue(1).ToString() ?? "";
+                                    ben.B_Limit = reader.GetValue(2).ToString()??"";
+                                   //     ben.B_Is_Plus=reader.GetValue(3).ToString()=="yes"?true:false;
+                                   //     ben.B_Additional_Benefits = Convert.ToInt16(reader.GetValue(4));
+                                  //  try
+                                  //  {
+                                  ////      ben.B_Additional_Benefits_Format=(reader.GetValue(5).ToString() == "%") ? 1 : (reader.GetValue(5).ToString() == "#" ? 2 : 0);
 
-                                    }
-                                    catch
-                                    {
-                                        ben.B_Additional_Benefits_Format = 0;
-                                    }
-                                        ben.BT_Id = titleid;
+                                  //  }
+                                  //  catch
+                                  //  {
+                                  //      ben.B_Additional_Benefits_Format = 0;
+                                  //  }
+                                        //ben.BT_Id = titleid;
                                     
 
                                     benefits.Add(ben);

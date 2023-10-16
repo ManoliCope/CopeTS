@@ -175,7 +175,7 @@
                         </li>
                     }
 
-                    @if (isadmin == true || currentUser.U_Agents_Creation != true)
+                    @if (isadmin == true || currentUser.U_Agents_Creation == true)
                     {
                         <li class="menu-item @(controllerName == "users" ? "active" : "")">
                             <a href="~/Users/">

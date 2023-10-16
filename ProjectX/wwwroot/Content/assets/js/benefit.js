@@ -60,7 +60,7 @@ function importbenefits(me) {
     if (selectedfiles) {
         thisformData = selectedfiles;
         thisformData.append("packageid", $("#packageid").val());
-        thisformData.append("titleid", $("#titleid").val());
+        //thisformData.append("titleid", $("#titleid").val());
     }
     else
         return false;

@@ -73,7 +73,8 @@ function drawtable(data, status) {
                 visible: isAdmin == 'True' && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
-                    if (full.status == 3) {
+                    
+                   // if (full.status == 3) {
                         if (type === 'display' || type === 'filter') {
                             // Assuming "IsEditable" is a boolean property
                             if (data) {
@@ -85,8 +86,8 @@ function drawtable(data, status) {
                             return checkbox[0].outerHTML;
                         }
                         return data; // For other types, return the original data
-                    }
-                    return '';
+                   // }
+                   // return '';
                 }
             },
 
@@ -95,13 +96,27 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     var icon = "";
-                    if (status == 1 || status == 3) icon = "book"; else icon = "eye"
-                    {
-                        if (full.status == 3) icon = "book"; else icon = "eye"
-                        {
-                            return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
-                        }
+                    if (isAdmin == 'True') {
+                        icon = "book";
+                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+
                     }
+                    else if (status == 1 || status == 3) {
+                        icon = "book";
+                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+
+                    }
+                    else {
+                        icon = "eye";
+                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+
+                    }
+                       
+                  //  {
+                       // if (full.status == 3) icon = "book"; else icon = "eye"
+                      //  {
+                     //   }
+                  //  }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
@@ -110,9 +125,9 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 visible: isAdmin == 'True' &&( status == 1 || status == 3),
                 "render": function (data, type, full, meta) {
-                    if (full.status == 3)
+                    //if (full.status == 3)
                         return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-                    else return '';
+                  //  else return '';
 
                 }
             }
