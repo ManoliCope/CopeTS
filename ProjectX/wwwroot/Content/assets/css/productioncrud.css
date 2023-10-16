@@ -218,3 +218,9 @@
 .togglebenpopup:hover {
   color:white !important
 }
+
+.borderless-input {
+    border: none;
+    outline: none;
+    width: 100%
+}

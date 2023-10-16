@@ -45,8 +45,8 @@
 									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == item.Insured))
 									{
 										@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
-							@thislist.PlanName
-						</option>*@
+										@thislist.PlanName
+									</option>*@
 
 										<option value="@thislist.Plan" data-plan="@thislist.Plan"
 												data-price="@thislist.PriceAmount"
@@ -69,7 +69,7 @@
 								</select>
 							</td>
 						</tr>
-						<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count>0)? "":"hidden")">
+						<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count > 0) ? "" : "hidden")">
 							<td>Additional Benefits</td>
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
@@ -98,7 +98,7 @@
 								<span class="planprice" data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
 							</td>
 						</tr>
-						<tr class="@((!UserRights.Is_Admin ==true)? "":"hidden")">
+						<tr class="@((UserRights.Is_Admin == true) ? "" : "hidden")">
 							<td>
 							</td>
 							<td>
@@ -115,6 +115,7 @@
 				</table>
 			}
 
+			
 			<table class="table table-bordered  mt-3 totaltable">
 				<tbody>
 					<tr>
@@ -124,18 +125,20 @@
 					</tr>
 					<tr>
 						<td>Additional</td>
-						<td id="additiononprem" class="text-end">0.00 USD</td>
-						<td id="additiononpremforeign" class="text-end">0.00 USD</td>
+						<td class="text-end">
+							<input type="number" id="additiononprem" name="additiononprem" step="0.01" class="borderless-input" value="0">
+						</td>
+						<td id="additiononpremforeign" class="text-end">0.00 @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT)/100)) USD</td>
-						<td id="taxvatforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT)/100)) USD</td>
+						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT) / 100))</td>
+						<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT) / 100)) @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>
-						<td id="stamps" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
-						<td id="stampsforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
+						<td id="stamps" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
+						<td id="stampsforeign" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Stamp) / 100)) @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Total</td>
