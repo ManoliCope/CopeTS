@@ -12,8 +12,8 @@ namespace ProjectX.Entities.AppSettings
         public WwwRoot WwwRoot { get; set; }
         public EmailXMLSettings EmailXMLSettings { get; set; }
         public UploadUsProduct UploadUsProduct { get; set; }
-        public UploadLogo UploadLogo { get; set; }
-        public ExternalFolder ExternalFolder { get; set; }
+        //public UploadLogo UploadLogo { get; set; }
+        //public ExternalFolder ExternalFolder { get; set; }
     }
 
     public class Jwt
