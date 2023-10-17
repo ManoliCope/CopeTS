@@ -404,3 +404,11 @@ body.modal-open {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+
+.complogo {
+    width: 60px;
+    height: 60px;
+    margin: 13px;
+    border-radius: 25%;
+    margin-left: 20px;
+}

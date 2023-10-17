@@ -64,8 +64,10 @@ function drawtable(data, status) {
                     return data; // For other types, return the original data
                 }
             },
+            { "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
             { "title": "Nb of Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
             { "title": "Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
+
             {
                 title: "Editable",
                 className: "text-center filter",
@@ -108,7 +110,7 @@ function drawtable(data, status) {
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
-                visible: isAdmin == 'True' &&( status == 1 || status == 3),
+                visible: isAdmin == 'True' && (status == 1 || status == 3),
                 "render": function (data, type, full, meta) {
                     if (full.status == 3)
                         return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
@@ -119,6 +121,15 @@ function drawtable(data, status) {
         ],
         orderCellsTop: true,
         fixedHeader: true
+    });
+
+    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+        var data = this.data();
+        console.log(data.isCanceled)
+
+        if (data.isCanceled == true) {
+            $(this.node()).addClass('cancelled-row');
+        }
     });
 
     triggerfiltertable(table, "profile")
@@ -385,6 +396,7 @@ function Search4() {
         url: projectname + "/Production/Search",
         data: { req: filter },
         success: function (result) {
+            console.log(result.production)
             removeloader();
             if (result.production)
                 drawtable(result.production, status);

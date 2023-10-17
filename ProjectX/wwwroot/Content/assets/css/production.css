@@ -122,15 +122,16 @@
     min-width: 50px;
 }
 
-.quotecontainer{
-    display:none;
+.quotecontainer {
+    display: none;
 }
 
 .result.load .quotecontainer {
-    display:none;
+    display: none;
 }
+
 .result.load .loadersize {
-   display:block
+    display: block
 }
 
 .result .quotecontainer {
@@ -141,12 +142,13 @@
     display: none
 }
 
-.quotecontainer{
-    min-height:25px;
+.quotecontainer {
+    min-height: 25px;
 }
-.quotecontainer .validatemsg {
-    color: red
-}
+
+    .quotecontainer .validatemsg {
+        color: red
+    }
 
 
 #searchDropdownContent span {
@@ -156,9 +158,10 @@
     user-select: none;
 }
 
-.totaltable td{
-    padding:5px
+.totaltable td {
+    padding: 5px
 }
+
     .totaltable td:first-child {
         background: #edf0f7;
         border-color: white;
@@ -174,6 +177,14 @@
 }
 
 .quoatetable td, .quoatetable th {
-    padding:10px;
+    padding: 10px;
 }
 
+.cancelled-row, .cancelled-row:hover {
+    background-color: var(--third-color) !important;
+    color: white !important;
+}
+
+tr.cancelled-row td .fas.fa-eye, tr.cancelled-row td .fas.fa-eye:hover {
+    color: #d5d5d5 !important;
+}

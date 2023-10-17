@@ -289,7 +289,7 @@ namespace ProjectX.Controllers
             {
                 if (file != null && file.Length > 0)
                 {
-                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(),"Conditions");
                     createNewFolder(userFullPath);
                     var fileName = Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(userFullPath, fileName);
@@ -324,7 +324,7 @@ namespace ProjectX.Controllers
             {
                 if (file != null && file.Length > 0)
                 {
-                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(), "Logo");
                     createNewFolder(userFullPath);
                     var fileName = Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(userFullPath, fileName);
@@ -340,7 +340,9 @@ namespace ProjectX.Controllers
                     UsersId=UsersId,
                         UploadedFile=fileName
                     };
+
                     var response =_usersBusiness.SaveUploadedLogo(req);
+                    response.UploadedFile = fileName;
                     return Ok(response);
                 }
                 else

@@ -15,11 +15,6 @@
 		<div class="card-body">
 			<form class="needs-validation" novalidate="" id="addUserForm" userid="@Model.id" autocomplete="off">
 				<div class="row">
-					<div class="col-md-12">
-						<label class="logo" for="logo"> <i id="logo" class="fas fa-camera"></i></label>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="form-control-label" for="firstName">First Name<span class="red-star"> *</span></label>
@@ -127,7 +122,7 @@
 								<option data-select2-id="2">Select Super Agent (Mother Account)</option>
 								@*<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>*@
 
-								@foreach (var thislist in filldata.loadedData.superAgents.Where(x=>x.LK_ID != Model.id))
+								@foreach (var thislist in filldata.loadedData.superAgents.Where(x => x.LK_ID != Model.id))
 								{
 									string test = thislist.LK_ID.ToString();
 									@if (thislist.LK_ID == Model.super_Agent_Id)
@@ -251,21 +246,21 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label class="form-control-label" for="commPerc">Commission %</label>
-									<input class="form-control"   field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission">
+									<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission">
 								</div>
 							</div>
 
 							<div class="col-md-3">
 								<div class="form-group">
 									<label class="form-control-label" for="stampPerc">Stamp %</label>
-									<input class="form-control"   field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp">
+									<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp">
 								</div>
 							</div>
 
 							<div class="col-md-3">
 								<div class="form-group">
 									<label class="form-control-label" for="retentionPerc">Retention %</label>
-									<input class="form-control"   field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="@Model.retention">
+									<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="@Model.retention">
 								</div>
 							</div>
 
@@ -284,7 +279,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label class="form-control-label" for="vat">VAT</label>
-									<input class="form-control"   field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat">
+									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat">
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -498,7 +493,10 @@
 					@* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
 
 				</div>
-				<div class="col-md-8 ">
+				<div class="col-md-6 ">
+				</div>
+				<div class="col-md-2 text-center">
+					<button id="logo" class="btn btn-primary float-right w-100" type="button">Files</button>
 				</div>
 				<div class="col-md-2 text-center">
 					<div class="form-group">
@@ -560,7 +558,7 @@
 								@using (Html.BeginForm("Upload", "Logo", FormMethod.Post, new { enctype = "multipart/form-data" }))
 								{
 									<div class="form-group  pt-2">
-										<label for="file">Select File: @Model.logo</label>
+										<label for="file">Select File: <span class="logoname">@Model.logo</span></label>
 										<input type="file" name="Upload File" id="uploadFile" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" value="@Model.logo" />
 									</div>
 								}

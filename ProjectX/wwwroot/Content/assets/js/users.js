@@ -13,8 +13,10 @@ $(document).ready(function () {
     //fillUser(usid);
     //}
     //else
-    Search();
 
+    if ($('#userstable').length) {
+        Search();
+    }
     resetPassScreen();
 
     $("#searchprofile").click(function () {
@@ -23,7 +25,6 @@ $(document).ready(function () {
     $("#confirmdeleteuser").click(function () {
         deleteuser(this)
     });
-
 });
 
 function drawtable(data) {
@@ -492,14 +493,12 @@ $('#saveUploadedLogo').click(function () {
         type: "POST",
         success: function (result) {
             removeloader();
-            console.log(result)
 
             if (result.statusCode.code != 1)
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
             else {
-                Search();
+                $(".logoname").text(result.uploadedFile)
                 showresponsemodal(1, result.statusCode.message)
-
             }
 
         },
@@ -522,7 +521,7 @@ function Getuploadedlogo(me) {
     var formData = new FormData();
 
     if (files.length > 0) {
-        var allowedExtensions = ['png','jpg','jpeg','pnb'];
+        var allowedExtensions = ['png', 'jpg', 'jpeg', 'pnb'];
         var valid = true;
         for (var i = 0; i != files.length; i++) {
             var path = files[i].name.split('.');
