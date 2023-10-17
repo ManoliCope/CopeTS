@@ -6,6 +6,8 @@
 	var benefitlist = ViewData["benefitlist"] as List<ProjectX.Entities.dbModels.TR_Benefit>;
 	var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var is_admin = ViewData["isAdmin"] as string;
+	
 
 }
 
@@ -163,7 +165,7 @@
 	</div>
 </div>
 
-@if (Model.IsEditable && Model.Status == 3)
+@if ((Model.IsEditable && Model.Status == 3) ||is_admin=="True")
 {
 	<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>
 }

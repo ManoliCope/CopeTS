@@ -182,6 +182,7 @@ namespace ProjectX.Controllers
                 ViewData["zonelist"] = zonelist;
                 ViewData["destinationlist"] = destinationlist;
                 ViewData["benefitlist"] = benefitlist;
+                ViewData["isAdmin"] = _user.U_Is_Admin.ToString();
 
                 return View("details", policyreponse);
             }

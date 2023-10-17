@@ -326,8 +326,10 @@ namespace ProjectX.Controllers
                 {
                     var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(), "Logo");
                     createNewFolder(userFullPath);
+                    var logoPath = Path.Combine(userFullPath, "Logo");
+                    createNewFolder(logoPath);
                     var fileName = Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(userFullPath, fileName);
+                    var filePath = Path.Combine(logoPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {

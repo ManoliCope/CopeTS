@@ -6,6 +6,11 @@
 	var mainuser = filldata.loadedData.superAgents.Where(a => a.LK_ID == Convert.ToInt16(userId)).FirstOrDefault();
 	filldata.loadedData.superAgents.Remove(mainuser);
 	//var userId= ViewData["userid"] as string;
+	var hide = "";
+	@if (is_admin != "1")
+	{
+		hide = "hidden";
+	}
 }
 
 
@@ -152,11 +157,11 @@
 						</div>*@
 
 
-					@if (Model.id != 1 + Convert.ToInt32(userId))
+					@*@if (Model.id != 1 + Convert.ToInt32(userId))
 					{
 						@if (is_admin == "1")
-						{
-							<div class="col-md-3">
+						{*@
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 
 									<label class="form-control-label" for="tax">Tax (% and #)</label>
@@ -189,7 +194,7 @@
 
 
 
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="currencyId">Currency<span class="red-star"> *</span></label>
 									<select class="form-control" name="currencyId" id="currencyId" field-name="currency" required>
@@ -210,7 +215,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="roundingRule">Rounding Rule</label>
 									<select class="form-control" name="roundingRule" id="roundingRule" field-name="rounding_Rule">
@@ -243,21 +248,21 @@
 										<input class="form-control"   field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
 									</div>
 								</div>*@
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="commPerc">Commission %</label>
 									<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission">
 								</div>
 							</div>
 
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="stampPerc">Stamp %</label>
 									<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp">
 								</div>
 							</div>
 
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="retentionPerc">Retention %</label>
 									<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="@Model.retention">
@@ -276,13 +281,13 @@
 										<input class="form-control"   field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees">
 									</div>
 								</div>*@
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="vat">VAT</label>
 									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="creationDate">Creation Date</label>
 									<label class="form-control" field-name="creation_Date" id="creationDate">@Model.creation_Date.ToShortDateString()</label>
@@ -293,7 +298,7 @@
 
 
 
-							<div class="row">
+							<div class="row @hide">
 								@*   <div class="col-md-3">
 										<div class="form-check-inline ">
 											<label class="custom-control custom-checkbox">
@@ -470,8 +475,8 @@
 
 									</div>
 								</div>*@
-						}
-					}
+				@*		}
+					}*@
 
 
 				</div>
@@ -484,13 +489,13 @@
 					@if (Model.id != Convert.ToInt32(userId))
 					{
 						@if (Model.id != null && is_admin == "1")
-						{
+								{ 
 							<div id="thisloader" class="smloader hide"></div>
 							<button class="btn btn-primary" type="button" onclick="getUserPass(this,@Model.id)">Show Password</button>
-						}
+							}
 
-					}
-					@* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
+						}
+						@* <a  href="#" title="View Users" userid=""  class="text-black-50" onclick=""><i class="fas fa-eye"/></a>*@
 
 				</div>
 				<div class="col-md-6 ">
