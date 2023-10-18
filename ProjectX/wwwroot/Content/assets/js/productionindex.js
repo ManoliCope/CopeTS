@@ -22,10 +22,10 @@ $(document).ready(function () {
     });
 
     Search();
-    Search2();
-    Search3();
-    Search4();
-    Search5();
+    //Search2();
+    //Search3();
+    //Search4();
+    //Search5();
 
 
     var isadmin = $(".prodadm").attr("prodadm")
@@ -64,7 +64,7 @@ function drawtable(data, status) {
                     return data; // For other types, return the original data
                 }
             },
-            { "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
+            //{ "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
             { "title": "Nb of Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
             { "title": "Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
 

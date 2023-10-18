@@ -24,6 +24,6 @@ public class Program
         .ConfigureWebHostDefaults(webBuilder =>
         {
             webBuilder.UseStartup<Startup>();
-            webBuilder.UseNLog();
+            //webBuilder.UseNLog();
         });
 }
