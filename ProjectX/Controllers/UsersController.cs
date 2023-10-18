@@ -273,7 +273,7 @@ namespace ProjectX.Controllers
             response.usersproduct = _usersBusiness.GetUsersProduct(userid);
 
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, userid.ToString()).Replace("\\", "/");
+            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, userid.ToString(),"conditions").Replace("\\", "/");
 
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
             return response;
@@ -324,7 +324,7 @@ namespace ProjectX.Controllers
             {
                 if (file != null && file.Length > 0)
                 {
-                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(), "Logo");
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
                     createNewFolder(userFullPath);
                     var logoPath = Path.Combine(userFullPath, "Logo");
                     createNewFolder(logoPath);
