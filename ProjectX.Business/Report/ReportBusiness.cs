@@ -18,23 +18,29 @@ namespace ProjectX.Business.Report
         {
             _reportRepository = reportRepository;
         }
-        public List<dynamic> GenerateProduction(int req, int userid)
+        public List<dynamic> GenerateProduction(int req, int userid, DateTime datefrom, DateTime dateto)
 
         {
             
-            return _reportRepository.GenerateProduction(req,userid);
+            return _reportRepository.GenerateProduction(req,userid, datefrom, dateto);
         } 
-        public List<dynamic> GenerateBenefits( int userid)
+        public List<dynamic> GenerateBenefits( int userid, DateTime datefrom, DateTime dateto)
 
         {
             
-            return _reportRepository.GenerateBenefits(userid);
+            return _reportRepository.GenerateBenefits(userid, datefrom, dateto);
         } 
-        public List<dynamic> GenerateBeneficiaries(int userid)
+        public List<dynamic> GenerateBeneficiaries(int userid, DateTime datefrom, DateTime dateto)
 
         {
             
-            return _reportRepository.GenerateBeneficiaries(userid);
+            return _reportRepository.GenerateBeneficiaries(userid, datefrom, dateto);
+        }
+        public List<dynamic> GenerateCurrencies(int userid)
+
+        {
+            
+            return _reportRepository.GenerateCurrencies(userid);
         }
 
     }

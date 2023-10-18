@@ -9,10 +9,10 @@ namespace ProjectX.Repository.ReportRepository
 {
     public interface IReportRepository
     {
-        public List<dynamic> GenerateProduction(int req, int userid);
-        public List<dynamic> GenerateBenefits(int userid);
-        public List<dynamic> GenerateBeneficiaries(int userid);
-
+        public List<dynamic> GenerateProduction(int req, int userid, DateTime datefrom, DateTime dateto);
+        public List<dynamic> GenerateBenefits(int userid, DateTime datefrom, DateTime dateto);
+        public List<dynamic> GenerateBeneficiaries(int userid, DateTime datefrom, DateTime dateto);
+        public List<dynamic> GenerateCurrencies(int userid);
 
     }
 }
