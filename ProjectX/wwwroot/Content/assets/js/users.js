@@ -515,6 +515,37 @@ $('#saveUploadedLogo').click(function () {
 
 });
 
+$('#clearUploadedLogo').click(function (){
+    var userid = $("#addUserForm").attr('userid');
+    showloader("load");
+
+    $.ajax({
+        url: projectname + "/Users/clearUploadedLogo",
+        data: { userid: userid },
+        type: "POST",
+        success: function (result) {
+            removeloader();
+
+            if (result.statusCode.code != 1)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+            else {
+                $(".logoname").text('')
+                $("#uploadFile").val('')
+                showresponsemodal(1, result.statusCode.message)
+            }
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+
+        }
+    });
+});
 function Getuploadedlogo(me) {
     var files = me.get(0).files;
     //var files = $(me)[0].files;

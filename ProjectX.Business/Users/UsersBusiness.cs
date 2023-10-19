@@ -207,5 +207,9 @@ namespace ProjectX.Business.Users
         {
             return _usersRepository.GetListedUserWithChildren(userid);
         }
+        public UsProResp clearUploadedLogo(int userid)
+        {
+            return _usersRepository.clearUploadedLogo(userid);
+        }
     }
 }

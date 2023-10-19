@@ -21,6 +21,7 @@ namespace ProjectX.Repository.UsersRepository
         public List<LookUpp> GetUsersChildren(int userid);
         public List<TR_Users> GetListedUserWithChildren(int userid);
         public UsProResp SaveUploadedLogo(UsProReq req);
+        public UsProResp clearUploadedLogo(int userid);
 
     }
 }
