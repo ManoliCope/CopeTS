@@ -115,29 +115,47 @@ namespace ProjectX.Controllers
             });
             return View(response);
         }
+         public ActionResult Currencies()
+        {
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadProductionTabs = true
+            });
+            return View(response);
+        }
 
         [HttpPost]
-        public IActionResult GenerateProduction(int req)
+        public IActionResult GenerateProduction(int req,DateTime datefrom,DateTime dateto)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id);
+            result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id, datefrom, dateto);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }
         [HttpPost]
-        public IActionResult GenerateBenefits()
+        public IActionResult GenerateBenefits(DateTime datefrom, DateTime dateto)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateBenefits(_user.U_Id);
+            result.reportData = _reportBusiness.GenerateBenefits(_user.U_Id, datefrom, dateto);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }
 
         [HttpPost]
-        public IActionResult GenerateBeneficiaries()
+        public IActionResult GenerateBeneficiaries(DateTime datefrom, DateTime dateto)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateBeneficiaries(_user.U_Id);
+            result.reportData = _reportBusiness.GenerateBeneficiaries(_user.U_Id, datefrom, dateto);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
+        }
+
+        [HttpPost]
+        public IActionResult GenerateCurrencies()
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GenerateCurrencies(_user.U_Id);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }

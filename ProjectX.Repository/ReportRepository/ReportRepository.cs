@@ -23,13 +23,15 @@ namespace ProjectX.Repository.ReportRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public List<dynamic> GenerateProduction(int req, int userid)
+        public List<dynamic> GenerateProduction(int req, int userid, DateTime datefrom, DateTime dateto)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@prodid", req);
             param.Add("@userid", userid);
+            param.Add("@datefrom", datefrom);
+            param.Add("@dateto", dateto);
            
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -41,13 +43,14 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateBenefits( int userid)
+        public List<dynamic> GenerateBenefits( int userid, DateTime datefrom, DateTime dateto)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
-
+            param.Add("@datefrom", datefrom);
+            param.Add("@dateto", dateto);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -58,17 +61,34 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateBeneficiaries(int userid)
+        public List<dynamic> GenerateBeneficiaries(int userid, DateTime datefrom, DateTime dateto)
+
+        {
+            List<dynamic> response = new List<dynamic>();
+            var param = new DynamicParameters();
+            param.Add("@userid", userid);
+            param.Add("@datefrom", datefrom);
+            param.Add("@dateto", dateto);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_Beneficiaries", param, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<dynamic>().ToList();
+                }
+            }
+            return response;
+        }
+        public List<dynamic> GenerateCurrencies(int userid)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
 
-
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_Beneficiaries", param, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_Currencies", param, commandType: CommandType.StoredProcedure))
                 {
                     response = result.Read<dynamic>().ToList();
                 }
