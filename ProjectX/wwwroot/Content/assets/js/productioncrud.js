@@ -121,7 +121,7 @@ $(document).ready(function () {
 function generatePdf() {
     var policyId = $(".editscreen").attr("pol-id");
 
-    fetch(`/pdf/GeneratePdfFromRazorView?policyId=${policyId}`, {
+    fetch(`/pdf/GeneratePdfFromRazorView?ii=${policyId}`, {
         method: "GET",
         responseType: "blob",
     })

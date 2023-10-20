@@ -9,7 +9,9 @@ using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.General;
 using ProjectX.Entities.Models.Beneficiary;
 using ProjectX.Entities.Resources;
-
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace ProjectX.Controllers
 {
@@ -173,7 +175,6 @@ namespace ProjectX.Controllers
             response = _beneficiaryBusiness.GetBeneficiary(id);
             return response;
         }
-
 
     }
 }

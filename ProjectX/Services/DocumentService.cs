@@ -1,13 +1,17 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using ProjectX.Business.Production;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Production;
 using ProjectX.Interfaces;
 using ProjectX.Models;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace ProjectX.Services
@@ -51,12 +55,16 @@ namespace ProjectX.Services
             return GeneratePdf(htmlContent);
         }
 
-        public byte[] GeneratePdfFromRazorView(int policyid)
+        public byte[] GeneratePdfFromRazorView(int policyid,string fileqrurl)
         {
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id,true);
-
+            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id, true);
+            policyreponse.QrCodebit = fileqrurl;
             var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
+
+            if (policyreponse.PolicyDetails.Count > 1)
+                partialName = "/Views/PdfTemplate/PrintPolicyGroup.cshtml";
+
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
 
             return GeneratePdf(htmlContent);
@@ -66,7 +74,7 @@ namespace ProjectX.Services
         {
             var globalSettings = new GlobalSettings
             {
-                ColorMode = ColorMode.Color,
+                ColorMode = DinkToPdf.ColorMode.Color,
                 Orientation = Orientation.Portrait,
                 PaperSize = PaperKind.A4,
                 Margins = new MarginSettings { Top = 18, Bottom = 18 },
@@ -132,5 +140,6 @@ namespace ProjectX.Services
 
             return invoiceViewModel;
         }
+
     }
 }

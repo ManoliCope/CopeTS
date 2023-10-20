@@ -166,36 +166,29 @@
 
 		<h2 class="underlined-heading">Beneficiary Information:</h2>
 		<table>
-			<tr>
-				<td class="td25"><label for="firstName">First Name:</label></td>
-				<td class="td25"><label id="firstName">@Model.PolicyDetails.First().FirstName</label></td>
-				<td class="td25"><label for="residenceCountry">Country of Residence:</label></td>
-				<td class="td25"><label id="residenceCountry">@Model.PolicyDetails.First().CountryResidence</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="middleName">Middle Name:</label></td>
-				<td class="td25"><label id="middleName">@Model.PolicyDetails.First().MiddleName</label></td>
-				<td class="td25"><label for="nationality">Nationality:</label></td>
-				<td class="td25"><label id="nationality">@Model.PolicyDetails.First().Nationality</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="lastName">Last Name:</label></td>
-				<td class="td25"><label id="lastName">@Model.PolicyDetails.First().LastName</label></td>
-				<td class="td25"><label for="passportNumber">Passport N.:</label></td>
-				<td class="td25"><label id="passportNumber">@Model.PolicyDetails.First().PassportNo</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
-				<td class="td25"><label id="dateOfBirth">@Model.PolicyDetails.First().DateOfBirth.ToString("dd-MM-yyyy")</label></td>
-				<td class="td25"><label for="age">Age:</label></td>
-				<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
-			</tr>
-			@*<tr>
-					<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-					<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-					<td class="td25"></td>
-					<td class="td25"></td>
-				</tr>*@
+				<thead>
+					<tr>
+						<th>First Name</th>
+						<th>Middle Name</th>
+						<th>Last Name</th>
+						<th>Date of Birth</th>
+						<th>Age</th>
+						<th>Passport N.</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var beneficiary in Model.PolicyDetails)
+					{
+						<tr>
+							<td>@beneficiary.FirstName</td>
+							<td>@beneficiary.MiddleName</td>
+							<td>@beneficiary.LastName</td>
+							<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
+							<td>@beneficiary.Age</td>
+							<td>@beneficiary.PassportNo</td>
+						</tr>
+					}
+				</tbody>
 		</table>
 
 
@@ -281,15 +274,17 @@
 			<div class="boxholder" style="float:right">
 				<label>Signature</label>
 				<div class="box">
+
 				</div>
 			</div>
 			<div class="boxholder" style="float:left">
 				<label>QR Code</label>
-				<div>
-					<img width="150" height="150" src="data:image/jpeg;base64,@Model.QrCodebit" alt="QR Code" />
+				<div class="box">
 				</div>
 			</div>
 		</div>
+
+
 	</div>
 </body>
 </html>

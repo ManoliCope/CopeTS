@@ -38,6 +38,7 @@ namespace ProjectX.Entities.Models.Production
         public List<PolicyDestination> Destinations { get; set; }
         public List<TR_Benefit> Benefits { get; set; }
         public CurrResp CurrencyRate { get; set; }
+        public string QrCodebit { get; set; }
     }
 
     public class PolicyDetail
@@ -58,6 +59,7 @@ namespace ProjectX.Entities.Models.Production
         public decimal FinalPrice { get; set; }
         public int InsuredId { get; set; }
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int Age { get; set; }
