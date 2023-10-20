@@ -74,6 +74,7 @@ function importbenefits(me) {
         success: function (data) {
             showresponsemodal(1, 'Benefits Uploaded')
             removebtnloader(me)
+            $('#search').click();
         },
         error: function (xhr, status, error) {
             //console.log('Error:'+ xhr.responseText + '. Try Again!'); 

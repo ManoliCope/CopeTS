@@ -359,6 +359,11 @@ namespace ProjectX.Controllers
             if (!Directory.Exists(folderPath))
                     Directory.CreateDirectory(folderPath);
         }
+        [HttpPost]
+        public UsProResp clearUploadedLogo(int userid)
+        {
+            return _usersBusiness.clearUploadedLogo(userid);
+        }
     }
 }
 
