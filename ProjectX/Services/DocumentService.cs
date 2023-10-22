@@ -14,6 +14,23 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 
+using System.IO;
+using ProjectX.Entities.AppSettings;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.Options;
+using DocumentFormat.OpenXml.Wordprocessing;
+
+
+//using iTextSharp.text;
+//using iTextSharp.text.pdf;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using DocumentFormat.OpenXml.InkML;
+using ProjectX.Entities.bModels;
+using ProjectX.Business.General;
+using ProjectX.Entities.Models.Users;
+using ProjectX.Business.Users;
+
 namespace ProjectX.Services
 {
     public class DocumentService : IDocumentService
@@ -22,15 +39,22 @@ namespace ProjectX.Services
         private readonly IRazorRendererHelper _razorRendererHelper;
         private TR_Users _user;
         private IProductionBusiness _productionBusiness;
+        private readonly TrAppSettings _appSettings;
+        private IGeneralBusiness _generalBusiness;
+        private IUsersBusiness _usersBusiness;
 
-        public DocumentService(IHttpContextAccessor httpContextAccessor,
-            IConverter converter, IProductionBusiness productionBusiness,
+        public DocumentService(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor,
+            IConverter converter, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IUsersBusiness usersBusiness,
             IRazorRendererHelper razorRendererHelper)
         {
+            _appSettings = appIdentitySettingsAccessor.Value;
             _converter = converter;
             _razorRendererHelper = razorRendererHelper;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _productionBusiness = productionBusiness;
+            _generalBusiness = generalBusiness;
+            _usersBusiness = usersBusiness;
+
         }
 
         public byte[] GeneratePdfFromString()
@@ -55,10 +79,11 @@ namespace ProjectX.Services
             return GeneratePdf(htmlContent);
         }
 
-        public byte[] GeneratePdfFromRazorView(int policyid,string fileqrurl)
+        public byte[] GeneratePdfFromRazorView(int policyid, string fileqrurl)
         {
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id, true);
+
+            policyreponse = _productionBusiness.GetPolicy(policyid, 0, true);
             policyreponse.QrCodebit = fileqrurl;
             var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
 
@@ -66,9 +91,119 @@ namespace ProjectX.Services
                 partialName = "/Views/PdfTemplate/PrintPolicyGroup.cshtml";
 
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
+            byte[] pdfBytes = GeneratePdf(htmlContent); ;
 
-            return GeneratePdf(htmlContent);
+            try
+            {
+                int userid = Convert.ToInt16(policyreponse.CreatedById);
+                var response = new UsProSearchResp();
+                response.usersproduct = _usersBusiness.GetUsersProduct(userid);
+
+                string UploadedCondition = response.usersproduct.OrderByDescending(product => product.UP_CreationDate).FirstOrDefault(product => product.PR_Id == policyreponse.ProductID).UP_UploadedFile;
+                if (UploadedCondition == null)
+                    UploadedCondition = "";
+
+
+                var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+                var userFullPath = Path.Combine(uploadsDirectory, userid.ToString(), "Conditions", UploadedCondition);
+
+                byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
+                return combinedPdf;
+            }
+            catch (Exception ex)
+            {
+                var logData = new LogData
+                {
+                    Timestamp = DateTime.UtcNow,
+                    Controller = "test",
+                    Action = "test",
+                    ErrorMessage = ex.Message,
+                    Type = "Error",
+                    Message = ex.Message,
+                    RequestPath = "here",
+                    Response = "Response content",
+                    Exception = ex.ToString(),
+                    ExecutionTime = 0,
+                    Userid = 14
+                };
+                _generalBusiness.LogErrorToDatabase(logData);
+
+                return pdfBytes;
+            }
+
         }
+
+
+
+        public byte[] CombinePdfFiles(byte[] pdfBytes, string pdfPath)
+        {
+
+            using (MemoryStream combinedPdfStream = new MemoryStream())
+            {
+                // Load the PDF from a byte[] stream
+                PdfDocument pdfDocument1 = new PdfDocument(new PdfReader(new MemoryStream(pdfBytes)));
+                PdfDocument pdfDocument2 = new PdfDocument(new PdfReader(pdfPath));
+
+                using (PdfWriter writer = new PdfWriter(combinedPdfStream))
+                using (PdfDocument combinedDocument = new PdfDocument(writer))
+                {
+                    iText.Kernel.Geom.Rectangle pageSize1 = pdfDocument1.GetPage(1).GetPageSize();
+                    //iText.Kernel.Geom.PageSize pageSize1 = (iText.Kernel.Geom.PageSize)(pdfDocument1.GetPage(1).GetPageSize());
+
+                    pdfDocument2 = new PdfDocument(new PdfReader(pdfPath));
+                    pdfDocument2.GetPage(1).GetPdfObject().Put(PdfName.MediaBox, new PdfArray(new float[] { pageSize1.GetLeft(), pageSize1.GetBottom(), pageSize1.GetRight(), pageSize1.GetTop() }));
+
+                    for (int page = 1; page <= pdfDocument1.GetNumberOfPages(); page++)
+                    {
+                        PdfPage pdfPage = pdfDocument1.GetPage(page);
+                        combinedDocument.AddPage(pdfPage.CopyTo(combinedDocument));
+                    }
+
+                    for (int page = 1; page <= pdfDocument2.GetNumberOfPages(); page++)
+                    {
+                        pdfDocument2.GetPage(page).GetPdfObject().Put(PdfName.MediaBox, new PdfArray(new float[] { pageSize1.GetLeft(), pageSize1.GetBottom(), pageSize1.GetRight(), pageSize1.GetTop() }));
+                        PdfPage pdfPage = pdfDocument2.GetPage(page);
+                        combinedDocument.AddPage(pdfPage.CopyTo(combinedDocument));
+                    }
+                }
+                return combinedPdfStream.ToArray();
+            }
+        }
+
+        //public byte[] CombinePdfFiles(byte[] pdfBytes, string pdfPath)
+        //{
+        //    using (MemoryStream combinedPdfStream = new MemoryStream())
+        //    {
+        //        // Load the PDF from a byte[] stream
+        //        PdfReader pdfReader1 = new PdfReader(pdfBytes);
+        //        PdfReader pdfReader2 = new PdfReader(pdfPath);
+
+        //        using (Document document = new Document())
+        //        {
+        //            iTextSharp.text.Rectangle pageSize1 = pdfReader1.GetPageSize(1);
+
+        //            pdfReader2 = new PdfReader(pdfPath);
+        //            pdfReader2.GetPageN(1).Put(PdfName.MEDIABOX, new PdfRectangle(pageSize1));
+
+        //            PdfCopy pdfCopy = new PdfCopy(document, combinedPdfStream);
+        //            document.Open();
+
+        //            for (int page = 1; page <= pdfReader1.NumberOfPages; page++)
+        //            {
+        //                PdfImportedPage importedPage = pdfCopy.GetImportedPage(pdfReader1, page);
+        //                pdfCopy.AddPage(importedPage);
+        //            }
+
+        //            for (int page = 1; page <= pdfReader2.NumberOfPages; page++)
+        //            {
+        //                pdfReader2.GetPageN(page).Put(PdfName.MEDIABOX, new PdfRectangle(pageSize1));
+        //                PdfImportedPage importedPage = pdfCopy.GetImportedPage(pdfReader2, page);
+        //                pdfCopy.AddPage(importedPage);
+        //            }
+        //        }
+        //        return combinedPdfStream.ToArray();
+        //    }
+        //}
 
         private byte[] GeneratePdf(string htmlContent)
         {
@@ -98,48 +233,6 @@ namespace ProjectX.Services
             return _converter.Convert(htmlToPdfDocument);
         }
 
-        private InvoiceViewModel GetInvoiceModel()
-        {
-            var invoiceViewModel = new InvoiceViewModel
-            {
-                OrderDate = DateTime.Now,
-                OrderId = 1234567890,
-                DeliveryDate = DateTime.Now.AddDays(10),
-                Products = new List<Product>()
-                {
-                    new Product
-                    {
-                        ItemName = "Hosting (12 months)",
-                        Price = 200
-                    },
-                    new Product
-                    {
-                        ItemName = "Domain name (1 year)",
-                        Price = 12
-                    },
-                    new Product
-                    {
-                        ItemName = "Website design",
-                        Price = 1000
-
-                    },
-                    new Product
-                    {
-                        ItemName = "Maintenance",
-                        Price = 300
-                    },
-                    new Product
-                    {
-                        ItemName = "Customization",
-                        Price = 400
-                    },
-                }
-            };
-
-            invoiceViewModel.TotalAmount = invoiceViewModel.Products.Sum(p => p.Price);
-
-            return invoiceViewModel;
-        }
 
     }
 }

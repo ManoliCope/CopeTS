@@ -16,6 +16,7 @@ using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
 using ProjectX.Entities.bModels;
 using ProjectX.Business.General;
 using ProjectX.Entities.Models;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace ProjectX.Middleware.Jwt
 {
@@ -56,7 +57,7 @@ namespace ProjectX.Middleware.Jwt
 
                 if (!string.IsNullOrEmpty(Controller))
                 {
-                    if (Controller == "login" || Controller == "content" || Controller == "errorf" || Controller == "user" || Action == "display" || Action == "drawpdf")
+                    if (Controller == "login" || Controller == "pdf" || Controller == "content" || Controller == "errorf" || Controller == "user" || Action == "display" || Action == "drawpdf")
                     {
                         if (Controller == "login")
                             context.Response.Cookies.Delete("token");
@@ -98,6 +99,24 @@ namespace ProjectX.Middleware.Jwt
 
                                     context.Response.Cookies.Append("token", cookieUser.refreshedtoken, options);
                                     context.Items["User"] = user;
+
+                                    if (user.U_Logo != null)
+                                    {
+
+                                        var logoFullPath = Path.Combine(_appSettings.UploadUsProduct.UploadsDirectory, user.U_Id.ToString(), "Logo", user.U_Logo);
+                                        if (!System.IO.File.Exists(logoFullPath))
+                                            user.U_Logo = "";
+                                    }
+
+
+                                    //string requesturl = context.Request.Scheme + "://" + context.Request.Host;
+                                    //string imagePath = requesturl +  @"\Files\" + user.U_Id + @"\Logo\" + user.U_Logo;
+                                    //string filename = imagePath.Replace("\\", "/");
+                                    //if (!System.IO.File.Exists(filename))
+                                    //{
+                                    //    imagePath = @"\Content\assets\images\userlogo.png";
+                                    //}
+
                                     context.Items["Userid"] = user.U_Id;
                                     context.Items["Username"] = user.U_First_Name + " " + user.U_Last_Name;
                                 }
@@ -132,7 +151,7 @@ namespace ProjectX.Middleware.Jwt
                         await _next(context);
                     }
                 }
-                else if(context.Request.Path.ToString().Contains("/Files/"))
+                else if (context.Request.Path.ToString().Contains("/Files/"))
                 {
                     await _next(context);
                 }

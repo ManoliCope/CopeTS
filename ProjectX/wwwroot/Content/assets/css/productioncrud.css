@@ -224,3 +224,8 @@
     outline: none;
     width: 100%
 }
+.cancelledtxt {
+    color: red !important;
+    font-weight: bold !important;
+    padding-left: 10px;
+}

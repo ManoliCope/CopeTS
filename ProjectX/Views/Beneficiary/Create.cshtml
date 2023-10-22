@@ -29,9 +29,9 @@
 										<input type="text" class="form-control" id="middleName" name="middleName">
 									</div>
 									@*<div class="form-group mb-3 col-lg-4">
-											<label for="middleName">Maiden Name</label>
-											<input type="text" class="form-control" id="maidenName" name="maidenName">
-										</div>*@
+			<label for="middleName">Maiden Name</label>
+			<input type="text" class="form-control" id="maidenName" name="maidenName">
+		</div>*@
 									<div class="form-group mb-3 col-lg-4">
 										<label for="lastName">Last Name</label>
 										<input type="text" class="form-control" id="lastName" name="lastName" required>
@@ -48,13 +48,16 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="passportNumber">Passport Number</label>
-										<input type="text" class="form-control" id="passportNumber" name="passportNumber">
+										<input type="text" class="form-control" id="passportNumber" name="passportNumber" required>
 									</div>
-
+									<div class="form-group mb-3 col-lg-4">
+										<label for="dateOfBirth">Date of Birth</label>
+										<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+									</div>
 									<div class="form-group mb-3 col-lg-4">
 										<label for="Nationalityid">Nationality</label>
 										<select class="form-control isselect2" id="Nationalityid" name="Nationalityid" required>
-											<option>Select Nationality</option>
+											<option value="">Select Nationality</option>
 											@foreach (var thislist in filldata.loadedData.destinations)
 											{
 												<option value="@thislist.D_Id"> @thislist.D_Destination</option>
@@ -65,7 +68,7 @@
 									<div class="form-group mb-3 col-lg-4">
 										<label for="CountryResidenceid">Country of Residence</label>
 										<select class="form-control isselect2" id="CountryResidenceid" name="CountryResidenceid" required>
-											<option>Select Country</option>
+											<option value="">Select Country</option>
 											@foreach (var thislist in filldata.loadedData.destinations)
 											{
 												<option value="@thislist.D_Id"> @thislist.D_Destination</option>

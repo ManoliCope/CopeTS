@@ -3,8 +3,8 @@ var userRights = [];
 
 
 
-$(document).ready(function () {                     
-   
+$(document).ready(function () {
+
     drawwtable([]);
     Search();
 });
@@ -18,7 +18,7 @@ function drawwtable(data, directory) {
         "filter": true,
         "destroy": true,
         "columns": [
-           
+
             { "title": "Product", "className": "text-center filter", "orderable": true, "data": "pR_Name" },
             { "title": "Issuing Fees", "className": "text-center filter", "orderable": true, "data": "uP_IssuingFees" },
             {
@@ -36,11 +36,14 @@ function drawwtable(data, directory) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a href="${directory}/${full.uP_UploadedFile}" target="_blank"   title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
+                    if (full.uP_UploadedFile == null)
+                        return "";
+                    else
+                        return `<a href="${directory}/${full.uP_UploadedFile}" target="_blank"   title="ViewFiles" userid="` + full.u_Id.toString() + `"  class="red-star" ><i class="fas fa-eye"/></a>`;
                 }
             },
             {
-                
+
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
@@ -56,7 +59,7 @@ function drawwtable(data, directory) {
 }
 
 function openAssignView() {
-    
+
     showresponsemodalbyid('openAssignProdView');
 }
 
@@ -68,7 +71,7 @@ $('#saveUsersProd').click(function () {
     var selectedfiles = Getuploadedpdf($fileInput)
     if (selectedfiles) {
         thisformData = selectedfiles;
-        thisformData.append("Action","Create");
+        thisformData.append("Action", "Create");
         thisformData.append("ProductId", $("#productId").val());
         thisformData.append("IssuingFees", $("#issuingFees").val());
         thisformData.append("UsersId", $("#assprodtable").attr('userid'));
@@ -93,7 +96,7 @@ $('#saveUsersProd').click(function () {
             else {
                 Search();
                 showresponsemodal(1, result.statusCode.message)
-       
+
             }
 
         },
@@ -141,13 +144,13 @@ function Search() {
     $.ajax({
         type: 'GET',
         url: projectname + "/Users/getUsersProduct",
-        data: { userid : userid },
+        data: { userid: userid },
         success: function (result) {
             removeloader();
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawwtable(result.usersproduct,result.directory);
+                drawwtable(result.usersproduct, result.directory);
             }
 
         },

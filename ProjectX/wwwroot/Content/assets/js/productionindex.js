@@ -48,6 +48,7 @@ function drawtable(data, status) {
         "ordering": true,
         "filter": true,
         "destroy": true,
+        "order": [[2, 'desc']], 
         "columns": [
             { "title": "Reference", "className": "text-center filter", "orderable": true, "data": "reference" },
             { "title": "Client Name", "className": "text-center filter", "orderable": true, "data": "mainname" },
@@ -57,11 +58,10 @@ function drawtable(data, status) {
                     if (type === 'display' || type === 'filter') {
                         // Format the date using JavaScript's toLocaleDateString function
                         var date = new Date(data);
-                        //var formattedDate = date.toLocaleDateString('en-US'); // Adjust the locale as needed
                         var formattedDate = formatDate_DdMmYyyy(date);
                         return formattedDate;
                     }
-                    return data; // For other types, return the original data
+                    return data;
                 }
             },
             //{ "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
@@ -75,21 +75,21 @@ function drawtable(data, status) {
                 visible: isAdmin == 'True' && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
-                    
-                   // if (full.status == 3) {
-                        if (type === 'display' || type === 'filter') {
-                            // Assuming "IsEditable" is a boolean property
-                            if (data) {
-                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
-                            }
-                            else
-                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
 
-                            return checkbox[0].outerHTML;
+                    // if (full.status == 3) {
+                    if (type === 'display' || type === 'filter') {
+                        // Assuming "IsEditable" is a boolean property
+                        if (data) {
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
                         }
-                        return data; // For other types, return the original data
-                   // }
-                   // return '';
+                        else
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
+
+                        return checkbox[0].outerHTML;
+                    }
+                    return data; // For other types, return the original data
+                    // }
+                    // return '';
                 }
             },
 
@@ -98,27 +98,28 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     var icon = "";
-                    if (isAdmin == 'True') {
-                        icon = "book";
-                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                    console.log(full.status, full.policyID)
 
-                    }
-                    else if (status == 1 || status == 3) {
-                        icon = "book";
-                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                    //if (isAdmin == 'True') {
+                    //    icon = "book";
+                    //    return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
 
+                    //}
+                    //else
+                    if (full.status == 4) {
+                        icon = "eye";
+                        return `<a   title="View" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
                     else {
-                        icon = "eye";
+                        icon = "book";
                         return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
-
                     }
-                       
-                  //  {
-                       // if (full.status == 3) icon = "book"; else icon = "eye"
-                      //  {
-                     //   }
-                  //  }
+
+                    //  {
+                    // if (full.status == 3) icon = "book"; else icon = "eye"
+                    //  {
+                    //   }
+                    //  }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
@@ -128,8 +129,15 @@ function drawtable(data, status) {
                 visible: isAdmin == 'True' && (status == 1 || status == 3),
                 "render": function (data, type, full, meta) {
                     //if (full.status == 3)
-                        return `<a  title="Delete" prodid="` + full.policyID + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-delete-production',${full.policyID},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-                  //  else return '';
+                    if (full.isCanceled) {
+
+                        return `<a  title="Activate" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-check green"></i></a>`;
+                    }
+                    else {
+
+                        return `<a  title="Cancel" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-times red"></i></a>`;
+                    }
+                    //  else return '';
 
                 }
             }
@@ -154,6 +162,16 @@ $('#closeconfirmeditbtn').click(function () {
     returncheckbox(this);
 
 });
+
+
+function changestatus(popupname, polid, metarow, isCanceled) {
+    if (isCanceled)
+        $(`#${popupname} .modal-body.msgtxt`).text("Are you sure you want to activate this record ?")
+    else
+        $(`#${popupname} .modal-body.msgtxt`).text("Are you sure you want to cancel this record ?")
+
+    showresponsemodalbyid(popupname, polid, metarow);
+}
 function returncheckbox(me) {
     var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
     var polid = $(me).closest("#confirm-edit-approval").attr("actid");

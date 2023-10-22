@@ -745,6 +745,9 @@ body {
 table td i.red {
     color: red
 }
+table td i.green {
+    color: #00db00
+}
 
 .transpback {
     /*background: rgba(192, 192, 192, 0.5) !important;*/

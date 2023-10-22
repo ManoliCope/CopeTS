@@ -55,7 +55,7 @@ namespace ProjectX.Repository.BeneficiaryRepository
             resp.Id = idOut;
             return resp;
         }
-        public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req)
+        public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req ,int userid)
         {
             var resp = new List<TR_Beneficiary>();
 
@@ -69,6 +69,7 @@ namespace ProjectX.Repository.BeneficiaryRepository
             param.Add("@BE_MaidenName", req.LastName);
             param.Add("@BE_PassportNumber", req.PassportNumber);
             param.Add("@BE_DOB", req.DateOfBirth);
+            param.Add("@user_id", userid);
 
 
 
@@ -84,11 +85,12 @@ namespace ProjectX.Repository.BeneficiaryRepository
 
             return resp;
         }
-        public TR_Beneficiary GetBeneficiary(int IdBeneficiary)
+        public TR_Beneficiary GetBeneficiary(int IdBeneficiary, int userid)
         {
             var resp = new TR_Beneficiary();
             var param = new DynamicParameters();
             param.Add("@BE_Id", IdBeneficiary);
+            param.Add("@user_id", userid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -101,11 +103,12 @@ namespace ProjectX.Repository.BeneficiaryRepository
             return resp;
         }
         
-        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix, int userid)
         {
             var resp = new BeneficiarySearchResp();
             var param = new DynamicParameters();
             param.Add("@BE_Prefix", prefix);
+            param.Add("@user_id", userid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

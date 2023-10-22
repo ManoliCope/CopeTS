@@ -28,7 +28,8 @@ namespace ProjectX.Controllers
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string printingdirection = GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + ii).Base64Image;
             var pdfFile = _documentService.GeneratePdfFromRazorView(ii, printingdirection);
-            return File(pdfFile, "application/octet-stream", "RazorPdf.pdf");
+            return File(pdfFile, "application/octet-stream", "PrintPolicy.pdf");
+
         }
 
         [HttpGet]
@@ -38,7 +39,7 @@ namespace ProjectX.Controllers
             string printingdirection = GenerateQRCodeImage(requesturl + "/Pdf/DownloadPdfFromRazorView?ii=" + ii).Base64Image;
 
             var pdfFile = _documentService.GeneratePdfFromRazorView(ii, printingdirection);
-            return File(pdfFile, "application/octet-stream", "RazorPdf.pdf");
+            return File(pdfFile, "application/octet-stream", "PrintPolicy.pdf");
         }
 
         private QRCodeModel GenerateQRCodeImage(string txtCode)

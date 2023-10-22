@@ -24,6 +24,7 @@ namespace ProjectX.Entities.Models.Production
         public bool IsGroup { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public int CreatedById { get; set; }
         public bool IsCanceled { get; set; }
         public bool IsEditable { get; set; }
         public decimal InitialPremium { get; set; }

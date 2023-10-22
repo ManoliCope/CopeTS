@@ -3940,7 +3940,7 @@ body.authentication-bg {
     user-select: none; /* Standard */
 }
 
-.disable-click {
+.no-click {
     pointer-events: none;
 }
 

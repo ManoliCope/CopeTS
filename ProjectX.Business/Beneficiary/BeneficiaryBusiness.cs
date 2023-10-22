@@ -25,13 +25,13 @@ namespace ProjectX.Business.Beneficiary
             return response;
 
         }
-        public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req)
+        public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req, int userid)
         {
-            return _beneficiaryRepository.GetBeneficiaryList(req);
+            return _beneficiaryRepository.GetBeneficiaryList(req, userid);
         }
-        public BeneficiaryResp GetBeneficiary(int IdBeneficiary)
+        public BeneficiaryResp GetBeneficiary(int IdBeneficiary, int userid)
         {
-            TR_Beneficiary repores = _beneficiaryRepository.GetBeneficiary(IdBeneficiary);
+            TR_Beneficiary repores = _beneficiaryRepository.GetBeneficiary(IdBeneficiary, userid);
             BeneficiaryResp resp = new BeneficiaryResp();
             if (repores == null)
                 return resp;
@@ -52,9 +52,9 @@ namespace ProjectX.Business.Beneficiary
 
             return resp;
         }
-        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
+        public BeneficiarySearchResp SearchBeneficiaryPref(string prefix, int userid)
         {
-            return _beneficiaryRepository.SearchBeneficiaryPref(prefix);
+            return _beneficiaryRepository.SearchBeneficiaryPref(prefix, userid);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace ProjectX.Controllers
         public BeneficiarySearchResp Search(BeneficiarySearchReq req)
         {
             BeneficiarySearchResp response = new BeneficiarySearchResp();
-            response.beneficiary = _beneficiaryBusiness.GetBeneficiaryList(req);
+            response.beneficiary = _beneficiaryBusiness.GetBeneficiaryList(req, _user.U_Id);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -104,7 +104,7 @@ namespace ProjectX.Controllers
             ViewData["filldata"] = filldata;
 
             BeneficiaryResp response = new BeneficiaryResp();
-            response = _beneficiaryBusiness.GetBeneficiary(id);
+            response = _beneficiaryBusiness.GetBeneficiary(id, _user.U_Id);
             return View("details", response);
         }
 
@@ -140,7 +140,7 @@ namespace ProjectX.Controllers
         public BeneficiarySearchResp SearchBeneficiaryPref(string prefix)
         {
             BeneficiarySearchResp resp = new BeneficiarySearchResp();
-            resp = _beneficiaryBusiness.SearchBeneficiaryPref(prefix);
+            resp = _beneficiaryBusiness.SearchBeneficiaryPref(prefix, _user.U_Id);
             return resp;
         }
         private List<TR_Beneficiary> GenerateRandomBeneficiaries(string prefix)
@@ -172,7 +172,7 @@ namespace ProjectX.Controllers
         {
             //id = 74;
             BeneficiaryResp response = new BeneficiaryResp();
-            response = _beneficiaryBusiness.GetBeneficiary(id);
+            response = _beneficiaryBusiness.GetBeneficiary(id, _user.U_Id);
             return response;
         }
 

@@ -272,7 +272,8 @@ body.modal-open {
 }
 
 .page-link {
-    color: var(--main-color);;
+    color: var(--main-color);
+    ;
 }
 
 
@@ -380,6 +381,7 @@ body.modal-open {
     width: 300px !important;
     margin-left: 45px !important;
 }
+
 #divservicetowing .cancel-dropdownmenu {
     width: 400px !important;
     margin-left: 150px !important;
@@ -405,10 +407,28 @@ body.modal-open {
         transform: rotate(360deg);
     }
 
-.complogo {
+/*.complogo {
     width: 140px;
     height: 60px;
-    margin: 13px;
+    margin: 13px;*/
     /*border-radius: 25%;*/
-    margin-left: 20px;
+    /*margin-left: 20px;
+}*/
+
+
+.logo-container {
+    margin-top: 10px;
+    max-width: 200px; 
+    max-height: 100px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f1f1f1; 
 }
+
+    .logo-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }

@@ -20,15 +20,15 @@
 				<div class="page-title mt-2">
 					<h4 class="card-title ">
 						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-						<span>Edit Policy - @Model.Reference </span>
-
+						<span>Edit Policy - @Model.Reference</span>
+						<span class="cancelledtxt" >@(Model.IsCanceled ? "Cancelled":"") </span>
 					</h4>
 				</div>
 				<span class="text-warning"></span>
 			</div>
 			<div class="page-content w-100">
 				<div class="row m-0">
-					<div class="col-md-6 @(!Model.IsEditable ? "disable-click":"")">
+					<div class="col-md-6 @((UserRights.Is_Admin == false && !Model.IsEditable) ? "no-click":"")">
 						<div class="card mt-4">
 							<div class="card-body">
 								<div class="row">

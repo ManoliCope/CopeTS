@@ -353,9 +353,9 @@ namespace ProjectX.Entities
         System = 0,
         Profile = 1,
         Case = 2,
-        MotorDeclaration = 3,
-        CaseAudit = 4,
-        FinanceComplete=5
+        TEST = 3,
+        TTTT = 4,
+        AAAAA=5
     }
 
     public enum DocumentTypes
@@ -363,20 +363,12 @@ namespace ProjectX.Entities
         All = -1,
         Others = 0,
         GOP = 1,
-        ID = 2,
-        MedicalReport = 3,
-        Contract = 4,
-        DrivingLicense = 5,
-        VehicleImages = 6,
-        DeclarationReport = 7,
-        Invoice = 8
+        ID = 2
     }
 
     public enum ProfileTypes
     {
         Payer = 1,
-        TPA = 2,
-        Assistance_Company = 3
     }
 
     public enum CaseUpdateActions
@@ -385,8 +377,7 @@ namespace ProjectX.Entities
         Proceed = 2,
         Close = 3,
         ReOpen = 4,
-        Cancel = 5,
-        FinanceComplete = 6
+        Cancel = 5
     }
 
     public enum CaseStatus
@@ -426,21 +417,13 @@ namespace ProjectX.Entities
     public enum CaseEmailOptions
     {
         GetApprovalFromPayer = 1,
-        GetMedicalReportFromPartner = 2,
-        AnyEmail = 3,
-        MotorDeclaration = 4,
     }
 
     public enum CaseTypes
     {
         Expert = 1,
-        TowingAndExpert = 2,
         Others = 3,
         Property = 4,
-        BadReview = 5,
-        Towing = 6,
-        Assistance = 7,
-        Medical = 8
     }
 
     public enum Groups
@@ -450,7 +433,6 @@ namespace ProjectX.Entities
         Auditor = 3,
         Payer = 4,
         Accountant = 6,
-        Operator_Supervisor = 7
     }
 
     public enum TowingStatus
@@ -466,12 +448,5 @@ namespace ProjectX.Entities
         Cancelled = 3,
     }
 
-    public enum LOB
-    {
-        TR,
-        MO,
-        MD,
-        NM,
-        OT
-    }
+    
 }
