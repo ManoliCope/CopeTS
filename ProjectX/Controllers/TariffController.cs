@@ -163,7 +163,7 @@ namespace ProjectX.Controllers
         { 
             List<TR_Tariff> tariffs = new List<TR_Tariff>();
             List<int> rowsWithError = new List<int>();
-
+            TariffResp response= new TariffResp();
             foreach (IFormFile formFile in files)
             {
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -202,7 +202,7 @@ namespace ProjectX.Controllers
                             }
                         }
                     }
-                    var importTariff = _tariffBusiness.ImportDataTariff(tariffs, _user.U_Id);
+                     response = _tariffBusiness.ImportDataTariff(tariffs, _user.U_Id);
                 }
             }
 
@@ -215,7 +215,7 @@ namespace ProjectX.Controllers
             ///  after no error detected
             ///  call business and insert to db and change below return ok to text success
 
-            return Ok(tariffs);
+            return Ok(response);
         }
 
     }

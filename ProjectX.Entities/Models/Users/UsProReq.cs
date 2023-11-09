@@ -14,5 +14,6 @@ namespace ProjectX.Entities.Models.Users
         public DateTime? CreationDate { get; set; }
         public string Action { get; set; }
         public string UploadedFile { get; set; }
+        public string UploadedFolder { get; set; }
     }
 }

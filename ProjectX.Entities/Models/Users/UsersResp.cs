@@ -57,6 +57,8 @@ namespace ProjectX.Entities.Models.Users
         public DateTime creation_Date { get; set; }
         public bool? is_Admin { get; set; }
         public string logo { get; set; }
+        public string header { get; set; }
+        public string footer { get; set; }
 
     }
 }

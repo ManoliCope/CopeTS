@@ -61,7 +61,7 @@ namespace ProjectX.Repository.TariffRepository
         public List<TR_Tariff> GetTariffList(TariffSearchReq req)
         {
             var resp = new List<TR_Tariff>();
-            
+
             var param = new DynamicParameters();
             param.Add("@T_Id", req.id);
             param.Add("@P_Id", req.idPackage);
@@ -82,10 +82,10 @@ namespace ProjectX.Repository.TariffRepository
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Tariff_Get", param, commandType: CommandType.StoredProcedure))
                 {
                     resp = result.Read<TR_Tariff>().ToList();
-                 
+
                 }
-               
-               
+
+
             }
             return resp;
         }
@@ -117,17 +117,34 @@ namespace ProjectX.Repository.TariffRepository
             param.Add("@userid", userid);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
-          
-           
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+
+            try
             {
-                _db.Execute("TR_Tariff_Import", param, commandType: CommandType.StoredProcedure);
-                statusCode = param.Get<int>("@Status");
-                idOut = param.Get<int>("@Returned_ID");
+                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+                {
+                    _db.Execute("TR_Tariff_Import", param, commandType: CommandType.StoredProcedure);
+                    statusCode = param.Get<int>("@Status");
+                    idOut = param.Get<int>("@Returned_ID");
+                }
+                resp.statusCode.code = statusCode;
+                resp.id = idOut;
+                return resp;
             }
-            resp.statusCode.code = statusCode;
-            resp.id = idOut;
-            return resp;
+            catch (SqlException ex)
+            {
+
+                if (ex.Number == 2627)
+                    resp.statusCode.message = "Tariff already exists";
+                else
+                    resp.statusCode.message = "Error Try Again";
+
+
+                resp.statusCode.code = 0;
+                resp.id = 0;
+
+                return resp;
+            }
+
         }
         public static DataTable ConvertToDataTable<T>(IEnumerable<T> list)
         {

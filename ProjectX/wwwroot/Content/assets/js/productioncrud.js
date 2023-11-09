@@ -999,12 +999,12 @@ function recalculateTotalPrice(table) {
 
     var initialPremium = parseFloat($('#initpremtotal').text());
     var additionalValue = parseFloat($('#additiononprem').val());
-   
+
     var vatperc = parseFloat($('#taxvat').attr("vt"));
     var stperc = parseFloat($('#stamps').attr("st"));
 
-    $('#taxvat').text((initialPremium * (vatperc/100)).toFixed(2) + " USD")
-    $('#stamps').text((initialPremium * (stperc /100)).toFixed(2) + " USD")
+    $('#taxvat').text((initialPremium * (vatperc / 100)).toFixed(2) + " USD")
+    $('#stamps').text((initialPremium * (stperc / 100)).toFixed(2) + " USD")
     $('#initpremtotal').text(totalinsuredprem.toFixed(2) + " USD");
 
 
@@ -1020,7 +1020,7 @@ function recalculateTotalPrice(table) {
         taxVATValue = 0;
     if (isNaN(stampsValue))
         stampsValue = 0;
- 
+
 
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
     $('#grandtotal').text(grandTotal.toFixed(2) + " USD");
@@ -1294,8 +1294,9 @@ function sendDataIssuance() {
                     $("#responsemodal button").click(function () {
                         gotopage("production", "Edit", result.policyID);
                     });
-                    showresponsemodal("1", result.statusCode.message)
                 }
+
+                showresponsemodal("1", result.statusCode.message)
             }
             else {
                 showresponsemodal("0", result.statusCode.message)

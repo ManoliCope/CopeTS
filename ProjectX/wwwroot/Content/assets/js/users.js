@@ -25,6 +25,11 @@ $(document).ready(function () {
     $("#confirmdeleteuser").click(function () {
         deleteuser(this)
     });
+
+
+    $(".file-upload").on("change", function () {
+        $(this).closest(".file-input-container").find(".save-button").removeAttr("hidden");
+    });
 });
 
 function drawtable(data) {
@@ -470,15 +475,17 @@ function resetPassScreen() {
 function gotoAssignProduct(userid) {
     window.location.href = '/users/assignproduct?userid=' + userid;
 }
-$('#saveUploadedLogo').click(function () {
+$('.uploadfile').click(function () {
 
     var thisformData = new FormData();
-    var $fileInput = $('#uploadFile');
+    //var $fileInput = $('#uploadFile');
+    var $fileInput = $(this).parent().find('.file-upload');
 
     var selectedfiles = Getuploadedlogo($fileInput)
     if (selectedfiles) {
         thisformData = selectedfiles;
         thisformData.append("UsersId", $("#addUserForm").attr('userid'));
+        thisformData.append("Folder", $(this).attr('fld'));
     }
     else
         return false;

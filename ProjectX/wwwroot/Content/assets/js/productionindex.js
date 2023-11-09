@@ -48,7 +48,7 @@ function drawtable(data, status) {
         "ordering": true,
         "filter": true,
         "destroy": true,
-        "order": [[2, 'desc']], 
+        "order": [[2, 'desc']],
         "columns": [
             { "title": "Reference", "className": "text-center filter", "orderable": true, "data": "reference" },
             { "title": "Client Name", "className": "text-center filter", "orderable": true, "data": "mainname" },
@@ -80,10 +80,10 @@ function drawtable(data, status) {
                     if (type === 'display' || type === 'filter') {
                         // Assuming "IsEditable" is a boolean property
                         if (data) {
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'1'); triggerclose(this)" checked>`);
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this); triggerclose(this)" checked>`);
                         }
                         else
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},'0');triggerclose(this)">`);
+                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this);triggerclose(this)">`);
 
                         return checkbox[0].outerHTML;
                     }
@@ -158,10 +158,10 @@ function drawtable(data, status) {
     triggerfiltertable(table, "profile")
 }
 
-$('#closeconfirmeditbtn').click(function () {
-    returncheckbox(this);
+//$('#closeconfirmeditbtn').click(function () {
+//    returncheckbox(this);
 
-});
+//});
 
 
 function changestatus(popupname, polid, metarow, isCanceled) {
@@ -172,32 +172,37 @@ function changestatus(popupname, polid, metarow, isCanceled) {
 
     showresponsemodalbyid(popupname, polid, metarow);
 }
+function triggerclose(me) {
+    $("#closeconfirmeditbtn").off("click");
+
+    $('#closeconfirmeditbtn').click(function () {
+        var status = $(me).is(':checked');
+        if (status) {
+            $(me).prop("checked", false)
+        }
+        else {
+            $(me).prop("checked", true)
+        }
+    });
+}
+
 function returncheckbox(me) {
     var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
     var polid = $(me).closest("#confirm-edit-approval").attr("actid");
     var rowid = '#chckbox' + polid;
     if (isEditable == '0') {
-
         $(rowid).prop("checked", false)
     } else {
         $(rowid).prop("checked", true)
     }
 }
-//function triggerclose(me) {
-
-//    $('#closeconfirmeditbtn').click(function () {
-//        var status = $(me).is(':checked');
-//        if (status) {
-//            $(me).prop("checked", false)
-//        }
-//        else {
-//            $(me).prop("checked", true)
-//        }
-//    });
-//}
-function responsemodalcheckbox(popupid, thisid, trindex, chkbx) {
+function responsemodalcheckbox(popupid, thisid, trindex,me) {
     showresponsemodalbyid(popupid, thisid, trindex)
-    $('#' + popupid).attr('chckbox', chkbx);
+    var status = $(me).is(':checked');
+    if (status) 
+        $('#' + popupid).attr('chckbox', 1);
+    else 
+        $('#' + popupid).attr('chckbox', 0);
 }
 
 function Search() {
@@ -271,6 +276,11 @@ function editableProduction(me) {
     togglebtnloader(me)
     var thisid = $(me).closest("#confirm-edit-approval").attr("actid");
     var isEditable = $(me).closest("#confirm-edit-approval").attr("chckbox");
+
+    //deductible: insuredSection.find("input[name='name'][data-dedprice]").prop("checked"),
+    //table.find('input[data-dedprice]').prop('checked', item.deductible);
+    alert(isEditable)
+
 
     removebtnloader(me);
 

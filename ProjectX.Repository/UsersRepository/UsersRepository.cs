@@ -363,6 +363,7 @@ namespace ProjectX.Repository.UsersRepository
 
             param.Add("@U_Id", req.UsersId);
             param.Add("@U_Logo", req.UploadedFile);
+            param.Add("@U_Folder", req.UploadedFolder);
 
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);

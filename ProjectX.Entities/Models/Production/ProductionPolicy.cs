@@ -40,6 +40,8 @@ namespace ProjectX.Entities.Models.Production
         public List<TR_Benefit> Benefits { get; set; }
         public CurrResp CurrencyRate { get; set; }
         public string QrCodebit { get; set; }
+        public string Header { get; set; }
+        public string Footer { get; set; }
     }
 
     public class PolicyDetail

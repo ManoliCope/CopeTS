@@ -78,8 +78,10 @@ function importbenefits(me) {
         },
         error: function (xhr, status, error) {
             //console.log('Error:'+ xhr.responseText + '. Try Again!'); 
-            var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            //var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            var responseerror = 'Error. Try Again!'
             showresponsemodal(0, responseerror)
+            removebtnloader(me)
         }
     });
 }

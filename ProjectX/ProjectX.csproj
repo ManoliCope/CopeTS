@@ -25,6 +25,7 @@
     <None Remove="libwkhtmltox.dll" />
     <None Remove="libwkhtmltox.dylib" />
     <None Remove="libwkhtmltox.so" />
+    <None Remove="Views\PdfTemplate\footer.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <Content Include="libwkhtmltox.so">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\PdfTemplate\footer.html" />
   </ItemGroup>
 
   <ItemGroup>

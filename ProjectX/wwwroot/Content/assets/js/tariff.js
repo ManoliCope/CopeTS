@@ -58,7 +58,7 @@ $(document).ready(function () {
 });
 
 function downloadExcel() {
-    var fileName = "tariff.xlsx"; 
+    var fileName = "tariff.xlsx";
     var baseUrl = window.location.origin;
     var filePath = baseUrl + "/Samplefile/" + fileName;
 
@@ -348,14 +348,21 @@ function importtariff(me) {
         processData: false,
         contentType: false,
         type: "POST",
-        success: function (data) {
-            showresponsemodal(1, 'Tariff Uploaded')
+        success: function (result) {
+            if (result.statusCode.code != 1)
+                showresponsemodal(0, result.statusCode.message)
+            else {
+                showresponsemodal(1, 'Tariff Uploaded')
+            }
             removebtnloader(me)
+
         },
         error: function (xhr, status, error) {
             //console.log('Error:'+ xhr.responseText + '. Try Again!'); 
-            var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            //var responseerror = 'Error in rows:' + xhr.responseText + '. Try Again!'
+            var responseerror = 'Error. Try Again!'
             showresponsemodal(0, responseerror)
+            removebtnloader(me)
         }
     });
 }

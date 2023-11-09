@@ -161,7 +161,7 @@ namespace ProjectX.Controllers
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id,false);
+            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id, false);
 
             if (policyreponse != null)
             {
@@ -269,8 +269,8 @@ namespace ProjectX.Controllers
         {
             ProductionSaveResp response = new ProductionSaveResp();
 
-            DateTime currentDate = DateTime.Now.Date; 
-            DateTime fromdate = Convert.ToDateTime(IssuanceReq.from).Date; 
+            DateTime currentDate = DateTime.Now.Date;
+            DateTime fromdate = Convert.ToDateTime(IssuanceReq.from).Date;
             if (fromdate < currentDate && (_user.U_Is_Admin == false))
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.Backdate);
@@ -308,13 +308,14 @@ namespace ProjectX.Controllers
         [HttpPost]
         public ProductionResp CancelProduction(int polId)
         {
-            return _productionBusiness.CancelProduction(polId,  _user.U_Id);
+            return _productionBusiness.CancelProduction(polId, _user.U_Id);
         }
         [HttpPost]
         public ProductionResp EditableProduction(int polId, int isEditable)
         {
-            var editable=isEditable == 1?false:true;
-            return _productionBusiness.EditableProduction(polId,  _user.U_Id, editable);
+            var editable = isEditable == 1 ? true : false;
+
+            return _productionBusiness.EditableProduction(polId, _user.U_Id, editable);
         }
     }
 }

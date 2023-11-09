@@ -319,7 +319,15 @@ namespace ProjectX.Repository.ProductionRepository
                         resp.PolicyDetails = result.Read<PolicyDetail>().ToList();
                         resp.AdditionalBenefits = result.Read<PolicyAdditionalBenefit>().ToList();
                         resp.Destinations = result.Read<PolicyDestination>().ToList();
-                        resp.CurrencyRate = result.Read<CurrResp>().First();
+                        var thecurrencyrate = result.Read<CurrResp>();
+
+                        if (thecurrencyrate.Count() == 0 )
+                        {
+                            resp.CurrencyRate = new CurrResp();
+                            resp.CurrencyRate.Rate = 0;
+                        }
+                        else
+                            resp.CurrencyRate = thecurrencyrate.First();
 
                         if (isprint)
                             resp.Benefits = result.Read<TR_Benefit>().ToList();
@@ -382,7 +390,7 @@ namespace ProjectX.Repository.ProductionRepository
             return dataTable;
         }
 
-        public ProductionResp EditableProduction(int polId, int userid,bool isEditable)
+        public ProductionResp EditableProduction(int polId, int userid, bool isEditable)
         {
             var resp = new ProductionResp();
             int statusCode = 0;
@@ -405,7 +413,7 @@ namespace ProjectX.Repository.ProductionRepository
             //resp.id = idOut;
             return resp;
         }
-        
+
         public ProductionResp CancelProduction(int polId, int userid)
         {
             var resp = new ProductionResp();

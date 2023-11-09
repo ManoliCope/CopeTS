@@ -30,6 +30,8 @@ using ProjectX.Entities.bModels;
 using ProjectX.Business.General;
 using ProjectX.Entities.Models.Users;
 using ProjectX.Business.Users;
+using Microsoft.AspNetCore.Components.Web;
+using static ProjectX.Controllers.PdfController;
 
 namespace ProjectX.Services
 {
@@ -57,45 +59,32 @@ namespace ProjectX.Services
 
         }
 
-        public byte[] GeneratePdfFromString()
-        {
-            var htmlContent = $@"
-            <!DOCTYPE html>
-            <html lang=""en"">
-            <head>
-                <style>
-                p{{
-                    width: 80%;
-                }}
-                </style>
-            </head>
-            <body>
-                <h1>Some heading</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </body>
-            </html>
-            ";
 
-            return GeneratePdf(htmlContent);
-        }
-
-        public byte[] GeneratePdfFromRazorView(int policyid, string fileqrurl)
+        public byte[] GeneratePdfFromRazorView(int policyid, string fileqrurl, string requesturl)
         {
+            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             ProductionPolicy policyreponse = new ProductionPolicy();
-
             policyreponse = _productionBusiness.GetPolicy(policyid, 0, true);
-            policyreponse.QrCodebit = fileqrurl;
-            var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
 
+            int userid = Convert.ToInt16(policyreponse.CreatedById);
+
+            GetUserReq thisuser = new GetUserReq();
+            thisuser.idUser = userid;
+            var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
+
+            policyreponse.QrCodebit = fileqrurl;
+            policyreponse.Header = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty));
+            policyreponse.Footer = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+
+            var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
             if (policyreponse.PolicyDetails.Count > 1)
                 partialName = "/Views/PdfTemplate/PrintPolicyGroup.cshtml";
 
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
-            byte[] pdfBytes = GeneratePdf(htmlContent); ;
+            byte[] pdfBytes = ConvertHtmlToPDF(htmlContent);
 
             try
             {
-                int userid = Convert.ToInt16(policyreponse.CreatedById);
                 var response = new UsProSearchResp();
                 response.usersproduct = _usersBusiness.GetUsersProduct(userid);
 
@@ -103,12 +92,10 @@ namespace ProjectX.Services
                 if (UploadedCondition == null)
                     UploadedCondition = "";
 
-
-                var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
                 var userFullPath = Path.Combine(uploadsDirectory, userid.ToString(), "Conditions", UploadedCondition);
 
-                byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
-                return combinedPdf;
+                //byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
+                return pdfBytes;
             }
             catch (Exception ex)
             {
@@ -132,7 +119,6 @@ namespace ProjectX.Services
             }
 
         }
-
 
 
         public byte[] CombinePdfFiles(byte[] pdfBytes, string pdfPath)
@@ -170,69 +156,119 @@ namespace ProjectX.Services
             }
         }
 
-        //public byte[] CombinePdfFiles(byte[] pdfBytes, string pdfPath)
-        //{
-        //    using (MemoryStream combinedPdfStream = new MemoryStream())
-        //    {
-        //        // Load the PDF from a byte[] stream
-        //        PdfReader pdfReader1 = new PdfReader(pdfBytes);
-        //        PdfReader pdfReader2 = new PdfReader(pdfPath);
 
-        //        using (Document document = new Document())
-        //        {
-        //            iTextSharp.text.Rectangle pageSize1 = pdfReader1.GetPageSize(1);
-
-        //            pdfReader2 = new PdfReader(pdfPath);
-        //            pdfReader2.GetPageN(1).Put(PdfName.MEDIABOX, new PdfRectangle(pageSize1));
-
-        //            PdfCopy pdfCopy = new PdfCopy(document, combinedPdfStream);
-        //            document.Open();
-
-        //            for (int page = 1; page <= pdfReader1.NumberOfPages; page++)
-        //            {
-        //                PdfImportedPage importedPage = pdfCopy.GetImportedPage(pdfReader1, page);
-        //                pdfCopy.AddPage(importedPage);
-        //            }
-
-        //            for (int page = 1; page <= pdfReader2.NumberOfPages; page++)
-        //            {
-        //                pdfReader2.GetPageN(page).Put(PdfName.MEDIABOX, new PdfRectangle(pageSize1));
-        //                PdfImportedPage importedPage = pdfCopy.GetImportedPage(pdfReader2, page);
-        //                pdfCopy.AddPage(importedPage);
-        //            }
-        //        }
-        //        return combinedPdfStream.ToArray();
-        //    }
-        //}
-
-        private byte[] GeneratePdf(string htmlContent)
+        public byte[] ConvertHtmlToPDF(string html, string Title = "",
+         string paperSize = "A4", double Margins = 1.25, bool Landscape = false, bool hasPageNumber = false,
+         string HeaderUrl = "", double HeaderSpacing = -20, string FooterUrl = "", double FooterSpacing = -15)
         {
-            var globalSettings = new GlobalSettings
+            Margins = 0;
+            var converter = new SynchronizedConverter(new PdfTools());
+            var doc = new HtmlToPdfDocument()
             {
-                ColorMode = DinkToPdf.ColorMode.Color,
-                Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.A4,
-                Margins = new MarginSettings { Top = 18, Bottom = 18 },
+                GlobalSettings = {
+                    ColorMode = DinkToPdf.ColorMode.Color,
+                    DocumentTitle = Title,
+                    Margins = new MarginSettings()
+                    {
+                        Unit = Unit.Centimeters,
+                        Bottom = Margins,
+                        Left = Margins,
+                        Right = -1,
+                        Top = Margins
+                    }
+                },
+                Objects = {
+                    new ObjectSettings() {
+                        PagesCount = true,
+                        HtmlContent = html,
+                        WebSettings = { DefaultEncoding = "utf-8" }
+                    }
+                }
             };
 
-            var objectSettings = new ObjectSettings
+            if (!string.IsNullOrWhiteSpace(HeaderUrl))
             {
-                PagesCount = true,
-                HtmlContent = htmlContent,
-                WebSettings = { DefaultEncoding = "utf-8" },
-                //HeaderSettings = { FontSize = 10, Right = "Page [page] of [toPage]", Line = true },
-                //FooterSettings = { FontSize = 8, Center = "PDF demo from JeminPro", Line = true },
-            };
-
-            var htmlToPdfDocument = new HtmlToPdfDocument()
+                doc.Objects.FirstOrDefault().HeaderSettings = new HeaderSettings() { HtmUrl = HeaderUrl, Spacing = HeaderSpacing };
+            }
+            if (!string.IsNullOrWhiteSpace(FooterUrl))
             {
-                GlobalSettings = globalSettings,
-                Objects = { objectSettings },
-            };
+                doc.Objects.FirstOrDefault().FooterSettings = new FooterSettings() { HtmUrl = FooterUrl, Spacing = FooterSpacing };
+            }
+            if (hasPageNumber)
+            {
+                doc.Objects.FirstOrDefault().FooterSettings = new FooterSettings() { Right = "Page [page] of [toPage]" };
+            }
+            if (Landscape)
+            {
+                doc.GlobalSettings.Orientation = Orientation.Landscape;
+            }
+            else
+            {
+                doc.GlobalSettings.Orientation = Orientation.Portrait;
+            }
+            switch (paperSize.ToLower())
+            {
+                case "a4":
+                    doc.GlobalSettings.PaperSize = DinkToPdf.PaperKind.A4;
+                    break;
+                case "a5":
+                    doc.GlobalSettings.PaperSize = DinkToPdf.PaperKind.A5;
+                    break;
+                default:
+                    doc.GlobalSettings.PaperSize = DinkToPdf.PaperKind.A4;
+                    break;
+            }
+            try
+            {
 
-            return _converter.Convert(htmlToPdfDocument);
+                return _converter.Convert(doc);
+                //byte[] pdf = _converter.Convert(doc);
+                //string base64String = Convert.ToBase64String(pdf);
+                //return base64String;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
 
+        public string ConvertImageToBase64(string imagePath)
+        {
+            string base64String = string.Empty;
+            try
+            {
+                byte[] imageBytes = File.ReadAllBytes(imagePath);
+                base64String = Convert.ToBase64String(imageBytes);
+            }
+            catch
+            {
+            }
 
+            return base64String;
+        }
+
+        public QRCodeModel GenerateQRCodeImage(string txtCode)
+        {
+            QRCodeGenerator qrcodegenerator = new QRCodeGenerator();
+            QRCodeData QRCodeData = qrcodegenerator.CreateQrCode(txtCode, QRCodeGenerator.ECCLevel.Q);
+            QRCode QRCode = new QRCode(QRCodeData);
+            Bitmap bitmap = QRCode.GetGraphic(15);
+            var bitmapbytes = BitmapToBytes(bitmap);
+            var base64Image = Convert.ToBase64String(bitmapbytes);
+
+            return new QRCodeModel
+            {
+                Base64Image = base64Image
+            };
+        }
+        public byte[] BitmapToBytes(Bitmap bitmap)
+        {
+            using (var stream = new System.IO.MemoryStream())
+            {
+                bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
     }
 }

@@ -316,7 +316,7 @@ namespace ProjectX.Controllers
         }
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files,int UsersId)
+        public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files,int UsersId,string Folder)
         {//see tariff upload and make it like it.. make the popup as form
             //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
@@ -326,7 +326,7 @@ namespace ProjectX.Controllers
                 {
                     var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString());
                     createNewFolder(userFullPath);
-                    var logoPath = Path.Combine(userFullPath, "Logo");
+                    var logoPath = Path.Combine(userFullPath, Folder);
                     createNewFolder(logoPath);
                     var fileName = Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(logoPath, fileName);
@@ -340,7 +340,8 @@ namespace ProjectX.Controllers
                     // Your database code goes here
                     var req = new UsProReq {
                     UsersId=UsersId,
-                        UploadedFile=fileName
+                        UploadedFile=fileName,
+                        UploadedFolder= Folder
                     };
 
                     var response =_usersBusiness.SaveUploadedLogo(req);
