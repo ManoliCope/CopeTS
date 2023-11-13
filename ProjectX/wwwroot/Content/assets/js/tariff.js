@@ -102,7 +102,8 @@ function drawtable(data) {
                 "render": function (data, type, row) {
                     if (type === "display" || type === "filter") {
                         var date = new Date(data);
-                        return date.toLocaleDateString();
+                        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                        return date.toLocaleDateString('en-GB', options);
                     }
                     return data;
                 }

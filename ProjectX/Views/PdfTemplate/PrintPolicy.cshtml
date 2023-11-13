@@ -1,394 +1,347 @@
 ﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
 @{
-	Layout = null;
+    Layout = null;
 }
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Beneficiary and Policy Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+            padding: 0px;
+            /*padding-top: 80px;*/
+            /*border:2px solid red;*/
+            /*margin: 5px;*/
+        }
 
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			margin: 0px;
-			padding: 0px;
-			/*padding-top: 80px;*/
-			/*border:2px solid red;*/
-			/*margin: 5px;*/
-		}
+        .underlined {
+            display: inline-block;
+            border-bottom: 1px solid;
+            margin-bottom: 3px;
+        }
 
-		.underlined {
-			display: inline-block;
-			border-bottom: 1px solid;
-			margin-bottom: 3px;
-		}
+        .underlined-heading {
+            /*display: inline-block;*/
+            border-bottom: 1px solid;
+            margin-bottom: 3px;
+        }
 
-		.underlined-heading {
-			/*display: inline-block;*/
-			border-bottom: 1px solid;
-			margin-bottom: 3px;
-		}
+        h1.mainheader {
+            text-align: center;
+        }
 
-		h1.mainheader {
-			text-align: center;
-		}
+        h2 {
+            margin-bottom: 5px;
+        }
 
-		h2 {
-			margin-bottom: 5px;
-		}
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            /*border: 0px solid #dddddd;*/
+        }
 
-		table {
-			border-collapse: collapse;
-			width: 100%;
-			margin-bottom: 20px;
-			/*border: 0px solid #dddddd;*/
-		}
+        th, td {
+            /*border: 0px solid #dddddd;*/
+            padding: 4px;
+            text-align: left;
+        }
 
-		th, td {
-			/*border: 0px solid #dddddd;*/
-			padding: 4px;
-			text-align: left;
-		}
-
-			td, td label {
-				font-size: 15px
-			}
+            td, td label {
+                font-size: 15px
+            }
 
 
-		.td25 {
-			width: 25%;
-			min-width: 25%;
-			max-width: 25%;
-		}
+        .td25 {
+            width: 25%;
+            min-width: 25%;
+            max-width: 25%;
+        }
 
-		.td33 {
-			width: 33%;
-			min-width: 33%;
-			max-width: 33%;
-		}
+        .td33 {
+            width: 33%;
+            min-width: 33%;
+            max-width: 33%;
+        }
 
-		th {
-			/*background-color: #f2f2f2;*/
-		}
+        th {
+            /*background-color: #f2f2f2;*/
+        }
 
-		p {
-			margin-bottom: 20px;
-		}
+        p {
+            margin-bottom: 20px;
+        }
 
-		.clearfix::after {
-			content: "";
-			display: table;
-			clear: both;
-		}
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
 
-		.headertitle span {
-			font-weight: bold;
-		}
+        .headertitle span {
+            font-weight: bold;
+        }
 
-		.headertitle label {
-			font-weight: 400;
-		}
-
-
-		.container {
-			border: 2px solid red;
-			padding-left: 10px;
-			padding-right: 10px;
-			top: 50px;
-			bottom: 50px;
-			left: 0;
-			right: 0;
-			background-color: white;
-			height: 1245px;
-			max-height: 1245px;
-		}
-
-		.box-container {
-			display: flex;
-			justify-content: space-between;
-			margin-top: 20px;
-		}
-
-		.box {
-			width: 150px;
-			height: 60px;
-			border: 1px solid #dddddd;
-			padding: 10px;
-		}
-
-			.box label {
-				display: block;
-				text-align: center;
-				margin-bottom: 50px;
-			}
-
-		.printheader, .printfooter {
-			width: 100%;
-			height: 80px
-		}
-
-		.benefitidv{
-			height:500px
-		}
+        .headertitle label {
+            font-weight: 400;
+        }
 
 
-		.header {
-			top: 0;
-			left: 0;
-			right: 0;
-			height: 50px;
-			background-color: lightgray;
-		}
+        .container {
+            padding-left: 10px;
+            padding-right: 10px;
+            top: 50px;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            background-color: white;
+            min-height: 1050px;
+            height: 1050px;
+            max-height: 1050px;
+        }
 
-		.content {
-		}
+        .box-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
 
-		.footer {
-			bottom: 0;
-			width: 100%;
-			background-color: #333;
-			color: #fff;
-			text-align: center;
-			padding: 10px 0;
-		}
-	</style>
+        .box {
+            width: 150px;
+            height: 60px;
+            border: 1px solid #dddddd;
+            padding: 10px;
+        }
+
+            .box label {
+                display: block;
+                text-align: center;
+                margin-bottom: 50px;
+            }
+
+        .printheader, .printfooter {
+            width: 100%;
+            height: 80px
+        }
+
+        .benefitidv {
+            /*height: 500px*/
+        }
+
+
+        .header {
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            width: 100%;
+        }
+
+
+        .footer {
+            bottom: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-	<div class="header">
-		<img width="850" height="100" class="printheader" src="data:image/jpeg;base64,@Model.Header" alt="Header" />
-	</div>
+    <div class="page">
+        <div class="header">
+            <img width="850" height="100" class="printheader" src="data:image/jpeg;base64,@Model.Header" alt="Header" />
+        </div>
 
-	<div class="container">
-		<div class="headertitle">
-
-
-			<h1 class="mainheader ">Travel Insurance Certificate</h1>
-
-			<div style="width: 33.33%; float: left;">
-				<span>
-					Agent Name: <label id="agentName">@Model.CreatedBy</label>
-				</span>
-			</div>
-			<div style="width: 33.33%; float: left;">
-				<span>
-					Policy N.: <label id="policyNumber">@Model.Reference</label>
-				</span>
-			</div>
-			<div style="width: 33.33%; float: left;">
-				<span>
-					Issuing Date: <label id="issuingDate">@Model.CreatedOn.ToString("dd-MM-yyyy")</label>
-				</span>
-			</div>
-			<div style="clear: both;"></div>
-		</div>
-
-		<h2 class="underlined-heading">Policy Information:</h2>
-		<table>
-			<caption></caption>
-			<tr>
-				<td class="td25"><label for="productChosen">Product Chosen:</label></td>
-				<td class="td25"><label id="productChosen">@Model.ProductName</label></td>
-				<td class="td25"><label for="zoneChosen">Zone Chosen:</label></td>
-				<td class="td25"><label id="zoneChosen">@Model.ZoneName</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="inceptionDate">Inception Date:</label></td>
-				<td class="td25"><label id="inceptionDate">@Model.FromDate.ToString("dd-MM-yyyy")</label></td>
-				<td class="td25"><label for="destinations">Destinations:</label></td>
-				<td class="td25"><label id="destinations">@string.Join(", ", Model.Destinations.Select(d => d.DestinationName))</label></td>
-
-			</tr>
-			<tr>
-				<td class="td25"><label for="expiryDate">Expiry Date:</label></td>
-				<td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd-MM-yyyy")</label></td>
-				<td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
-				<td class="td25"><label id="excessDeductible"> @Model.PolicyDetails.First().DeductiblePrice</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="duration">Duration:</label></td>
-				<td class="td25"><label id="duration">@Model.Duration Days</label></td>
-				<td class="td25"><label for="sportsActivities">Sports Activities:</label></td>
-				<td class="td25"><label id="sportsActivities">@Model.PolicyDetails.First().SportsActivitiesPrice</label></td>
-			</tr>
-		</table>
-
-		<h2 class="underlined-heading">Beneficiary Information:</h2>
-		<table>
-			<tr>
-				<td class="td25"><label for="firstName">First Name:</label></td>
-				<td class="td25"><label id="firstName">@Model.PolicyDetails.First().FirstName</label></td>
-				<td class="td25"><label for="residenceCountry">Country of Residence:</label></td>
-				<td class="td25"><label id="residenceCountry">@Model.PolicyDetails.First().CountryResidence</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="middleName">Middle Name:</label></td>
-				<td class="td25"><label id="middleName">@Model.PolicyDetails.First().MiddleName</label></td>
-				<td class="td25"><label for="nationality">Nationality:</label></td>
-				<td class="td25"><label id="nationality">@Model.PolicyDetails.First().Nationality</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="lastName">Last Name:</label></td>
-				<td class="td25"><label id="lastName">@Model.PolicyDetails.First().LastName</label></td>
-				<td class="td25"><label for="passportNumber">Passport N.:</label></td>
-				<td class="td25"><label id="passportNumber">@Model.PolicyDetails.First().PassportNo</label></td>
-			</tr>
-			<tr>
-				<td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
-				<td class="td25"><label id="dateOfBirth">@Model.PolicyDetails.First().DateOfBirth.ToString("dd-MM-yyyy")</label></td>
-				<td class="td25"><label for="age">Age:</label></td>
-				<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
-			</tr>
-			@*<tr>
-					<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-					<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-					<td class="td25"></td>
-					<td class="td25"></td>
-				</tr>*@
-		</table>
+        <div class="container">
+            <div class="headertitle">
 
 
-		<div class="benefitidv">
-			<h2 class="underlined-heading">Table of Benefits:</h2>
-			<table border="0">
-				<caption></caption>
-				<tr>
-					<th>Benefits</th>
-					<th>Limits</th>
-					<th>Excess/Deductible</th>
-				</tr>
+                <h1 class="mainheader ">Travel Insurance Certificate</h1>
 
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-			
-				
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
+                <div style="width: 33.33%; float: left;">
+                    <span>
+                        Agent Name: <label id="agentName">@Model.CreatedBy</label>
+                    </span>
+                </div>
+                <div style="width: 33.33%; float: left;">
+                    <span>
+                        Policy N.: <label id="policyNumber">@Model.Reference</label>
+                    </span>
+                </div>
+                <div style="width: 33.33%; float: left;">
+                    <span>
+                        Issuing Date: <label id="issuingDate">@Model.CreatedOn.ToString("dd-MM-yyyy")</label>
+                    </span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
 
-				@foreach (var thislist in Model.Benefits)
-				{
-					<tr>
-						<td class="td33">@thislist.B_Title</td>
-						<td class="td33">@thislist.B_Limit</td>
-						<td class="td33">@thislist.B_Limit</td>
-					</tr>
-				}
-				@foreach (var thislist in Model.AdditionalBenefits)
-				{
-					<tr>
-						<td class="td33">AB - @thislist.Name</td>
-						<td class="td33">@thislist.Price</td>
-						<td class="td33">@thislist.Price</td>
-					</tr>
-				}
-			</table>
-		</div>
+            <h2 class="underlined-heading">Policy Information:</h2>
+            <table>
+                <caption></caption>
+                <tr>
+                    <td class="td25"><label for="productChosen">Product Chosen:</label></td>
+                    <td class="td25"><label id="productChosen">@Model.ProductName</label></td>
+                    <td class="td25"><label for="zoneChosen">Zone Chosen:</label></td>
+                    <td class="td25"><label id="zoneChosen">@Model.ZoneName</label></td>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="inceptionDate">Inception Date:</label></td>
+                    <td class="td25"><label id="inceptionDate">@Model.FromDate.ToString("dd-MM-yyyy")</label></td>
+                    <td class="td25"><label for="destinations">Destinations:</label></td>
+                    <td class="td25"><label id="destinations">@string.Join(", ", Model.Destinations.Select(d => d.DestinationName))</label></td>
 
-		<p>For more specific coverage, please refer to the terms and conditions attached with this certificate.</p>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="expiryDate">Expiry Date:</label></td>
+                    <td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd-MM-yyyy")</label></td>
+                    <td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
+                    <td class="td25"><label id="excessDeductible"> @Model.PolicyDetails.First().DeductiblePrice</label></td>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="duration">Duration:</label></td>
+                    <td class="td25"><label id="duration">@Model.Duration Days</label></td>
+                    <td class="td25"><label for="sportsActivities">Sports Activities:</label></td>
+                    <td class="td25"><label id="sportsActivities">@Model.PolicyDetails.First().SportsActivitiesPrice</label></td>
+                </tr>
+            </table>
 
-		<h2 class="underlined-heading">Premium Information:</h2>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>USD</th>
-					<th>@Model.CurrencyRate.CurrencySymbol</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="td33">Premium:</td>
-					<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-					<td class="td33">
-						@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-					</td>
+            <h2 class="underlined-heading">Beneficiary Information:</h2>
+            <table>
+                <tr>
+                    <td class="td25"><label for="firstName">First Name:</label></td>
+                    <td class="td25"><label id="firstName">@Model.PolicyDetails.First().FirstName</label></td>
+                    <td class="td25"><label for="residenceCountry">Country of Residence:</label></td>
+                    <td class="td25"><label id="residenceCountry">@Model.PolicyDetails.First().CountryResidence</label></td>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="middleName">Middle Name:</label></td>
+                    <td class="td25"><label id="middleName">@Model.PolicyDetails.First().MiddleName</label></td>
+                    <td class="td25"><label for="nationality">Nationality:</label></td>
+                    <td class="td25"><label id="nationality">@Model.PolicyDetails.First().Nationality</label></td>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="lastName">Last Name:</label></td>
+                    <td class="td25"><label id="lastName">@Model.PolicyDetails.First().LastName</label></td>
+                    <td class="td25"><label for="passportNumber">Passport N.:</label></td>
+                    <td class="td25"><label id="passportNumber">@Model.PolicyDetails.First().PassportNo</label></td>
+                </tr>
+                <tr>
+                    <td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
+                    <td class="td25"><label id="dateOfBirth">@Model.PolicyDetails.First().DateOfBirth.ToString("dd-MM-yyyy")</label></td>
+                    <td class="td25"><label for="age">Age:</label></td>
+                    <td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
+                </tr>
+                @*<tr>
+                        <td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+                        <td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+                        <td class="td25"></td>
+                        <td class="td25"></td>
+                    </tr>*@
+            </table>
 
-				</tr>
-				@*<tr>
-						<td class="td33">Issuing / Gov.fees:</td>
-						<td class="td33">@Model.StampsValue</td>
-						<td class="td33">
-						</td>
-					</tr>*@
-				<tr>
-					<td class="td33">Stamps / Insurance Tax:</td>
-					<td class="td33">@Model.StampsValue</td>
-					<td class="td33">
-						@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-					</td>
-				</tr>
-				<tr>
-					<td class="td33">VAT:</td>
-					<td class="td33">@Model.TaxVATValue</td>
-					<td class="td33">
-						@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-					</td>
-				</tr>
-				<tr>
-					<td class="td33">Total Premium:</td>
-					<td class="td33">@Model.GrandTotal</td>
-					<td class="td33">
-						@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
+            <div class="benefitidv">
+                <h2 class="underlined-heading">Table of Benefits:</h2>
+                <table border="0">
+                    <caption></caption>
+                    <tr>
+                        <th>Benefits</th>
+                        <th>Limits</th>
+                        <th>Excess/Deductible</th>
+                    </tr>
+
+                 
+
+                    @foreach (var thislist in Model.Benefits)
+                    {
+                        <tr>
+                            <td class="td33">@thislist.B_Title</td>
+                            <td class="td33">@thislist.B_Limit</td>
+                            <td class="td33">@thislist.B_Limit</td>
+                        </tr>
+                    }
+                    @foreach (var thislist in Model.AdditionalBenefits)
+                    {
+                        <tr>
+                            <td class="td33">AB - @thislist.Name</td>
+                            <td class="td33">@thislist.Price</td>
+                            <td class="td33">@thislist.Price</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <p>For more specific coverage, please refer to the terms and conditions attached with this certificate.</p>
+
+            <h2 class="underlined-heading">Premium Information:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>USD</th>
+                        <th>@Model.CurrencyRate.CurrencySymbol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="td33">Premium:</td>
+                        <td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
+                        <td class="td33">
+                            @String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
+                        </td>
+
+                    </tr>
+                    @*<tr>
+                            <td class="td33">Issuing / Gov.fees:</td>
+                            <td class="td33">@Model.StampsValue</td>
+                            <td class="td33">
+                            </td>
+                        </tr>*@
+                    <tr>
+                        <td class="td33">Stamps / Insurance Tax:</td>
+                        <td class="td33">@Model.StampsValue</td>
+                        <td class="td33">
+                            @String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td33">VAT:</td>
+                        <td class="td33">@Model.TaxVATValue</td>
+                        <td class="td33">
+                            @String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td33">Total Premium:</td>
+                        <td class="td33">@Model.GrandTotal</td>
+                        <td class="td33">
+                            @String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
 
 
-	</div>
-
-	<div class="footer">
-		<div class="box-container">
-			<div class="boxholder" style="float:right">
-				<label>Signature</label>
-				<div class="box">
-				</div>
-			</div>
-			<div class="boxholder" style="float:left">
-				<div>
-					<img width="150" height="150" src="data:image/jpeg;base64,@Model.QrCodebit" alt="QR Code" />
-				</div>
-			</div>
-		</div>
-
-		<img width="850" height="100" class="printfooter" src="data:image/jpeg;base64,@Model.Footer" alt="Footer" />
-	</div>
+        <div class="box-container">
+            <div class="boxholder" style="float:right">
+                <label>Signature</label>
+                <div class="box">
+                </div>
+            </div>
+            <div class="boxholder" style="float:left">
+                <div>
+                    <img width="150" height="150" src="data:image/jpeg;base64,@Model.QrCodebit" alt="QR Code" />
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <img  class="printfooter" src="data:image/jpeg;base64,@Model.Footer" alt="Footer" />
+        </div>
+    </div>
 </body>
 </html>
