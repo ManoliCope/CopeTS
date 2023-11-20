@@ -30,6 +30,16 @@ $(document).ready(function () {
 
     var isadmin = $(".prodadm").attr("prodadm")
     //alert(isadmin)
+
+    $('.nav-tabs a').on('click', function (e) {
+        //e.preventDefault();
+        var tabcontainer = $($(this).attr('href'))
+
+        if (tabcontainer.find('table tbody tr').length == 0) {
+            tabcontainer.find('button[id^="search"]').click();
+        }
+    });
+
 });
 
 
@@ -279,7 +289,7 @@ function editableProduction(me) {
 
     //deductible: insuredSection.find("input[name='name'][data-dedprice]").prop("checked"),
     //table.find('input[data-dedprice]').prop('checked', item.deductible);
-    alert(isEditable)
+    //alert(isEditable)
 
 
     removebtnloader(me);

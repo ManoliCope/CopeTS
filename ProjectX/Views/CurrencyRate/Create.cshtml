@@ -1,68 +1,69 @@
 ﻿@model ProjectX.Entities.Models.CurrencyRate.CurrGetResp
 @{
-    var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
 }
 
 
 <div class="content" pgtype="view">
-    <div class="container-fluid" style="padding:10px 0">
-        <div class="row mb-3">
-            <div class="col-md-12 ">
-                <div class="card h-100 ">
-                    <div class="card-body">
-                        <h4 class="card-title ">
-                            <i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-                             <span>New </span>
-                        </h4>
-                        <hr />
-                       
-                      <div id="divinfo" class="col-lg-12">
-                         <div class="row">
-                           <div class="form-group mb-3 col-lg-4">
-                            <label class="form-control-label" for="currency">Currency</label>
-                            <select class="form-control" name="currencyId" id="currencyId" field-name="currency" required onchange="ChangeFormByCategoryId()">
-                                <option></option>
-                                 @foreach (var thislist in filldata.loadedData.currencies)  
-											        {
-											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											        }
-                                
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row mb-3">
+			<div class="col-md-12 ">
+				<div class="card h-100 ">
+					<div class="card-header custom">
+						<h4 class="card-title ">
+							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+							<span>New Currency Rate </span>
+						</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div id="divinfo" class="col-lg-12">
+								<div class="row">
+									<div class="form-group mb-3 col-lg-4">
+										<label class="form-control-label" for="currency">Currency</label>
+										<select class="form-control" name="currencyId" id="currencyId" field-name="currency" required onchange="ChangeFormByCategoryId()">
+											<option></option>
+											@foreach (var thislist in filldata.loadedData.currencies)
+											{
+												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											}
 
-                            </select>
-                        </div>
-                        <div class="form-group mb-3 col-lg-4">
-                            <label for="title">Rate</label>
-                            <input type="number" class="form-control" id="rateId" name="rateId"  required>
-                        </div>
-                       </div>
-                     </div>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-body">
-                    <div class="row">
-                        <div class="col-lg-8">
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                </div>
-                                <div class="col-lg-4">
-                                    <button id="create" class="btn btn-primary w-100 bglocalcolor" type="submit">
-                                        <span> Add </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+										</select>
+									</div>
+									<div class="form-group mb-3 col-lg-4">
+										<label for="title">Rate</label>
+										<input type="number" class="form-control" id="rateId" name="rateId" required>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-body">
+					<div class="row">
+						<div class="col-lg-8">
+						</div>
+						<div class="col-lg-4">
+							<div class="row">
+								<div class="col-lg-8">
+								</div>
+								<div class="col-lg-4">
+									<button id="create" class="btn btn-primary w-100 bglocalcolor" type="submit">
+										<span> Add </span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

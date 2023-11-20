@@ -22,7 +22,7 @@
 		<div class="card-body">
 			<form class="needs-validation" novalidate="" id="addUserForm" userid="@Model.id" autocomplete="off">
 				<div class="row">
-					<div class="col-md-9">
+					<div class="@(hide == "hidden"? "col-md-12" : "col-md-9")">
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
@@ -286,7 +286,7 @@
 					</div>*@
 							<div class="col-md-4 @hide">
 								<div class="form-group">
-									<label class="form-control-label" for="vat">VAT</label>
+									<label class="form-control-label" for="vat">VAT %</label>
 									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat">
 								</div>
 							</div>
@@ -332,63 +332,15 @@
 					</div>
 					<div class="col-md-3 mt-4 pl-5">
 						<div class="row @hide">
-						@*   <div class="col-md-6">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="isSyria" id="isSyria" field-name="for_Syria">
-								<label class="form-control-label" for="isSyria">For Syria</label>
-							</label>
-						</div>
-					</div>*@
-							@* <div class="col-md-6">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="showComm" id="showComm" field-name="show_Commission" value="">
-								<label class="form-control-label" for="showComm">Show Commission</label>
-							</label>
-						</div>
-					</div>*@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
 										<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" @(Model.fixed_Additional_Fees.HasValue && (bool)Model.fixed_Additional_Fees ? "checked" : "")>
-										<label class="form-control-label" for="isAdditionalFeeFixed">Fixed Additional Fees</label>
+										<label class="form-control-label" for="isAdditionalFeeFixed">Max Additional</label>
 									</label>
 								</div>
 							</div>
-							@* <div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="toRound" id="toRound"  field-name="apply_Rounding">
-								<label class="form-control-label" for="toRound">Apply rounding</label>
-							</label>
-						</div>
-					</div>*@
-
-							@*<div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="cancellationAllowed" id="cancellationAllowed" field-name="allow_Cancellation" @(Model.allow_Cancellation.HasValue && (bool)Model.allow_Cancellation ? "checked" : "")>
-								<label class="form-control-label" for="cancellationAllowed">Allow Cancellation</label>
-							</label>
-						</div>
-					</div>*@
-							@*<div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="showCertificate" id="showCertificate"  field-name="show_Certificate" value="">
-								<label class="form-control-label" for="showCertificate">Show Cetificate</label>
-							</label>
-						</div>
-					</div>   *@
-							@*<div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="subAgentCanAllowed" id="subAgentCanAllowed" field-name="cancellation_SubAgent" @(Model.cancellation_SubAgent.HasValue && (bool)Model.cancellation_SubAgent ? "checked" : "")>
-								<label class="form-control-label" for="subAgentCanAllowed">Cancellation for Sub-Agent</label>
-							</label>
-						</div>
-					</div>*@
+					
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -413,14 +365,7 @@
 									</label>
 								</div>
 							</div>
-							@* <div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="userCreationApproval" id="userCreationApproval" field-name="agents_Creation_Approval" value="">
-								<label class="form-control-label" for="userCreationApproval">Agents Creation Approval</label>
-							</label>
-						</div>
-					</div>*@
+						
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -438,14 +383,7 @@
 									</label>
 								</div>
 							</div>
-							@* <div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="printClientVoucher" id="printClientVoucher"    field-name="print_Client_Voucher" value="">
-								<label class="form-control-label" for="printClientVoucher">Print Client Voucher</label>
-							</label>
-						</div>
-					</div>*@
+						
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -454,14 +392,7 @@
 									</label>
 								</div>
 							</div>
-							@*  <div class="col-md-12">
-						<div class="form-check-inline ">
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" name="enableTaxInvoice" id="enableTaxInvoice"    field-name="tax_Invoice" value="">
-								<label class="form-control-label" for="enableTaxInvoice">Tax Invoice</label>
-							</label>
-						</div>
-					</div>*@
+					
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">

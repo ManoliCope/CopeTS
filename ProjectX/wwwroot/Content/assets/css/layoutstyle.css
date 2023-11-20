@@ -432,8 +432,10 @@ a {
     display: flex;
     align-items: center;
 }
-
-    .layout .sidebar .pro-sidebar-logo > div {
+.layout .sidebar .pro-sidebar-logo img{
+    width:175px
+}
+    /* .layout .sidebar .pro-sidebar-logo > div {
         width: 35px;
         min-width: 35px;
         height: 35px;
@@ -447,7 +449,7 @@ a {
         font-weight: 700;
         background-color: var(--third-color);
         margin-right: 10px;
-    }
+    }*/
 
     .layout .sidebar .pro-sidebar-logo > h5 {
         overflow: hidden;
@@ -874,4 +876,10 @@ table td a {
 
 .visiblehidden{
     visibility:hidden
+}
+
+.welcometxt {
+    color: var(--third-color);
+    margin-bottom: 4px;
+    display: block
 }
