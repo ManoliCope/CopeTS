@@ -17,7 +17,7 @@ $(document).ready(function () {
         dropdown.val(null).trigger('change');
     });
     $(".isselect2").select2({
-        tags: true,
+        //tags: true,
         tokenSeparators: [',', ' ']
     })
 

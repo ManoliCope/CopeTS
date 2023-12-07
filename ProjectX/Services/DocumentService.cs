@@ -73,8 +73,20 @@ namespace ProjectX.Services
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
 
             policyreponse.QrCodebit = fileqrurl;
-            policyreponse.Header = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty));
-            policyreponse.Footer = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+
+            string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "backcope.jpg");
+            string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+
+            if (prodcutionuser.user.U_Header != null || prodcutionuser.user.U_Header != "")
+                policyreponse.Header = ConvertImageToBase64(mainheader);
+            else
+                policyreponse.Header = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? ""));
+
+
+            if (prodcutionuser.user.U_Footer != null || prodcutionuser.user.U_Footer != "")
+                policyreponse.Footer = ConvertImageToBase64(mainfooter);
+            else
+                policyreponse.Footer = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
 
             var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
             if (policyreponse.PolicyDetails.Count > 1)
@@ -94,8 +106,8 @@ namespace ProjectX.Services
 
                 var userFullPath = Path.Combine(uploadsDirectory, userid.ToString(), "Conditions", UploadedCondition);
 
-                //byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
-                return pdfBytes;
+                byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
+                return combinedPdf;
             }
             catch (Exception ex)
             {

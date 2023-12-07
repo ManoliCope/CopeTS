@@ -53,8 +53,22 @@ namespace ProjectX.Controllers
             string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty);
 
             policyreponse.QrCodebit = printingdirection;
-            policyreponse.Header = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty));
-            policyreponse.Footer = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+
+            string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+            string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+
+            if (prodcutionuser.user.U_Header != null || prodcutionuser.user.U_Header != "")
+                policyreponse.Header = _documentService.ConvertImageToBase64(mainheader);
+            else
+                policyreponse.Header = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? ""));
+
+
+            if (prodcutionuser.user.U_Footer != null || prodcutionuser.user.U_Footer != "")
+                policyreponse.Footer = _documentService.ConvertImageToBase64(mainfooter);
+            else
+                policyreponse.Footer = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+
+
 
             return View("/Views/PdfTemplate/PrintPolicy.cshtml", policyreponse);
         }
