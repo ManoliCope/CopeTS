@@ -77,16 +77,16 @@ namespace ProjectX.Services
             string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "backcope.jpg");
             string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
 
-            if (prodcutionuser.user.U_Header != null || prodcutionuser.user.U_Header != "")
-                policyreponse.Header = ConvertImageToBase64(mainheader);
+            if (prodcutionuser.user.U_PrintLayout != null && prodcutionuser.user.U_PrintLayout != "")
+                policyreponse.Layout = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Layout", prodcutionuser.user.U_PrintLayout ?? ""));
             else
-                policyreponse.Header = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? ""));
+                policyreponse.Layout = ConvertImageToBase64(mainheader);
 
 
-            if (prodcutionuser.user.U_Footer != null || prodcutionuser.user.U_Footer != "")
-                policyreponse.Footer = ConvertImageToBase64(mainfooter);
+            if (prodcutionuser.user.U_Signature != null && prodcutionuser.user.U_Signature != "")
+                policyreponse.Signature = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Signature", prodcutionuser.user.U_Signature ?? string.Empty));
             else
-                policyreponse.Footer = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+                policyreponse.Signature = ConvertImageToBase64(mainfooter);
 
             var partialName = "/Views/PdfTemplate/PrintPolicy.cshtml";
             if (policyreponse.PolicyDetails.Count > 1)
@@ -174,7 +174,7 @@ namespace ProjectX.Services
          string HeaderUrl = "", double HeaderSpacing = -20, string FooterUrl = "", double FooterSpacing = -15)
         {
             Margins = 0;
-            var converter = new SynchronizedConverter(new PdfTools());
+            //var converter = new SynchronizedConverter(new PdfTools());
             var doc = new HtmlToPdfDocument()
             {
                 GlobalSettings = {

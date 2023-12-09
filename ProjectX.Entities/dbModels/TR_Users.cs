@@ -65,8 +65,10 @@ namespace ProjectX.Entities.dbModels
         public string U_CurrencySymbol { get; set; }
         public string U_Password { get; set; }
         public string U_Logo { get; set; }  
-        public string U_Header { get; set; }  
-        public string U_Footer { get; set; }  
+        public string U_PrintLayout { get; set; }  
+        public string U_Signature { get; set; }  
+        public bool? U_Can_Cancel { get; set; }  
+        public bool? U_Can_Edit { get; set; }  
 
     }
 }

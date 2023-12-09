@@ -1,91 +1,91 @@
 ﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
 @{
-    Layout = null;
+	Layout = null;
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0px;
-            padding: 0px;
-            /*padding-top: 80px;*/
-            /*border:2px solid red;*/
-            /*margin: 5px;*/
-        }
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0px;
+			padding: 0px;
+			/*padding-top: 80px;*/
+			/*border:2px solid red;*/
+			/*margin: 5px;*/
+		}
 
-        .underlined {
-            display: inline-block;
-            border-bottom: 1px solid;
-            margin-bottom: 3px;
-        }
+		.underlined {
+			display: inline-block;
+			border-bottom: 1px solid;
+			margin-bottom: 3px;
+		}
 
-        .underlined-heading {
-            /*display: inline-block;*/
-            border-bottom: 1px solid;
-            margin-bottom: 3px;
-        }
+		.underlined-heading {
+			/*display: inline-block;*/
+			border-bottom: 1px solid;
+			margin-bottom: 3px;
+		}
 
-        h1.mainheader {
-            text-align: center;
-        }
+		h1.mainheader {
+			text-align: center;
+		}
 
-        h2 {
-            margin-bottom: 5px;
-        }
+		h2 {
+			margin-bottom: 5px;
+		}
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-            /*border: 0px solid #dddddd;*/
-        }
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 20px;
+			/*border: 0px solid #dddddd;*/
+		}
 
-        th, td {
-            /*border: 0px solid #dddddd;*/
-            padding: 4px;
-            text-align: left;
-        }
+		th, td {
+			/*border: 0px solid #dddddd;*/
+			padding: 4px;
+			text-align: left;
+		}
 
-            td, td label {
-                font-size: 15px
-            }
+			td, td label {
+				font-size: 15px
+			}
 
 
-        .td25 {
-            width: 25%;
-            min-width: 25%;
-            max-width: 25%;
-        }
+		.td25 {
+			width: 25%;
+			min-width: 25%;
+			max-width: 25%;
+		}
 
-        .td33 {
-            width: 33%;
-            min-width: 33%;
-            max-width: 33%;
-        }
+		.td33 {
+			width: 33%;
+			min-width: 33%;
+			max-width: 33%;
+		}
 
-        th {
-            /*background-color: #f2f2f2;*/
-        }
+		th {
+			/*background-color: #f2f2f2;*/
+		}
 
-        p {
-            margin-bottom: 20px;
-        }
+		p {
+			margin-bottom: 20px;
+		}
 
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+		.clearfix::after {
+			content: "";
+			display: table;
+			clear: both;
+		}
 
-        .headertitle span {
-            font-weight: bold;
-        }
+		.headertitle span {
+			font-weight: bold;
+		}
 
-        .headertitle label {
-            font-weight: 400;
-        }
+		.headertitle label {
+			font-weight: 400;
+		}
 
 
 		.container {
@@ -98,54 +98,54 @@
 			margin-left: 50px;
 			margin-right: 50px;
 			border: 2px solid transparent;
-			background:transparent;
-			padding-top:100px;
+			background: transparent;
+			padding-top: 100px;
 		}
 
-        .box-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+		.box-container {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+		}
 
-        .box {
-            width: 150px;
-            height: 60px;
-            border: 1px solid #dddddd;
-            padding: 10px;
-        }
+		.box {
+			width: 150px;
+			height: 60px;
+			border: 1px solid #dddddd;
+			padding: 10px;
+		}
 
-            .box label {
-                display: block;
-                text-align: center;
-                margin-bottom: 50px;
-            }
+			.box label {
+				display: block;
+				text-align: center;
+				margin-bottom: 50px;
+			}
 
-        .printheader, .printfooter {
-            width: 100%;
-            height: 80px
-        }
+		.printheader, .printfooter {
+			width: 100%;
+			height: 80px
+		}
 
-        .benefitidv {
-            /*height: 500px*/
-        }
-
-
-        .header {
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            width: 80%;
-        }
+		.benefitidv {
+			/*height: 500px*/
+		}
 
 
-        .footer {
-            bottom: 0;
-            width: 100%;
-            color: white;
-            text-align: center;
-        }
+		.header {
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 80px;
+			width: 80%;
+		}
+
+
+		.footer {
+			bottom: 0;
+			width: 100%;
+			color: white;
+			text-align: center;
+		}
 
 		body, html {
 			height: 100%;
@@ -169,19 +169,19 @@
 			background-size: cover;
 			background-position: center;
 		}
+
 			.background-image img {
 				height: 1400px;
 			}
-
-    </style>
+	</style>
 </head>
 <body>
-    <div class="page">
-        <div class="background-image">
-            <img src="data:image/jpeg;base64,@Model.Header" alt="Header" />
-        </div>
+	<div class="page">
+		<div class="background-image">
+			<img src="data:image/jpeg;base64,@Model.Layout" alt="Header" />
+		</div>
 
-		<div class="container" style="" >
+		<div class="container" style="">
 			<div class="headertitle">
 
 				<h1 class="mainheader ">Travel Insurance Certificate</h1>
@@ -261,11 +261,11 @@
 					<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
 				</tr>
 				@*<tr>
-				<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-				<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-				<td class="td25"></td>
-				<td class="td25"></td>
-			</tr>*@
+						<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+						<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+						<td class="td25"></td>
+						<td class="td25"></td>
+					</tr>*@
 			</table>
 
 
@@ -320,11 +320,11 @@
 
 					</tr>
 					@*<tr>
-					<td class="td33">Issuing / Gov.fees:</td>
-					<td class="td33">@Model.StampsValue</td>
-					<td class="td33">
-					</td>
-				</tr>*@
+							<td class="td33">Issuing / Gov.fees:</td>
+							<td class="td33">@Model.StampsValue</td>
+							<td class="td33">
+							</td>
+						</tr>*@
 					<tr>
 						<td class="td33">Stamps / Insurance Tax:</td>
 						<td class="td33">@Model.StampsValue</td>
@@ -350,9 +350,14 @@
 			</table>
 
 			<div class="box-container">
+				@*<div class="boxholder" style="float:right">
+						<label>Signature</label>
+						<div class="box">
+						</div>
+					</div>*@
 				<div class="boxholder" style="float:right">
-					<label>Signature</label>
-					<div class="box">
+					<div>
+						<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
 					</div>
 				</div>
 				<div class="boxholder" style="float:left">
@@ -366,10 +371,10 @@
 
 
 
-		
-        @*<div class="footer">
-            <img  class="printfooter" src="data:image/jpeg;base64,@Model.Footer" alt="Footer" />
-        </div>*@
-    </div>
+
+		@*<div class="footer">
+				<img  class="printfooter" src="data:image/jpeg;base64,@Model.Footer" alt="Footer" />
+			</div>*@
+	</div>
 </body>
 </html>

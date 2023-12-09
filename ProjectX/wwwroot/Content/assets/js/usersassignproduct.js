@@ -20,7 +20,7 @@ function drawwtable(data, directory) {
         "columns": [
 
             { "title": "Product", "className": "text-center filter", "orderable": true, "data": "pR_Name" },
-            { "title": "Issuing Fees", "className": "text-center filter", "orderable": true, "data": "uP_IssuingFees" },
+            //{ "title": "Issuing Fees", "className": "text-center filter", "orderable": true, "data": "uP_IssuingFees" },
             {
                 "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "uP_CreationDate",
                 "render": function (data, type, row) {

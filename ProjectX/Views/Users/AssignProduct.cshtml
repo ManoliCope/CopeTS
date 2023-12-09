@@ -92,17 +92,16 @@
 
 					</select>
 				</div>
-				<div class="col-md-12">
+				@*<div class="col-md-12">
 					<label class="form-control-label" for="issuingFees">Issuing Fees: </label>
 					<input class="form-control"   field-name="issuingFees" type="number" min="0" max="99" name="issuingFees" id="issuingFees" oninput="this.value = Math.abs(this.value)">
-
-				</div>
+				</div>*@
 				<div class="col-md-12">
 
 					@using (Html.BeginForm("Upload", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" }))
 					{
 						<div class="form-group  pt-2">
-							<label for="file">Select File:</label>
+							<label for="file">Select File:</label> <b style="color:red">(PDF)</b>
 							<input type="file" name="Upload File" id="uploadFile" accept=".pdf" class="form-control-file file-upload" required />
 						</div>
 					}

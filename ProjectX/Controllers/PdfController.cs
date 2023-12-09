@@ -50,23 +50,23 @@ namespace ProjectX.Controllers
             thisuser.idUser = userid;
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
 
-            string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty);
+            string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty);
 
             policyreponse.QrCodebit = printingdirection;
 
             string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
             string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
 
-            if (prodcutionuser.user.U_Header != null || prodcutionuser.user.U_Header != "")
-                policyreponse.Header = _documentService.ConvertImageToBase64(mainheader);
+            if (prodcutionuser.user.U_PrintLayout != null || prodcutionuser.user.U_PrintLayout != "")
+                policyreponse.Layout = _documentService.ConvertImageToBase64(mainheader);
             else
-                policyreponse.Header = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? ""));
+                policyreponse.Layout = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? ""));
 
 
-            if (prodcutionuser.user.U_Footer != null || prodcutionuser.user.U_Footer != "")
-                policyreponse.Footer = _documentService.ConvertImageToBase64(mainfooter);
+            if (prodcutionuser.user.U_Signature != null || prodcutionuser.user.U_Signature != "")
+                policyreponse.Signature = _documentService.ConvertImageToBase64(mainfooter);
             else
-                policyreponse.Footer = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+                policyreponse.Signature = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
 
 
 
@@ -78,7 +78,7 @@ namespace ProjectX.Controllers
             GetUserReq thisuser = new GetUserReq();
             thisuser.idUser = userid;
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
-            ViewData["headerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_Header ?? string.Empty));
+            ViewData["headerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty));
             return PartialView("~/Views/PdfTemplate/Printheader.cshtml");
         }
         public IActionResult Footer(int userid)
@@ -87,8 +87,8 @@ namespace ProjectX.Controllers
             GetUserReq thisuser = new GetUserReq();
             thisuser.idUser = userid;
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
-            ViewData["footerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
-            string testhhh = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Footer ?? string.Empty));
+            ViewData["footerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
+            string testhhh = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
             return PartialView("~/Views/PdfTemplate/Printfooter.cshtml");
         }
 

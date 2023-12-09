@@ -97,8 +97,11 @@ namespace ProjectX.Business.Users
             resp.have_Parents = repores.U_Have_Parents;
             resp.is_Admin = repores.U_Is_Admin;
             resp.logo = repores.U_Logo;
-            resp.header = repores.U_Header;
-            resp.footer = repores.U_Footer;
+            resp.printlayout = repores.U_PrintLayout;
+            resp.signature = repores.U_Signature;
+
+            resp.can_edit = repores.U_Can_Edit;
+            resp.signature = repores.U_Can_Cancel;
 
 
             return resp;
