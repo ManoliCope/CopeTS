@@ -101,7 +101,7 @@ namespace ProjectX.Business.Users
             resp.signature = repores.U_Signature;
 
             resp.can_edit = repores.U_Can_Edit;
-            resp.signature = repores.U_Can_Cancel;
+            resp.can_cancel = repores.U_Can_Cancel;
 
 
             return resp;

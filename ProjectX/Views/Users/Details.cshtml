@@ -343,7 +343,7 @@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" name="canedit" id="canedit" field-name="canedit" @(Model.can_edit.HasValue && (bool)Model.can_edit ? "checked" : "")>
+										<input type="checkbox" name="canedit" id="canedit" field-name="Can_edit" @(Model.can_edit.HasValue && (bool)Model.can_edit ? "checked" : "")>
 										<label class="form-control-label" for="canedit">Can Edit</label>
 									</label>
 								</div>
@@ -351,7 +351,7 @@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
-										<input type="checkbox" name="cancancel" id="cancancel" field-name="cancancel" @(Model.can_cancel.HasValue && (bool)Model.can_cancel ? "checked" : "")>
+										<input type="checkbox" name="cancancel" id="cancancel" field-name="Can_Cancel" @(Model.can_cancel.HasValue && (bool)Model.can_cancel ? "checked" : "")>
 										<label class="form-control-label" for="cancancel">Can Cancel</label>
 									</label>
 								</div>
