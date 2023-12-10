@@ -50,6 +50,8 @@ namespace ProjectX.Entities.Models.Users
         public bool? multi_Lang_Policy { get; set; }
         public bool? tax_Invoice { get; set; }
         public bool? hide_Premium_Info { get; set; }
+        public bool? can_edit { get; set; }
+        public bool? can_cancel { get; set; }
         public bool? active { get; set; }
         public bool? have_Parents { get; set; }
         //public int? parent_Id { get; set; }
@@ -57,8 +59,8 @@ namespace ProjectX.Entities.Models.Users
         public DateTime creation_Date { get; set; }
         public bool? is_Admin { get; set; }
         public string logo { get; set; }
-        public string header { get; set; }
-        public string footer { get; set; }
+        public string printlayout { get; set; }
+        public string signature { get; set; }
 
     }
 }

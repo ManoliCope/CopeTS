@@ -224,7 +224,7 @@
     position: fixed;
     z-index: 99999;
     width: calc(100% - 275px);
-    padding-top: 25%;
+    padding-top: 20%;
     background-color: transparent;
     z-index: 9999;
 }

@@ -15,8 +15,16 @@
 		hide = "hidden";
 	}
 
-}
 
+}
+<style>
+	.popup-file-format {
+		color: red;
+		float: right;
+		font-size: 10px;
+		padding-top: 5px;
+	}
+</style>
 <div class="content" pgtype="view">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="card-body">
@@ -75,11 +83,11 @@
 							</div>
 
 							@*<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="lastName">Broker Code<span class="red-star"> *</span></label>
-							<input type="text" class="form-control" id="brkNumber" value="@Model.broker_Code" field-name="broker_Code" required>
-						</div>
-					</div>*@
+									<div class="form-group">
+										<label class="form-control-label" for="lastName">Broker Code<span class="red-star"> *</span></label>
+										<input type="text" class="form-control" id="brkNumber" value="@Model.broker_Code" field-name="broker_Code" required>
+									</div>
+								</div>*@
 
 							<div class="col-md-4">
 								<div class="form-group">
@@ -154,16 +162,16 @@
 								</div>
 							</div>
 							@*<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="insno">Insured Number *</label>
-							<input type="text" class="form-control" id="insno" field-name="insured_Number" required>
-						</div>
-					</div>*@
+									<div class="form-group">
+										<label class="form-control-label" for="insno">Insured Number *</label>
+										<input type="text" class="form-control" id="insno" field-name="insured_Number" required>
+									</div>
+								</div>*@
 
 
 
 							@*@if (is_admin == "1")
-					{*@
+								{*@
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 
@@ -186,7 +194,7 @@
 													}
 												}
 												@*<option value="1">%</option>
-										<option value="2">Fixed</option>*@
+													<option value="2">Fixed</option>*@
 											</select>
 										</div>
 									</div>
@@ -240,17 +248,17 @@
 							</div>
 
 							@*  <div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="uniqueTax">Unique Tax</label>
-							<input class="form-control"   field-name="unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
-						</div>
-					</div>*@
+									<div class="form-group">
+										<label class="form-control-label" for="uniqueTax">Unique Tax</label>
+										<input class="form-control"   field-name="unique_Tax" type="number" min="0" max="99" name="uniqueTax" id="uniqueTax" oninput="this.value = Math.abs(this.value)" value="0">
+									</div>
+								</div>*@
 							@*  <div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="uniqueTaxAdmin">Unique Admin Tax</label>
-							<input class="form-control"   field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
-						</div>
-					</div>*@
+									<div class="form-group">
+										<label class="form-control-label" for="uniqueTaxAdmin">Unique Admin Tax</label>
+										<input class="form-control"   field-name="unique_Admin_Tax" type="number" min="0" max="99" name="uniqueTaxAdmin" id="uniqueTaxAdmin" value="0" oninput="this.value = Math.abs(this.value)">
+									</div>
+								</div>*@
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="commPerc">Commission %</label>
@@ -273,17 +281,17 @@
 							</div>
 
 							@*<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="additionalFees">Addional Fees</label>
-							<input class="form-control"   field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.additional_Fees">
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
-							<input class="form-control"   field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees">
-						</div>
-					</div>*@
+									<div class="form-group">
+										<label class="form-control-label" for="additionalFees">Addional Fees</label>
+										<input class="form-control"   field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.additional_Fees">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
+										<input class="form-control"   field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees">
+									</div>
+								</div>*@
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="vat">VAT %</label>
@@ -303,29 +311,29 @@
 
 
 							@*<div class="col-md-4 hide" id="logoDivId">
-						<div class="form-group">
-							<label class="form-control-label" for="example3cols1Input">Logo</label>
-							<br>
+									<div class="form-group">
+										<label class="form-control-label" for="example3cols1Input">Logo</label>
+										<br>
 
-							<div>
-								<div class="custom-file" id="but_upload">
-									<input type="file" class="custom-file-input" name="fileuploadlogo" id="fileuploadlogo" lang="en" onchange="uploadUserFileLogo()">
-									<label id="fileuploadtextlogo" class="custom-file-label" for="fileuploadlogo"></label>
-								</div>
-							</div>
-							<div>
-								<a style="float:left" id="atagviewimagelogo" target="_blank" href="">
-									<img id="viewfilelogo" class="adjustimage hide" src="/Content/assets/img/viewicon.png">
-								</a>
-								<a id="atagremoveimagelogo" style="cursor:pointer" onclick="deleteFileValidationLogo()">
-									<img id="removefilelogo" class="adjustimage hide" src="/Content/assets/img/trash.png">
-								</a>
-							</div>
+										<div>
+											<div class="custom-file" id="but_upload">
+												<input type="file" class="custom-file-input" name="fileuploadlogo" id="fileuploadlogo" lang="en" onchange="uploadUserFileLogo()">
+												<label id="fileuploadtextlogo" class="custom-file-label" for="fileuploadlogo"></label>
+											</div>
+										</div>
+										<div>
+											<a style="float:left" id="atagviewimagelogo" target="_blank" href="">
+												<img id="viewfilelogo" class="adjustimage hide" src="/Content/assets/img/viewicon.png">
+											</a>
+											<a id="atagremoveimagelogo" style="cursor:pointer" onclick="deleteFileValidationLogo()">
+												<img id="removefilelogo" class="adjustimage hide" src="/Content/assets/img/trash.png">
+											</a>
+										</div>
 
-						</div>
-					</div>*@
+									</div>
+								</div>*@
 							@*		}
-					}*@
+								}*@
 
 						</div>
 
@@ -335,12 +343,29 @@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="canedit" id="canedit" field-name="Can_edit" @(Model.can_edit.HasValue && (bool)Model.can_edit ? "checked" : "")>
+										<label class="form-control-label" for="canedit">Can Edit</label>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="cancancel" id="cancancel" field-name="Can_Cancel" @(Model.can_cancel.HasValue && (bool)Model.can_cancel ? "checked" : "")>
+										<label class="form-control-label" for="cancancel">Can Cancel</label>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
 										<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" @(Model.fixed_Additional_Fees.HasValue && (bool)Model.fixed_Additional_Fees ? "checked" : "")>
 										<label class="form-control-label" for="isAdditionalFeeFixed">Max Additional</label>
 									</label>
 								</div>
 							</div>
-					
+
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -365,7 +390,7 @@
 									</label>
 								</div>
 							</div>
-						
+
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -383,7 +408,7 @@
 									</label>
 								</div>
 							</div>
-						
+
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -392,7 +417,7 @@
 									</label>
 								</div>
 							</div>
-					
+
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -401,14 +426,14 @@
 									</label>
 								</div>
 							</div>
-							<div class="col-md-12">
-								<div class="form-check-inline ">
-									<label class="custom-control custom-checkbox">
-										<input type="checkbox" name="is_admin" id="is_admin" field-name="is_admin" @(Model.is_Admin.HasValue && (bool)Model.is_Admin ? "checked" : "")>
-										<label class="form-control-label" for="is_admin">Admin</label>
-									</label>
-								</div>
-							</div>
+							@*<div class="col-md-12">
+			<div class="form-check-inline ">
+				<label class="custom-control custom-checkbox">
+					<input type="checkbox" name="is_admin" id="is_admin" field-name="is_admin" @(Model.is_Admin.HasValue && (bool)Model.is_Admin ? "checked" : "")>
+					<label class="form-control-label" for="is_admin">Admin</label>
+				</label>
+			</div>
+		</div>*@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -502,6 +527,11 @@
 							<div class="col-md-12">
 								<div class="form-group pt-2">
 									<label for="uploadFile">Select Logo: <span class="logoname">@Model.logo</span></label>
+									@if (@Model.logo != "" && @Model.logo != null)
+									{
+										<a target="_blank" href="\Files\@Model.id\LOGO\@Model.logo"><i class="fas fa-eye"></i></a>
+									}
+									<b class="popup-file-format">(Image 175x90)</b>
 									<div class="file-input-container">
 										<input type="file" name="Upload File" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" />
 										<button fld="Logo" type="button" class="uploadfile btn btn-secondary width-btn save-button" data-dismiss="modal" hidden>Upload</button>
@@ -510,29 +540,39 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group pt-2">
-									<label for="uploadHeader">Select Header: <span class="logoname">@Model.header</span></label>
+									<label class="p-0 m-0" for="uploadHeader">Select Print Layout: <span class="logoname">@Model.printlayout</span></label>
+									@if (@Model.printlayout != "" && @Model.printlayout != null)
+									{
+										<a target="_blank" href="\Files\@Model.id\Layout\@Model.printlayout"><i class="fas fa-eye"></i></a>
+									}
+									<b class="popup-file-format">(Image A4)</b>
 									<div class="file-input-container">
-										<input type="file" name="Upload File" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" value="@Model.header" />
-										<button fld="Header" type="button" class="uploadfile btn btn-secondary width-btn save-button" data-dismiss="modal" hidden>Upload</button>
+										<input type="file" name="Upload File" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" value="@Model.printlayout" />
+										<button fld="Layout" type="button" class="uploadfile btn btn-secondary width-btn save-button" data-dismiss="modal" hidden>Upload</button>
 									</div>
 								</div>
 							</div>
 
 							<div class="col-md-12">
 								<div class="form-group pt-2">
-									<label for="uploadFooter">Select Footer: <span class="logoname">@Model.footer</span></label>
+									<label for="uploadFooter">Select Signature: <span class="logoname">@Model.signature</span></label>
+									@if (@Model.signature != "" && @Model.signature != null)
+									{
+										<a target="_blank" href="\Files\@Model.id\Signature\@Model.signature"><i class="fas fa-eye"></i></a>
+									}
+									<b class="popup-file-format">(Image 80x80)</b>
 									<div class="file-input-container">
-										<input type="file" name="Upload File" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" value="@Model.footer" />
-										<button fld="Footer" type="button" class="uploadfile btn btn-secondary width-btn save-button" data-dismiss="modal" hidden>Upload</button>
+										<input type="file" name="Upload File" accept=".png,.jpg,.jpeg,.pnb" class="form-control-file file-upload" value="@Model.signature" />
+										<button fld="Signature" type="button" class="uploadfile btn btn-secondary width-btn save-button" data-dismiss="modal" hidden>Upload</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="modal-footer justify-content-start">
+						<!--<div class="modal-footer justify-content-start">-->
 							@*<button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>*@
-							<button type="button" class="btn btn-secondary width-btn btn-outline-red" data-dismiss="modal" id="clearUploadedLogo">Clear Logo</button>
+							<!--<button type="button" class="btn btn-secondary width-btn btn-outline-red" data-dismiss="modal" id="clearUploadedLogo">Clear Logo</button>
 
-						</div>
+						</div>-->
 					</div>
 				</div>
 			</div>

@@ -17,9 +17,9 @@ $(document).ready(function () {
         dropdown.val(null).trigger('change');
     });
     $(".isselect2").select2({
-        tags: true,
-        //tokenSeparators: [',', ' '],
-        closeOnSelect: false
+        //tags: true,
+        tokenSeparators: [',', ' '],
+       // closeOnSelect: false
     })
 
 

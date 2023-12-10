@@ -95,6 +95,8 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Hide_Premium_Info", req.Hide_Premium_Info);
             param.Add("@U_Active", req.Active);
             param.Add("@U_Is_Admin", req.Is_Admin);
+            param.Add("@U_Can_edit", req.Can_edit);
+            param.Add("@U_Can_cancel", req.Can_cancel);
 
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);

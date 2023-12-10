@@ -239,6 +239,11 @@ function saveUser() {
     });
     var userid = $('#addUserForm').attr('userid');
     user.id = userid;
+
+
+    console.log(user)
+
+
     if (userid > 0)
         url = "/Users/EditUser";
     else {
