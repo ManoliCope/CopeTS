@@ -17,33 +17,54 @@
                                 <div class="card m-0" style="box-shadow:none !important">
                                     <div id="searchform" class="card-body ">
                                         <div class="row mb-6">
-                                             <div class="col-md-3 mb-lg-0 mb-6" >
+                                            @* <div class="col-md-3 mb-lg-0 mb-6" >
                                                 <label>From:</label>
                                                 <input id="datefrom" type="date" class="form-control datatable-input required" value="" >
                                             </div>
                                             <div class="col-md-3 mb-lg-0 mb-6">
                                                 <label>To:</label>
                                                 <input id="dateto" type="date" class="form-control datatable-input required" value="">
-                                            </div>
-
-                                        </div>
-                                        <div class="row mb-6">
-                                            @*<div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>Status:</label>
-                                                 <select class="form-control" name="beneficiariesId" id="beneficiariesId" field-name="beneficiaries" required >
-                                
-                                 @foreach (var thislist in Model.loadedData.productionTabs)
+                                            </div>*@
+                                             <div class="col-md-3 mb-lg-0 mb-6" >
+                                                <label>Agent Report:</label>
+                                                 <select class="form-control" name="agentId" id="agentId" field-name="agent" >
+                                                      <option value=""> Select Agent</option>
+                                                      @foreach (var thislist in Model.loadedData.agents)
 											        {
 											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
 											        }
-                                
-
-                            </select>
+                                                 </select>
                                             </div>
                                             <div class="col-md-3 mb-lg-0 mb-6">
-                                               
-                                            </div>*@
-                                         
+                                                <label>Sub Agent Report:</label>
+                                                <select class="form-control" name="subAgentId" id="subAgentId" field-name="subagent" >
+                                                     <option value=""> Select Sub Agent</option>
+                                                     @foreach (var thislist in Model.loadedData.subagents)
+											        {
+											        	<option value="@thislist.LK_ID" parent="@thislist.LK_ParentID"> @thislist.LK_TableField</option>
+											        }
+                                                </select>
+                                            </div>
+                                              <div class="col-md-3 mb-lg-0 mb-6">
+                                                <label>Client First Name:</label>
+                                                <input id="clientFirstName" type="text" class="form-control datatable-input required" value="">
+                                            </div>
+                                             <div class="col-md-3 mb-lg-0 mb-6">
+                                                <label>Client Last Name:</label>
+                                                <input id="clientLastName" type="text" class="form-control datatable-input required" value="">
+                                            </div>
+                                        </div>
+                                          <div class="row mb-6">
+                                              <div class="col-md-12 mt-12">
+                                                <div class="row mt-4">
+                                                    <div class="col-md-3 mb-lg-0 mb-6">
+                                                      <label>Passport Number:</label>
+                                                        <input id="passportNumber" type="text" class="form-control datatable-input required" value="">
+                                                      </div>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
                                             <div class="col-md-3 mt-1">
                                                 <div class="row mt-4">
                                                     <div class="col-md-12">
@@ -54,7 +75,6 @@
                                                                 <span>Generate</span>
                                                             </span>
                                                         </button>&nbsp;&nbsp;
-
                                                     </div>
                                                 </div>
                                             </div>

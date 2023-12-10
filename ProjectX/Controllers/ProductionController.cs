@@ -79,9 +79,30 @@ namespace ProjectX.Controllers
             return View();
         }
 
-
-
         public ActionResult Create()
+        {
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadBenefits = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true,
+                loadZones = true
+
+            });
+
+
+
+
+            ViewData["filldata"] = response;
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
+            ProdGetResp ttt = new ProdGetResp();
+            ttt.product = new TR_Product();
+            return View(ttt);
+        }
+         public ActionResult ManualProduction()
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {

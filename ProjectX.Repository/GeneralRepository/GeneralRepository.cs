@@ -34,6 +34,7 @@ namespace ProjectX.Repository.GeneralRepository
             LoadDataModel resp = new LoadDataModel();
             //return resp;
             var param = new DynamicParameters();
+            param.Add("@userid", loadDataModelSetup.userid);
             param.Add("@loadBenefits", loadDataModelSetup.loadBenefits);
             param.Add("@loadProducts", loadDataModelSetup.loadProducts);
             param.Add("@loadPlans", loadDataModelSetup.loadPlans);
@@ -51,12 +52,14 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadCurrencyRate", loadDataModelSetup.loadCurrencyRate);
             param.Add("@loadBenefitTitle", loadDataModelSetup.loadBenefitTitle);
             param.Add("@loadProductionTabs", loadDataModelSetup.loadProductionTabs);
+            param.Add("@loadAgents", loadDataModelSetup.loadAgents);
+            param.Add("@loadSubAgents", loadDataModelSetup.loadSubAgents);
 
 
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_data_load", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_data_load_new", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
                 {
                     if (loadDataModelSetup.loadBenefits)
                         resp.benefits = result.Read<LookUpp>().ToList();
@@ -90,6 +93,12 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.benefitTitle = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.loadProductionTabs)
                         resp.productionTabs = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadAgents)
+                        resp.agents = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadSubAgents)
+                        resp.subagents = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.userid>0)
+                        resp.usersHierarchy = result.Read<LookUpp>().ToList();
                 }
             }
 

@@ -23,16 +23,23 @@ namespace ProjectX.Repository.ReportRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
-        public List<dynamic> GenerateProduction(int req, int userid, DateTime datefrom, DateTime dateto)
+        public List<dynamic> GenerateProduction(productionReport req, int userid)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
-            param.Add("@prodid", req);
+            param.Add("@prodid", req.prodId);
             param.Add("@userid", userid);
-            param.Add("@datefrom", datefrom);
-            param.Add("@dateto", dateto);
-           
+            param.Add("@datefrom", req.datefrom);
+            param.Add("@dateto", req.dateto);
+            param.Add("@agentid", req.agentId);
+            param.Add("@subagentid", req.subAgentId);
+            param.Add("@policynumber", req.policyNumber);
+            param.Add("@policystatus", req.policyStatus);
+            param.Add("@clientfirstname", req.clientFirstName);
+            param.Add("@clientlastname", req.clientLastName);
+            param.Add("@passportnumber", req.passportNumber);
+
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -43,14 +50,14 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateBenefits( int userid, DateTime datefrom, DateTime dateto)
+        public List<dynamic> GenerateBenefits(int userid)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
-            param.Add("@datefrom", datefrom);
-            param.Add("@dateto", dateto);
+            //param.Add("@datefrom", datefrom);
+            //param.Add("@dateto", dateto);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
@@ -61,14 +68,17 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateBeneficiaries(int userid, DateTime datefrom, DateTime dateto)
+        public List<dynamic> GenerateBeneficiaries(int userid, productionReport req)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
-            param.Add("@datefrom", datefrom);
-            param.Add("@dateto", dateto);
+            param.Add("@agentid", req.agentId);
+            param.Add("@subagentid", req.subAgentId);
+            param.Add("@clientfirstname", req.clientFirstName);
+            param.Add("@clientlastname", req.clientLastName);
+            param.Add("@passportnumber", req.passportNumber);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

@@ -24,6 +24,9 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> currencyRate { get; set; }
         public List<LookUpp> benefitTitle { get; set; }
         public List<LookUpp> productionTabs { get; set; }
+        public List<LookUpp> agents { get; set; }
+        public List<LookUpp> subagents { get; set; }
+        public List<LookUpp> usersHierarchy { get; set; }
         
     }
 }
