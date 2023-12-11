@@ -69,6 +69,7 @@ namespace ProjectX.Entities.dbModels
         public string U_Signature { get; set; }  
         public bool? U_Can_Cancel { get; set; }  
         public bool? U_Can_Edit { get; set; }  
+        public bool? U_Manual_Production { get; set; }  
 
     }
 }

@@ -1,0 +1,263 @@
+﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
+@{
+	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
+	var productlist = ViewData["productlist"] as List<ProjectX.Entities.dbModels.TR_Product>;
+	var zonelist = ViewData["zonelist"] as List<ProjectX.Entities.dbModels.TR_Zone>;
+	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	DateTime today = DateTime.Today;
+	if (UserRights.Is_Admin == true)
+	{
+		today = new DateTime(1950, 1, 1);
+	}
+
+}
+
+
+<div class="content editscreen prodadm" pgtype="view" pol-id="@Model.PolicyID" prodadm="@(UserRights.Is_Admin.HasValue && UserRights.Is_Admin.Value ? "1" : "0")">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row" data-select2-id="20">
+			<div class="col-12">
+				<div class="page-title mt-2">
+					<h4 class="card-title ">
+						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+						<span>Edit Policy - @Model.Reference -      Manual Production</span>
+						<span class="cancelledtxt">@(Model.IsCanceled ? "Cancelled" : "") </span>
+					</h4>
+				</div>
+				<span class="text-warning"></span>
+			</div>
+			<div class="page-content w-100">
+				<div class="row m-0">
+					<div class="col-md-6 @((UserRights.Is_Admin == false && !Model.IsEditable) ? "no-click" : "")">
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Product Information</h3>
+											<hr>
+											<div class="row">
+												<div class="col-md-12 typeradio">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="we-checkbox">
+																@if (Model.IsIndividual)
+																{
+																	<input type="radio" id="is_individual" name="type" @(Model.IsIndividual ? "checked" : "")>
+																}
+
+																<label for="is_individual">Individual</label>
+																<i class="fa fa-question-circle" title="Individual"></i>
+															</div>
+														</div>
+														<div class="col-md-4 family" style="">
+															<div class="we-checkbox">
+																@if (Model.IsFamily)
+																{
+																	<input type="radio" id="is_family" name="type" @(Model.IsFamily ? "checked" : "")>
+																}
+																<label for="is_family">Family</label>
+																<i class="fa fa-question-circle" title="Family"></i>
+															</div>
+														</div>
+														<div class="col-md-4 group" style="">
+															<div class="we-checkbox">
+																@if (Model.IsGroup)
+																{
+																	<input type="radio" id="is_group" name="type" @(Model.IsGroup ? "checked" : "")>
+																}
+																<label for="is_group">Group</label>
+																<i class="fa fa-question-circle" title="Group"></i>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="product_id">Product <span class="text-danger">*</span></label>
+														<br />
+														<label class="form-control">@productlist.FirstOrDefault(p => p.PR_Id == Model.ProductID).PR_Title  </label>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="zone_id">Zone <span class="text-danger">*</span></label>
+														<br />
+														<label class="form-control">@zonelist.FirstOrDefault(p => p.Z_Id == Model.ZoneID).Z_Title </label>
+													</div>
+												</div>
+											</div>
+											@*<div class="row">
+													<div class="col-md-8">
+														<div class="form-group">
+															<label for="notes">Notes</label>
+															<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
+														</div>
+													</div>
+												</div>*@
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3 style="display: inline-block; vertical-align: middle;">Beneficiaries</h3>
+											<hr>
+											<div class="row thisbeneficiary">
+												<div class="col-md-12">
+													<div class="table-responsive">
+														<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="width:100%; ">
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card mt-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h3>Travel Info</h3><hr>
+
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="form-group col-md-12">
+																<label for="destination_id">Destination(s) </label>
+																<br />
+																<label class="form-control">
+																	@string.Join(",", Model.Destinations.Select(d => d.DestinationName));
+																</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="form-group col-md-4">
+																<label>Duration <span class="text-danger">*</span></label><br />
+																<label id="durationLabel" class="form-control">@Model.Duration</label>
+
+															</div>
+															<div class="form-group col-md-4">
+																<label>From <span class="text-danger">*</span></label><br />
+																<label id="durationLabel" class="form-control">@Model.FromDate.ToString("dd-MM-yyyy")</label>
+
+															</div>
+															<div class="form-group col-md-4">
+																<label>To <span class="text-danger">*</span></label><br />
+																<label id="durationLabel" class="form-control">@Model.ToDate.ToString("dd-MM-yyyy")</label>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="card mt-4  sticky-top" style="top:90px;">
+							<div class="card-header text-center">
+								<h4>
+									<span class="float-left ">
+										Quotation
+									</span>
+								</h4>
+							</div>
+							<div class="card-body result ">
+								<div class="quotecontainer " cr="@Model.CurrencyRate.Rate" crs="@Model.CurrencyRate.CurrencySymbol">
+									@{
+										var benefitlist = ViewData["benefitlist"] as List<ProjectX.Entities.dbModels.TR_Benefit>;
+										var DestinationNames = string.Join(",", Model.Destinations.Select(d => d.DestinationName));
+									}
+
+
+									<div class="card mt-2 mb-0">
+										<div class="card-body @(!Model.IsEditable ? "no-click":"")" style="font-size:13px">
+											<div>
+												<b>Destination(s)</b>
+												<span class="float-end dest">@DestinationNames</span>
+											</div>
+											<div>
+												<b>Inception Date</b>
+												<span class="float-end incdate">@Model.FromDate.ToString("dd-MM-yyyy")</span>
+											</div>
+											<div>
+												<b>Expiry Date</b>
+												<span class="float-end expdate">@Model.ToDate.ToString("dd-MM-yyyy")</span>
+											</div>
+											<div>
+												<b>Duration</b>
+												<span class="float-end duration">@Model.Duration Days</span>
+											</div>
+											<div>
+												<span class="float-end total_price" data-currency="USD"></span>
+											</div>
+
+
+
+											<div class="my-3 mb-1">
+												@foreach (var item in Model.PolicyDetails)
+												{
+													<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
+														<tbody>
+															<tr class="card-header">
+																<td>Full Name</td>
+																<td colspan="2"> @item.FirstName @item.LastName</td>
+															</tr>
+															<tr>
+																<td>Plan</td>
+																<td colspan="2">
+																	<label class="form-control">
+																		@item.PlanName
+																	</label>
+																</td>
+															</tr>
+
+
+															<tr>
+																<td></td>
+																<td>
+																	Price(USD) <br />
+																	<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
+																</td>
+															</tr>
+														</tbody>
+
+													</table>
+												}
+
+											</div>
+										</div>
+									</div>
+
+									@if (!Model.IsCanceled)
+									{
+										<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

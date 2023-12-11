@@ -94,6 +94,9 @@ namespace ProjectX.Services
 
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
             byte[] pdfBytes = ConvertHtmlToPDF(htmlContent);
+            //byte[] pdfBytes2 = ConvertHtmlToPDF(htmlContent);
+            //byte[] combinedPdf1 = CombinePdfFiles(pdfBytes, pdfBytes2);
+            //return combinedPdf1;
 
             try
             {
@@ -130,6 +133,39 @@ namespace ProjectX.Services
                 return pdfBytes;
             }
 
+        }
+        public byte[] CombinePdfFiles(byte[] pdfBytes1, byte[] pdfBytes2 )
+        {
+
+            using (MemoryStream combinedPdfStream = new MemoryStream())
+            {
+                // Load the PDF from a byte[] stream
+                PdfDocument pdfDocument1 = new PdfDocument(new PdfReader(new MemoryStream(pdfBytes1)));
+                PdfDocument pdfDocument2 = new PdfDocument(new PdfReader(new MemoryStream(pdfBytes2)));
+
+                using (PdfWriter writer = new PdfWriter(combinedPdfStream))
+                using (PdfDocument combinedDocument = new PdfDocument(writer))
+                {
+                    iText.Kernel.Geom.Rectangle pageSize1 = pdfDocument1.GetPage(1).GetPageSize();
+                    //iText.Kernel.Geom.PageSize pageSize1 = (iText.Kernel.Geom.PageSize)(pdfDocument1.GetPage(1).GetPageSize());
+
+                    pdfDocument2.GetPage(1).GetPdfObject().Put(PdfName.MediaBox, new PdfArray(new float[] { pageSize1.GetLeft(), pageSize1.GetBottom(), pageSize1.GetRight(), pageSize1.GetTop() }));
+
+                    for (int page = 1; page <= pdfDocument1.GetNumberOfPages(); page++)
+                    {
+                        PdfPage pdfPage = pdfDocument1.GetPage(page);
+                        combinedDocument.AddPage(pdfPage.CopyTo(combinedDocument));
+                    }
+
+                    for (int page = 1; page <= pdfDocument2.GetNumberOfPages(); page++)
+                    {
+                        pdfDocument2.GetPage(page).GetPdfObject().Put(PdfName.MediaBox, new PdfArray(new float[] { pageSize1.GetLeft(), pageSize1.GetBottom(), pageSize1.GetRight(), pageSize1.GetTop() }));
+                        PdfPage pdfPage = pdfDocument2.GetPage(page);
+                        combinedDocument.AddPage(pdfPage.CopyTo(combinedDocument));
+                    }
+                }
+                return combinedPdfStream.ToArray();
+            }
         }
 
 

@@ -37,6 +37,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? Show_Commission { get; set; }
         public bool? Can_edit { get; set; }
         public bool? Can_cancel { get; set; }
+        public bool? Manual_Production { get; set; }
         public bool? Fixed_Additional_Fees { get; set; }
         public bool? Apply_Rounding { get; set; }
         public bool? Allow_Cancellation { get; set; }
