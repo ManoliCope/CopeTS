@@ -137,36 +137,38 @@ function addnew() {
     });
 }
 
-function edit() {
-    if (validateForm(".container-fluid")) {
-        return;
-    }
+//function edit() {
+//    if (validateForm(".container-fluid")) {
+//        return;
+//    }
 
-    showloader("load")
-    var planReq = {
-        "id": $("#divinfo").attr("mid"),
-        "title": $("#title").val(),
-    }
+//    showloader("load")
+//    var planReq = {
+//        "id": $("#divinfo").attr("mid"),
+//        "title": $("#title").val(),
+//    }
 
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: projectname + "/Plan/EditPlan",
-        data: { req: planReq },
-        success: function (result) {
-            removeloader();
-            showresponsemodal(1, result.statusCode.message)
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-        }
-    });
-}
-
-function deleteplan(me) {
+//    $.ajax({
+//        type: 'post',
+//        dataType: 'json',
+//        url: projectname + "/Plan/EditPlan",
+//        data: { req: planReq },
+//        success: function (result) {
+//            removeloader();
+//            showresponsemodal(1, result.statusCode.message)
+//        },
+//        failure: function (data, success, failure) {
+//            showresponsemodal("Error", "Bad Request")
+//        },
+//        error: function (data) {
+//            showresponsemodal("Error", "Bad Request")
+//        }
+//    });
+//}
+//$('#confirmdeletebtn').onclick(){
+//    deletebatch();
+//}
+function deletebatch(me) {
     if (validateForm(".container-fluid")) {
         return;
     }
@@ -204,10 +206,250 @@ function deleteplan(me) {
         }
     });
 }
-function gotoplan(me) {
-    showloader("load")
-    window.location.href = "/plan/edit/" + $(me).attr("planid");
-    removeloader();
-    return
+
+function clearimportpopup() {
+    $('#import-production-batch').find("#divinfo").find('input,select').css("border-color", "#e2e7f1").val('');
+    //$("#filtericon").css("color", "inherit");
+    $("#divproductiontable").attr("hidden", "hidden")
+    $("#import-production-batch").find(".modal-footer").attr("hidden", "hidden")
+    $("#import-production-batch .modal-dialog").removeClass("modal-lg")
+    showresponsemodalbyid('import-production-batch');
+}
+$("#productionbatchimport").click(function () {
+    importproduction();
+});
+function importproduction() {
+
+    if (validateForm("#divinfo")) {
+        return;
+    }
+
+    if ($('#productionbatchtable tbody tr').length == 0) {
+        $(".importresponse").text("No Batch Uploaded!")
+        return
+    }
+    else
+        $(".importresponse").text("")
+
+
+    var table = $('#productionbatchtable').DataTable();
+    var importedbatch = []
+    importedbatch = table.data().toArray();
+    console.log(importedbatch)
+    //var filter = {
+    //    importedbatch: importedbatch,
+    //    //idProduct: $("#productid").val(),
+    //    //IdProfile: $("#profileid").val(),
+    //    //fromdate: $("#datefrom").val(),
+    //    //todate: $("#dateto").val(),
+    //}
+    var title = $("#title").val();
+    var stringifiedreq = JSON.stringify(importedbatch)
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/ProductionBatch/importproduction",
+        data: { importedbatch: stringifiedreq, title: title },
+        success: function (result) {
+            if (result.statusCode.code != 1)
+                showresponsemodal("error", result.statusCode.message)
+            else {
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                SearchContract();
+            }
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            //alert("Error:" + failure);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("fail");
+        }
+    });
 }
 
+var importbutton = $("#importupload");
+importbutton.click(function () {
+    var importupload = $(this).parent().find(".file-upload");
+    importupload.click();
+
+    importupload.change(function () {
+        togglebtnloader($("#importupload"));
+        var profileid = $("#prname").attr("name")
+
+        importproductionfiles(this)
+
+        importupload.unbind();
+    });
+});
+
+function importproductionfiles(me) {
+    var thisformData = new FormData();
+
+    var selectedfiles = GetProductions(me)
+    if (selectedfiles)
+        thisformData = selectedfiles;
+    else
+        return false;
+
+    $.ajax({
+        url: projectname + '/ProductionBatch/exceltotable',
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (result) {
+            $("#import-production-batch .modal-dialog").addClass("modal-lg")
+            $("#divproductiontable").removeAttr("hidden")
+            drawproductionbatchtable(result)
+            $(me).val('');
+            $("#import-production-batch").find(".modal-footer").removeAttr("hidden");
+
+            removebtnloader($("#importupload"));
+            $(me).closest(".modal").find(".importresponse").html('').css("color", "Green")
+
+            //$("#import-adherent").find(".modal-footer").show();
+
+        },
+        error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            $('#post').html(msg);
+        }
+    });
+
+}
+function GetProductions(me) {
+
+
+    var files = $(me)[0].files;
+    var formData = new FormData();
+
+    if (files.length > 0) {
+        var allowedExtensions = ['xlsx', 'xls'];
+        var valid = true;
+        for (var i = 0; i != files.length; i++) {
+            var path = files[i].name.split('.');
+            var extension = path[path.length - 1]
+            if ($.inArray(extension.toLowerCase(), allowedExtensions) < 0)
+                if ($.inArray(extension, allowedExtensions) < 0)
+                    valid = false;
+
+            formData.append("files", files[i]);
+        }
+
+        if (!valid) {
+            //addFileAlert('Not allowed file extension', 'danger')
+            //alert('Not allowed file extension')
+            removebtnloader($(".btnFileUpload"));
+            $(me).closest(".modal").find(".importresponse").html('Not allowed file extension').css("color", "red")
+
+            removebtnloader($("#importupload"));
+            //$("#import-adherent").find(".modal-footer").hide();
+
+            return;
+        }
+
+
+        return formData;
+    } else {
+        return formData;
+    }
+}
+function importadherents() {
+
+    if (validateForm("#divinfo")) {
+        return;
+    }
+
+    if ($('#adherenttable tbody tr').length == 0) {
+        $(".importresponse").text("No Adherents Uploaded!")
+        return
+    }
+    else
+        $(".importresponse").text("")
+
+
+    var table = $('#adherenttable').DataTable();
+    var importedadherents = []
+    importedadherents = table.data().toArray();
+    var filter = {
+        adherents: importedadherents,
+        idProduct: $("#productid").val(),
+        IdProfile: $("#profileid").val(),
+        fromdate: $("#datefrom").val(),
+        todate: $("#dateto").val(),
+    }
+
+    var stringifiedreq = JSON.stringify(filter)
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Profile/importadherents",
+        data: { reqadherent: stringifiedreq },
+        success: function (result) {
+            if (result.statusCode.code != 1)
+                showresponsemodal("error", result.statusCode.message)
+            else {
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                SearchContract();
+            }
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+            //alert("Error:" + failure);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("fail");
+        }
+    });
+}
+function drawproductionbatchtable(result) {
+    console.log(result);
+    var table = $('#productionbatchtable').DataTable({
+        "data": result,
+        "paging": true,
+        "ordering": false,
+        "filter": false,
+        "searching": true,
+        "destroy": true,
+        "lengthMenu": [[5, -1], [5, "All"]],
+        "columns": [
+            { "title": "ReferenceNumber", "className": "text-center filter", "orderable": true, "data": "referenceNumber" },
+            { "title": "Type", "className": "text-center filter", "orderable": true, "data": "type" },
+            { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "plan" },
+            { "title": "Zone", "className": "text-center filter", "orderable": true, "data": "zone" },
+            { "title": "Days", "className": "text-center filter", "orderable": true, "data": "days" },
+            { "title": "StartDate", "className": "text-center filter", "orderable": true, "data": "startDate" },
+            { "title": "FirstName", "className": "text-center filter", "orderable": true, "data": "firstName" },
+            { "title": "MiddleName", "className": "text-center filter", "orderable": true, "data": "middleName" },
+            { "title": "LastName", "className": "text-center filter", "orderable": true, "data": "lastName" },
+            { "title": "DateOfBirth", "className": "text-center filter", "orderable": true, "data": "dateOfBirth" },
+            { "title": "Age", "className": "text-center filter", "orderable": true, "data": "age" },
+            { "title": "Gender", "className": "text-center filter", "orderable": true, "data": "gender" },
+            { "title": "PassportNumber", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
+            { "title": "Nationality", "className": "text-center filter", "orderable": true, "data": "nationality" },
+            { "title": "PremiumInUSD", "className": "text-center filter", "orderable": true, "data": "premiumInUSD" },
+            { "title": "NetInUSD", "className": "text-center filter", "orderable": true, "data": "netInUSD" }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+
+}

@@ -8,7 +8,7 @@
 			 <h4 class="mb-0 mt-0 float-left">Manual Production</h4>
 		</div>
 		<div class="col-md-1">
-			<a class="btn bglocalcolor float-right addnewbtn" data-toggle="modal" data-target="#import-production-file" style="width:150px" onclick="showImportModel()">
+			<a class="btn bglocalcolor float-right addnewbtn" data-toggle="modal" data-target="#import-production-batch" style="width:150px" onclick="clearimportpopup()">
 				<i class="fas fa-plus-circle"></i> Import
 			</a>
 		</div>
@@ -132,8 +132,11 @@
                                     <label for="dateto">To </label>
                                     <input type="date" class="form-control" id="dateto" required>
                                 </div>*@
-
-
+                                <div class="form-group mb-1 col-lg-6">
+                                    <label for="title">Title</label>
+                                    <input id="title" type="text" class="form-control datatable-input" placeholder="Title" data-col-index="0">
+                                
+                                    </div>
 
                                 <div class="form-group mb-1 col-lg-12">
                                     <label for="validationCustom02">&nbsp;</label>
@@ -151,8 +154,8 @@
                                     <label class="importresponse text-danger"></label>
                                 </div>
 
-                                <div id="divadeherenttable" class="form-group mb-1 col-lg-12">
-                                    <table id="adherenttable" class="scrolly table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered mb-0 ">
+                                <div id="divproductiontable" class="form-group mb-1 col-lg-12">
+                                    <table id="productionbatchtable" class="scrolly table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered mb-0 ">
                                     </table>
                                 </div>
                             </div>
@@ -160,7 +163,7 @@
                     </div>
                     <div class="modal-footer" hidden >
                         <div id="thisloader" class="smloader hide"></div>
-                        <button id="adherentimport" class="btn btn-primary w-100 bglocalcolor mb-1" type="submit">
+                        <button id="productionbatchimport" class="btn btn-primary w-100 bglocalcolor mb-1" type="submit">
                             <span> Add </span>
                         </button>
                     </div>
