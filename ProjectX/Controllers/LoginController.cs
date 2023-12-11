@@ -9,6 +9,7 @@ using System;
 using ProjectX.Entities.Models.Users;
 using ProjectX.Entities;
 using ProjectX.Entities.dbModels;
+using System.Text;
 
 namespace ProjectX.Controllers
 {
@@ -29,7 +30,7 @@ namespace ProjectX.Controllers
 
         public ActionResult Index(string cid)
         {
- 
+
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("token");
             return View();
         }
@@ -63,6 +64,13 @@ namespace ProjectX.Controllers
             catch (Exception ex)
             {
                 response.statusCode.message = ex.Message;
+            }
+
+            var originalUrl = "";
+            if (_httpContextAccessor.HttpContext.Session.TryGetValue("OriginalUrl", out var originalUrlBytes))
+            {
+                response.ReturnUrl = Encoding.UTF8.GetString(originalUrlBytes);
+                _httpContextAccessor.HttpContext.Session.Remove("OriginalUrl");
             }
 
             return response;

@@ -45,21 +45,13 @@ function LogintoCMS() {
                 setTimeout(function () {
                     if (result.statusCode) {
                         if (result.statusCode.code == 1) {
-                            var url_string = window.location.href
-                            var url = new URL(url_string);
-                            //var cid = url.searchParams.get("cid");
-                            //var caseid = url.searchParams.get("csid");
-                            //alert(url_string);
-                            window.location.href = "/production";
-                            
-                            //if (cid)
-                            //    window.location.href = "/Home?cid=" + cid;
-                            //else if (caseid) {
-                            //    window.location.href = "/Home?csid=" + caseid;
-                            //}
-                            //else
-                            //    window.location.href = "/Home";
+                            //var url_string = window.location.href
+                            //var url = new URL(url_string);
 
+                            if (result.returnUrl != "" && result.returnUrl != null)
+                                window.location.href = result.returnUrl;
+                            else
+                                window.location.href = "/production";
                         }
                         else {
                             $("#incorrectCredMsg").removeClass("hide");

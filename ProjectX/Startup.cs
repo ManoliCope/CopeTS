@@ -174,12 +174,21 @@ public class Startup
 
 
         services.AddDistributedMemoryCache();
-        services.AddSession();
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(30);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
+
+
+        //services.AddSession();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseRouting();
+        app.UseSession();
 
         app.UseCors(x => x.SetIsOriginAllowed(origin => true)
             .AllowAnyMethod()

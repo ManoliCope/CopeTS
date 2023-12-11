@@ -192,6 +192,9 @@ namespace ProjectX.Middleware.Jwt
                 string ttt = Controller;
                 string aaa = Action;
 
+                //var originalUrl = context.Request.Path + context.Request.QueryString;
+                context.Session.SetString("OriginalUrl", context.Request.Path + context.Request.QueryString);
+
                 //context.Response.Redirect("/");
                 context.Response.Redirect("/login");
             }
