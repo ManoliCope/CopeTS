@@ -163,6 +163,56 @@ namespace ProjectX.Controllers
             }
         }
 
+        public ActionResult EditManual(int id)
+        {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadBenefits = true,
+                loadProducts = true,
+                loadDestinations = true,
+                loadPlans = true,
+                loadTariffs = true,
+                loadZones = true
+
+            });
+            ViewData["filldata"] = response;
+
+            ProductionPolicy policyreponse = new ProductionPolicy();
+            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id, false);
+
+            if (policyreponse != null)
+            {
+                int typeid = 0;
+                if (policyreponse.IsIndividual)
+                    typeid = 1;
+                else if (policyreponse.IsFamily)
+                    typeid = 2;
+                else if (policyreponse.IsGroup)
+                    typeid = 3;
+
+                List<TR_Product> productlist = GetProdutctsByType(typeid);
+                List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
+                List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
+                List<TR_Benefit> benefitlist = GetAdditionalBenbyTariff(policyreponse.PolicyDetails.Select(detail => detail.Tariff).ToList());
+
+                ViewData["productlist"] = productlist;
+                ViewData["zonelist"] = zonelist;
+                ViewData["destinationlist"] = destinationlist;
+                ViewData["benefitlist"] = benefitlist;
+                ViewData["isAdmin"] = _user.U_Is_Admin.ToString();
+
+                return View("detailsManual", policyreponse);
+            }
+            else
+                return RedirectToAction("index", "Production"); // Redirect to another action
+
+        }
+
+
+
         // GET: ProductionController/Edit/5
         public ActionResult Edit(int id)
         {

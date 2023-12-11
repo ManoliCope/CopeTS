@@ -356,6 +356,14 @@
 									</label>
 								</div>
 							</div>
+							<div class="col-md-12">
+								<div class="form-check-inline ">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" name="manualproduction" id="manualproduction" field-name="Manual_Production" @(Model.manual_production.HasValue && (bool)Model.manual_production ? "checked" : "")>
+										<label class="form-control-label" for="manualproduction">Manual Production</label>
+									</label>
+								</div>
+							</div>
 
 							<div class="col-md-12">
 								<div class="form-check-inline ">

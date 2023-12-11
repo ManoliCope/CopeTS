@@ -99,6 +99,7 @@ namespace ProjectX.Business.Users
             resp.logo = repores.U_Logo;
             resp.printlayout = repores.U_PrintLayout;
             resp.signature = repores.U_Signature;
+            resp.manual_production = repores.U_Manual_Production;
 
             resp.can_edit = repores.U_Can_Edit;
             resp.can_cancel = repores.U_Can_Cancel;

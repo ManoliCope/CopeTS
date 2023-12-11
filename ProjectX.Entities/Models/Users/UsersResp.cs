@@ -52,6 +52,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? hide_Premium_Info { get; set; }
         public bool? can_edit { get; set; }
         public bool? can_cancel { get; set; }
+        public bool? manual_production { get; set; }
         public bool? active { get; set; }
         public bool? have_Parents { get; set; }
         //public int? parent_Id { get; set; }
