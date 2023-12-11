@@ -24,7 +24,6 @@ namespace ProjectX.Controllers
         private readonly TrAppSettings _appSettings;
         private TR_Users _user;
         private IJwtBusiness _jwtBusiness;
-
         private IWebHostEnvironment _env;
 
         public ReportController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
@@ -63,7 +62,6 @@ namespace ProjectX.Controllers
                     dataTable.Rows.Add(dataRow);
                 }
             }
-
             return dataTable;
         }
         public IActionResult ExporttoExcel(DataTable dataTable, string filename)
@@ -83,16 +81,15 @@ namespace ProjectX.Controllers
             }
         }
 
-
-
-
         
         public ActionResult Production()
         {
             
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadProductionTabs = true
+                loadProductionTabs = true,
+                loadSubAgents = true,
+                loadAgents = true
             });
             return View(response);
         }
@@ -102,7 +99,8 @@ namespace ProjectX.Controllers
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadProductionTabs = true
+                userid=_user.U_Id
+                //,loadProductionTabs = true
             });
             return View(response);
         }
@@ -111,7 +109,9 @@ namespace ProjectX.Controllers
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadProductionTabs = true
+                loadProductionTabs = true,
+                loadSubAgents = true,
+                loadAgents = true
             });
             return View(response);
         }
@@ -126,27 +126,27 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerateProduction(int req,DateTime datefrom,DateTime dateto)
+        public IActionResult GenerateProduction(productionReport req)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id, datefrom, dateto);
+            result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }
         [HttpPost]
-        public IActionResult GenerateBenefits(DateTime datefrom, DateTime dateto)
+        public IActionResult GenerateBenefits(int userid /*,DateTime datefrom, DateTime dateto*/)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateBenefits(_user.U_Id, datefrom, dateto);
+            result.reportData = _reportBusiness.GenerateBenefits(userid);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }
 
         [HttpPost]
-        public IActionResult GenerateBeneficiaries(DateTime datefrom, DateTime dateto)
+        public IActionResult GenerateBeneficiaries(productionReport req)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateBeneficiaries(_user.U_Id, datefrom, dateto);
+            result.reportData = _reportBusiness.GenerateBeneficiaries(_user.U_Id, req);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         }

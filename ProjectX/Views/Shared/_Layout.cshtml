@@ -112,6 +112,10 @@
 	{
 		<link href="~/Content/assets/css/productioncrud.css" rel="stylesheet" asp-append-version="true" />
 	}
+	else if (controllerName == "productionbatch")
+	{
+		<link href="~/Content/assets/css/productioncrud.css" rel="stylesheet" asp-append-version="true" />
+	}
 	else if (controllerName == "beneficiary")
 	{
 		<link href="~/Content/assets/css/beneficiary.css" rel="stylesheet" asp-append-version="true" />
@@ -313,6 +317,10 @@
 	else if (controllerName == "production" && (actionName == "edit" || actionName == "create"))
 	{
 		<script src="~/Content/assets/js/productioncrud.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "productionbatch")
+	{
+		<script src="~/Content/assets/js/productionbatch.js" asp-append-version="true" ></script>
 	}
 	else if (controllerName == "beneficiary")
 	{

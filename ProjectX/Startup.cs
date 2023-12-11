@@ -49,6 +49,8 @@ using DinkToPdf.Contracts;
 using ProjectX.Interfaces;
 using ProjectX.Services;
 using Microsoft.Extensions.FileProviders;
+using ProjectX.Repository.ProductionBatch;
+using ProjectX.Repository.ProductionBatchRepository;
 
 public class Startup
 {
@@ -164,6 +166,9 @@ public class Startup
 
         services.AddSingleton<IReportBusiness, ReportBusiness>();
         services.AddSingleton<IReportRepository, ReportRepository>();
+
+        services.AddSingleton<IProductionBatchBusiness, ProductionBatchBusiness>();
+        services.AddSingleton<IProductionBatchRepository, ProductionBatchRepository>();
 
 
         services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));

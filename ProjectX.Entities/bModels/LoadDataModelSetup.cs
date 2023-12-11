@@ -6,6 +6,7 @@ namespace ProjectX.Entities.bModels
 {
     public class LoadDataModelSetup
     {
+        public int userid { get; set; }
         public bool loadBenefits { get; set; }
         public bool loadProducts { get; set; }
         public bool loadPlans { get; set; }
@@ -23,6 +24,8 @@ namespace ProjectX.Entities.bModels
         public bool loadCurrencyRate { get; set; }
         public bool loadBenefitTitle { get; set; }
         public bool loadProductionTabs { get; set; }
+        public bool loadAgents { get; set; }
+        public bool loadSubAgents { get; set; }
        
         
 

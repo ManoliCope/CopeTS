@@ -18,12 +18,13 @@ $(document).ready(function () {
 });
 
 function generatebenefits() {
-    var datefrom = $("#datefrom").val();
-    var dateto = $("#dateto").val();
+    //var datefrom = $("#datefrom").val();
+    //var dateto = $("#dateto").val();
+    var userid = $("#userid").val();
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateBenefits",
-        data: { datefrom: datefrom, dateto: dateto },
+        data: { userid: userid},
         xhrFields: {
             responseType: 'blob'
         },
@@ -46,14 +47,23 @@ function generatebenefits() {
 }
 
 function generateproduction() {
-    var request = $("#prodId").val();
-    var datefrom = $("#datefrom").val();
-    var dateto = $("#dateto").val();
+    var prod = {};
+     prod['request'] = $("#prodId").val();
+     prod['datefrom'] = $("#datefrom").val();
+     prod['dateto'] = $("#dateto").val();
+     prod['agentId'] = $("#agentId").val();
+     prod['subAgentId'] = $("#subAgentId").val();
+     prod['policyStatus'] = $("#policyStatus").val();
+     prod['policyNumber'] = $("#policyNumber").val();
+     prod['clientFirstName'] = $("#clientFirstName").val();
+     prod['clientLastName'] = $("#clientLastName").val();
+     prod['passportNumber'] = $("#passportNumber").val();
+    
 
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateProduction",
-        data: { req: request,datefrom: datefrom,dateto:dateto },
+        data: { req: prod },
         xhrFields: {
             responseType: 'blob'
         },
@@ -77,7 +87,7 @@ function generateproduction() {
 
 }
 
-function x  () {
+function generatecurrencies  () {
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateCurrencies",
@@ -107,13 +117,24 @@ function x  () {
 
 
 function generatebeneficiaries() {
-    var request = $("#prodId").val();
-    var datefrom = $("#datefrom").val();
-    var dateto = $("#dateto").val();
+    //var request = $("#prodId").val();
+    //var datefrom = $("#datefrom").val();
+    //var dateto = $("#dateto").val();
+    var prod = {};
+    prod['request'] = $("#prodId").val();
+    prod['agentId'] = $("#agentId").val();
+    prod['subAgentId'] = $("#subAgentId").val();
+    //prod['policyStatus'] = $("#policyStatus").val();
+    //prod['policyNumber'] = $("#policyNumber").val();
+    prod['clientFirstName'] = $("#clientFirstName").val();
+    prod['clientLastName'] = $("#clientLastName").val();
+    prod['passportNumber'] = $("#passportNumber").val();
+
+
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateBeneficiaries",
-        data: { req: request, datefrom: datefrom, dateto: dateto },
+        data: { req:prod },
         xhrFields: {
             responseType: 'blob'
         },

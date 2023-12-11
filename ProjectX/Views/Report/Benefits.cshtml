@@ -18,14 +18,23 @@
                                     <div id="searchform" class="card-body ">
 
                                         <div class="row mb-6">
-                                             <div class="col-md-3 mb-lg-0 mb-6" >
+                                            <div class="col-md-3 mb-lg-0 mb-6" >
+                                                <label>Users:</label>
+                                                <select class="form-control" name="userid" id="userid" field-name="users" >
+                                                     @*<option value=""> Select Sub Agent</option>*@
+                                                     @foreach (var thislist in Model.loadedData.usersHierarchy)
+											        {
+											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                                                </select> </div>
+                                             @*<div class="col-md-3 mb-lg-0 mb-6" >
                                                 <label>From:</label>
                                                 <input id="datefrom" type="date" class="form-control datatable-input required" value="" >
                                             </div>
                                             <div class="col-md-3 mb-lg-0 mb-6">
                                                 <label>To:</label>
                                                 <input id="dateto" type="date" class="form-control datatable-input required" value="">
-                                            </div>
+                                            </div>*@
 
                                         </div>
 
