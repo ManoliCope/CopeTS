@@ -39,7 +39,8 @@ namespace ProjectX.Repository.ProductionBatch
         //SaveProductionBatch
         public ProductionBatchSaveResp SaveProductionBatch(ProductionBatchSaveReq req)
         {
-            ProductionBatchSaveResp response = new ProductionBatchSaveResp();
+           // ProductionBatchSaveReq response = new ProductionBatchSaveReq();
+
             //List<TR_P> _ProductionBatches = new List<TR_Production>();
 
             //if (req.productionbatches != null && req.productionbatches.Count > 0)
@@ -67,7 +68,7 @@ namespace ProjectX.Repository.ProductionBatch
             //_profileRepository.SaveAdherent(req.idProfile, req.idProduct, req.fromdate, req.todate, _Adherents);
             //response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success);
             //return response;
-            return _productionBatchRepository.SaveProductionBatch(response);
+            return _productionBatchRepository.SaveProductionBatch(req);
         }
     }
 }

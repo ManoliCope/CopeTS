@@ -10,6 +10,7 @@ namespace ProjectX.Entities.dbModels
         public string PB_Title { get; set; }
         public string PB_FileName { get; set; }
         public int U_Id { get; set; }
+        public DateTime PB_CreationDate { get; set; }
 
 
 

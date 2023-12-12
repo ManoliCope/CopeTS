@@ -133,10 +133,9 @@ namespace ProjectX.Repository.ProductionBatchRepository
             var resp=new ProductionBatchSaveResp();
             var param = new DynamicParameters();
             var batches = ConvertToDataTable(req.productionbatches);
-            param.Add("@Title", req.title);
+            param.Add("@PB_Title", req.title);
             param.Add("@userid", req.userid);
             param.Add("@ProductionList", batches.AsTableValuedParameter("TR_ProductionBatch_Req"));
-
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 

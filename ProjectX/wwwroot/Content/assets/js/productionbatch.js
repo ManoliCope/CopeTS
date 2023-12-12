@@ -38,7 +38,8 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pB_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pB_Name" },
+            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pB_Title" },
+            { "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate" },
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             //{
             //    'data': 'pB_Id',
@@ -48,7 +49,7 @@ function drawtable(data) {
             //    }
             //},
             {
-                'data': 'pL_Id',
+                'data': 'pB_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
                     return `<a  title="Delete" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pB_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
@@ -74,8 +75,6 @@ function Search() {
     var filter = {
         "title": $("#title").val(),
     }
-
-
     $.ajax({
         type: 'POST',
         url: projectname + "/ProductionBatch/Search",
@@ -86,7 +85,7 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                drawtable(result.plan);
+                drawtable(result.productionbatch);
             }
         },
         failure: function (data, success, failure) {
@@ -137,37 +136,6 @@ function addnew() {
     });
 }
 
-//function edit() {
-//    if (validateForm(".container-fluid")) {
-//        return;
-//    }
-
-//    showloader("load")
-//    var planReq = {
-//        "id": $("#divinfo").attr("mid"),
-//        "title": $("#title").val(),
-//    }
-
-//    $.ajax({
-//        type: 'post',
-//        dataType: 'json',
-//        url: projectname + "/Plan/EditPlan",
-//        data: { req: planReq },
-//        success: function (result) {
-//            removeloader();
-//            showresponsemodal(1, result.statusCode.message)
-//        },
-//        failure: function (data, success, failure) {
-//            showresponsemodal("Error", "Bad Request")
-//        },
-//        error: function (data) {
-//            showresponsemodal("Error", "Bad Request")
-//        }
-//    });
-//}
-//$('#confirmdeletebtn').onclick(){
-//    deletebatch();
-//}
 function deletebatch(me) {
     if (validateForm(".container-fluid")) {
         return;
@@ -236,19 +204,19 @@ function importproduction() {
     var importedbatch = []
     importedbatch = table.data().toArray();
     console.log(importedbatch)
+    
+    //var title = $("#title").val();
+    var stringifiedreq = JSON.stringify(importedbatch);
+    var batchtitle = $("#batch-title").val();
     //var filter = {
-    //    importedbatch: importedbatch,
-    //    //idProduct: $("#productid").val(),
-    //    //IdProfile: $("#profileid").val(),
-    //    //fromdate: $("#datefrom").val(),
-    //    //todate: $("#dateto").val(),
+    //    importedbatch: stringifiedreq,
+    //    title: $("#title").val()
     //}
-    var title = $("#title").val();
-    var stringifiedreq = JSON.stringify(importedbatch)
+
     $.ajax({
         type: 'POST',
         url: projectname + "/ProductionBatch/importproduction",
-        data: { importedbatch: stringifiedreq, title: title },
+        data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
