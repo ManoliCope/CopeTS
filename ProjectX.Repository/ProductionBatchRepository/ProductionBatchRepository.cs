@@ -76,7 +76,7 @@ namespace ProjectX.Repository.ProductionBatchRepository
             var param = new DynamicParameters();
 
             param.Add("@PB_Id", req.id);
-            param.Add("@PB_Title", req.name);
+            param.Add("@PB_Title", req.title);
 
 
 

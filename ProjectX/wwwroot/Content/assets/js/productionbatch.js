@@ -39,7 +39,16 @@ function drawtable(data) {
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pB_Id" },
             { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pB_Title" },
-            { "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate" },
+            {
+                "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate",
+                "render": function (data, type, row) {
+                        var date = new Date(data);
+                        var formattedDate = formatDate_DdMmYyyy(date);
+                        return formattedDate;
+                    
+                    return data;
+                }
+            }
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             //{
             //    'data': 'pB_Id',
@@ -48,15 +57,15 @@ function drawtable(data) {
             //        return `<a title="Edit" planid="` + full.pB_Id + `"  class="text-black-50" onclick="gotoplan(this)"><i class="fas fa-edit pr-1"></i></a>`;
             //    }
             //},
-            {
-                'data': 'pB_Id',
-                className: "dt-center editor-edit",
-                "render": function (data, type, full, meta) {
-                    return `<a  title="Delete" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pB_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
+            //{
+            //    'data': 'pB_Id',
+            //    className: "dt-center editor-edit",
+            //    "render": function (data, type, full, meta) {
+            //        return `<a  title="Delete" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pB_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
 
 
-                }
-            }
+            //    }
+            //}
         ],
         orderCellsTop: true,
         fixedHeader: true
@@ -221,8 +230,9 @@ function importproduction() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
-                showresponsemodal(result.statusCode.code, result.statusCode.message)
-                SearchContract();
+               // showresponsemodal(result.statusCode.code, result.statusCode.message)
+               // SearchContract();
+                drawproductionbatchtable(result.productionbatches)
             }
         },
         failure: function (data, success, failure) {
@@ -417,7 +427,13 @@ function drawproductionbatchtable(result) {
             { "title": "NetInUSD", "className": "text-center filter", "orderable": true, "data": "netInUSD" }
         ],
         orderCellsTop: true,
-        fixedHeader: true
+        fixedHeader: true,
+        "rowCallback": function (row, data) {
+            if (data.isError) {
+                // If "isError" is true, set the background color of the row to red
+                $(row).css("background-color", "#f78888");
+            }
+        }
     });
 
 }
