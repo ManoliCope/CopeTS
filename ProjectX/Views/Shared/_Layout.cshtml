@@ -4,9 +4,7 @@
 	//var Avayacallinfo = ViewData["Avayacallinfo"] as List<ProjectX.Entities.Models.Avaya.AvayaCallReq>;
 	//var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
 
-	string test = "";
 }
-
 
 
 <html lang="en">
@@ -14,7 +12,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="shortcut icon" />
+	<link rel="shortcut icon" href="@Url.Content("~/Content/assets/images/copeicon.png")">
 
 	<!-- <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png"> -->
 	<!-- <meta name="apple-mobile-web-app-title" content="CodePen"> -->
@@ -108,7 +106,7 @@
 	{
 		<link href="~/Content/assets/css/production.css" rel="stylesheet" asp-append-version="true" />
 	}
-	else if (controllerName == "production" && (actionName == "edit" ||actionName == "editmanual" || actionName == "create"))
+	else if (controllerName == "production" && (actionName == "edit" || actionName == "editmanual" || actionName == "create"))
 	{
 		<link href="~/Content/assets/css/productioncrud.css" rel="stylesheet" asp-append-version="true" />
 	}

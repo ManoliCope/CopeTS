@@ -236,29 +236,37 @@
 			</table>
 
 
-			<h2 class="underlined-heading">Beneficiary:</h2>
+			<h2 class="underlined-heading">Beneficiary:  Total # of Clients @Model.PolicyDetails.Count()</h2>
 			<table>
 				<thead>
 					<tr>
+						<th>#</th>
 						<th>First Name</th>
 						<th>Middle Name</th>
 						<th>Last Name</th>
 						<th>Date of Birth</th>
 						<th>Age</th>
+						<th>Country of Residence</th>
 						<th>Passport N.</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var beneficiary in Model.PolicyDetails)
-					{
-						<tr>
-							<td>@beneficiary.FirstName</td>
-							<td>@beneficiary.MiddleName</td>
-							<td>@beneficiary.LastName</td>
-							<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
-							<td>@beneficiary.Age</td>
-							<td>@beneficiary.PassportNo</td>
-						</tr>
+					@{
+						int count = 1;
+						foreach (var beneficiary in Model.PolicyDetails)
+						{
+							<tr>
+								<td>@count</td>
+								<td>@beneficiary.FirstName</td>
+								<td>@beneficiary.MiddleName</td>
+								<td>@beneficiary.LastName</td>
+								<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
+								<td>@beneficiary.Age</td>
+								<td>@beneficiary.CountryResidence</td>
+								<td>@beneficiary.PassportNo</td>
+							</tr>
+							count++;
+						}
 					}
 				</tbody>
 			</table>
@@ -295,11 +303,11 @@
 						<td class="td25"><label id="age">@beneficiary.Age</label></td>
 					</tr>
 					@*<tr>
-					<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-					<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-					<td class="td25"></td>
-					<td class="td25"></td>
-				</tr>*@
+							<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+							<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+							<td class="td25"></td>
+							<td class="td25"></td>
+						</tr>*@
 				</table>
 
 				bencount++;
@@ -317,70 +325,70 @@
 					@*max 10 per page*@
 
 					@*<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>*@
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>*@
 
 
 
@@ -426,11 +434,11 @@
 
 					</tr>
 					@*<tr>
-					<td class="td33">Issuing / Gov.fees:</td>
-					<td class="td33">@Model.StampsValue</td>
-					<td class="td33">
-					</td>
-				</tr>*@
+							<td class="td33">Issuing / Gov.fees:</td>
+							<td class="td33">@Model.StampsValue</td>
+							<td class="td33">
+							</td>
+						</tr>*@
 					<tr>
 						<td class="td33">Stamps / Insurance Tax:</td>
 						<td class="td33">@Model.StampsValue</td>
@@ -457,10 +465,10 @@
 
 			<div class="box-container">
 				@*<div class="boxholder" style="float:right">
-				<label>Signature</label>
-				<div class="box">
-				</div>
-			</div>*@
+						<label>Signature</label>
+						<div class="box">
+						</div>
+					</div>*@
 				<div class="boxholder" style="float:right">
 					<label>Signature</label>
 					<div>
