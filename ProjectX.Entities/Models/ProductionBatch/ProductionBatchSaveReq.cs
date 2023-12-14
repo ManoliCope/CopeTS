@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace ProjectX.Entities.Models.ProductionBatch
-
 {
-    public class ProductionBatchSearchReq : GlobalResponse
+    public class ProductionBatchSaveReq : GlobalResponse
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string filename { get; set; }
         public int userid { get; set; }
+        public string title { get; set; }
+        public List<ProductionBatchDetailsReq> productionbatches { get; set; }
 
     }
+
 }

@@ -12,5 +12,6 @@ namespace ProjectX.Repository.ProductionBatch
         //public ZoneResp ModifyZone(ZoneReq req, string act, int userid);
         public List<TR_ProductionBatch> GetProductionBatchList(ProductionBatchSearchReq req);
         public TR_ProductionBatch GetProductionBatch(int batchid);
+        public ProductionBatchSaveResp SaveProductionBatch(ProductionBatchSaveReq req);
     }
 }
