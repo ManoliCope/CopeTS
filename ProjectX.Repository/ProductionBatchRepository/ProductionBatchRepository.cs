@@ -139,18 +139,20 @@ namespace ProjectX.Repository.ProductionBatchRepository
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
-            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
-            {
+            //using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            //{
                 
-                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
-                {
-                    _db.Execute("TR_ProductionBatch_Save", param, commandType: CommandType.StoredProcedure);
-                    statusCode = param.Get<int>("@Status");
-                    idOut = param.Get<int>("@Returned_ID");
-                }
-                resp.statusCode.code = statusCode;
-                resp.id = idOut;
-            }
+            //    using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            //    {
+            //        _db.Execute("TR_ProductionBatch_Save", param, commandType: CommandType.StoredProcedure);
+            //        statusCode = param.Get<int>("@Status");
+            //        idOut = param.Get<int>("@Returned_ID");
+            //    }
+            //    resp.statusCode.code = statusCode;
+            //    resp.id = idOut;
+            //}
+
+            resp.productionbatches = req.productionbatches;
 
             return resp;
         }
