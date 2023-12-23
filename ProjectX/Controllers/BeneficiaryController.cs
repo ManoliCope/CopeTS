@@ -64,8 +64,6 @@ namespace ProjectX.Controllers
 
         public ActionResult Create()
         {
-
-
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadDestinations = true,
