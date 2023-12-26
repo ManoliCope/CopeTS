@@ -42,10 +42,10 @@ function drawtable(data) {
             {
                 "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate",
                 "render": function (data, type, row) {
-                        var date = new Date(data);
-                        var formattedDate = formatDate_DdMmYyyy(date);
-                        return formattedDate;
-                    
+                    var date = new Date(data);
+                    var formattedDate = formatDate_DdMmYyyy(date);
+                    return formattedDate;
+
                     return data;
                 }
             }
@@ -213,7 +213,7 @@ function importproduction() {
     var importedbatch = []
     importedbatch = table.data().toArray();
     console.log(importedbatch)
-    
+
     //var title = $("#title").val();
     var stringifiedreq = JSON.stringify(importedbatch);
     var batchtitle = $("#batch-title").val();
@@ -227,11 +227,13 @@ function importproduction() {
         url: projectname + "/ProductionBatch/importproduction",
         data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
-            if (result.statusCode.code != 1)
-                showresponsemodal("error", result.statusCode.message)
+            if (result.statusCode.code == 1) {
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                Search()
+            }
             else {
-               // showresponsemodal(result.statusCode.code, result.statusCode.message)
-               // SearchContract();
+                // showresponsemodal(result.statusCode.code, result.statusCode.message)
+                // SearchContract();
                 drawproductionbatchtable(result.productionbatches)
             }
         },

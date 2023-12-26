@@ -273,7 +273,7 @@
 
 
 
-			@foreach (var beneficiary in Model.PolicyDetails)
+			@*@foreach (var beneficiary in Model.PolicyDetails)
 			{
 
 				<h2 class="underlined-heading">Beneficiary: <span style="padding-left:10px">@bencount.ToString("D2")</span></h2>
@@ -302,16 +302,10 @@
 						<td class="td25"><label for="age">Age:</label></td>
 						<td class="td25"><label id="age">@beneficiary.Age</label></td>
 					</tr>
-					@*<tr>
-							<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-							<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-							<td class="td25"></td>
-							<td class="td25"></td>
-						</tr>*@
 				</table>
 
 				bencount++;
-			}
+			}*@
 
 			<div class="benefitidv">
 				<h2 class="underlined-heading">Table of Benefits:</h2>

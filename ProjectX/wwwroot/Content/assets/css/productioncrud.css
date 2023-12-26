@@ -229,3 +229,20 @@
     font-weight: bold !important;
     padding-left: 10px;
 }
+
+.card-body {
+    padding: 0.6rem;
+}
+
+.card-body h3 {
+    margin: 0 !important
+}
+
+
+.card-body hr {
+    margin-top: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}

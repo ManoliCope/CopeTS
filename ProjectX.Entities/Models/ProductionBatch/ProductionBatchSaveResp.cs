@@ -7,12 +7,12 @@ namespace ProjectX.Entities.Models.ProductionBatch
 {
     public class ProductionBatchSaveResp : GlobalResponse
     {
-       
-            //public int idProfile { get; set; }
-            public int id { get; set; }
-            public List<ProductionBatchDetailsReq> productionbatches { get; set; }
 
-        
+        //public int idProfile { get; set; }
+        public int id { get; set; }
+        public List<ProductionBatchDetailsResp> productionbatches { get; set; }
+
+
     }
 
 }

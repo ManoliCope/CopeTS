@@ -118,11 +118,11 @@ function drawtable(data, status) {
                     //else
                     if (full.status == 4) {
                         icon = "eye";
-                        return `<a   title="View" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                        return `<a   title="View" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
                     else {
                         icon = "book";
-                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
 
                     //  {
@@ -150,7 +150,8 @@ function drawtable(data, status) {
                     //  else return '';
 
                 }
-            }
+            },
+            //{ "title": "Source", "className": "text-center filter", "orderable": true, "data": "source" },
         ],
         orderCellsTop: true,
         fixedHeader: true
@@ -206,12 +207,12 @@ function returncheckbox(me) {
         $(rowid).prop("checked", true)
     }
 }
-function responsemodalcheckbox(popupid, thisid, trindex,me) {
+function responsemodalcheckbox(popupid, thisid, trindex, me) {
     showresponsemodalbyid(popupid, thisid, trindex)
     var status = $(me).is(':checked');
-    if (status) 
+    if (status)
         $('#' + popupid).attr('chckbox', 1);
-    else 
+    else
         $('#' + popupid).attr('chckbox', 0);
 }
 
@@ -272,7 +273,11 @@ function removerow(me) {
 function gotopol(me) {
     showloader("load")
     sessionStorage.setItem('status', $(me).attr("stat"));
-    window.location.href = "/production/edit/" + $(me).attr("polid");
+
+    if ($(me).attr('src') == 'M')
+        window.location.href = "/production/EditManual/" + $(me).attr("polid");
+    else
+        window.location.href = "/production/edit/" + $(me).attr("polid");
     removeloader();
     return
 }

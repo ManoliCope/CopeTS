@@ -32,7 +32,7 @@ namespace ProjectX.Entities.dbModels
         public string nbofclients { get; set; }
         public bool IsEditable { get; set; }
         public int Status { get; set; }
-
+        public string Source { get; set; }
     }
 
 }

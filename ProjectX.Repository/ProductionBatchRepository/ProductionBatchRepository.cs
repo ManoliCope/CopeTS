@@ -146,11 +146,12 @@ namespace ProjectX.Repository.ProductionBatchRepository
                 {
                     using (SqlMapper.GridReader result = _db.QueryMultiple("TR_ProductionBatch_Save", param, commandType: CommandType.StoredProcedure))
                     {
-                        resp.productionbatches = result.Read<ProductionBatchDetailsReq>().ToList();
+                        resp.productionbatches = result.Read<ProductionBatchDetailsResp>().ToList();
                         statusCode = param.Get<int>("@Status");
                         idOut = param.Get<int>("@Returned_ID");
                     }
                     resp.id = idOut;
+                    resp.statusCode.code = statusCode;
                 }
 
 
@@ -166,7 +167,6 @@ namespace ProjectX.Repository.ProductionBatchRepository
                 //resp.id = idOut;
             }
 
-            resp.productionbatches = req.productionbatches;
 
             return resp;
         }
