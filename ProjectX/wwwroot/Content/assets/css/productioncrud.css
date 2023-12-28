@@ -210,10 +210,19 @@
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    width: 80px;
+    width: 60px;
     float: right;
-    margin-top:10px
+    font-size:14px;
+    height:25px;
+    /*margin-top:10px*/
 }
+
+
+.togglebenpopup .fa{
+    font-size: 12px !important;
+}
+
+
 
 .togglebenpopup:hover {
   color:white !important
