@@ -94,26 +94,26 @@ namespace ProjectX.Controllers
 
 
         [HttpGet]
-        public ActionResult GeneratePdfFromRazorView(int ii)
+        public ActionResult GeneratePdfFromRazorView(int ii, int prttyp)
         {
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + ii).Base64Image;
+            string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + ii + "&prttyp=" + prttyp).Base64Image;
 
-            var pdfFile = _documentService.GeneratePdfFromRazorView(ii, printingdirection, requesturl);
+            var pdfFile = _documentService.GeneratePdfFromRazorView(ii, prttyp, printingdirection, requesturl);
             return File(pdfFile, "application/octet-stream", "PrintPolicy.pdf");
         }
 
         [HttpGet]
-        public ActionResult DownloadPdfFromRazorView(int ii)
+        public ActionResult DownloadPdfFromRazorView(int ii, int prttyp)
         {
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/DownloadPdfFromRazorView?ii=" + ii).Base64Image;
 
-            var pdfFile = _documentService.GeneratePdfFromRazorView(ii, printingdirection, requesturl);
+            var pdfFile = _documentService.GeneratePdfFromRazorView(ii, prttyp, printingdirection, requesturl);
             return File(pdfFile, "application/octet-stream", "PrintPolicy.pdf");
         }
 
-       
+
 
         public class QRCodeModel
         {

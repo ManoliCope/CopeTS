@@ -10,7 +10,7 @@ namespace ProjectX.Interfaces
 {
     public interface IDocumentService
     {
-        byte[] GeneratePdfFromRazorView(int policyid, string fileqr,string requesturl);
+        byte[] GeneratePdfFromRazorView(int policyid,int prttyp, string fileqr,string requesturl);
 
          string ConvertImageToBase64(string imagePath);
 

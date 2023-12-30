@@ -255,3 +255,14 @@
 .form-group {
     margin-bottom: 0.5rem;
 }
+
+#AsAgreed-popup .modal-body.asagreed {
+    height: 100px;
+    text-align: center;
+    padding-top: 25px;
+}
+
+#AsAgreed-popup .modal-body.asagreed button {
+    margin-left: 15px;
+    margin-right: 15px;
+}

@@ -2,10 +2,15 @@
 @{
 	Layout = null;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	string test = UserRights.VAT.ToString();
+	string safasf = UserRights.Commission.ToString();
+	string wwww = UserRights.Commission.ToString();
+
+
 }
 
 
-<div class="card mt-2 mb-0">
+<div class="Quotationcard card mt-2 mb-0">
 	<div class="card-body" style="font-size:13px">
 		<div>
 			<b>Destination(s)</b>
@@ -132,8 +137,8 @@
 					</tr>
 					<tr>
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT) / 100))</td>
-						<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT) / 100)) @UserRights.CurrencySymbol</td>
+						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100))</td>
+						<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100)) @UserRights.CurrencySymbol</td>
 					</tr>
 					<tr>
 						<td>Stamps</td>

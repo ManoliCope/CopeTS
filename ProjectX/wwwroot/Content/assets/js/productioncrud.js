@@ -46,10 +46,7 @@ $(document).ready(function () {
     settofrom()
     searchbeneficiary()
 
-    $('#printButton').click(function () {
-        generatePdf();
 
-    });
 
 
     //$('#confirmdeletebtn').click(function () {
@@ -116,12 +113,27 @@ $(document).ready(function () {
 
     $('#date_of_birth').on('focusout', updateAge);
 
+    $('#printButton').click(function () {
+        showresponsemodalbyid('AsAgreed-popup')
+    });
+
+
+    $('.asagreed button').click(function () {
+        popupasagreed(this)
+    });
+
 });
 
-function generatePdf() {
+
+function popupasagreed(me) {
+    var prttyp = $(me).attr("prttyp")
+    generatePdf(prttyp);
+}
+
+function generatePdf(prttyp) {
     var policyId = $(".editscreen").attr("pol-id");
 
-    fetch(`/pdf/GeneratePdfFromRazorView?ii=${policyId}`, {
+    fetch(`/pdf/GeneratePdfFromRazorView?ii=${policyId}&prttyp=${prttyp}`, {
         method: "GET",
         responseType: "blob",
     })
@@ -358,7 +370,7 @@ function populatebeneficiarydatatable(tablename, data) {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: ismanual == '0' ,
+                visible: ismanual == '0',
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
@@ -1296,8 +1308,15 @@ function sendDataIssuance() {
                         gotopage("production", "Edit", result.policyID);
                     });
                 }
-
-                showresponsemodal("1", result.statusCode.message)
+                else {
+                    showresponsemodal("1", result.statusCode.message)
+                    if ($("#printButton").length == 0) {
+                        $(".Quotationcard").parent().append(`<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>`)
+                        $('#printButton').click(function () {
+                            showresponsemodalbyid('AsAgreed-popup')
+                        });
+                    }
+                }
             }
             else {
                 showresponsemodal("0", result.statusCode.message)
