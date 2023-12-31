@@ -1383,3 +1383,12 @@ function setselectedfields() {
         recalculateTotalPrice(table);
     });
 }
+
+function handlemax(input) {
+    var maxValue = parseFloat(input.getAttribute("max"));
+    var enteredValue = parseFloat(input.value);
+
+    if (enteredValue > maxValue) {
+        input.value = maxValue.toFixed(2); 
+    }
+}

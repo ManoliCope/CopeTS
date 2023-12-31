@@ -84,7 +84,6 @@ namespace ProjectX.Controllers
             ViewData["userid"] = userid.ToString();
             ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
 
-
             return View();
             
         }

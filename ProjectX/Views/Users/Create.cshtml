@@ -130,7 +130,7 @@
 														<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
 													}
 													@*<option value="1">%</option>
-										<option value="2">Fixed</option>*@
+								<option value="2">Fixed</option>*@
 												</select>
 											</div>
 										</div>
@@ -166,37 +166,43 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-control-label" for="commPerc">Commission %</label>
-										<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)">
+										<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" @*oninput="this.value = Math.abs(this.value)"*@>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-control-label" for="stampPerc">Stamp %</label>
-										<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="0">
+										<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" @*oninput="this.value = Math.abs(this.value)"*@ value="0">
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-control-label" for="retentionPerc">Retention %</label>
-										<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="0">
+										<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" @*oninput="this.value = Math.abs(this.value)"*@ value="0">
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-control-label" for="vat">VAT %</label>
-										<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="0">
+										<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" @*oninput="this.value = Math.abs(this.value)"*@ value="0">
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
+										<input class="form-control" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees"  value="0" >
 									</div>
 								</div>
 
-								<div class="col-md-3">
+								@*<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-control-label" for="creationDate">Creation Date</label>
 										<label class="form-control" field-name="creation_Date" id="creationDate"></label>
 									</div>
-								</div>
+								</div>*@
 							}
 						</div>
 					</div>
@@ -232,14 +238,14 @@
 										</div>
 									</div>
 
-									<div class="col-md-12">
+									@*<div class="col-md-12">
 										<div class="form-check-inline ">
 											<label class="custom-control custom-checkbox">
 												<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" value="">
 												<label class="form-control-label" for="isAdditionalFeeFixed">Max Additional</label>
 											</label>
 										</div>
-									</div>
+									</div>*@
 
 									<div class="col-md-12">
 										<div class="form-check-inline ">
