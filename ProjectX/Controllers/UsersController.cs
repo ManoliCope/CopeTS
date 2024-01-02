@@ -157,7 +157,7 @@ namespace ProjectX.Controllers
             else 
                 user.Super_Agent_Id = parentid;
             var response = new UsersSearchResp();
-            response.users = _usersBusiness.GetUsersList(user);
+            response = _usersBusiness.GetUsersList(user);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -178,7 +178,7 @@ namespace ProjectX.Controllers
             
         //    return View();
         //}
-        public IActionResult Details(int userid)
+        public IActionResult Details(int userid,int sameuser)
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -194,6 +194,7 @@ namespace ProjectX.Controllers
             ViewData["isAdmin"] = _user.U_Is_Admin==true?"1":"0";
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = _user.U_Id.ToString();
+            ViewData["same"] = sameuser.ToString();
 
             
             return View(user);

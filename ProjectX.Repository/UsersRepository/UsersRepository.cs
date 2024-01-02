@@ -115,9 +115,9 @@ namespace ProjectX.Repository.UsersRepository
             resp.id = idOut;
             return resp;
         }
-        public List<TR_Users> GetUsersList(UsersSearchReq req)
+        public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
-            var resp = new List<TR_Users>();
+            var resp = new UsersSearchResp();
 
             var param = new DynamicParameters();
 
@@ -175,7 +175,8 @@ namespace ProjectX.Repository.UsersRepository
 
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Users_Get", param, commandType: CommandType.StoredProcedure))
                 {
-                    resp = result.Read<TR_Users>().ToList();
+                    resp.users = result.Read<TR_Users>().ToList();
+                    resp.parent_name = result.Read<String>().FirstOrDefault();
 
                 }
             }

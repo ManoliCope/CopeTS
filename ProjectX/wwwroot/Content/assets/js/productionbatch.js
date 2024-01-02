@@ -251,6 +251,9 @@ function importproduction() {
 
 var importbutton = $("#importupload");
 importbutton.click(function () {
+    if (validateForm("#import-production-batch")) {
+        return;
+    }
     var importupload = $(this).parent().find(".file-upload");
     importupload.click();
 

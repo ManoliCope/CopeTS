@@ -2,8 +2,16 @@
 @{
 	var userId = ViewData["userid"] as string;
 	var is_admin = ViewData["isAdmin"] as string;
+	var same = ViewData["same"] as string;
 	var filldata = ViewData["loadDataCreate"] as ProjectX.Entities.Models.General.LoadDataResp;
 	var mainuser = filldata.loadedData.superAgents.Where(a => a.LK_ID == Convert.ToInt16(userId)).FirstOrDefault();
+	var disabled="";
+	if (same == "1")
+	{
+		disabled = "disabled";
+	}
+
+	
 
 	if (Model.id == mainuser.LK_ID)
 		filldata.loadedData.superAgents.Remove(mainuser);
@@ -133,9 +141,9 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
-									<label class="form-control-label" for="superAgentId">Super-Agent<span class="red-star"> *</span></label>
-									<select class=" form-control" required field-name="super_Agent_Id">
+								<div class="form-group" >
+									<label class="form-control-label" for="superAgentId">Super-Agents<span class="red-star"> *</span></label>
+									<select class=" form-control" required field-name="super_Agent_Id" @disabled>
 										<option data-select2-id="2" disabled>Select Super Agent (Mother Account)</option>
 										@*<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>*@
 

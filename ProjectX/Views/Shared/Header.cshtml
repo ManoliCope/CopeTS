@@ -1,6 +1,6 @@
 ﻿@model string
 @{
-	var user = ViewData["User"] as ProjectX.Entities.dbModels.User;
+	//var user = ViewData["User"] as ProjectX.Entities.dbModels.User;
 	//var Avayacallinfo = ViewData["Avayacallinfo"] as ProjectX.Entities.Models.Avaya.AvayaCallReq;
 
 	var currentUser = Context.Items["User"] as ProjectX.Entities.dbModels.TR_Users; // Replace "User" with your user model
@@ -119,11 +119,14 @@
 										<span class="menu-title">Creation</span>
 									</a>
 								</li>
-								<li class="menu-item @(controllerName == "ProductionBatch" && actionName == "Index" ? "active" : "")">
+								@if(isadmin == true || currentUser.U_Manual_Production==true){
+									<li class="menu-item @(controllerName == "ProductionBatch" && actionName == "Index" ? "active" : "")">
 									<a href="~/productionbatch/">
 										<span class="menu-title">Manual Production</span>
 									</a>
 								</li>
+								}
+								
 
 							</ul>
 						</div>

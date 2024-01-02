@@ -14,7 +14,12 @@
 					<i class="fas fa-plus-circle"></i> Add
 				</a>
 			}
-
+			
+						@*<h4 class="card-title ">
+							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+							<span>Main</span>
+						</h4>*@
+					
 			<h4 class="mb-0 mt-0 float-left">Main</h4>
 
 		</div>
@@ -76,7 +81,10 @@
 		<div class="row tablediv">
 			<div class="col-lg-12">
 				<div class="card">
+					<label id="parentlabel" style="padding-left: 10px;padding-top: 5px;"></label>
 					<div class="card-body">
+						
+						
 						@if (rights.Agents_Creation == true)
 						{
 							<table id="userstable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" generate="1" style="width:100%; ">

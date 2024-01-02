@@ -27,7 +27,7 @@ namespace ProjectX.Business.Users
             return response;
            
         }
-        public List<TR_Users> GetUsersList(UsersSearchReq req)
+        public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
 
             return _usersRepository.GetUsersList(req);
