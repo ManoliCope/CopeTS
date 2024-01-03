@@ -267,7 +267,7 @@ function saveUser() {
                 showresponsemodal(1, result.statusCode.message)
                 if (!userid > 0)
                     $("#responsemodal button").click(function () {
-                        window.location.href = '/users/details?userid=' + result.id;
+                        window.location.href = '/users/details?userid=' + result.id +'&amp;sameuser=0';
                     });
                 //drawtable(result);
             }
@@ -310,13 +310,30 @@ function Search() {
             if (result.statusCode.code != 1)
                 showresponsemodal("error", result.statusCode.message)
             else {
+                var parenttext = '';
+                if (parentid == null || parentid == undefined)
+                    sessionStorage.removeItem('parenttext');
+                var storedtext = sessionStorage.getItem('parenttext');
+                sessionStorage.removeItem('parenttext');
+                if (storedtext != undefined && storedtext.length > 0 && storedtext!=null) {
+                    parenttext= storedtext + '/' + result.parent_name;
+                    $('#parentlabel').text(parenttext);
+                    sessionStorage.setItem('parenttext', parenttext)
+                }
+                else if (parentid != undefined && parentid.length > 0 && parentid != null) {
+                    if (result.parent_name != null) {
+                        parenttext = 'Showing agents under: ' + result.parent_name
+                        $('#parentlabel').text(parenttext)
+                        sessionStorage.setItem('parenttext', parenttext)
+                    }
+                }
+                    
                 drawtable(result.users);
             }
 
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
-
 
         },
         error: function (data) {
@@ -408,7 +425,7 @@ function gotouser(me) {
     //console.log(me)
     var userId = $(me).attr('userid');
     //sessionStorage.setItem('userid', userId);
-    window.location.href = '/users/details?userid=' + userId;
+    window.location.href = '/users/details?userid=' + userId +'&amp;sameuser=0';
 }
 function formatDate(data) {
 
