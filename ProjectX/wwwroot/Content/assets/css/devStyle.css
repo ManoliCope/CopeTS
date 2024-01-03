@@ -238,14 +238,14 @@ body.modal-open {
 
 
 .bglocalcolor {
-    background-color: var(--main-color) !important;
-    border-color: var(--main-color) !important;
+    background-color: var(--third-color) !important;
+    border-color: var(--third-color) !important;
     color: #fff;
 }
 
     .bglocalcolor:hover {
-        background-color: black !important;
-        border-color: black !important;
+        background-color: var(--third-alternate-color) !important;
+        border-color: transparent !important;
         color: #fff;
     }
 

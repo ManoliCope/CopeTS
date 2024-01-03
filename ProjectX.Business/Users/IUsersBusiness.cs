@@ -9,6 +9,7 @@ namespace ProjectX.Business.Users
 {
     public interface IUsersBusiness
     {
+        public int GetUserID(Guid id);
         public LoginResp Login(LoginReq Req);
         public GetUserResp GetUserAuth(GetUserReq Req);
         public UserRights GetUserRights(int userid);

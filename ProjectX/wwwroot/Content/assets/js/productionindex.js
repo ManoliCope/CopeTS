@@ -118,11 +118,11 @@ function drawtable(data, status) {
                     //else
                     if (full.status == 4) {
                         icon = "eye";
-                        return `<a   title="View" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                        return `<a   title="View" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
                     else {
                         icon = "book";
-                        return `<a   title="Edit" polid="` + full.policyID + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
+                        return `<a   title="Edit" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
 
                     //  {

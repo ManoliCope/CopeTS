@@ -268,6 +268,7 @@ function deleteprod(me) {
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
 
+            removebtnloader(me);
 
             //if (result.statusCode.code == 1) {
             //    if ($('#producttable').length > 0) {
@@ -286,9 +287,11 @@ function deleteprod(me) {
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         }
     });
 }

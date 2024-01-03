@@ -9,6 +9,7 @@ namespace ProjectX.Repository.UsersRepository
 {
     public interface IUsersRepository
     {
+        public int GetUserID(Guid id);
         public TR_Users Login(string username, string password);
         public UsersResp ModifyUser(UsersReq req, string act, int userid);
         public UsersSearchResp GetUsersList(UsersSearchReq req);

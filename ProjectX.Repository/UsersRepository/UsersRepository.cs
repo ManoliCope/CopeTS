@@ -23,6 +23,24 @@ namespace ProjectX.Repository.UsersRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
+
+        public int GetUserID(Guid id)
+        {
+            int PolicyID = 0;
+
+            var param = new DynamicParameters();
+            param.Add("@Pol_Guid", id);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Users_GetUserID", param, commandType: CommandType.StoredProcedure))
+                {
+                    PolicyID = result.Read<int>().FirstOrDefault();
+                }
+            }
+            return PolicyID;
+        }
+
         public TR_Users Login(string username, string password)
         {
             TR_Users user = new TR_Users();

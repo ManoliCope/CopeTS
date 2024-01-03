@@ -19,6 +19,11 @@ namespace ProjectX.Business.Users
         {
             _usersRepository = usersRepository;
         }
+        public int GetUserID(Guid id)
+        {
+            return _usersRepository.GetUserID(id);
+        }
+
         public UsersResp ModifyUser(UsersReq req, string act, int userid)
         {
             UsersResp response = new UsersResp();

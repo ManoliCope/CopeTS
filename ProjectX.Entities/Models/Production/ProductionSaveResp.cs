@@ -10,5 +10,6 @@ namespace ProjectX.Entities.Models.Production
     public class ProductionSaveResp : GlobalResponse
     {
         public int PolicyID { set; get; }
+        public Guid PolicyGuid { set; get; }
     }
 }

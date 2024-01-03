@@ -1,10 +1,12 @@
 ﻿body {
     font-family: Arial, sans-serif;
     margin: 0;
-    /*background: url("https://hips.hearstapps.com/cos.h-cdn.co/assets/16/20/4000x2000/landscape-1463760296-gettyimages-126171246.jpg?resize=1200:*") no-repeat center center fixed;*/
-    background: url("/Content/assets/images/mainback.jpg") no-repeat center center fixed;
+    background: url(/Content/assets/images/mainimg.jpg) fixed;
     background-size: cover;
+    background-position: center bottom -30px;
 }
+
+
 .container-fluid {
     display: flex;
     align-items: center;
@@ -13,9 +15,11 @@
 }
 
 .login-form {
-    background-color: rgb(255 255 255 / 25%);
+    background-color: rgb(255 255 255 / 50%);
     padding: 40px;
     text-align: center;
+    border-radius: 10%;
+    width: 350px;
 }
 
 h2 {
@@ -45,3 +49,35 @@ input[type="password"] {
     .login-button:hover {
         background-color: #3071a9;
     }
+
+
+
+.container-fluid {
+    margin-left: 30%;
+}
+
+
+
+@media (max-width: 768px) {
+    .container-fluid {
+        margin-left: 0%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .container-fluid {
+        margin-left: 25%;
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+    .container-fluid {
+        margin-left: 28%;
+    }
+}
+
+@media (min-width: 1201px) {
+    .container-fluid {
+        margin-left: 30%;
+    }
+}

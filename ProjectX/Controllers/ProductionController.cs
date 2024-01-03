@@ -163,8 +163,10 @@ namespace ProjectX.Controllers
             }
         }
 
-        public ActionResult EditManual(int id)
+        public ActionResult EditManual(Guid id)
         {
+            int policyid = _productionBusiness.GetPolicyID(id);
+
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
@@ -181,7 +183,7 @@ namespace ProjectX.Controllers
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id, false);
+            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id, false);
 
             if (policyreponse != null)
             {
@@ -214,8 +216,11 @@ namespace ProjectX.Controllers
 
 
         // GET: ProductionController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
+            int policyid = _productionBusiness.GetPolicyID(id);
+
+            // check Guid
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
@@ -232,7 +237,7 @@ namespace ProjectX.Controllers
             ViewData["filldata"] = response;
 
             ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(id, _user.U_Id, false);
+            policyreponse = _productionBusiness.GetPolicy(policyid, _user.U_Id, false);
 
             if (policyreponse != null)
             {

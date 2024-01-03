@@ -10,6 +10,7 @@ namespace ProjectX.Entities.dbModels
     public class TR_PolicyHeader
     {
         public int PolicyID { get; set; }
+        public Guid PolicyGuid { get; set; }
         public string Reference { get; set; }
         public int Duration { get; set; }
         public DateTime Todate { get; set; }

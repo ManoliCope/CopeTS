@@ -179,6 +179,9 @@ namespace ProjectX.Controllers
         //}
         public IActionResult Details(int userid,int sameuser)
         {
+            Guid test = new Guid();
+            int useridtest = _usersBusiness.GetUserID(test);
+
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadFormats = true,
