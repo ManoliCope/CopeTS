@@ -261,11 +261,11 @@
 					<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
 				</tr>
 				@*<tr>
-						<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-						<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-						<td class="td25"></td>
-						<td class="td25"></td>
-					</tr>*@
+				<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+				<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+				<td class="td25"></td>
+				<td class="td25"></td>
+			</tr>*@
 			</table>
 
 
@@ -282,26 +282,26 @@
 
 
 					@*<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>
-					<tr>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-						<td class="td33">test</td>
-					</tr>*@
-				
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+				</tr>
+				<tr>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+				</tr>
+				<tr>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+				</tr>
+				<tr>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+					<td class="td33">test</td>
+				</tr>*@
+
 
 
 
@@ -328,60 +328,80 @@
 
 			<p>For more specific coverage, please refer to the terms and conditions attached with this certificate.</p>
 
-			<h2 class="underlined-heading">Premium Information:</h2>
-			<table>
-				<thead>
-					<tr>
-						<th></th>
-						<th>USD</th>
-						<th>@Model.CurrencyRate.CurrencySymbol</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="td33">Premium:</td>
-						<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-						<td class="td33">
-							@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-						</td>
 
-					</tr>
-					@*<tr>
-							<td class="td33">Issuing / Gov.fees:</td>
-							<td class="td33">@Model.StampsValue</td>
+
+			@if (Model.prttyp == 2)
+			{
+				<h2 class="underlined-heading">Premium Information:</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Premium: <span style="padding-left:30px">As Agreed </span></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+
+
+			}
+			else if (Model.prttyp == 1)
+			{
+				<h2 class="underlined-heading">Premium Information:</h2>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>USD</th>
+							<th>@Model.CurrencyRate.CurrencySymbol</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="td33">Premium:</td>
+							<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
 							<td class="td33">
+								@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
 							</td>
-						</tr>*@
-					<tr>
-						<td class="td33">Stamps / Insurance Tax:</td>
+
+						</tr>
+						@*<tr>
+						<td class="td33">Issuing / Gov.fees:</td>
 						<td class="td33">@Model.StampsValue</td>
 						<td class="td33">
-							@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
 						</td>
-					</tr>
-					<tr>
-						<td class="td33">VAT:</td>
-						<td class="td33">@Model.TaxVATValue</td>
-						<td class="td33">
-							@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-						</td>
-					</tr>
-					<tr>
-						<td class="td33">Total Premium:</td>
-						<td class="td33">@Model.GrandTotal</td>
-						<td class="td33">
-							@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
-						</td>
-					</tr>
-				</tbody>
-			</table>
+					</tr>*@
+						<tr>
+							<td class="td33">Stamps / Insurance Tax:</td>
+							<td class="td33">@Model.StampsValue</td>
+							<td class="td33">
+								@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+							</td>
+						</tr>
+						<tr>
+							<td class="td33">VAT:</td>
+							<td class="td33">@Model.TaxVATValue</td>
+							<td class="td33">
+								@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+							</td>
+						</tr>
+						<tr>
+							<td class="td33">Total Premium:</td>
+							<td class="td33">@Model.GrandTotal</td>
+							<td class="td33">
+								@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			}
+
 
 			<div class="box-container">
 				@*<div class="boxholder" style="float:right">
-						<label>Signature</label>
-						<div class="box">
-						</div>
-					</div>*@
+				<label>Signature</label>
+				<div class="box">
+				</div>
+			</div>*@
 				<div class="boxholder" style="float:right">
 					<label>Signature</label>
 					<div>

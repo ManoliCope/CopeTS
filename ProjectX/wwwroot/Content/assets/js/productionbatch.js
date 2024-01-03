@@ -232,7 +232,7 @@ function importproduction() {
                 Search()
             }
             else {
-                // showresponsemodal(result.statusCode.code, result.statusCode.message)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
                 // SearchContract();
                 drawproductionbatchtable(result.productionbatches)
             }

@@ -60,7 +60,7 @@ namespace ProjectX.Services
         }
 
 
-        public byte[] GeneratePdfFromRazorView(int policyid, string fileqrurl, string requesturl)
+        public byte[] GeneratePdfFromRazorView(int policyid, int prttyp, string fileqrurl, string requesturl)
         {
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             ProductionPolicy policyreponse = new ProductionPolicy();
@@ -73,6 +73,7 @@ namespace ProjectX.Services
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
 
             policyreponse.QrCodebit = fileqrurl;
+            policyreponse.prttyp = prttyp;
 
             string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "backcope.jpg");
             string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");

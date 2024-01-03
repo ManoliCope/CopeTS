@@ -23,6 +23,8 @@
 		hide = "hidden";
 	}
 
+	hide = "";
+
 
 }
 <style>
@@ -270,21 +272,21 @@
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="commPerc">Commission %</label>
-									<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" oninput="this.value = Math.abs(this.value)" value="@Model.commission">
+									<input class="form-control" field-name="commission" type="number" min="0" max="99" name="commPerc" id="commPerc" @*oninput="this.value = Math.abs(this.value)"*@ value="@Model.commission">
 								</div>
 							</div>
 
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="stampPerc">Stamp %</label>
-									<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" oninput="this.value = Math.abs(this.value)" value="@Model.stamp">
+									<input class="form-control" field-name="stamp" type="number" min="0" max="99" name="stampPerc" id="stampPerc" @*oninput="this.value = Math.abs(this.value)"*@ value="@Model.stamp">
 								</div>
 							</div>
 
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="retentionPerc">Retention %</label>
-									<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" oninput="this.value = Math.abs(this.value)" value="@Model.retention">
+									<input class="form-control" field-name="retention" type="number" min="0" max="99" name="retentionPerc" id="retentionPerc" @*oninput="this.value = Math.abs(this.value)"*@ value="@Model.retention">
 								</div>
 							</div>
 
@@ -293,17 +295,18 @@
 										<label class="form-control-label" for="additionalFees">Addional Fees</label>
 										<input class="form-control"   field-name="additional_Fees" type="number" min="0" max="99" name="additionalFees" id="additionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.additional_Fees">
 									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
-										<input class="form-control"   field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" oninput="this.value = Math.abs(this.value)" value="@Model.max_Additional_Fees">
-									</div>
 								</div>*@
+
 							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="vat">VAT %</label>
-									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" oninput="this.value = Math.abs(this.value)" value="@Model.vat">
+									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" @*oninput="this.value = Math.abs(this.value)"*@ value="@Model.vat">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
+									<input class="form-control" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" value="@Model.max_Additional_Fees">
 								</div>
 							</div>
 							<div class="col-md-4 @hide">
@@ -373,14 +376,14 @@
 								</div>
 							</div>
 
-							<div class="col-md-12">
-								<div class="form-check-inline ">
-									<label class="custom-control custom-checkbox">
-										<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" @(Model.fixed_Additional_Fees.HasValue && (bool)Model.fixed_Additional_Fees ? "checked" : "")>
-										<label class="form-control-label" for="isAdditionalFeeFixed">Max Additional</label>
-									</label>
-								</div>
-							</div>
+							@*<div class="col-md-12">
+									<div class="form-check-inline ">
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" name="isAdditionalFeeFixed" id="isAdditionalFeeFixed" field-name="fixed_Additional_Fees" @(Model.fixed_Additional_Fees.HasValue && (bool)Model.fixed_Additional_Fees ? "checked" : "")>
+											<label class="form-control-label" for="isAdditionalFeeFixed">Max Additional</label>
+										</label>
+									</div>
+								</div>*@
 
 							<div class="col-md-12">
 								<div class="form-check-inline ">
@@ -443,13 +446,13 @@
 								</div>
 							</div>
 							@*<div class="col-md-12">
-			<div class="form-check-inline ">
-				<label class="custom-control custom-checkbox">
-					<input type="checkbox" name="is_admin" id="is_admin" field-name="is_admin" @(Model.is_Admin.HasValue && (bool)Model.is_Admin ? "checked" : "")>
-					<label class="form-control-label" for="is_admin">Admin</label>
-				</label>
-			</div>
-		</div>*@
+									<div class="form-check-inline ">
+										<label class="custom-control custom-checkbox">
+											<input type="checkbox" name="is_admin" id="is_admin" field-name="is_admin" @(Model.is_Admin.HasValue && (bool)Model.is_Admin ? "checked" : "")>
+											<label class="form-control-label" for="is_admin">Admin</label>
+										</label>
+									</div>
+								</div>*@
 							<div class="col-md-12">
 								<div class="form-check-inline ">
 									<label class="custom-control custom-checkbox">
@@ -585,8 +588,8 @@
 							</div>
 						</div>
 						<!--<div class="modal-footer justify-content-start">-->
-							@*<button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>*@
-							<!--<button type="button" class="btn btn-secondary width-btn btn-outline-red" data-dismiss="modal" id="clearUploadedLogo">Clear Logo</button>
+						@*<button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>*@
+						<!--<button type="button" class="btn btn-secondary width-btn btn-outline-red" data-dismiss="modal" id="clearUploadedLogo">Clear Logo</button>
 
 						</div>-->
 					</div>

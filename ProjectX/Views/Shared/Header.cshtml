@@ -82,19 +82,28 @@
 	</div>
 	<div class="sidebar-layout">
 		<div class="sidebar-header">
-			<div class="pro-sidebar-logo logo-container">
+			@if (currentUser.U_Is_Admin == true)
+			{
+				<div class="pro-sidebar-logo pt-4">
+					<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />
+				</div>
+			}
+			else
+			{
+				<div class="pro-sidebar-logo logo-container">
+					@if (currentUser.U_Logo == null || currentUser.U_Logo == "")
+					{
+						<img class="complogo" src="~/Content/assets/images/userlogo.png" alt="Cope Logo">
+					}
+					else
+					{
+						<img class="complogo" src="\Files\@currentUser.U_Id\Logo\@currentUser.U_Logo" alt="Cope Logo">
+					}
+					@*<div>C</div>*@
+					@*<h5>Cope</h5>*@
+				</div>
+			}
 
-				@if (currentUser.U_Logo == null || currentUser.U_Logo == "")
-				{
-					<img class="complogo" src="~/Content/assets/images/userlogo.png" alt="Cope Logo">
-				}
-				else
-				{
-					<img class="complogo" src="\Files\@currentUser.U_Id\Logo\@currentUser.U_Logo" alt="Cope Logo">
-				}
-				@*<div>C</div>*@
-				@*<h5>Cope</h5>*@
-			</div>
 		</div>
 		<div class="sidebar-content">
 			<nav class="menu open-current-submenu">
@@ -119,8 +128,7 @@
 										<span class="menu-title">Creation</span>
 									</a>
 								</li>
-								@if(isadmin == true || currentUser.U_Manual_Production==true){
-									<li class="menu-item @(controllerName == "ProductionBatch" && actionName == "Index" ? "active" : "")">
+								<li class="menu-item @(controllerName == "productionbatch" && actionName == "index" ? "active" : "")">
 									<a href="~/productionbatch/">
 										<span class="menu-title">Manual Production</span>
 									</a>
@@ -264,12 +272,14 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="sidebar-header sidebar-bottom pb-2">
-			<div class="pro-sidebar-logo" style="display:inline-block">
+		@if (currentUser.U_Is_Admin == false)
+		{
+			<div class="sidebar-header sidebar-bottom pb-2">
+				<div class="pro-sidebar-logo" style="display:inline-block">
 					<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />
-
+				</div>
 			</div>
-		</div>
+		}
 	</div>
 </aside>
 
