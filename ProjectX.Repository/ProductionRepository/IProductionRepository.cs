@@ -10,6 +10,7 @@ namespace ProjectX.Repository.ProductionRepository
 {
     public interface IProductionRepository
     {
+        public int GetPolicyID(Guid id);
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
         public List<TR_Product> GetProductsByType(int id, int userId);
         public List<TR_Zone> GetZonesByProduct(int id);

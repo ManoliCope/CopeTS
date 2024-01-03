@@ -385,13 +385,10 @@ function deleteuser(me) {
         success: function (result) {
 
             if (result.statusCode.code == 1) {
-
                 removebtnloader(me);
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
                 Search();      ///////1557///////    why do u need to get all users after deleting?
             }
-
-
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
 

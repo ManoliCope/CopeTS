@@ -17,6 +17,11 @@ namespace ProjectX.Business.Production
     {
         IProductionRepository _prodRepository;
 
+
+        public int GetPolicyID(Guid id)
+        {
+            return _prodRepository.GetPolicyID(id);
+        }
         public ProductionBusiness(IProductionRepository prodRepository)
         {
             _prodRepository = prodRepository;

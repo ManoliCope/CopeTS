@@ -370,7 +370,7 @@ function populatebeneficiarydatatable(tablename, data) {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: ismanual == '0',
+                visible: ismanual != '1',
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
@@ -1300,22 +1300,24 @@ function sendDataIssuance() {
         data: { IssuanceReq: dataToSend },
         method: 'POST',
         success: function (result) {
+            console.log(result)
             removescreenloader();
 
             if (result.statusCode.code == 1) {
                 if ($(".editscreen").attr("pol-id") == undefined) {
                     $("#responsemodal button").click(function () {
-                        gotopage("production", "Edit", result.policyID);
+                        gotopage("production", "Edit", result.policyGuid);
                     });
+                    showresponsemodal("1", result.statusCode.message)
                 }
                 else {
-                    showresponsemodal("1", result.statusCode.message)
                     if ($("#printButton").length == 0) {
                         $(".Quotationcard").parent().append(`<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>`)
                         $('#printButton').click(function () {
                             showresponsemodalbyid('AsAgreed-popup')
                         });
                     }
+                    showresponsemodal("1", result.statusCode.message)
                 }
             }
             else {
@@ -1389,6 +1391,6 @@ function handlemax(input) {
     var enteredValue = parseFloat(input.value);
 
     if (enteredValue > maxValue) {
-        input.value = maxValue.toFixed(2); 
+        input.value = maxValue.toFixed(2);
     }
 }

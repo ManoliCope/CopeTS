@@ -31,7 +31,7 @@ $(document).ready(function () {
 
 
 function triggerme() {
-  
+
 }
 
 
@@ -201,7 +201,7 @@ function addnew() {
         data: { req: zneReq },
         success: function (result) {
             removeloader();
-           
+
             showresponsemodal(result.statusCode.code, result.statusCode.message)
             $("#responsemodal button").click(function () {
                 if (result.statusCode.code == 1 && result.id != "0")
@@ -304,19 +304,25 @@ function deletezne(me) {
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
-                else
+                else {
                     showresponsemodal(result.statusCode.code, result.statusCode.message, "zone")
+                    removebtnloader(me);
+                }
 
             }
-            else
+            else {
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
+                removebtnloader(me);
+            }
 
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         }
     });
 }

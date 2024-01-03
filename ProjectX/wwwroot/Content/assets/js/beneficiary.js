@@ -232,20 +232,26 @@ function deletebeneficiary(me) {
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }
-                else
+                else {
                     showresponsemodal(result.statusCode.code, result.statusCode.message, "Beneficiary")
+                    removebtnloader(me);
+                }
 
             }
-            else
+            else {
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
+                removebtnloader(me);
+            }
 
 
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+                removebtnloader(me);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+                removebtnloader(me);
         }
     });
 }

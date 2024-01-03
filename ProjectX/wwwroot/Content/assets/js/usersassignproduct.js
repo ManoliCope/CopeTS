@@ -185,11 +185,13 @@ function deleteUsersProduct(upid) {
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removeloader();
 
 
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
+            removeloader();
 
         }
     });

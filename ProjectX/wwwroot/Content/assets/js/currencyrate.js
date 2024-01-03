@@ -202,13 +202,15 @@ function deletecurrencyrate(me) {
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
 
-
+            removebtnloader(me);
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
+            removebtnloader(me);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request - Currency Linked")
+            removebtnloader(me);
         }
     });
 }

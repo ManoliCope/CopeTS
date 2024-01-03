@@ -36,6 +36,23 @@ namespace ProjectX.Repository.ProductionRepository
             _generalRepository = generalrepository;
         }
 
+        public int GetPolicyID(Guid id)
+        {
+            int PolicyID = 0;
+
+            var param = new DynamicParameters();
+            param.Add("@Pol_Guid", id);
+           
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_GetPolicyID", param, commandType: CommandType.StoredProcedure))
+                {
+                    PolicyID = result.Read<int>().FirstOrDefault();
+                }
+            }
+            return PolicyID;
+        }
+
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid)
         {
             var resp = new List<TR_PolicyHeader>();
@@ -204,6 +221,7 @@ namespace ProjectX.Repository.ProductionRepository
         {
             ProductionSaveResp response = new ProductionSaveResp();
             string thisresult = "";
+            Guid thisresultGuid ;
             var query = "";
 
             DataTable Selectediddestinations = new DataTable();
@@ -264,6 +282,7 @@ namespace ProjectX.Repository.ProductionRepository
                 using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
                 {
                     thisresult = result.Read<string>().First();
+                    thisresultGuid = result.Read<Guid>().First();
                     //response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
                 }
             }
@@ -278,6 +297,7 @@ namespace ProjectX.Repository.ProductionRepository
                     response.statusCode.message = "Policy Edited";
 
                 response.PolicyID = Convert.ToInt32(thisresult);
+                response.PolicyGuid = thisresultGuid;
             }
             else
             {
