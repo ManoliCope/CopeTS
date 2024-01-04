@@ -8,6 +8,7 @@ namespace ProjectX.Entities.Models.Users
     public class UsersResp : GlobalResponse
     {
         public int id { get; set; }
+        public Guid Guid { get; set; }
         public string first_Name { get; set; }
         public string middle_Name { get; set; }
         public string last_Name { get; set; }

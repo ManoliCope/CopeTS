@@ -35,11 +35,11 @@ namespace ProjectX.Controllers
         private IJwtBusiness _jwtBusiness;
         private readonly IConfiguration _configuration;
         private IWebHostEnvironment _env;
-  
 
-        public UsersController(IHttpContextAccessor httpContextAccessor, 
-            IOptions<TrAppSettings> appIdentitySettingsAccessor, 
-            IGeneralBusiness generalBusiness, IJwtBusiness jwtBusiness, IWebHostEnvironment env,IUsersBusiness usersBusiness, IConfiguration configuration)
+
+        public UsersController(IHttpContextAccessor httpContextAccessor,
+            IOptions<TrAppSettings> appIdentitySettingsAccessor,
+            IGeneralBusiness generalBusiness, IJwtBusiness jwtBusiness, IWebHostEnvironment env, IUsersBusiness usersBusiness, IConfiguration configuration)
         {
             _httpContextAccessor = httpContextAccessor;
             //_profileBusiness = profileBusiness;
@@ -66,10 +66,12 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
-        public IActionResult Create(int userid)
+        public IActionResult Create(Guid userid)
         {
-            if (userid == 0)
-                userid = _user.U_Id;
+            int iduser = _usersBusiness.GetUserID(userid);
+
+            if (iduser == 0)
+                iduser = _user.U_Id;
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadFormats = true,
@@ -77,15 +79,15 @@ namespace ProjectX.Controllers
                 loadRoundingRule = true,
                 loadDestinations = true,
                 //loadSuperAgents = true,
-                loadCurrencyRate=true
+                loadCurrencyRate = true
             });
-            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(userid);
+            response.loadedData.superAgents = _usersBusiness.GetUsersChildren(iduser);
             ViewData["loadDataCreate"] = response;
-            ViewData["userid"] = userid.ToString();
+            ViewData["userid"] = iduser.ToString();
             ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
 
             return View();
-            
+
         }
 
         public IActionResult Contract()
@@ -105,16 +107,16 @@ namespace ProjectX.Controllers
         //    //return _profileBusiness.SearchProfiles(req);
         //}
 
-       public IActionResult Reset()
+        public IActionResult Reset()
         {
             return View();
         }
         [HttpPost]
         public ResetPass resetPassword(ResetPass pass)
         {
-                //pass.userId = _user.U_Id;
-                var resp= _usersBusiness.resetPass(pass);
-                return resp;
+            //pass.userId = _user.U_Id;
+            var resp = _usersBusiness.resetPass(pass);
+            return resp;
         }
 
         public List<TR_Users> credentialbyuser(int iduser)
@@ -131,10 +133,10 @@ namespace ProjectX.Controllers
             if (req.Super_Agent_Id == null)
                 req.Super_Agent_Id = _user.U_Id;
             if (req.Active == null)
-                req.Active =true;
+                req.Active = true;
             if (req != null)
             {
-                 response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
+                response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
             }
             else
             {
@@ -146,17 +148,18 @@ namespace ProjectX.Controllers
 
         }
         [HttpGet]
-        public UsersSearchResp Search(string name,int? parentid)
+        public UsersSearchResp Search(string name, int? parentid)
         {
             //user.Id = _user.UserId;
             var user = new UsersSearchReq();
             user.First_Name = name;
             if (parentid == null)
                 user.Super_Agent_Id = _user.U_Id;
-            else 
+            else
                 user.Super_Agent_Id = parentid;
             var response = new UsersSearchResp();
             response = _usersBusiness.GetUsersList(user);
+            var abc = response.users.First().U_Guid;
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -174,13 +177,12 @@ namespace ProjectX.Controllers
         //    ViewData["loadDataCreate"] = response;
         //    ViewData["userid"] = userid.ToString();
 
-            
+
         //    return View();
         //}
-        public IActionResult Details(int userid,int sameuser)
+        public IActionResult Details(Guid userid, int su)
         {
-            Guid test = new Guid();
-            int useridtest = _usersBusiness.GetUserID(test);
+            int iduser = _usersBusiness.GetUserID(userid);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -192,13 +194,13 @@ namespace ProjectX.Controllers
                 loadCurrencyRate = true
             });
             response.loadedData.superAgents = _usersBusiness.GetUsersChildren(_user.U_Id);
-            var user = _usersBusiness.GetUser(userid);
-            ViewData["isAdmin"] = _user.U_Is_Admin==true?"1":"0";
+            var user = _usersBusiness.GetUser(iduser);
+            ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = _user.U_Id.ToString();
-            ViewData["same"] = sameuser.ToString();
+            ViewData["same"] = su.ToString();
 
-            
+
             return View(user);
         }
         [HttpPost]
@@ -211,7 +213,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-          
+
 
 
             return _usersBusiness.ModifyUser(req, "Update", _user.U_Id);
@@ -225,9 +227,10 @@ namespace ProjectX.Controllers
 
             return _usersBusiness.ModifyUser(req, "Delete", _user.U_Id);
         }
-        public UsersResp GetUserById(int userId)
+        public UsersResp GetUserById(Guid userId)
         {
-            var response = _usersBusiness.GetUser(userId);
+            int iduser = _usersBusiness.GetUserID(userId);
+            var response = _usersBusiness.GetUser(iduser);
 
             return response;
         }
@@ -247,44 +250,46 @@ namespace ProjectX.Controllers
         [HttpGet]
         public string getUserPass(int userid)
         {
-           
-                return _usersBusiness.getUserPass(userid);
-          
+            return _usersBusiness.getUserPass(userid);
         }
-        public IActionResult AssignProduct(int userid)
+        public IActionResult AssignProduct(Guid userid)
         {
+            int iduser = _usersBusiness.GetUserID(userid);
+
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadProducts = true
             });
-           
+
             ViewData["loadData"] = response;
-            ViewData["userid"] = userid.ToString(); ;
+            ViewData["userid"] = iduser.ToString(); 
             return View();
         }
-   
-        public UsProResp deleteUsersProduct(int upid)
+
+        public UserProductResp deleteUsersProduct(int upid)
         {
             var req = new UsProReq();
             req.Action = "Delete";
             req.Id = upid;
             return _usersBusiness.ModifyUsersProduct(req);
-        } 
-        public UsProSearchResp getUsersProduct(int userid)
+        }
+        public UsProSearchResp getUsersProduct(Guid userid)
         {
+            int iduser = _usersBusiness.GetUserID(userid);
+
             var response = new UsProSearchResp();
-            response.usersproduct = _usersBusiness.GetUsersProduct(userid);
+            response.usersproduct = _usersBusiness.GetUsersProduct(iduser);
 
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, userid.ToString(),"conditions").Replace("\\", "/");
+            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, iduser.ToString(), "conditions").Replace("\\", "/");
 
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, iduser == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
             return response;
         }
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> assignUsersProduct([FromForm(Name = "files")] IFormFileCollection files,
-            string Action, int ProductId, double IssuingFees,int UsersId)
+            string Action, int ProductId, double IssuingFees, int UsersId)
         {
             //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
@@ -292,7 +297,7 @@ namespace ProjectX.Controllers
             {
                 if (file != null && file.Length > 0)
                 {
-                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(),"Conditions");
+                    var userFullPath = Path.Combine(uploadsDirectory, UsersId.ToString(), "Conditions");
                     createNewFolder(userFullPath);
                     var fileName = Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(userFullPath, fileName);
@@ -302,12 +307,15 @@ namespace ProjectX.Controllers
                         await file.CopyToAsync(stream);
                     }
 
-                    var req = new UsProReq {
-                    UsersId=UsersId,ProductId= ProductId,
-                        IssuingFees= IssuingFees,Action= Action,
-                        UploadedFile=fileName
+                    var req = new UsProReq
+                    {
+                        UsersId = UsersId,
+                        ProductId = ProductId,
+                        IssuingFees = IssuingFees,
+                        Action = Action,
+                        UploadedFile = fileName
                     };
-                    var response =_usersBusiness.ModifyUsersProduct(req);
+                    var response = _usersBusiness.ModifyUsersProduct(req);
                     return Ok(response);
                 }
                 else
@@ -315,11 +323,11 @@ namespace ProjectX.Controllers
                     return Json("No file selected.");
                 }
             }
-                return null;
+            return null;
         }
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files,int UsersId,string Folder)
+        public async Task<IActionResult> saveUploadedLogo([FromForm(Name = "files")] IFormFileCollection files, int UsersId, string Folder)
         {//see tariff upload and make it like it.. make the popup as form
             //string uploadsDirectory = _configuration["UploadUsProduct:UploadsDirectory"];
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
@@ -341,13 +349,14 @@ namespace ProjectX.Controllers
 
                     // Save the file path to the database as needed
                     // Your database code goes here
-                    var req = new UsProReq {
-                    UsersId=UsersId,
-                        UploadedFile=fileName,
-                        UploadedFolder= Folder
+                    var req = new UsProReq
+                    {
+                        UsersId = UsersId,
+                        UploadedFile = fileName,
+                        UploadedFolder = Folder
                     };
 
-                    var response =_usersBusiness.SaveUploadedLogo(req);
+                    var response = _usersBusiness.SaveUploadedLogo(req);
                     response.UploadedFile = fileName;
                     return Ok(response);
                 }
@@ -356,15 +365,15 @@ namespace ProjectX.Controllers
                     return Json("No file selected.");
                 }
             }
-                return null;
+            return null;
         }
         public void createNewFolder(string folderPath)
         {
             if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
+                Directory.CreateDirectory(folderPath);
         }
         [HttpPost]
-        public UsProResp clearUploadedLogo(int userid)
+        public UserProductResp clearUploadedLogo(int userid)
         {
             return _usersBusiness.clearUploadedLogo(userid);
         }

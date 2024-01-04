@@ -47,7 +47,7 @@ function drawtable(data) {
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     if (full.u_Have_Parents) {
-                        return `<a  href="#" title="View Users" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="showChildren(` + full.u_Id.toString() + `)"><i class="fas fa-eye"/></a>`;
+                        return `<a  href="#" title="View Users" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="showChildren(this)"><i class="fas fa-eye"/></a>`;
 
                     } else {
                         return '';
@@ -78,7 +78,7 @@ function drawtable(data) {
                 "render": function (data, type, full) {
                     if (generate == '1') {
 
-                        return `<a  href="#" title="Add User" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="createChildUser(` + full.u_Id.toString() + `)"><i class="fas fa-plus"/></a>`;
+                        return `<a  href="#" title="Add User" userid="` + full.u_Guid + `"  class="text-black-50" onclick="createChildUser(this)"><i class="fas fa-plus"/></a>`;
                     } else {
                         return '';
                     }
@@ -88,7 +88,7 @@ function drawtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    return `<a  href="#" title="Edit" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="gotouser(this)"><i class="fas fa-book"/></a>`;
+                    return `<a  href="#" title="Edit" userid="` + full.u_Guid + `"  class="text-black-50" onclick="gotouser(this)"><i class="fas fa-book"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             }, {
@@ -97,7 +97,7 @@ function drawtable(data) {
                 "render": function (data, type, full) {
                     if (generate == '1') {
 
-                        return `<a  href="#" title="Assign Product" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="gotoAssignProduct(` + full.u_Id.toString() + `)"><i class="fas fa-briefcase"/></a>`;
+                        return `<a  href="#" title="Assign Product" userid="` + full.u_Guid + `"  class="text-black-50" onclick="gotoAssignProduct(this)"><i class="fas fa-briefcase"/></a>`;
                     } else {
                         return '';
                     }
@@ -253,7 +253,6 @@ function saveUser() {
             user.Super_Agent_Id = parentid;
         url = "/Users/createNewUser";
     }
-    console.log(user);
     $.ajax({
         type: 'POST',
         url: projectname + url,
@@ -267,7 +266,7 @@ function saveUser() {
                 showresponsemodal(1, result.statusCode.message)
                 if (!userid > 0)
                     $("#responsemodal button").click(function () {
-                        window.location.href = '/users/details?userid=' + result.id +'&amp;sameuser=0';
+                        window.location.href = '/users/details?userid=' + result.guid +'&amp;su=0';
                     });
                 //drawtable(result);
             }
@@ -425,7 +424,7 @@ function gotouser(me) {
     //console.log(me)
     var userId = $(me).attr('userid');
     //sessionStorage.setItem('userid', userId);
-    window.location.href = '/users/details?userid=' + userId +'&amp;sameuser=0';
+    window.location.href = '/users/details?userid=' + userId +'&su=0';
 }
 function formatDate(data) {
 
@@ -472,11 +471,14 @@ $('#changePassword').click(function () {
     sessionStorage.setItem('pass', JSON.stringify(passuser));
     window.location.href = "/Users/Reset";
 });
-function createChildUser(parentid) {
+function createChildUser(me) {
+    var parentid = $(me).attr('userid');
+
     sessionStorage.setItem('parentid', parentid);
     window.location.href = '/users/create?userid=' + parentid;
 }
-function showChildren(parentid) {
+function showChildren(me) {
+    var parentid = $(me).attr('userid');
     sessionStorage.setItem('parid', parentid);
     //window.location.href = '/users/createuser';
     Search();
@@ -491,7 +493,8 @@ function resetPassScreen() {
         }
     }
 }
-function gotoAssignProduct(userid) {
+function gotoAssignProduct(me) {
+    var userid = $(me).attr('userid');
     window.location.href = '/users/assignproduct?userid=' + userid;
 }
 $('.uploadfile').click(function () {

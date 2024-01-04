@@ -197,11 +197,11 @@ namespace ProjectX.Business.Users
         {
             return _usersRepository.getUserPass(userid);
         }
-        public UsProResp ModifyUsersProduct(UsProReq req)
+        public UserProductResp ModifyUsersProduct(UsProReq req)
         {
             return _usersRepository.ModifyUsersProduct(req);
         }
-        public UsProResp SaveUploadedLogo(UsProReq req)
+        public UserProductResp SaveUploadedLogo(UsProReq req)
         {
             return _usersRepository.SaveUploadedLogo(req);
         }
@@ -217,7 +217,7 @@ namespace ProjectX.Business.Users
         {
             return _usersRepository.GetListedUserWithChildren(userid);
         }
-        public UsProResp clearUploadedLogo(int userid)
+        public UserProductResp clearUploadedLogo(int userid)
         {
             return _usersRepository.clearUploadedLogo(userid);
         }

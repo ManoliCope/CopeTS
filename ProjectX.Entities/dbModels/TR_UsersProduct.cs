@@ -13,6 +13,7 @@ namespace ProjectX.Entities.dbModels
         public string? PR_Name { get; set; }
         public string? UP_UploadedFile { get; set; }
         public int? U_Id { get; set; }
+        public Guid U_Guid { get; set; }
         public double? UP_IssuingFees { get; set; }
         public DateTime? UP_CreationDate { get; set; }
     }

@@ -17,12 +17,12 @@ namespace ProjectX.Repository.UsersRepository
         public ResetPass resetPass(ResetPass res);
         public TR_Users GetUserRights(int userid);
         public string getUserPass(int userid);
-        public UsProResp ModifyUsersProduct(UsProReq req);
+        public UserProductResp ModifyUsersProduct(UsProReq req);
         public List<TR_UsersProduct> GetUsersProduct(int userid);
         public List<LookUpp> GetUsersChildren(int userid);
         public List<TR_Users> GetListedUserWithChildren(int userid);
-        public UsProResp SaveUploadedLogo(UsProReq req);
-        public UsProResp clearUploadedLogo(int userid);
+        public UserProductResp SaveUploadedLogo(UsProReq req);
+        public UserProductResp clearUploadedLogo(int userid);
 
     }
 }

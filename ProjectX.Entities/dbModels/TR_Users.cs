@@ -9,6 +9,7 @@ namespace ProjectX.Entities.dbModels
     public class TR_Users
     {
         public int U_Id { get; set; }
+        public Guid U_Guid { get; set; }
         public string U_First_Name { get; set; }
         public string U_Middle_Name { get; set; }
         public string U_Last_Name { get; set; }
