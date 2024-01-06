@@ -433,10 +433,26 @@ a {
     display: flex;
     align-items: center;
 }
-.layout .sidebar .pro-sidebar-logo img{
-    width:175px
+
+
+
+
+
+
+.layout .sidebar.collapsed .pro-sidebar-logo img.adminlogo {
+    width: 50px;
+    content: url('/Content/assets/images/copeicon.png');
 }
-    /* .layout .sidebar .pro-sidebar-logo > div {
+
+.layout .sidebar .pro-sidebar-logo img.adminlogo {
+    width: 175px;
+    content: url('/Content/assets/images/copelogo.png');
+}
+
+
+
+
+/* .layout .sidebar .pro-sidebar-logo > div {
         width: 35px;
         min-width: 35px;
         height: 35px;
@@ -452,15 +468,15 @@ a {
         margin-right: 10px;
     }*/
 
-    .layout .sidebar .pro-sidebar-logo > h5 {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-size: 20px;
-        line-height: 30px;
-        transition: opacity 0.3s;
-        opacity: 1;
-    }
+.layout .sidebar .pro-sidebar-logo > h5 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    line-height: 30px;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
 
 .layout .sidebar .footer-box {
     display: flex;
@@ -748,6 +764,7 @@ body {
 table td i.red {
     color: red
 }
+
 table td i.green {
     color: #00db00
 }
@@ -875,12 +892,16 @@ table td a {
     margin-top: 5px
 }
 
-.visiblehidden{
-    visibility:hidden
+.visiblehidden {
+    visibility: hidden
 }
 
 .welcometxt {
     color: var(--third-color);
     margin-bottom: 4px;
     display: block
+}
+
+.selectedmenu{
+    display:block !important; 
 }

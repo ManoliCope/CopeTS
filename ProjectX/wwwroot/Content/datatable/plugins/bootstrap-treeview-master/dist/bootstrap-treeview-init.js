@@ -313,17 +313,24 @@ $(function() {
         });
 
         $('#btn-select-node.select-node').on('click', function (e) {
+            alert('b')
           $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
         });
 
         $('#btn-unselect-node.select-node').on('click', function (e) {
-          $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+            alert('a')
+            $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
         });
 
-        $('#btn-toggle-selected.select-node').on('click', function (e) {
+    $('#btn-toggle-selected.select-node').on('click', function (e) {
+            alert('t')
           $selectableTree.treeview('toggleNodeSelected', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
         });
 
+
+    $('#btn-toggle').on('click', function (e) {
+        alert('taaa')
+    });
 
 
         var $expandibleTree = $('#treeview-expandible').treeview({
