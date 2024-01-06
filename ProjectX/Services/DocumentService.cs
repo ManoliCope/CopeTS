@@ -128,7 +128,7 @@ namespace ProjectX.Services
                     Response = "Response content",
                     Exception = ex.ToString(),
                     ExecutionTime = 0,
-                    Userid = 14
+                    Userid = 1
                 };
                 _generalBusiness.LogErrorToDatabase(logData);
 

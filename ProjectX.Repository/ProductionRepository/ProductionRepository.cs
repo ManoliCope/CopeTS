@@ -36,13 +36,14 @@ namespace ProjectX.Repository.ProductionRepository
             _generalRepository = generalrepository;
         }
 
-        public int GetPolicyID(Guid id)
+        public int GetPolicyID(Guid id,int userid)
         {
             int PolicyID = 0;
 
             var param = new DynamicParameters();
             param.Add("@Pol_Guid", id);
-           
+            param.Add("@U_ID", userid);
+
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_GetPolicyID", param, commandType: CommandType.StoredProcedure))

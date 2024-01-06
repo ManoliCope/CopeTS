@@ -159,7 +159,6 @@ namespace ProjectX.Controllers
                 user.Super_Agent_Id = parentid;
             var response = new UsersSearchResp();
             response = _usersBusiness.GetUsersList(user);
-            var abc = response.users.First().U_Guid;
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -273,17 +272,16 @@ namespace ProjectX.Controllers
             req.Id = upid;
             return _usersBusiness.ModifyUsersProduct(req);
         }
-        public UsProSearchResp getUsersProduct(Guid userid)
+        public UsProSearchResp getUsersProduct(int userid)
         {
-            int iduser = _usersBusiness.GetUserID(userid);
 
             var response = new UsProSearchResp();
-            response.usersproduct = _usersBusiness.GetUsersProduct(iduser);
+            response.usersproduct = _usersBusiness.GetUsersProduct(userid);
 
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, iduser.ToString(), "conditions").Replace("\\", "/");
+            response.Directory = Path.Combine(requesturl, _appSettings.ExternalFolder.Staticpathname, userid.ToString(), "conditions").Replace("\\", "/");
 
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, iduser == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, userid == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
             return response;
         }
         [HttpPost]

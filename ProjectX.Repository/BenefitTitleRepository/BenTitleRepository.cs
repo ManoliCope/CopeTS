@@ -50,13 +50,10 @@ namespace ProjectX.Repository.BenefitTitleRepository
         public List<TR_BenefitTitle> GetBenTitleList(BenTitleSearchReq req)
         {
             var resp = new List<TR_BenefitTitle>();
-
             var param = new DynamicParameters();
 
             param.Add("@BT_Id", req.id);
             param.Add("@BT_Title", req.title);
-
-
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

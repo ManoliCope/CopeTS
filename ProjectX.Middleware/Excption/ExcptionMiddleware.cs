@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using ProjectX.Entities.bModels;
 using ProjectX.Business.General;
 using ProjectX.Entities.Models;
+using System.Data.SqlClient;
 
 namespace ProjectX.Middleware.Excption
 {
@@ -143,12 +144,18 @@ namespace ProjectX.Middleware.Excption
 
                 if (_ex != null)
                 {
+                    string responsetxt = "An error occurred while processing your request.";
+                    if (_ex is SqlException sqlException && sqlException.Number == 50000)
+                    {
+                        responsetxt = _ex.Message;
+                    }
+
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = "application/json";
 
                     var errorResponse = new
                     {
-                        Message = "An error occurred while processing your request."
+                        Message = responsetxt
                     };
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));

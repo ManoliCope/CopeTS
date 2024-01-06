@@ -102,7 +102,7 @@ namespace ProjectX.Controllers
             ttt.product = new TR_Product();
             return View(ttt);
         }
-         public ActionResult ManualProduction()
+        public ActionResult ManualProduction()
         {
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -165,7 +165,7 @@ namespace ProjectX.Controllers
 
         public ActionResult EditManual(Guid id)
         {
-            int policyid = _productionBusiness.GetPolicyID(id);
+            int policyid = _productionBusiness.GetPolicyID(id, _user.U_Id);
 
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
@@ -218,9 +218,10 @@ namespace ProjectX.Controllers
         // GET: ProductionController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            int policyid = _productionBusiness.GetPolicyID(id);
+            int policyid = _productionBusiness.GetPolicyID(id, _user.U_Id);
+            if (policyid == 0)
+                return RedirectToAction("Index");
 
-            // check Guid
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup

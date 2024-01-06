@@ -186,13 +186,17 @@ function deleteUsersProduct(upid) {
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
             removeloader();
-
-
         },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-            removeloader();
+      
+        error: function (jqXHR, textStatus, errorThrown) {
+            //console.log(jqXHR.responseJSON);
+            //console.log(jqXHR.responseJSON.Message);
+        
 
+            // Display an error message
+            var errorMessage = jqXHR.responseJSON.Message;
+            showresponsemodal("Error", errorMessage);
+            removeloader();
         }
     });
 }

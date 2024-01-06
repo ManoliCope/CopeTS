@@ -233,11 +233,27 @@
     outline: none;
     width: 100%
 }
-.cancelledtxt {
+.cancelledtitle {
     color: red !important;
     font-weight: bold !important;
     padding-left: 10px;
 }
+
+.createdontxt, .cancelledtxt {
+    font-weight: bold !important;
+    padding-left: 10px;
+    font-size: 15px;
+    float: right;
+    display:block;
+}
+.multiline-text {
+    float: right;
+    white-space: pre-line;
+    font-size: 15px;
+    text-align:right
+}
+
+
 
 .card-body {
     padding: 0.6rem;

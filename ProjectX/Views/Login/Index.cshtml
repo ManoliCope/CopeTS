@@ -1,8 +1,15 @@
-﻿<div class="container-fluid">
+﻿<style>
+	.formlogin button {
+		font-size: 23px;
+		HEIGHT: 40px;
+		padding-bottom: 4px;
+	}
+</style>
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12 d-flex align-items-center justify-content-center">
             <div class="login-form">
-                <h2>Login</h2>
+                <h1>Login</h1>
                 <form class="authentication-form formlogin" id="loginForm" onsubmit="return LogintoCMS()" method="POST">
                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" tabindex="1" required>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" tabindex="2" required>
@@ -19,7 +26,7 @@
                     <div class="form-group mb-0 text-center mt-3">
                         <p class="incorrectCred hide" id="incorrectCredMsg">Username and / or Password are wrong</p>
                         <button id="loginbutton" type="submit" class="btn btn-primary btn-block bglocalcolor" tabindex="3">
-                            Log In
+                            Login
                         </button>
                         <div id="loginloader" class="smloader hide"></div>
                     </div>
