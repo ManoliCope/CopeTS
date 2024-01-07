@@ -158,7 +158,16 @@ namespace ProjectX.Controllers
             result.reportData = _reportBusiness.GenerateCurrencies(_user.U_Id);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
+        } 
+        [HttpPost]
+        public IActionResult GenerateManualPolicies(int batchid)
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GenerateManualPolicies(batchid);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
         }
+
       
     }
 }

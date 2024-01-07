@@ -153,20 +153,7 @@ namespace ProjectX.Repository.ProductionBatchRepository
                     resp.id = idOut;
                     resp.statusCode.code = statusCode;
                 }
-
-
-                //using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
-                //{
-                //    _db.Execute("TR_ProductionBatch_Save", param, commandType: CommandType.StoredProcedure);
-                //    resp = result.ReadFirstOrDefault<TR_ProductionBatch>();
-
-                //    statusCode = param.Get<int>("@Status");
-                //    idOut = param.Get<int>("@Returned_ID");
-                //}
-                //resp.statusCode.code = statusCode;
-                //resp.id = idOut;
             }
-
 
             return resp;
         }

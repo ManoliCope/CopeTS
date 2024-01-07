@@ -105,5 +105,21 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
+     public List<dynamic> GenerateManualPolicies(int batchid)
+
+        {
+            List<dynamic> response = new List<dynamic>();
+            var param = new DynamicParameters();
+            param.Add("@batchid", batchid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_ManualPolicies", param, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<dynamic>().ToList();
+                }
+            }
+            return response;
+        }
     }
 }

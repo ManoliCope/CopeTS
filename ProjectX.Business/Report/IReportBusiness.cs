@@ -13,5 +13,6 @@ namespace ProjectX.Business.Report
         public List<dynamic> GenerateBenefits(int userid);
         public List<dynamic> GenerateBeneficiaries(int userid, productionReport req);
         public List<dynamic> GenerateCurrencies(int userid);
+        public List<dynamic> GenerateManualPolicies(int batchid);
     }
 }

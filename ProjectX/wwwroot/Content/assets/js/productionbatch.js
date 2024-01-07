@@ -48,7 +48,16 @@ function drawtable(data) {
 
                     return data;
                 }
+            },
+             {
+                'data': 'pB_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full, meta) {
+                    return `<a  title="Show Policies" productiontitle="`+full.pB_Title+`" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="getAPoliciesByBatchId(this)" ><i class="fas fa-eye "></i></a>`;
+
+                }
             }
+
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             //{
             //    'data': 'pB_Id',
@@ -230,11 +239,12 @@ function importproduction() {
         data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
             if (result.statusCode.code == 1) {
-                showresponsemodal(result.statusCode.code, result.statusCode.message)
-                Search()
+                drawproductionbatchtable(result.productionbatches)
+                //showresponsemodal(result.statusCode.code, result.statusCode.message)
+                //Search()
             }
             else {
-                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                //showresponsemodal(result.statusCode.code, result.statusCode.message)
                 // SearchContract();
                 drawproductionbatchtable(result.productionbatches)
             }
@@ -261,7 +271,7 @@ importbutton.click(function () {
 
     importupload.change(function () {
         togglebtnloader($("#importupload"));
-        var profileid = $("#prname").attr("name")
+        //var profileid = $("#prname").attr("name")
 
         importproductionfiles(this)
 
@@ -410,7 +420,9 @@ function drawproductionbatchtable(result) {
     var table = $('#productionbatchtable').DataTable({
         "data": result,
         "paging": true,
-        "ordering": false,
+        "ordering": true, // Enable ordering
+        "order": [[17, 'asc']], // Order based on the 'status' column (index 15) in ascending order
+
         "filter": false,
         "searching": true,
         "destroy": true,
@@ -432,15 +444,45 @@ function drawproductionbatchtable(result) {
             { "title": "Nationality", "className": "text-center filter", "orderable": true, "data": "nationality" },
             { "title": "PremiumInUSD", "className": "text-center filter", "orderable": true, "data": "premiumInUSD" },
             { "title": "NetInUSD", "className": "text-center filter", "orderable": true, "data": "netInUSD" }
+            , { "title": "Reason", "className": "text-center filter", "orderable": true, "data": "reason" }
+            , { "visible": false, "data": "status" }
+           
         ],
         orderCellsTop: true,
         fixedHeader: true,
         "rowCallback": function (row, data) {
-            if (data.isError) {
-                // If "isError" is true, set the background color of the row to red
+            if (data.status==0) {
                 $(row).css("background-color", "#f78888");
             }
+            
         }
     });
 
+}
+function getAPoliciesByBatchId(me) {
+    var batchid = $(me).attr('productionbatchid');
+    var productiontitle = $(me).attr('productiontitle');
+    $.ajax({
+        url: projectname + '/Report/GenerateManualPolicies',
+        data: { batchid: batchid},
+        type: "POST",
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = productiontitle+' Policies.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
+        },
+        error: function (error) {
+            console.error("Error generating report:", error);
+        }
+    });
 }

@@ -42,6 +42,12 @@ namespace ProjectX.Business.Report
             
             return _reportRepository.GenerateCurrencies(userid);
         }
+        public List<dynamic> GenerateManualPolicies(int batchid)
+
+        {
+            
+            return _reportRepository.GenerateManualPolicies(batchid);
+        }
 
     }
 }

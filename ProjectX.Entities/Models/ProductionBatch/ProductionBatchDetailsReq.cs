@@ -24,6 +24,7 @@ namespace ProjectX.Entities.Models.ProductionBatch
         public string Nationality { get; set; }
         public decimal PremiumInUSD { get; set; }
         public decimal NetInUSD { get; set; }
-        public bool isError { get; set; }
+        public string Status { get; set; }
+        public string Reason { get; set; }
     }
 }
