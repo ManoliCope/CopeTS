@@ -877,6 +877,15 @@ function formatDate_DdMmYyyy(inputDate) {
 
 
 
+$('#btn-toggle').on('click', function (e) {
+    $(".sidebar-content li.menu-item.sub-menu.open").find(".sub-menu-list").addClass("selectedmenu")
+});
+
+$('.menu-item.sub-menu').on('click', function (e) {
+    $('.sidebar-content li *').removeClass('selectedmenu');
+});
+
+
 
 
 ////// country flag full use

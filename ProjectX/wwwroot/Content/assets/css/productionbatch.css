@@ -27,83 +27,22 @@
                 background-color: transparent;
                 color: #333;
                 margin-right: 0px;
-                font-size: 16px;
             }
 
+                .panel.with-nav-tabs .nav-tabs > li > a:hover,
+                .panel.with-nav-tabs .nav-tabs > li > a:focus {
+                    background-color: #e7e7e7;
+                    color: #333;
+                }
 
-
-
-
-@media (max-width: 760px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 13px;
-        padding: 0.6rem 1rem;
-    }
-}
-
-@media (max-width: 670px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 12.5px;
-        padding: 0.6rem 0.7rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 12.0px;
-        padding: 0.6rem 0.6rem;
-    }
-}
-
-
-@media (max-width: 450px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 12.0px;
-        padding: 0.6rem 0.7rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 12.0px;
-        padding: 0.6rem 0.65rem;
-    }
-}
-
-
-@media (max-width: 370px) {
-    .panel.with-nav-tabs .nav-tabs > li > a {
-        font-size: 11.5px;
-        padding: 0.6rem 0.5rem;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.panel.with-nav-tabs .nav-tabs > li > a:hover,
-.panel.with-nav-tabs .nav-tabs > li > a:focus {
-    background-color: #e7e7e7;
-    color: #333;
-}
-
-.panel.with-nav-tabs .nav-tabs > li.active > a,
-.panel.with-nav-tabs .nav-tabs > li.active > a:hover,
-.panel.with-nav-tabs .nav-tabs > li.active > a:focus {
-    background-color: #fff;
-    color: #333;
-    border: none;
-    border-bottom-color: transparent;
-}
+            .panel.with-nav-tabs .nav-tabs > li.active > a,
+            .panel.with-nav-tabs .nav-tabs > li.active > a:hover,
+            .panel.with-nav-tabs .nav-tabs > li.active > a:focus {
+                background-color: #fff;
+                color: #333;
+                border: none;
+                border-bottom-color: transparent;
+            }
 
 .nav-tabs li a.active {
     border-bottom: 2px solid var(--third-color) !important;
@@ -139,22 +78,6 @@
     z-index: 200 !important
 }
 
-
-#destinationtbl td, #destinationtbl th {
-    font-size: 12px
-}
-
-.beneficiary-table td, .beneficiary-table th {
-    font-size: 12px
-}
-
-#destinationtbl tr td:first-child {
-    white-space: pre-line !important;
-}
-
-#destinationtbl tr th:not(:first-child), #destinationtbl tr td:not(:first-child) {
-    text-align: center;
-}
 
 
 .result .card {
@@ -241,19 +164,114 @@
     padding: 10px;
 }
 
-.cancelled-row, .cancelled-row:hover {
-    background-color: var(--third-color) !important;
-    color: white !important;
+
+.search-dropdown {
+    position: relative;
 }
 
-tr.cancelled-row td .fas.fa-eye, tr.cancelled-row td .fas.fa-eye:hover {
-    color: #d5d5d5 !important;
+.search-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    z-index: 1;
 }
 
-tr.cancelled-row td .fas.fa-book, tr.cancelled-row td .fas.fa-book:hover {
-    color: #d5d5d5 !important;
+    .search-dropdown-content a {
+        display: block;
+        padding: 6px 0;
+        text-decoration: none;
+        color: black;
+    }
+
+        .search-dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+.togglebenpopup {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    width: 60px;
+    float: right;
+    font-size:14px;
+    height:25px;
+    /*margin-top:10px*/
 }
 
-tr.cancelled-row td .fas.fa-times, tr.cancelled-row td .fas.fa-times:hover {
-    color: #d5d5d5 !important;
+
+.togglebenpopup .fa{
+    font-size: 12px !important;
+}
+
+
+
+.togglebenpopup:hover {
+  color:white !important
+}
+
+.borderless-input {
+    border: none;
+    outline: none;
+    width: 100%
+}
+
+
+
+.card-body {
+    padding: 0.6rem;
+}
+
+.card-body h3 {
+    margin: 0 !important
+}
+
+
+.card-body hr {
+    margin-top: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+
+
+#import-production-batch{
+    /*margin-left:230px;*/
+}
+
+
+    #import-production-batch .modal-dialog {
+        top: 5% !important;
+        /*padding-left:230px;*/
+        /*width:1000px;*/
+        /*max-width:1200px;*/
+    }
+
+
+
+
+
+
+    #import-production-batch.modal {
+      height:unset !important
+    }
+
+#downloadLink, #downloadLink  i{
+    font-size: 14px !important;
+    background: transparent;
+    color:black;
+}
+
+
+#divproductiontable {
+    height: 450px;
+    overflow: auto;
+}
+
+#productionbatchtable {
+    width: 100%; 
 }

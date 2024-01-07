@@ -2,174 +2,146 @@
 
 
 <div class="content">
-    <!-- Start Content-->
-    <div class="row page-title">
-        <div class="col-md-11">
-			 <h4 class="mb-0 mt-0 float-left">Manual Production</h4>
+	<!-- Start Content-->
+	<div class="row page-title">
+		<div class="col-md-11">
+			<h4 class="mb-0 mt-0 float-left">Manual Production</h4>
 		</div>
 		<div class="col-md-1">
 			<a class="btn bglocalcolor float-right text-white m-0 addnewbtn" data-toggle="modal" data-target="#import-production-batch" style="width:150px" onclick="clearimportpopup()">
 				<i class="fas fa-plus-circle"></i> Import
 			</a>
 		</div>
-    </div>
-    <div class="container-fluid " style="padding:10px 0">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div id="searchform" class="card-body">
-                        <div>
-                            <div class="row mb-6">
-                                <div class="col-lg-3 mb-lg-0 mb-6">
-                                    <label>Title:</label>
-                                    <input id="title" type="text" class="form-control datatable-input" placeholder="Title" data-col-index="0">
-                                </div>
-                                <div class="col-lg-6">
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6">
-                                            <button class="btn bglocalcolor" id="search" style="width:100%">
-                                                <span>
-                                                    <i class="la la-search"></i>
-                                                    <span>Search</span>
-                                                </span>
-                                            </button>&nbsp;&nbsp;
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
-                                                <span>
-                                                    <i class="la la-close"></i>
-                                                    <span>Reset</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+	</div>
+	<div class="container-fluid " style="padding:10px 0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div id="searchform" class="card-body">
+						<div>
+							<div class="row mb-6">
+								<div class="col-lg-3 mb-lg-0 mb-6">
+									<label>Title:</label>
+									<input id="title" type="text" class="form-control datatable-input" placeholder="Title" data-col-index="0">
+								</div>
+								<div class="col-lg-6">
+								</div>
+								<div class="col-lg-3">
+									<div class="row mt-4">
+										<div class="col-sm-6">
+											<button class="btn bglocalcolor" id="search" style="width:100%">
+												<span>
+													<i class="la la-search"></i>
+													<span>Search</span>
+												</span>
+											</button>&nbsp;&nbsp;
+										</div>
+										<div class="col-sm-6">
+											<button class="btn btn-info resetdiv" id="kt_reset" style="width:100%">
+												<span>
+													<i class="la la-close"></i>
+													<span>Reset</span>
+												</span>
+											</button>
+										</div>
+									</div>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="row tablediv">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="manualproductiontable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
-                        </table>
+		<div class="row tablediv">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="manualproductiontable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+						</table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="confirm-email-approval" class="modal fade" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this record?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
-                <div id="thisloader" class="smloader hide"></div>
-                <button id="confirmdeletebtn"  type="button" class="btn btn-danger">Proceed</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this record?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal fade" id="import-production-batch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered " role="document">
-                <div class="modal-content" style="margin-bottom: 200px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle"> Import Production Batch </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"> &times;</span>
-                        </button>
-                    </div>
+	<div class="modal-dialog modal-dialog-centered " role="document">
+		<div class="modal-content" style="margin-bottom: 200px;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle"> Import Production Batch </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"> &times;</span>
+				</button>
+			</div>
 
-                    <div class="modal-body">
-                        <div id="divinfo" class="col-lg-12">
-                            <div class="row">
-                                @*<div class="form-group mb-1 col-lg-6">
-                                    <label for="profileid">Profile</label>
-                                    <select id="profileid" data-plugin="Profile" class="form-control" data-placeholder="Profile" required>
-                                        <option value=""> Select Profile </option>
-                                        @foreach (var Profile in Model.loadedData.profiles.Where(x => x.AllProfileTypes == "Payer").ToList())
-                                        {
-                                            <option value="@Profile.IdProfile"> @Profile.Name</option>
-                                        }
-                                    </select>
-                                </div>
+			<div class="modal-body">
+				<div id="divinfo" class="col-lg-12">
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<label for="title">Title</label>
+							<a id="downloadLink" class="mr-auto pt-1 float-right" href="/Samplefile/manualproduction.xlsx" download>
+								Sample File <i class="fa fa-download"></i>
+							</a>
+							<input id="batch-title" type="text" class="form-control datatable-input" placeholder="Title" data-col-index="0" autocomplete="off" required>
+						</div>
 
-                                <div class="form-group mb-1 col-lg-6">
-                                    <label for="productid">Product</label>
-                                    <select id="productid" data-plugin="Product" class="form-control" data-placeholder="Product" required>
-                                        <option value=""> Select Product </option>
-                                        @foreach (var Product in Model.loadedData.Products)
-                                        {
-                                            <option value="@Product.LK_ID"> @Product.LK_TableField</option>
-                                        }
-                                    </select>
-                                </div>
+						<div class="form-group col-lg-3"></div>
+						<div class="form-group col-lg-3 mt-4 float-lg-right p-1">
+							<label for="validationCustom02" hidden>&nbsp;</label>
 
-                                <div class="form-group mb-1 col-lg-6">
-                                    <label for="datefrom">From </label>
-                                    <input type="date" class="form-control" id="datefrom" required>
-                                </div>
+							<button id="importupload" type="button" class="btn btn-primary btn-block bglocalcolor ">
+								<span>
+									Select File
+								</span>
+							</button>
+							<div id="thisloader" class="smloader hide"></div>
+							<input type="file" class="file-upload" style="display: none" multiple />
+						</div>
 
-                                <div class="form-group mb-1 col-lg-6">
-                                    <label for="dateto">To </label>
-                                    <input type="date" class="form-control" id="dateto" required>
-                                </div>*@
-                                <div class="form-group mb-1 col-lg-6">
-                                    <label for="title">Title</label>
-                                    <input id="batch-title" type="text" class="form-control datatable-input" placeholder="Title" data-col-index="0" required>
-									<a id="downloadLink" class="btn  bglocalcolor border mr-auto pt-1 " href="/Samplefile/manualproduction.xlsx" download>Sample File</a>
-                                
-                                    </div>
+						<div class="form-group mb-1 col-lg-12">
+						</div>
+						<div class="form-group mb-1 col-lg-12 hidden">
+							<br />
+							<label class="importresponse text-danger "></label>
+						</div>
 
-								<div class="form-group mb-1 col-lg-12">
-									<label for="validationCustom02">&nbsp;</label>
-
-
-									<button id="importupload" type="button" class="btn btn-primary btn-block bglocalcolor ">
-										<span>
-											Select File
-										</span>
-									</button>
-									<div id="thisloader" class="smloader hide"></div>
-									<input type="file" class="file-upload" style="display: none" multiple />
-
-								</div>
-                                <div class="form-group mb-1 col-lg-12">
-                                    <br />
-                                    <label class="importresponse text-danger"></label>
-                                </div>
-
-                                <div id="divproductiontable" class="form-group mb-1 col-lg-12">
-                                    <table id="productionbatchtable" class="scrolly table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered mb-0 ">
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" hidden >
-                        <div id="thisloader" class="smloader hide"></div>
-                        <button id="productionbatchimport" class="btn btn-primary w-100 bglocalcolor mb-1" type="submit">
-                            <span> Add </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+						<div id="divproductiontable" class="form-group mb-1 col-lg-12">
+							<table id="productionbatchtable" class="scrolly table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered mb-0 ">
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" hidden>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="productionbatchimport" class="btn btn-primary w-100 bglocalcolor mb-1" type="submit">
+					<span> Import Batch </span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
