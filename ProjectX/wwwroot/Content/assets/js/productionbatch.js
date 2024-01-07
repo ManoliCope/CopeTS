@@ -49,11 +49,11 @@ function drawtable(data) {
                     return data;
                 }
             },
-             {
+            {
                 'data': 'pB_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full, meta) {
-                    return `<a  title="Show Policies" productiontitle="`+full.pB_Title+`" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="getAPoliciesByBatchId(this)" ><i class="fas fa-eye "></i></a>`;
+                    return `<a  title="Show Policies" productiontitle="` + full.pB_Title + `" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="getAPoliciesByBatchId(this)" ><i class="fas fa-eye "></i></a>`;
 
                 }
             }
@@ -238,10 +238,11 @@ function importproduction() {
         url: projectname + "/ProductionBatch/importproduction",
         data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
+            console.log(result)
             if (result.statusCode.code == 1) {
-                drawproductionbatchtable(result.productionbatches)
-                //showresponsemodal(result.statusCode.code, result.statusCode.message)
-                //Search()
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                Search()
+                //drawproductionbatchtable(result.productionbatches)
             }
             else {
                 //showresponsemodal(result.statusCode.code, result.statusCode.message)
@@ -263,6 +264,7 @@ function importproduction() {
 
 var importbutton = $("#importupload");
 importbutton.click(function () {
+
     if (validateForm("#import-production-batch")) {
         return;
     }
@@ -446,15 +448,15 @@ function drawproductionbatchtable(result) {
             { "title": "NetInUSD", "className": "text-center filter", "orderable": true, "data": "netInUSD" }
             , { "title": "Reason", "className": "text-center filter", "orderable": true, "data": "reason" }
             , { "visible": false, "data": "status" }
-           
+
         ],
         orderCellsTop: true,
         fixedHeader: true,
         "rowCallback": function (row, data) {
-            if (data.status==0) {
-                $(row).css("background-color", "#f78888");
+            if (data.status == 0) {
+                $(row).addClass("validaterow");
             }
-            
+
         }
     });
 
@@ -464,7 +466,7 @@ function getAPoliciesByBatchId(me) {
     var productiontitle = $(me).attr('productiontitle');
     $.ajax({
         url: projectname + '/Report/GenerateManualPolicies',
-        data: { batchid: batchid},
+        data: { batchid: batchid },
         type: "POST",
         xhrFields: {
             responseType: 'blob'
@@ -476,7 +478,7 @@ function getAPoliciesByBatchId(me) {
 
             var link = document.createElement('a');
             link.href = blobUrl;
-            link.download = productiontitle+' Policies.xlsx';
+            link.download = productiontitle + ' Policies.xlsx';
             link.click();
 
             URL.revokeObjectURL(blobUrl);
