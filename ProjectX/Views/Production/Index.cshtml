@@ -1,6 +1,15 @@
 ﻿@*@model ProjectX.Entities.Models.General.LoadDataResp*@
+@model List<ProjectX.Entities.dbModels.LookUpp>
 @{
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var userId = ViewData["userid"] as string;
+	var mainuser = Model.Where(a => a.LK_ID == Convert.ToInt16(userId)).FirstOrDefault();
+	var children = Model.Where(a => a.LK_ID != Convert.ToInt16(userId)).ToList();
+	var disable = "disabled";
+	if (UserRights.can_cancel == true || UserRights.can_edit == true)
+	{
+		disable = "";
+	}
 }
 
 <div class="content">
@@ -44,17 +53,28 @@
 												<div id="searchform">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Agents:</label>
+															<select class=" form-control" required @disable id="agentid1">
+																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																@foreach (var thislist in children)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}
+															</select>
+														</div>
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Reference:</label>
 															<input id="referencename" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Beneficiary:</label>
 															<input id="beneficiaryname" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
 														</div>
+														
 														<div class="col-lg-3">
 															<div class="row mt-4">
 																<div class="col-sm-6">
@@ -99,14 +119,24 @@
 												<div id="searchform2">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Agents:</label>
+															<select class=" form-control" required @disable id="agentid2">
+																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																@foreach (var thislist in children)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}
+															</select>
+														</div>
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Reference:</label>
 															<input id="referencename2" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Beneficiary:</label>
 															<input id="beneficiaryname2" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno2" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
 														</div>
@@ -154,14 +184,24 @@
 												<div id="searchform3">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Agents:</label>
+															<select class=" form-control" required @disable id="agentid3">
+																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																@foreach (var thislist in children)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}
+															</select>
+														</div>
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Reference:</label>
 															<input id="referencename3" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Beneficiary:</label>
 															<input id="beneficiaryname3" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno3" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
 														</div>
@@ -206,14 +246,24 @@
 												<div id="searchform4">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Agents:</label>
+															<select class=" form-control" required @disable id="agentid4">
+																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																@foreach (var thislist in children)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}
+															</select>
+														</div>
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Reference:</label>
 															<input id="referencename4" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Beneficiary:</label>
 															<input id="beneficiaryname4" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno4" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
 														</div>
@@ -255,14 +305,24 @@
 												<div id="searchform5">
 													<div class="row mb-6">
 														<div class="col-lg-3 mb-lg-0 mb-6">
+															<label>Agents:</label>
+															<select class=" form-control" required @disable id="agentid5">
+																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																@foreach (var thislist in children)
+																{
+																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+																}
+															</select>
+														</div>
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Reference:</label>
 															<input id="referencename5" type="text" class="form-control datatable-input" placeholder="Reference" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Beneficiary:</label>
 															<input id="beneficiaryname5" type="text" class="form-control datatable-input" placeholder="Beneficiary" data-col-index="0" autocomplete="off">
 														</div>
-														<div class="col-lg-3 mb-lg-0 mb-6">
+														<div class="col-lg-2 mb-lg-0 mb-6">
 															<label>Passport No:</label>
 															<input id="passportno5" type="text" class="form-control datatable-input" placeholder="Passport No" data-col-index="0" autocomplete="off">
 														</div>

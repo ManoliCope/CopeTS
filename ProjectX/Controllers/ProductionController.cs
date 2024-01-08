@@ -58,16 +58,9 @@ namespace ProjectX.Controllers
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
-            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
-            {
-                loadPackages = true,
-                loadBenefits = true,
-                loadProducts = true,
-                loadDestinations = true,
-                loadPlans = true,
-                loadTariffs = true
-
-            });
+           
+            var response = _usersBusiness.GetUsersChildren(_user.U_Id);
+            ViewData["userid"] = _user.U_Id.ToString();
             return View(response);
         }
 

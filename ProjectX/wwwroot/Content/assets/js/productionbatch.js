@@ -239,9 +239,9 @@ function importproduction() {
         data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
             if (result.statusCode.code == 1) {
-                drawproductionbatchtable(result.productionbatches)
-                //showresponsemodal(result.statusCode.code, result.statusCode.message)
-                //Search()
+                //drawproductionbatchtable(result.productionbatches)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+                Search()
             }
             else {
                 //showresponsemodal(result.statusCode.code, result.statusCode.message)
