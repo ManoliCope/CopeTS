@@ -269,9 +269,15 @@
 
 #divproductiontable {
     height: 450px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #productionbatchtable {
-    width: 100%; 
+    width: 100% !important; 
+}
+
+.validaterow {
+    background: #cf2727 !important;
+    color: white !important;
 }
