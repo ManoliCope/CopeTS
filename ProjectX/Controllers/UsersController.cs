@@ -86,6 +86,14 @@ namespace ProjectX.Controllers
             ViewData["userid"] = iduser.ToString();
             ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
 
+            if(iduser>0)
+            {
+                var parentuser = _usersBusiness.GetUser(iduser);
+                var cancreate = parentuser.agents_Creation;
+                //if(cancreate)
+
+            }
+
             return View();
 
         }
