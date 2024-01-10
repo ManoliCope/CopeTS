@@ -240,9 +240,9 @@ function importproduction() {
         success: function (result) {
             console.log(result)
             if (result.statusCode.code == 1) {
+                //drawproductionbatchtable(result.productionbatches)
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
                 Search()
-                //drawproductionbatchtable(result.productionbatches)
             }
             else {
                 //showresponsemodal(result.statusCode.code, result.statusCode.message)

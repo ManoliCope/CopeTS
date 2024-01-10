@@ -31,5 +31,7 @@ namespace ProjectX.Entities.Models.Users
         public int? Currency { get; set; }
         public string CurrencySymbol { get; set; }
         public decimal? CurrencyRate { get; set; }
+        public bool? can_edit { get; set; }
+        public bool? can_cancel { get; set; }
     }
 }

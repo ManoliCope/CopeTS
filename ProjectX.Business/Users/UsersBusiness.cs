@@ -153,7 +153,8 @@ namespace ProjectX.Business.Users
                     Max_Additional_Fees = users.U_Max_Additional_Fees,
                     Tax = users.U_Tax,
                     Tax_Type = users.U_Tax_Format,
-
+                    can_cancel=true,
+                    can_edit=true,
                     Currency = users.U_Currency,
                     CurrencySymbol = users.U_CurrencySymbol,
                     CurrencyRate = users.U_CurrencyRate
@@ -183,7 +184,8 @@ namespace ProjectX.Business.Users
                     Max_Additional_Fees = users.U_Max_Additional_Fees,
                     Tax = users.U_Tax,
                     Tax_Type = users.U_Tax_Format,
-
+                    can_cancel = users.U_Can_Cancel,
+                    can_edit = users.U_Can_Edit,
                     Currency = users.U_Currency,
                     CurrencySymbol = users.U_CurrencySymbol,
                     CurrencyRate = users.U_CurrencyRate

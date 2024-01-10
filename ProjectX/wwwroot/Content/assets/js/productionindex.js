@@ -228,6 +228,7 @@ function Search() {
         reference: $("#referencename").val().trim(),
         beneficiarys: $("#beneficiaryname").val().trim(),
         passportno: $("#passportno").val().trim(),
+        agentid: $("#agentid1").val().trim()
     }
 
     $.ajax({
@@ -347,6 +348,7 @@ function Search2() {
         reference: $("#referencename2").val().trim(),
         beneficiarys: $("#beneficiaryname2").val().trim(),
         passportno: $("#passportno2").val().trim(),
+        agentid: $("#agentid2").val().trim()
     }
 
     $.ajax({
@@ -397,6 +399,7 @@ function Search3() {
         reference: $("#referencename3").val().trim(),
         beneficiarys: $("#beneficiaryname3").val().trim(),
         passportno: $("#passportno3").val().trim(),
+        agentid: $("#agentid3").val().trim()
     }
 
     $.ajax({
@@ -447,6 +450,7 @@ function Search4() {
         reference: $("#referencename4").val().trim(),
         beneficiarys: $("#beneficiaryname4").val().trim(),
         passportno: $("#passportno4").val().trim(),
+        agentid: $("#agentid4").val().trim()
     }
 
     $.ajax({
@@ -499,6 +503,7 @@ function Search5() {
         reference: $("#referencename5").val().trim(),
         beneficiarys: $("#beneficiaryname5").val().trim(),
         passportno: $("#passportno5").val().trim(),
+        agentid: $("#agentid5").val().trim()
     }
 
     $.ajax({

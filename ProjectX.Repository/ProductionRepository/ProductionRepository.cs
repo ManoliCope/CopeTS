@@ -64,10 +64,11 @@ namespace ProjectX.Repository.ProductionRepository
             param.Add("@Pol_Passportno", req.Passportno);
             param.Add("@status", req.status);
             param.Add("@userid", userid);
+            param.Add("@agentid", req.agentid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_Get", param, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_Get_New", param, commandType: CommandType.StoredProcedure))
                 {
                     resp = result.Read<TR_PolicyHeader>().ToList();
                 }
