@@ -21,13 +21,14 @@ function drawwtable(data, directory) {
 
             { "title": "Product", "className": "text-center filter", "orderable": true, "data": "pR_Name" },
             //{ "title": "Issuing Fees", "className": "text-center filter", "orderable": true, "data": "uP_IssuingFees" },
+
             {
                 "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "uP_CreationDate",
                 "render": function (data, type, row) {
-                    if (type === "display" || type === "filter") {
-                        var date = new Date(data);
-                        return date.toLocaleDateString();
-                    }
+                    var date = new Date(data);
+                    var formattedDate = formatDate_DdMmYyyy(date);
+                    return formattedDate;
+
                     return data;
                 }
             },

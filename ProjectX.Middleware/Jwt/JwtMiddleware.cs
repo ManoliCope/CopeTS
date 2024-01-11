@@ -118,6 +118,7 @@ namespace ProjectX.Middleware.Jwt
                                     //}
 
                                     context.Items["Userid"] = user.U_Id;
+                                    context.Items["Userguid"] = user.U_Guid;
                                     context.Items["Username"] = user.U_First_Name + " " + user.U_Last_Name;
                                 }
                                 else
