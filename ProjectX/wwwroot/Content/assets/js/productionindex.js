@@ -116,7 +116,7 @@ function drawtable(data, status) {
 
                     //}
                     //else
-                    if (full.status == 4) {
+                    if (full.status == 4 || full.source=='M') {
                         icon = "eye";
                         return `<a   title="View" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
