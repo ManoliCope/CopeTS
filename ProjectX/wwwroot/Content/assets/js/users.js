@@ -35,6 +35,7 @@ $(document).ready(function () {
 function drawtable(data) {
     console.log(data)
     var generate = $('#userstable').attr('generate');
+
     var table = $('#userstable').DataTable({
         "data": data,
         "paging": true,
@@ -95,12 +96,7 @@ function drawtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    if (generate == '1') {
-
                         return `<a  href="#" title="Assign Product" userid="` + full.u_Guid + `"  class="text-black-50" onclick="gotoAssignProduct(this)"><i class="fas fa-briefcase"/></a>`;
-                    } else {
-                        return '';
-                    }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             },
@@ -108,13 +104,8 @@ function drawtable(data) {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
-                    if (generate == '1') {
-
                         return `<div id="thisloader" class="xsmloader hide"></div>
                                 <a  href="#" title="Credentials" userid="` + full.u_Id.toString() + `"  class="text-black-50" onclick="getuserscredentials(this,` + full.u_Id.toString() + `)"><i class="fas fa-key"/></a>`;
-                    } else {
-                        return '';
-                    }
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             }

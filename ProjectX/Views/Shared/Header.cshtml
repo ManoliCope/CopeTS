@@ -32,7 +32,7 @@
 				<div class="pro-sidebar-logo pt-4">
 					<img class="adminlogo" />
 					@*<img src="Content/assets/images/copeicon.png" alt="Alternate Text" style="width:50px;height:50px" />
-					<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
+						<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
 				</div>
 			}
 			else
@@ -142,18 +142,18 @@
 						</li>
 					}
 
-					@if (isadmin == true || currentUser.U_Agents_Creation == true)
-					{
-						<li class="menu-item @(controllerName == "users" ? "active" : "")">
-							<a href="~/Users/">
-								<span class="menu-icon">
-									<i class="fa fa-users text-gray"></i>
-								</span>
-								<span class="menu-title">Users</span>
-							</a>
+					@*@if (isadmin == true || currentUser.U_Agents_Creation == true)
+						{*@
+					<li class="menu-item @(controllerName == "users" ? "active" : "")">
+						<a href="~/Users/">
+							<span class="menu-icon">
+								<i class="fa fa-users text-gray"></i>
+							</span>
+							<span class="menu-title">Users</span>
+						</a>
 
-						</li>
-					}
+					</li>
+					@* } *@
 					<li class="menu-item @(controllerName == "beneficiary" ? "active" : "")">
 						<a href="~/beneficiary/">
 							<span class="menu-icon">
@@ -218,7 +218,7 @@
 		{
 			<div class="sidebar-header sidebar-bottom pb-2">
 				<div class="pro-sidebar-logo" style="display:inline-block">
-					<img class="adminlogo" src="/Content/assets/images/copelogo.png"  />
+					<img class="adminlogo" src="/Content/assets/images/copelogo.png" />
 				</div>
 			</div>
 		}

@@ -23,6 +23,7 @@ namespace ProjectX.Entities.Models.Production
         public bool IsFamily { get; set; }
         public bool IsGroup { get; set; }
         public DateTime CreatedOn { get; set; }
+        public DateTime CanceledOn { get; set; }
         public string CreatedBy { get; set; }
         public int CreatedById { get; set; }
         public bool IsCanceled { get; set; }

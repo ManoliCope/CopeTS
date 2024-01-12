@@ -133,16 +133,16 @@ namespace ProjectX.Business.Users
             {
                 resp = new UserRights
                 {
+                    Preview_Total_Only = false,
+                    Hide_Premium_Info = false,
                     Fixed_Additional_Fees = true,
                     Allow_Cancellation = true,
                     Cancellation_SubAgent = true,
-                    Preview_Total_Only = true,
                     Preview_Net = true,
                     Agents_Creation = true,
                     Agents_Commission_ReportView = true,
                     SubAgents_Commission_ReportView = true,
                     Multi_Lang_Policy = true,
-                    Hide_Premium_Info = true,
                     Active = true,
                     Is_Admin = true,
                     Commission = users.U_Commission ?? 0,

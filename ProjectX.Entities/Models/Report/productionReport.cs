@@ -19,8 +19,8 @@ namespace ProjectX.Entities.Models.Report
         //var clientLastName = $("#clientLastName").val();
         //var passportNumber = $("#passportNumber").val();
         public int prodId { get; set; }
-        public DateTime datefrom { get; set; }
-        public DateTime dateto { get; set; }
+        public DateTime? datefrom { get; set; }
+        public DateTime? dateto { get; set; }
         public int agentId { get; set; }
         public int subAgentId { get; set; }
         public int policyStatus { get; set; }

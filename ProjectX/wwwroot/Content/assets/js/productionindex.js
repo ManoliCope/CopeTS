@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 
 function drawtable(data, status) {
-    console.log(data, 'drawtable')
+    //console.log(data, 'drawtable')
 
     if (status == null || status == 'undefined')
         status = 1;
@@ -58,9 +58,21 @@ function drawtable(data, status) {
         "ordering": true,
         "filter": true,
         "destroy": true,
-        "order": [[2, 'desc']],
+        "order": [[1, 'desc']],
         "columns": [
             { "title": "Reference", "className": "text-center filter", "orderable": true, "data": "reference" },
+            {
+                "title": "Production Date", "className": "text-center filter", "orderable": true, "data": "createdOn",
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        // Format the date using JavaScript's toLocaleDateString function
+                        var date = new Date(data);
+                        var formattedDate = formatDate_DdMmYyyy(date);
+                        return formattedDate;
+                    }
+                    return data;
+                }
+            },
             { "title": "Client Name", "className": "text-center filter", "orderable": true, "data": "mainname" },
             {
                 "title": "Inception", "className": "text-center filter", "orderable": true, "data": "fromdate",
@@ -74,8 +86,9 @@ function drawtable(data, status) {
                     return data;
                 }
             },
+           
             //{ "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
-            { "title": "Nb of Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
+            { "title": "# Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
             { "title": "Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
 
             {
@@ -108,7 +121,6 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 "render": function (data, type, full) {
                     var icon = "";
-                    console.log(full.status, full.policyID)
 
                     //if (isAdmin == 'True') {
                     //    icon = "book";
