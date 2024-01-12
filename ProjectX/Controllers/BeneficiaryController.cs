@@ -40,6 +40,7 @@ namespace ProjectX.Controllers
         // GET: CobController
         public ActionResult Index()
         {
+            string tes = string.Empty;
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 //loadCountries = true,
