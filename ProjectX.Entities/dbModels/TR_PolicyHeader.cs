@@ -34,6 +34,10 @@ namespace ProjectX.Entities.dbModels
         public bool IsEditable { get; set; }
         public int Status { get; set; }
         public string Source { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool CanEdit { get; set; }
+        public bool CanCancel { get; set; }
+
     }
 
 }

@@ -42,15 +42,47 @@ $(document).ready(function () {
 
 });
 
+function getCancellationControl(data, status) {
+    var isAdmin = data[0].isAdmin;
+    var canCancel = data[0].canCancel;
 
+    if ((isAdmin == true || canCancel == true) && (status == 1 || status == 3))
+        return 1;
+    
+    else return 0;
+}
+function getEditableControl(data, status) {
+    var isAdmin = data.isAdmin;
+    var canEdit = data.canEdit;
+
+    if (data.status == 4 || data.source == 'M')
+        return 0;
+    else if (isAdmin == true)
+        return 1;
+    else if (canEdit == true)
+        return 1;
+    else if (data.isEditable == true)
+        return 1;
+    
+    else return 0;
+}
 
 function drawtable(data, status) {
     //console.log(data, 'drawtable')
-
+    //isEditable
+    //isCancelled
+    //isAdmin
+    console.log(data, 'policy data');
     if (status == null || status == 'undefined')
         status = 1;
     var tableid = '#productiontable' + status;
-    var isAdmin = $(tableid).attr('admn');
+    var isAdmin = 0;
+    var cancelAllow = 0;
+    if (data != undefined) {
+         isAdmin = data[0].isAdmin;
+         cancelAllow = getCancellationControl(data, status);
+    }
+   
 
     var table = $(tableid).DataTable({
         "data": data,
@@ -128,11 +160,14 @@ function drawtable(data, status) {
 
                     //}
                     //else
-                    if (full.status == 4 || full.source=='M') {
+                    var editAllow = getEditableControl(full, status);
+                   
+                    //if (full.status == 4 || full.source == 'M') {
+                    if (editAllow==0) {
                         icon = "eye";
                         return `<a   title="View" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
-                    else {
+                    else{
                         icon = "book";
                         return `<a   title="Edit" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
@@ -148,9 +183,12 @@ function drawtable(data, status) {
             {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
-                visible: isAdmin == 'True' && (status == 1 || status == 3),
+                //visible: isAdmin == 'True' && (status == 1 || status == 3),
+                visible: cancelAllow == 1 || (isAdmin == true && data.source == 'M'),
                 "render": function (data, type, full, meta) {
                     //if (full.status == 3)
+                   // var cancelAllow = getCancellationControl(data, status);
+                    
                     if (full.isCanceled) {
 
                         return `<a  title="Activate" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-check green"></i></a>`;
