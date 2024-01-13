@@ -4,7 +4,7 @@
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 
 	DateTime today = DateTime.Today;
-	if(UserRights.Is_Admin == true)
+	if (UserRights.Is_Admin == true)
 	{
 		today = new DateTime(1950, 1, 1);
 	}
@@ -70,7 +70,7 @@
 															<div class="col-md-4">
 																<div class="we-checkbox">
 																	<input type="radio" id="is_individual" name="type">
-                                                                    <label for="is_individual">Individual</label>
+																	<label for="is_individual">Individual</label>
 																	<i class="fa fa-question-circle" title="Single"></i>
 																</div>
 															</div>
@@ -141,7 +141,7 @@
 											<div class="form-group">
 												<h3 style="display: inline-block; vertical-align: middle;">Beneficiaries</h3>
 												<button class="btn btn-md btn-third btn-block text-left togglebenpopup">
-													<i class="fa fa-plus" aria-hidden="true"></i> New 
+													<i class="fa fa-plus" aria-hidden="true"></i> New
 												</button>
 												<hr>
 												<div class="row thisbeneficiary">
@@ -156,70 +156,70 @@
 															</div>
 
 															@*<div class="form-group col-md-2  ">
-					</div>*@
+																</div>*@
 														</div>
 
 														<!--<div class="row">
-			<div class="form-group col-md-6">
-				<div class="search-dropdown">
-					<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
-					<div id="searchDropdownContent" class="search-dropdown-content"></div>
-				</div>
-			</div>
+														<div class="form-group col-md-6">
+															<div class="search-dropdown">
+																<input id="searchbeneficiary" name="beneficiary" type="text" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off" data-gtm-form-interact-field-id="0">
+																<div id="searchDropdownContent" class="search-dropdown-content"></div>
+															</div>
+														</div>
 
-			<div class="form-group col-md-6 xlsxupload" style="display: none;">
-				<a class="text-danger" style="font-size: 12px;">Sample File</a>
-				<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
-			</div>
-			<div class="form-group col-md-12">-->
+														<div class="form-group col-md-6 xlsxupload" style="display: none;">
+															<a class="text-danger" style="font-size: 12px;">Sample File</a>
+															<span class="btn btn-warning float-end benupload" data-bs-toggle="modal" data-bs-target="#benupload"><i class="fas fa-file-excel"></i> Upload Beneficiaries (xlsx) <span class="text-white"><br>Max <span class="max_upload">100</span> Beneficiaries</span></span>
+														</div>
+														<div class="form-group col-md-12">-->
 														<!--<input name="bnfid" id="bnfid" type="hidden" class="form-control">-->
 														<!--<div class="row">
-						<div class="col-md-2">
-							<div class="we-checkbox">
-								<input type="radio" id="male" name="sgender" value="M" checked="checked">
-								<label for="male">Male</label>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="we-checkbox">
-								<input type="radio" id="female" name="sgender" value="F">
-								<label for="female">Female</label>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4">
-					<label>First Name <span class="text-danger">*</span></label>
-					<input id="first_name" type="text" class="form-control first_name" value="" name="first_name" autocomplete="off" required>
-				</div>
-				<div class="form-group col-md-4">
-					<label>Middle Name</label>
-					<input type="text" class="form-control middle_name" value="" name="middle_name" autocomplete="off">
-				</div>
-				<div class="form-group col-md-4">
-					<label>Last Name <span class="text-danger">*</span></label>
-					<input id="last_name" type="text" class="form-control last_name" value="" name="last_name" autocomplete="off" required>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4 passport_no_form">
-					<label>Passport No. <span class="isrequired text-danger">*</span></label>
-					<input id="passport_no" type="text" class="form-control passport_no" value="" name="passport_no" autocomplete="off" required>
-				</div>
-				<div class="form-group col-md-4">
-					<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
-					<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
-				</div>
+																	<div class="col-md-2">
+																		<div class="we-checkbox">
+																			<input type="radio" id="male" name="sgender" value="M" checked="checked">
+																			<label for="male">Male</label>
+																		</div>
+																	</div>
+																	<div class="col-md-2">
+																		<div class="we-checkbox">
+																			<input type="radio" id="female" name="sgender" value="F">
+																			<label for="female">Female</label>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="form-group col-md-4">
+																<label>First Name <span class="text-danger">*</span></label>
+																<input id="first_name" type="text" class="form-control first_name" value="" name="first_name" autocomplete="off" required>
+															</div>
+															<div class="form-group col-md-4">
+																<label>Middle Name</label>
+																<input type="text" class="form-control middle_name" value="" name="middle_name" autocomplete="off">
+															</div>
+															<div class="form-group col-md-4">
+																<label>Last Name <span class="text-danger">*</span></label>
+																<input id="last_name" type="text" class="form-control last_name" value="" name="last_name" autocomplete="off" required>
+															</div>
+														</div>
+														<div class="row">
+															<div class="form-group col-md-4 passport_no_form">
+																<label>Passport No. <span class="isrequired text-danger">*</span></label>
+																<input id="passport_no" type="text" class="form-control passport_no" value="" name="passport_no" autocomplete="off" required>
+															</div>
+															<div class="form-group col-md-4">
+																<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+																<input type="date" class="form-control datepickeryear dob" value="" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+															</div>
 
-				<div class="form-group col-md-4 div-beneficiary ">
-					<label>&nbsp;</label>
-					<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
-						<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
-					</div>
-				</div>
-			</div>-->
+															<div class="form-group col-md-4 div-beneficiary ">
+																<label>&nbsp;</label>
+																<div class="btn btn-md btn-third btn-block text-left btn-beneficiary w-100" style="cursor: pointer; display: none">
+																	<i class="fa fa-plus" aria-hidden="true"></i> Add Beneficiary
+																</div>
+															</div>
+														</div>-->
 														<div class="table-responsive">
 															<table id="beneficiary-table" class="table table-sm table-bordered mt-3 beneficiary-table " style="width:100%; ">
 															</table>
@@ -311,7 +311,7 @@
 									</h4>
 								</div>
 								<div class="card-body result ">
-									<div class="quotecontainer " cr="@UserRights.CurrencyRate" crs="@UserRights.CurrencySymbol"> 
+									<div class="quotecontainer " cr="@UserRights.CurrencyRate" crs="@UserRights.CurrencySymbol">
 
 										@*<div class="card mt-2">
 												<div class="card-body" style="font-size:13px">
@@ -383,86 +383,87 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<div id="beneficiary-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle"> Beneficiary</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body container-fluid">
-					<div class="row">
-						<div class="form-group col-md-4">
-							<label>First Name <span class="text-danger">*</span></label>
-							<input id="first_name" type="text" class="form-control first_name" name="first_name" autocomplete="off" required>
-						</div>
-						<div class="form-group col-md-4">
-							<label>Middle Name</label>
-							<input id="middle_name" type="text" class="form-control middle_name" name="middle_name" autocomplete="off">
-						</div>
-						<div class="form-group col-md-4">
-							<label>Last Name <span class="text-danger">*</span></label>
-							<input id="last_name" type="text" class="form-control last_name" name="last_name" autocomplete="off" required>
-						</div>
+<div id="beneficiary-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle"> Beneficiary</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body container-fluid">
+				<div class="row">
+					<div class="form-group col-md-4">
+						<label>First Name <span class="text-danger">*</span></label>
+						<input id="first_name" type="text" class="form-control first_name" name="first_name" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Middle Name</label>
+						<input id="middle_name" type="text" class="form-control middle_name" name="middle_name" autocomplete="off">
+					</div>
+					<div class="form-group col-md-4">
+						<label>Last Name <span class="text-danger">*</span></label>
+						<input id="last_name" type="text" class="form-control last_name" name="last_name" autocomplete="off" required>
+					</div>
 
-						<div class="form-group col-md-4 passport_no_form">
-							<label>Passport No. <span class="isrequired text-danger">*</span></label>
-							<input id="passport_no" type="text" class="form-control passport_no" name="passport_no" autocomplete="off" required>
-						</div>
-						<div class="form-group col-md-4">
-							<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
-							<input type="date" class="form-control dob" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
-						</div>
+					<div class="form-group col-md-4 passport_no_form">
+						<label>Passport No. <span class="isrequired text-danger">*</span></label>
+						<input id="passport_no" type="text" class="form-control passport_no" name="passport_no" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Date Of Birth <span class="text-danger">*</span> <span class="age"></span></label>
+						<input type="date" class="form-control dob" name="date_of_birth" id="date_of_birth" autocomplete="off" required>
+					</div>
 
-						<div class="form-group col-md-4">
-							<label for="nationality">
-								Nationality <span class="text-danger">*</span>
-							</label>
-							<select class="form-control" id="nationality" name="nationality" required>
-								<option value=""> </option>
-								@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
-								{
-									<option value="@thislist.D_Id"> @thislist.D_Destination</option>
-								}
-							</select>
+					<div class="form-group col-md-4">
+						<label for="nationality">
+							Nationality <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="nationality" name="nationality" required>
+							<option value=""> </option>
+							@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="countryofresidence">
+							Country of Residence <span class="text-danger">*</span>
+						</label>
+						<select class="form-control" id="countryofresidence" name="countryofresidence" required>
+							<option value=""> </option>
+							@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
+							{
+								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
+							}
+						</select>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="male" name="sgender" value="M" checked>
+							<label for="male">Male</label>
 						</div>
-						<div class="form-group col-md-4">
-							<label for="countryofresidence">
-								Country of Residence <span class="text-danger">*</span>
-							</label>
-							<select class="form-control" id="countryofresidence" name="countryofresidence" required>
-								<option value=""> </option>
-								@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
-								{
-									<option value="@thislist.D_Id"> @thislist.D_Destination</option>
-								}
-							</select>
+					</div>
+					<div class="col-md-3 mt-4">
+						<div class="we-checkbox">
+							<input type="radio" id="female" name="sgender" value="F">
+							<label for="female">Female</label>
 						</div>
-						<div class="col-md-3 mt-4">
-							<div class="we-checkbox">
-								<input type="radio" id="male" name="sgender" value="M" checked>
-								<label for="male">Male</label>
-							</div>
-						</div>
-						<div class="col-md-3 mt-4">
-							<div class="we-checkbox">
-								<input type="radio" id="female" name="sgender" value="F">
-								<label for="female">Female</label>
-							</div>
-						</div>
-
 					</div>
 
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
-					<div id="thisloader" class="smloader hide"></div>
-					<button type="button" class="btn btn-danger btn-beneficiary">Save</button>
-				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button type="button" class="btn btn-danger btn-beneficiary">Save</button>
 			</div>
 		</div>
 	</div>
+</div>

@@ -21,9 +21,6 @@
 						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 						<span>Edit Policy - @Model.Reference</span>
 						<span class="cancelledtitle">@(Model.IsCanceled ? "Cancelled":"") </span>
-						@*<span class="createdontxt">Created on: @Model.CreatedOn</span>
-							<span class="cancelledtxt">Cancelled on: @Model.CreatedOn</span>*@
-
 						<span class="multiline-text">Created on:   @Model.CreatedOn
 							@if (Model.IsCanceled)
 							{
@@ -53,21 +50,21 @@
 																<input type="radio" id="is_individual" name="type" @(Model.IsIndividual ? "checked" : "")>
 
 																<label for="is_individual">Individual</label>
-																<i class="fa fa-question-circle" title="Individual"></i>
+																@*<i class="fa fa-question-circle" title="Individual"></i>*@
 															</div>
 														</div>
 														<div class="col-md-4 family" style="">
 															<div class="we-checkbox">
 																<input type="radio" id="is_family" name="type" @(Model.IsFamily ? "checked" : "")>
 																<label for="is_family">Family</label>
-																<i class="fa fa-question-circle" title="Family"></i>
+																@*<i class="fa fa-question-circle" title="Family"></i>*@
 															</div>
 														</div>
 														<div class="col-md-4 group" style="">
 															<div class="we-checkbox">
 																<input type="radio" id="is_group" name="type" @(Model.IsGroup ? "checked" : "")>
 																<label for="is_group">Group</label>
-																<i class="fa fa-question-circle" title="Group"></i>
+																@*<i class="fa fa-question-circle" title="Group"></i>*@
 															</div>
 														</div>
 													</div>
