@@ -52,7 +52,7 @@ function drawtable(data) {
             { "title": "First Name", "className": "text-center filter", "orderable": true, "data": "bE_FirstName" },
             { "title": "Middle Name", "className": "text-center filter", "orderable": true, "data": "bE_MiddleName" },
             { "title": "Last Name", "className": "text-center filter", "orderable": true, "data": "bE_LastName" },
-            { "title": "Sex", "className": "text-center filter", "orderable": true, "data": "bE_SexName" },
+            { "title": "Gender", "className": "text-center filter", "orderable": true, "data": "bE_SexName" },
             {
                 "title": "Date of Birth",
                 "className": "text-center filter",

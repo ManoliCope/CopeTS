@@ -89,6 +89,7 @@ namespace ProjectX.Business.Users
             resp.preview_Total_Only = repores.U_Preview_Total_Only;
             resp.preview_Net = repores.U_Preview_Net;
             resp.agents_Creation = repores.U_Agents_Creation;
+            resp.agents_View = repores.U_Agents_View;
             resp.agents_Creation_Approval = repores.U_Agents_Creation_Approval;
             resp.agents_Commission_ReportView = repores.U_Agents_Commission_ReportView;
             resp.subAgents_Commission_ReportView = repores.U_SubAgents_Commission_ReportView;
@@ -105,6 +106,8 @@ namespace ProjectX.Business.Users
             resp.printlayout = repores.U_PrintLayout;
             resp.signature = repores.U_Signature;
             resp.manual_production = repores.U_Manual_Production;
+            
+            resp.Guid = repores.U_Guid;
 
             resp.can_edit = repores.U_Can_Edit;
             resp.can_cancel = repores.U_Can_Cancel;
@@ -140,6 +143,7 @@ namespace ProjectX.Business.Users
                     Cancellation_SubAgent = true,
                     Preview_Net = true,
                     Agents_Creation = true,
+                    Agents_View = true,
                     Agents_Commission_ReportView = true,
                     SubAgents_Commission_ReportView = true,
                     Multi_Lang_Policy = true,
@@ -170,6 +174,7 @@ namespace ProjectX.Business.Users
                     Preview_Total_Only = users.U_Preview_Total_Only,
                     Preview_Net = users.U_Preview_Net,
                     Agents_Creation = users.U_Agents_Creation,
+                    Agents_View = users.U_Agents_View,
                     Agents_Commission_ReportView = users.U_Agents_Commission_ReportView,
                     SubAgents_Commission_ReportView = users.U_SubAgents_Commission_ReportView,
                     Multi_Lang_Policy = users.U_Multi_Lang_Policy,

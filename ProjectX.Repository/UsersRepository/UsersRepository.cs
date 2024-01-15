@@ -104,6 +104,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Preview_Total_Only", req.Preview_Total_Only);
             param.Add("@U_Preview_Net", req.Preview_Net);
             param.Add("@U_Agents_Creation", req.Agents_Creation);
+            param.Add("@U_Agents_View", req.Agents_View);
             param.Add("@U_Agents_Creation_Approval", req.Agents_Creation_Approval);
             param.Add("@U_Agents_Commission_ReportView", req.Agents_Commission_ReportView);
             param.Add("@U_SubAgents_Commission_ReportView", req.SubAgents_Commission_ReportView);
@@ -181,6 +182,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Preview_Total_Only", req.Preview_Total_Only);
             param.Add("@U_Preview_Net", req.Preview_Net);
             param.Add("@U_Agents_Creation", req.Agents_Creation);
+            param.Add("@U_Agents_View", req.Agents_View);
             param.Add("@U_Agents_Creation_Approval", req.Agents_Creation_Approval);
             param.Add("@U_Agents_Commission_ReportView", req.Agents_Commission_ReportView);
             param.Add("@U_SubAgents_Commission_ReportView", req.SubAgents_Commission_ReportView);

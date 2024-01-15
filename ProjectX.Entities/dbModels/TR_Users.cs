@@ -49,6 +49,7 @@ namespace ProjectX.Entities.dbModels
         public bool? U_Preview_Total_Only { get; set; }
         public bool? U_Preview_Net { get; set; }
         public bool? U_Agents_Creation { get; set; }
+        public bool? U_Agents_View { get; set; }
         public bool? U_Agents_Creation_Approval { get; set; }
         public bool? U_Agents_Commission_ReportView { get; set; }
         public bool? U_SubAgents_Commission_ReportView { get; set; }

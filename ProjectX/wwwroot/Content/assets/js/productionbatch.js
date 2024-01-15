@@ -37,7 +37,7 @@ function drawtable(data) {
         "filter": true,
         "destroy": true,
         "columns": [
-            { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pB_Id" },
+            /*{ "title": "ID", "className": "text-center filter", "orderable": true, "data": "pB_Id" },*/
             { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pB_Title" },
             {
                 "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate",
