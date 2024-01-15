@@ -284,7 +284,9 @@ namespace ProjectX.Repository.ProductionRepository
                 using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
                 {
                     thisresult = result.Read<string>().First();
-                    thisresultGuid = result.Read<Guid>().First();
+                    //response.PolicyGuid = result.Read<Guid>().First();
+                    thisresultGuid = result.Read<Guid>().ToList().First();
+
                     //response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
                 }
             }
