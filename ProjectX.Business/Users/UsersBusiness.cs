@@ -32,6 +32,7 @@ namespace ProjectX.Business.Users
             return response;
            
         }
+
         public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
 
@@ -227,6 +228,39 @@ namespace ProjectX.Business.Users
         public UserProductResp clearUploadedLogo(int userid)
         {
             return _usersRepository.clearUploadedLogo(userid);
+        }
+        public void CopyParentAttachments(int parentId, int childId,string uploadsDirectory)
+        {
+            var parentPath = Path.Combine(uploadsDirectory, parentId.ToString(), "Conditions");
+            var childPath = Path.Combine(uploadsDirectory, childId.ToString(), "Conditions");
+            if (Directory.Exists(parentPath))
+            {
+                // Create the destination directory if it doesn't exist
+                if (!Directory.Exists(childPath))
+                {
+                    Directory.CreateDirectory(childPath);
+                }
+
+                // Get all files in the source directory
+                string[] files = Directory.GetFiles(parentPath);
+
+                // Copy each file to the destination directory
+                foreach (string filePath in files)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    string destinationFilePath = Path.Combine(childPath, fileName);
+
+                    // Copy the file
+                    File.Copy(filePath, destinationFilePath, true); // Set the third parameter to 'true' to overwrite existing files
+                   
+                }
+
+                
+            }
+            //else
+            //{
+            //    Console.WriteLine("Source directory does not exist.");
+            //}
         }
     }
 }

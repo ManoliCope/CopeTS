@@ -71,7 +71,10 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_First_Name", req.First_Name);
             param.Add("@U_Middle_Name", req.Middle_Name);
             param.Add("@U_Last_Name", req.Last_Name);
+            if(req.User_Name!=null)
             param.Add("@U_User_Name", req.User_Name.Trim().Replace(" ", ""));
+            else 
+                param.Add("@U_User_Name", null);
             param.Add("@U_Category", req.Category);
             param.Add("@U_Broker_Code", req.Broker_Code);
             param.Add("@U_Country", req.Country);
@@ -117,7 +120,6 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Can_edit", req.Can_edit);
             param.Add("@U_Can_cancel", req.Can_cancel);
             param.Add("@U_Manual_Production", req.Manual_Production);
-
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
@@ -128,6 +130,7 @@ namespace ProjectX.Repository.UsersRepository
 
                 using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Users_CRUD", param, commandType: CommandType.StoredProcedure))
                 {
+                    if(act!= "Delete")
                     resp.Guid = result.Read<Guid>().First();
 
                     statusCode = param.Get<int>("@Status");

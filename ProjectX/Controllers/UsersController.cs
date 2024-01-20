@@ -137,14 +137,26 @@ namespace ProjectX.Controllers
         [HttpPost]
         public UsersResp createNewUser(UsersReq req)
         {
+            var haveParent = true;
             var response = new UsersResp();
             if (req.Super_Agent_Id == null)
+            {
                 req.Super_Agent_Id = _user.U_Id;
+                haveParent = false;
+            }
+               
             if (req.Active == null)
                 req.Active = true;
             if (req != null)
             {
                 response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
+                //copy attachments related to the parent if it's not an admin
+                if (haveParent == true && _user.U_Is_Admin == false)
+                {
+                    var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+                    _usersBusiness.CopyParentAttachments(_user.U_Id, response.id, uploadsDirectory);
+                }
+                    
             }
             else
             {
@@ -202,11 +214,11 @@ namespace ProjectX.Controllers
             });
             response.loadedData.superAgents = _usersBusiness.GetUsersChildren(_user.U_Id);
             var user = _usersBusiness.GetUser(iduser);
-            ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
+            //ViewData["isAdmin"] = _user.U_Is_Admin == true ? "1" : "0";
             ViewData["loadDataCreate"] = response;
             ViewData["userid"] = _user.U_Id.ToString();
             ViewData["same"] = su.ToString();
-
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
             return View(user);
         }
@@ -232,7 +244,7 @@ namespace ProjectX.Controllers
             var req = new UsersReq();
             req.Id = id;
 
-            return _usersBusiness.ModifyUser(req, "Delete", _user.U_Id);
+            return _usersBusiness.ModifyUser(req, "Delete", id);
         }
         public UsersResp GetUserById(Guid userId)
         {
