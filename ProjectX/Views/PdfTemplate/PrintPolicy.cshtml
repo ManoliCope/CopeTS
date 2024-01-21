@@ -335,25 +335,25 @@
 
 
 					@*<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>*@
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>*@
 
 
 
@@ -368,12 +368,20 @@
 							@*<td class="td33">@thislist.B_Limit</td>*@
 						</tr>
 					}
-					@foreach (var thislist in Model.AdditionalBenefits)
+					@*@foreach (var thislist in Model.AdditionalBenefits)
 					{
 						<tr>
 							<td class="td33">AB - @thislist.Name</td>
 							<td class="td33">@thislist.Price</td>
-							@*<td class="td33">@thislist.Price</td>*@
+						</tr>
+					}*@
+
+
+					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
+					{
+						<tr>
+							<td class="td33">AB - @group.First().Name</td>
+							<td class="td33">@group.First().Price</td>
 						</tr>
 					}
 				</table>

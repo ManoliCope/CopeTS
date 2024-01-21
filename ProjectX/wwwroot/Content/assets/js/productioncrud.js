@@ -91,7 +91,7 @@ $(document).ready(function () {
     //}
 
 
-    $('.trgrthis').focusout(function () {
+    $('.trgrthis').change(function () {
         getQuotation()
     });
 
@@ -964,14 +964,18 @@ function populateBenefits(thistable, tariffId) {
 
 function recalculateTotalPrice(table) {
 
-    var selectedBenefits = table.find('.benplus option:selected');
-    var totalAdditionalPrice = 0;
-
-    selectedBenefits.each(function () {
-        totalAdditionalPrice += parseFloat($(this).attr('data-benprice'));
-    });
+   
 
     $('.quoatetable').each(function () {
+
+        var selectedBenefits = $(this).find('.benplus option:selected');
+        var totalAdditionalPrice = 0;
+        selectedBenefits.each(function () {
+            totalAdditionalPrice += parseFloat($(this).attr('data-benprice'));
+        });
+
+
+
         var deductiblePrice = $(this).find('input[data-dedprice]:checked').length > 0 ? parseFloat($(this).find('input[data-dedprice]:checked').attr('data-dedprice')) : 0;
         var sportsPrice = $(this).find('input[data-sportsprice]:checked').length > 0 ? parseFloat($(this).find('input[data-sportsprice]:checked').attr('data-sportsprice')) : 0;
 

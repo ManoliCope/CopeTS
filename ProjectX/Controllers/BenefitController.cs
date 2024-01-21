@@ -49,7 +49,7 @@ namespace ProjectX.Controllers
                 loadPackages = true,
                 loadBenefitTitle = true
             });
-
+            ViewBag.Message = "";
 
             return View(response);
         }
