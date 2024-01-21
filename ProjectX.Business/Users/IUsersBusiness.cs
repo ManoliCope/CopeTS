@@ -24,5 +24,6 @@ namespace ProjectX.Business.Users
         public List<TR_Users> GetListedUserWithChildren(int userid);
         public UserProductResp SaveUploadedLogo(UsProReq req);
         public UserProductResp clearUploadedLogo(int userid);
+        public void CopyParentAttachments(int parentId, int childId, string uploadsDirectory);
     }
 }

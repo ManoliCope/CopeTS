@@ -32,6 +32,7 @@ namespace ProjectX.Business.Users
             return response;
            
         }
+
         public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
 
@@ -89,6 +90,7 @@ namespace ProjectX.Business.Users
             resp.preview_Total_Only = repores.U_Preview_Total_Only;
             resp.preview_Net = repores.U_Preview_Net;
             resp.agents_Creation = repores.U_Agents_Creation;
+            resp.agents_View = repores.U_Agents_View;
             resp.agents_Creation_Approval = repores.U_Agents_Creation_Approval;
             resp.agents_Commission_ReportView = repores.U_Agents_Commission_ReportView;
             resp.subAgents_Commission_ReportView = repores.U_SubAgents_Commission_ReportView;
@@ -105,6 +107,8 @@ namespace ProjectX.Business.Users
             resp.printlayout = repores.U_PrintLayout;
             resp.signature = repores.U_Signature;
             resp.manual_production = repores.U_Manual_Production;
+            
+            resp.Guid = repores.U_Guid;
 
             resp.can_edit = repores.U_Can_Edit;
             resp.can_cancel = repores.U_Can_Cancel;
@@ -140,6 +144,7 @@ namespace ProjectX.Business.Users
                     Cancellation_SubAgent = true,
                     Preview_Net = true,
                     Agents_Creation = true,
+                    Agents_View = true,
                     Agents_Commission_ReportView = true,
                     SubAgents_Commission_ReportView = true,
                     Multi_Lang_Policy = true,
@@ -170,6 +175,7 @@ namespace ProjectX.Business.Users
                     Preview_Total_Only = users.U_Preview_Total_Only,
                     Preview_Net = users.U_Preview_Net,
                     Agents_Creation = users.U_Agents_Creation,
+                    Agents_View = users.U_Agents_View,
                     Agents_Commission_ReportView = users.U_Agents_Commission_ReportView,
                     SubAgents_Commission_ReportView = users.U_SubAgents_Commission_ReportView,
                     Multi_Lang_Policy = users.U_Multi_Lang_Policy,
@@ -222,6 +228,39 @@ namespace ProjectX.Business.Users
         public UserProductResp clearUploadedLogo(int userid)
         {
             return _usersRepository.clearUploadedLogo(userid);
+        }
+        public void CopyParentAttachments(int parentId, int childId,string uploadsDirectory)
+        {
+            var parentPath = Path.Combine(uploadsDirectory, parentId.ToString(), "Conditions");
+            var childPath = Path.Combine(uploadsDirectory, childId.ToString(), "Conditions");
+            if (Directory.Exists(parentPath))
+            {
+                // Create the destination directory if it doesn't exist
+                if (!Directory.Exists(childPath))
+                {
+                    Directory.CreateDirectory(childPath);
+                }
+
+                // Get all files in the source directory
+                string[] files = Directory.GetFiles(parentPath);
+
+                // Copy each file to the destination directory
+                foreach (string filePath in files)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    string destinationFilePath = Path.Combine(childPath, fileName);
+
+                    // Copy the file
+                    File.Copy(filePath, destinationFilePath, true); // Set the third parameter to 'true' to overwrite existing files
+                   
+                }
+
+                
+            }
+            //else
+            //{
+            //    Console.WriteLine("Source directory does not exist.");
+            //}
         }
     }
 }

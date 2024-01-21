@@ -44,6 +44,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? preview_Total_Only { get; set; }
         public bool? preview_Net { get; set; }
         public bool? agents_Creation { get; set; }
+        public bool? agents_View { get; set; }
         public bool? agents_Creation_Approval { get; set; }
         public bool? agents_Commission_ReportView { get; set; }
         public bool? subAgents_Commission_ReportView { get; set; }

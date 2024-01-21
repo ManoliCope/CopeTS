@@ -185,19 +185,20 @@ function drawtable(data, status) {
                 className: "dt-center editor-edit",
                 //visible: isAdmin == 'True' && (status == 1 || status == 3),
                 visible: cancelAllow == 1 || (isAdmin == true && data.source == 'M'),
-                "render": function (data, type, full, meta) {
+                "render": function (data, type, full, meta) {   
                     //if (full.status == 3)
                    // var cancelAllow = getCancellationControl(data, status);
-                    
-                    if (full.isCanceled) {
+                    if (full.status != 5) {
+                        if (full.isCanceled) {
 
-                        return `<a  title="Activate" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-check green"></i></a>`;
-                    }
-                    else {
+                            return `<a  title="Activate" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-check green"></i></a>`;
+                        }
+                        else {
 
-                        return `<a  title="Cancel" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-times red"></i></a>`;
+                            return `<a  title="Cancel" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-times red"></i></a>`;
+                        }
                     }
-                    //  else return '';
+                     else return '';
 
                 }
             },

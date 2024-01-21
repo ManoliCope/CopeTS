@@ -14,6 +14,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? Preview_Total_Only { get; set; }
         public bool? Preview_Net { get; set; }
         public bool? Agents_Creation { get; set; }
+        public bool? Agents_View { get; set; }
         public bool? Agents_Commission_ReportView { get; set; }
         public bool? SubAgents_Commission_ReportView { get; set; }
         public bool? Multi_Lang_Policy { get; set; }

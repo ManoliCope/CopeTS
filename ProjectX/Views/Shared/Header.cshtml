@@ -143,8 +143,8 @@
 						</li>
 					}
 
-					@*@if (isadmin == true || currentUser.U_Agents_Creation == true)
-						{*@
+					@if (isadmin == true || currentUser.U_Agents_Creation == true || currentUser.U_Agents_View== true)
+						{
 					<li class="menu-item @(controllerName == "users" ? "active" : "")">
 						<a href="~/Users/">
 							<span class="menu-icon">
@@ -154,7 +154,7 @@
 						</a>
 
 					</li>
-					@* } *@
+					 } 
 					<li class="menu-item @(controllerName == "beneficiary" ? "active" : "")">
 						<a href="~/beneficiary/">
 							<span class="menu-icon">

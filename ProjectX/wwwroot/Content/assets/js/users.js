@@ -109,13 +109,13 @@ function drawtable(data) {
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
                 }
             }
-            //, {
-            //    'data': 'u_Id',
-            //    className: "dt-center editor-edit",
-            //    "render": function (data, type, full, meta) {
-            //        return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
-            //    }
-            //}
+            , {
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full, meta) {
+                    return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
+                }
+            }
         ],
         orderCellsTop: true,
         fixedHeader: true
@@ -364,7 +364,7 @@ function edit() {
         data: { req: user },
         success: function (result) {
             removeloader();
-            showresponsemodal(result.statusCode.code, result.statusCode.message)
+            showresponsemodal("Success", result.statusCode.message)
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -394,7 +394,7 @@ function deleteuser(me) {
             if (result.statusCode.code == 1) {
                 removebtnloader(me);
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
-                Search();      ///////1557///////    why do u need to get all users after deleting?
+                //Search();      ///////1557///////    why do u need to get all users after deleting?
             }
             else
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
