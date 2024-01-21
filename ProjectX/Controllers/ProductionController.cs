@@ -326,6 +326,12 @@ namespace ProjectX.Controllers
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
         }
+        [HttpPost]
+        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq)
+        {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+            return PartialView("~/Views/partialviews/partialquotationlist-family.cshtml", quotereq);
+        }
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int id)
         {
             List<TR_Beneficiary> policyreponse = new List<TR_Beneficiary>();

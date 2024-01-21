@@ -242,10 +242,11 @@
 }
 
 .cancelled-row, .cancelled-row:hover {
-    background-color: #08a4dd9e !important;
-    /*background-color: var(--third-color) !important;*/
-    color: white !important;
+    background-color: rgb(176 231 246 ) !important;
+    /* background-color: var(--third-color) !important; */
+    color: #6c7584 !important;
 }
+
 
 tr.cancelled-row td .fas.fa-eye, tr.cancelled-row td .fas.fa-eye:hover {
     color: #d5d5d5 !important;

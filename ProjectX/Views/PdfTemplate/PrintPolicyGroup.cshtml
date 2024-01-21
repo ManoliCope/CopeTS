@@ -314,7 +314,7 @@
 					<tr>
 						<th>Benefits</th>
 						<th>Limits</th>
-						<th>Excess/Deductible</th>
+						@*<th>Excess/Deductible</th>*@
 					</tr>
 					@*max 10 per page*@
 
@@ -393,7 +393,7 @@
 						<tr>
 							<td class="td33">@thislist.B_Title</td>
 							<td class="td33">@thislist.B_Limit</td>
-							<td class="td33">@thislist.B_Limit</td>
+							@*<td class="td33">@thislist.B_Limit</td>*@
 						</tr>
 					}
 					@foreach (var thislist in Model.AdditionalBenefits)
@@ -401,7 +401,7 @@
 						<tr>
 							<td class="td33">AB - @thislist.Name</td>
 							<td class="td33">@thislist.Price</td>
-							<td class="td33">@thislist.Price</td>
+							@*<td class="td33">@thislist.Price</td>*@
 						</tr>
 					}
 				</table>
@@ -473,7 +473,10 @@
 				<div class="boxholder" style="float:right">
 					<label>Signature</label>
 					<div>
-						<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						@if (Model.Signature != "")
+						{
+							<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						}
 					</div>
 				</div>
 				<div class="boxholder" style="float:left">

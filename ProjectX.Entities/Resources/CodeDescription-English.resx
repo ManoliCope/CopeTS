@@ -166,7 +166,7 @@
     <value>Multiple use of same beneficiary</value>
   </data>
   <data name="1204" xml:space="preserve">
-    <value>Audit Not Allowed</value>
+    <value>Multiple Beneficiaries not allowed</value>
   </data>
   <data name="1205" xml:space="preserve">
     <value>No Approval Needed</value>

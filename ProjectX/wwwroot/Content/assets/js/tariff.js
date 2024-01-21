@@ -357,6 +357,7 @@ function importtariff(me) {
                 showresponsemodal(0, result.statusCode.message)
             else {
                 showresponsemodal(1, 'Tariff Uploaded')
+                Search()
             }
             removebtnloader(me)
 

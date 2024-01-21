@@ -42,23 +42,42 @@
 
 
 		<div class="my-3 mb-1">
-			@foreach (var item in Model.QuotationResp.Where(x => x.RowId == 1))
-			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
+			<div class="benlist">
+				<ul>
+					<li>
+						<b class="inscnt" inscnt="@Model.QuotationResp.Count">Beneficiaries (@Model.QuotationResp.Where(x=>x.RowId == 1).ToList().Count)</b>
+					</li>
+					@for (int i = 0; i < Model.QuotationResp.Where(x => x.RowId == 1).ToList().Count; i++)
+					{
+						<li insid="@Model.QuotationResp.Where(x=>x.RowId == 1).ToList()[i].InsuredId">
+							@Model.QuotationResp.Where(x => x.RowId == 1).ToList()[i].Fullname - @Model.QuotationResp.Where(x => x.RowId == 1).ToList()[i].InsuredId
+						</li>
+					}
+					@if ((Model.QuotationResp.Where(x => x.RowId == 1).ToList().Count + 1) % 3 != 0)
+					{
+						// Add empty placeholders to make it a multiple of 3
+						int emptyCount = 3 - ((Model.QuotationResp.Where(x => x.RowId == 1).ToList().Count + 1) % 3);
+						for (int j = 0; j < emptyCount; j++)
+						{
+							<li></li>
+						}
+					}
+
+				</ul>
+			</div>
+
+		
+				<table class="table table-bordered mt-3 quoatetable insured@(Model.QuotationResp.Where(x => x.RowId == 1).First().Insured)" ins="@Model.QuotationResp.Where(x => x.RowId == 1).First().InsuredId" thisrow="@Model.QuotationResp.Where(x => x.RowId == 1).First().Insured">
 					<tbody>
-						<tr class="card-header">
-							<td>Full Name </td>
-							<td colspan="2">@item.Fullname</td>
-						</tr>
 						<tr>
 							<td>Plan</td>
 							<td colspan="2">
 								<select class="form-control plans">
-									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == item.Insured))
+									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == Model.QuotationResp.Where(x => x.RowId == 1).First().Insured))
 									{
 										@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
-												@thislist.PlanName
-											</option>*@
+										@thislist.PlanName
+									</option>*@
 
 										<option value="@thislist.Plan" data-plan="@thislist.Plan"
 												data-price="@thislist.PriceAmount"
@@ -86,7 +105,7 @@
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
 									@if (Model.AdditionalBenefits != null)
-										@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == item.Package && x.TariffId == item.TariffID))
+										@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == Model.QuotationResp.Where(x => x.RowId == 1).First().Package && x.TariffId == Model.QuotationResp.Where(x => x.RowId == 1).First().TariffID))
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
 												@thislist.B_Title: @thislist.B_Benfees USD
@@ -98,16 +117,16 @@
 						</tr>
 						<tr>
 							<td>
-								Remove Deductible <br /> (USD <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>)
-								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
+								Remove Deductible <br /> (USD <span data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee</span>)
+								<input type="checkbox" name="name" data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee" class="ml-2" />
 							</td>
 							<td>
-								Add Sports Activities <br /> (USD <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>)
-								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
+								Add Sports Activities <br /> (USD <span data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee</span>)
+								<input type="checkbox" name="name" data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee" class="ml-2" />
 							</td>
 							<td>
 								Price (USD)	<br />
-								<span class="planprice" data-bprice="@item.PriceAmount"> @item.PriceAmount</span>
+								<span class="planprice" data-bprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
 							</td>
 						</tr>
 						<tr class="@((UserRights.Is_Admin == true) ? "" : "hidden")">
@@ -119,23 +138,22 @@
 							</td>
 							<td>
 								Final (USD) <br />
-								<span id="finalprice" class="finalprice" data-fprice="@item.PriceAmount"> @item.PriceAmount</span>
+								<span id="finalprice" class="finalprice" data-fprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
 							</td>
 						</tr>
 					</tbody>
 
 				</table>
-			}
 
 
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
 				<tbody>
 					<tr class="@shownet @previewtotalonly">
 						<td>Initial Premium</td>
-						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
+						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount USD</td>
 						@if (UserRights.CurrencySymbol != "USD")
 						{
-							<td id="initpremtotalforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
+							<td id="initpremtotalforeign" class="text-end">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 						}
 					</tr>
 					<tr class="@previewtotalonly">
@@ -150,26 +168,26 @@
 					</tr>
 					<tr class="@previewtotalonly">
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100))</td>
+						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100))</td>
 						@if (UserRights.CurrencySymbol != "USD")
 						{
-							<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100)) @UserRights.CurrencySymbol</td>
+							<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100)) @UserRights.CurrencySymbol</td>
 						}
 					</tr>
 					<tr class="@previewtotalonly">
 						<td>Stamps</td>
-						<td id="stamps" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
+						<td id="stamps" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * (Convert.ToDecimal(UserRights.Stamp) / 100)) USD</td>
 						@if (UserRights.CurrencySymbol != "USD")
 						{
-							<td id="stampsforeign" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Stamp) / 100)) @UserRights.CurrencySymbol</td>
+							<td id="stampsforeign" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Stamp) / 100)) @UserRights.CurrencySymbol</td>
 						}
 					</tr>
 					<tr>
 						<td>Total</td>
-						<td id="grandtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
+						<td id="grandtotal" class="text-end">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount) USD</td>
 						@if (UserRights.CurrencySymbol != "USD")
 						{
-							<td id="grandtotalforeign" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
+							<td id="grandtotalforeign" class="text-end">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * UserRights.CurrencyRate) @UserRights.CurrencySymbol</td>
 						}
 					</tr>
 				</tbody>

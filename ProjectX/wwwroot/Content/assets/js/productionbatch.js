@@ -238,26 +238,22 @@ function importproduction() {
         url: projectname + "/ProductionBatch/importproduction",
         data: { importedbatch: stringifiedreq, title: batchtitle },
         success: function (result) {
-            console.log(result)
             if (result.statusCode.code == 1) {
-                //drawproductionbatchtable(result.productionbatches)
                 showresponsemodal(result.statusCode.code, result.statusCode.message)
                 Search()
+                $(".modal-footer").removeClass("hidden")
             }
             else {
-                //showresponsemodal(result.statusCode.code, result.statusCode.message)
-                // SearchContract();
                 drawproductionbatchtable(result.productionbatches)
+                $(".importresponse").text("Unhandled errors!")
+                $(".modal-footer").addClass("hidden")
             }
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
-
-            //alert("Error:" + failure);
         },
         error: function (data) {
             showresponsemodal("Error", "Bad Request")
-            //alert("fail");
         }
     });
 }
@@ -282,6 +278,9 @@ importbutton.click(function () {
 });
 
 function importproductionfiles(me) {
+    $(".importresponse").text("")
+    $(".modal-footer").removeClass("hidden")
+
     var thisformData = new FormData();
 
     var selectedfiles = GetProductions(me)
@@ -310,6 +309,9 @@ function importproductionfiles(me) {
 
         },
         error: function (jqXHR, exception) {
+            removebtnloader($("#importupload"));
+            $(".importresponse").text("Error: Excel missing fields!")
+
             var msg = '';
             if (jqXHR.status === 0) {
                 msg = 'Not connect.\n Verify Network.';
