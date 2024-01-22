@@ -14,6 +14,8 @@
 	var previewtotalonly = "";
 	if (UserRights.Preview_Total_Only == true)
 		previewtotalonly = "hidden";
+
+	int isnew = (int)ViewData["isnew"];
 }
 
 
@@ -45,7 +47,7 @@
 			<div class="benlist">
 				<ul>
 					<li>
-						<b class="inscnt" inscnt="@Model.QuotationResp.Count">Beneficiaries (@Model.QuotationResp.Where(x=>x.RowId == 1).ToList().Count)</b>
+						<b class="inscnt" inscnt="@Model.QuotationResp.Count">Beneficiaries (@Model.QuotationResp.Where(x => x.RowId == 1).ToList().Count)</b>
 					</li>
 					@for (int i = 0; i < Model.QuotationResp.Where(x => x.RowId == 1).ToList().Count; i++)
 					{
@@ -66,84 +68,84 @@
 				</ul>
 			</div>
 
-		
-				<table class="table table-bordered mt-3 quoatetable insured@(Model.QuotationResp.Where(x => x.RowId == 1).First().Insured)" ins="@Model.QuotationResp.Where(x => x.RowId == 1).First().InsuredId" thisrow="@Model.QuotationResp.Where(x => x.RowId == 1).First().Insured">
-					<tbody>
-						<tr>
-							<td>Plan</td>
-							<td colspan="2">
-								<select class="form-control plans">
-									@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == Model.QuotationResp.Where(x => x.RowId == 1).First().Insured))
-									{
-										@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
-										@thislist.PlanName
-									</option>*@
 
-										<option value="@thislist.Plan" data-plan="@thislist.Plan"
-												data-price="@thislist.PriceAmount"
-												data-deductible="@thislist.DeductibleFee"
-												data-insured="@thislist.Insured"
-												data-age="@thislist.Age"
-												data-product="@thislist.Product"
-												data-package="@thislist.Package"
-												data-duration="@thislist.Duration"
-												data-tariffid="@thislist.TariffID"
-												data-numberofdays="@thislist.NumberOfDays"
-												data-netpremiumamount="@thislist.NetPremiumAmount"
-												data-paamount="@thislist.PAAmount"
-												data-overrideamount="@thislist.OverrideAmount"
-												data-deductiblefee="@thislist.DeductibleFee"
-												data-sportactivitiesfee="@thislist.SportAcitiviesFee">
+			<table class="table table-bordered mt-3 quoatetable insured@(Model.QuotationResp.Where(x => x.RowId == 1).First().Insured)" ins="@Model.QuotationResp.Where(x => x.RowId == 1).First().InsuredId" thisrow="@Model.QuotationResp.Where(x => x.RowId == 1).First().Insured">
+				<tbody>
+					<tr>
+						<td>Plan</td>
+						<td colspan="2">
+							<select class="form-control plans">
+								@foreach (var thislist in Model.QuotationResp.Where(x => x.Insured == Model.QuotationResp.Where(x => x.RowId == 1).First().Insured))
+								{
+									@*<option value="@thislist.Plan" data-bprice="@thislist.PriceAmount" data-fprice="@thislist.PriceAmount" data-price0="@thislist.PriceAmount" data-deductible="@thislist.PriceAmount">
 											@thislist.PlanName
+										</option>*@
+
+									<option value="@thislist.Plan" data-plan="@thislist.Plan"
+											data-price="@thislist.PriceAmount"
+											data-deductible="@thislist.DeductibleFee"
+											data-insured="@thislist.Insured"
+											data-age="@thislist.Age"
+											data-product="@thislist.Product"
+											data-package="@thislist.Package"
+											data-duration="@thislist.Duration"
+											data-tariffid="@thislist.TariffID"
+											data-numberofdays="@thislist.NumberOfDays"
+											data-netpremiumamount="@thislist.NetPremiumAmount"
+											data-paamount="@thislist.PAAmount"
+											data-overrideamount="@thislist.OverrideAmount"
+											data-deductiblefee="@thislist.DeductibleFee"
+											data-sportactivitiesfee="@thislist.SportAcitiviesFee">
+										@thislist.PlanName
+									</option>
+								}
+							</select>
+						</td>
+					</tr>
+					<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count > 0) ? "" : "hidden")">
+						<td>Additional Benefits</td>
+						<td colspan="2">
+							<select class="form-control isselect2 benplus" multiple>
+								@if (Model.AdditionalBenefits != null)
+									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == Model.QuotationResp.Where(x => x.RowId == 1).First().Package && x.TariffId == Model.QuotationResp.Where(x => x.RowId == 1).First().TariffID))
+									{
+										<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
+											@thislist.B_Title: @thislist.B_Benfees USD
 										</option>
 									}
-								</select>
-							</td>
-						</tr>
-						<tr class="@((Model.AdditionalBenefits != null && Model.AdditionalBenefits.Count > 0) ? "" : "hidden")">
-							<td>Additional Benefits</td>
-							<td colspan="2">
-								<select class="form-control isselect2 benplus" multiple>
-									@if (Model.AdditionalBenefits != null)
-										@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.P_Id == Model.QuotationResp.Where(x => x.RowId == 1).First().Package && x.TariffId == Model.QuotationResp.Where(x => x.RowId == 1).First().TariffID))
-										{
-											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
-												@thislist.B_Title: @thislist.B_Benfees USD
-											</option>
-										}
 
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Remove Deductible <br /> (USD <span data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee</span>)
-								<input type="checkbox" name="name" data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee" class="ml-2" />
-							</td>
-							<td>
-								Add Sports Activities <br /> (USD <span data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee</span>)
-								<input type="checkbox" name="name" data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee" class="ml-2" />
-							</td>
-							<td>
-								Price (USD)	<br />
-								<span class="planprice" data-bprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
-							</td>
-						</tr>
-						<tr class="@((UserRights.Is_Admin == true) ? "" : "hidden")">
-							<td>
-							</td>
-							<td>
-								Discount (USD) <br />
-								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" @((UserRights.Is_Admin == true) ? "" : "readonly")>
-							</td>
-							<td>
-								Final (USD) <br />
-								<span id="finalprice" class="finalprice" data-fprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
-							</td>
-						</tr>
-					</tbody>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Remove Deductible <br /> (USD <span data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee</span>)
+							<input type="checkbox" name="name" data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee" class="ml-2" />
+						</td>
+						<td>
+							Add Sports Activities <br /> (USD <span data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee</span>)
+							<input type="checkbox" name="name" data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee" class="ml-2" />
+						</td>
+						<td>
+							Price (USD)	<br />
+							<span class="planprice" data-bprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
+						</td>
+					</tr>
+					<tr class="@((UserRights.Is_Admin == true) ? "" : "hidden")">
+						<td>
+						</td>
+						<td>
+							Discount (USD) <br />
+							<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" @((UserRights.Is_Admin == true) ? "" : "readonly")>
+						</td>
+						<td>
+							Final (USD) <br />
+							<span id="finalprice" class="finalprice" data-fprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount"> @Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount</span>
+						</td>
+					</tr>
+				</tbody>
 
-				</table>
+			</table>
 
 
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
@@ -241,4 +243,11 @@
 	</div>
 </div>
 
-<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+@if (isnew == 1)
+{
+	<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Issue Certificate</button>
+}
+else
+{
+	<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>
+}

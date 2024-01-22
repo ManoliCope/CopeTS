@@ -321,15 +321,17 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPartialViewQuotation(ProductionResp quotereq)
+        public IActionResult GetPartialViewQuotation(ProductionResp quotereq,int isnew)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+            ViewData["isnew"] = isnew;
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
         }
         [HttpPost]
-        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq)
+        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq,int isnew)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+            ViewData["isnew"] = isnew;
             return PartialView("~/Views/partialviews/partialquotationlist-family.cshtml", quotereq);
         }
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int id)

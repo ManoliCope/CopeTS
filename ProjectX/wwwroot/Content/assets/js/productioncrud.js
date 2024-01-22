@@ -532,6 +532,7 @@ function editrow(me) {
     if (rowData.bE_DOB)
         $('#beneficiary-popup #date_of_birth').val(rowData.bE_DOB.split('T')[0]);
 
+   
     $('#beneficiary-popup #nationality').val(rowData.bE_Nationalityid);
     $('#beneficiary-popup #countryofresidence').val(rowData.bE_CountryResidenceid);
     if (rowData.bE_Sex == 1) {
@@ -1188,6 +1189,10 @@ function loadQuotePartialView(response) {
     var selectedtype = document.querySelector('input[name="type"]:checked');
     var typeId = selectedtype ? selectedtype.id : '';
 
+    var newpolicy = 1
+    if ($(".editscreen").attr("pol-id") >0) 
+        newpolicy = 0;
+
     var partialname = 'GetPartialViewQuotation'
     if (typeId === 'is_family') {
         partialname = 'GetPartialViewQuotationFamily'
@@ -1196,7 +1201,7 @@ function loadQuotePartialView(response) {
     $.ajax({
         url: projectname + '/Production/' + partialname,
         type: 'POST',
-        data: { quotereq: response },
+        data: { quotereq: response, isnew:newpolicy },
         success: function (data) {
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
