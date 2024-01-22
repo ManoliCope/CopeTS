@@ -20,7 +20,7 @@ namespace ProjectX.Business.Production
 
         public int GetPolicyID(Guid id, int userid)
         {
-            return _prodRepository.GetPolicyID(id,userid);
+            return _prodRepository.GetPolicyID(id, userid);
         }
         public ProductionBusiness(IProductionRepository prodRepository)
         {
@@ -44,12 +44,23 @@ namespace ProjectX.Business.Production
         }
         public ProductionResp getProductionDetails(List<ProductionReq> req, int userid)
         {
-            return _prodRepository.getProductionDetails(req, userid);
+            ProductionResp ProductionDetails = _prodRepository.getProductionDetails(req, userid);
+            if (req.Count != ProductionDetails.QuotationResp.Where(x => x.RowId == 1).ToList().Count)
+                ProductionDetails.QuotationResp = new List<QuotationResp>();
+
+            return ProductionDetails;
         }
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
         {
             ProductionSaveResp response = new ProductionSaveResp();
             var duplicateBeneficiary = req.beneficiaryData.GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
+
+            if (req.Is_Individual && req.beneficiaryDetails.Count > 1)
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.NotIndividual);
+                return response;
+            }
+
             if (duplicateBeneficiary != null)
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.DuplicateBeneficiary);
@@ -70,7 +81,7 @@ namespace ProjectX.Business.Production
 
             return _prodRepository.SaveIssuance(req, userid);
         }
-        public ProductionPolicy GetPolicy(int IdPolicy, int userid , bool isprint)
+        public ProductionPolicy GetPolicy(int IdPolicy, int userid, bool isprint)
         {
             return _prodRepository.GetPolicy(IdPolicy, userid, isprint);
         }

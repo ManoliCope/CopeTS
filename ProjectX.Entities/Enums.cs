@@ -54,9 +54,10 @@ namespace ProjectX.Entities
         IndividualMax = 1201,
         Backdate = 1202,
         DuplicateBeneficiary = 1203,
+        NotIndividual = 1204,
 
 
-        AuditNotAllowed = 1204,
+
         NoApprovalNeeded = 1205,
         MedicalReportRequired = 1206,
         NonMedicalCase = 1207,

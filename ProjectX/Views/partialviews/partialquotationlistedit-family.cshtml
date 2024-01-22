@@ -27,8 +27,15 @@
 	if (UserRights.Preview_Total_Only == true)
 		previewtotalonly = "hidden";
 
+	var insuredcount = 1;
 }
 
+<style>
+
+
+	
+
+</style>
 
 <div class="card mt-2 mb-0">
 	<div class="card-body @(!Model.IsEditable ? "no-click":"")" style="font-size:13px">
@@ -55,27 +62,47 @@
 
 
 		<div class="my-3 mb-1">
-			@foreach (var item in Model.PolicyDetails)
-			{
-				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
+			<div class="benlist">
+				<ul>
+					<li>
+						<b>Beneficiaries (@Model.PolicyDetails.Count)</b>
+					</li>
+					@for (int i = 0; i < Model.PolicyDetails.Count; i++)
+					{
+						<li>
+							@Model.PolicyDetails[i].FirstName @Model.PolicyDetails[i].LastName
+						</li>
+					}
+					@if ((Model.PolicyDetails.Count  + 1) % 3 != 0)
+					{
+						// Add empty placeholders to make it a multiple of 3
+						int emptyCount = 3 - ((Model.PolicyDetails.Count + 1) % 3);
+						for (int j = 0; j < emptyCount; j++)
+						{
+							<li></li>
+						}
+					}
+
+				</ul>
+			</div>
+			@{
+				var firstItem = Model.PolicyDetails.FirstOrDefault();
+
+				<table class="table table-bordered mt-3 quoatetable insured@(firstItem.Insured)" ins="@firstItem.InsuredId" thisrow="@firstItem.Insured">
 					<tbody>
-						<tr class="card-header">
-							<td>Full Name</td>
-							<td colspan="2"> @item.FirstName @item.LastName</td>
-						</tr>
 						<tr>
 							<td>Plan</td>
 							<td colspan="2">
 								<select class="form-control plans">
-									@*<option value="@item..Plan" data-plan="@item.Plan">
-											@item.PlanName
+									@*<option value="@firstItem..Plan" data-plan="@firstItem.Plan">
+											@firstItem.PlanName
 										</option>*@
 
-									<option value="@item.Plan" data-plan="@item.Plan"
-											data-insured="@item.Insured"
-											data-price="@item.TariffPrice"
-											data-tariffid="@item.Tariff">
-										@item.PlanName
+									<option value="@firstItem.Plan" data-plan="@firstItem.Plan"
+											data-insured="@firstItem.Insured"
+											data-price="@firstItem.TariffPrice"
+											data-tariffid="@firstItem.Tariff">
+										@firstItem.PlanName
 									</option>
 								</select>
 							</td>
@@ -85,7 +112,7 @@
 							<td>Additional Benefits</td>
 							<td colspan="2">
 								<select class="form-control isselect2 benplus" multiple>
-									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId))
+									@foreach (var thislist in Model.AdditionalBenefits.Where(x => x.Insuredid == firstItem.InsuredId))
 									{
 										<option data-benprice="@thislist.Price" value="@thislist.AB_ID" selected>
 											@thislist.Name: @thislist.Price USD
@@ -95,10 +122,10 @@
 									@*adding tariff benefits with price that are not save into this policy*@
 									@foreach (var thislist in benefitlist)
 									{
-										var test = Model.AdditionalBenefits.Where(x => x.Insuredid == item.InsuredId).ToList();
-										bool benefitExists = Model.AdditionalBenefits.Any(ab => ab.Insuredid == item.InsuredId && ab.AB_ID == thislist.B_Id);
+										var test = Model.AdditionalBenefits.Where(x => x.Insuredid == firstItem.InsuredId).ToList();
+										bool benefitExists = Model.AdditionalBenefits.Any(ab => ab.Insuredid == firstItem.InsuredId && ab.AB_ID == thislist.B_Id);
 
-										if (thislist.TariffId == item.Tariff && !benefitExists)
+										if (thislist.TariffId == firstItem.Tariff && !benefitExists)
 										{
 											<option data-benprice="@thislist.B_Benfees" value="@thislist.B_Id">
 												@thislist.B_Title: @thislist.B_Benfees USD
@@ -110,16 +137,16 @@
 						</tr>
 						<tr>
 							<td>
-								Remove Deductible<br />(USD<span data-dedprice="@item.DeductiblePrice"> @item.DeductiblePrice</span>)
-								<input type="checkbox" name="name" data-dedprice="@item.DeductiblePrice" class="ml-2" @(item.Deductible ? "checked" : "" ) />
+								Remove Deductible<br />(USD<span data-dedprice="@firstItem.DeductiblePrice"> @firstItem.DeductiblePrice</span>)
+								<input type="checkbox" name="name" data-dedprice="@firstItem.DeductiblePrice" class="ml-2" @(firstItem.Deductible ? "checked" : "" ) />
 							</td>
 							<td>
-								Add Sports Activities<br />(USD<span data-sportsprice="@item.SportsActivitiesPrice"> @item.SportsActivitiesPrice</span>)
-								<input type="checkbox" name="name" data-sportsprice="@item.SportsActivitiesPrice" class="ml-2" @(item.SportsActivities ? "checked" : "" ) />
+								Add Sports Activities<br />(USD<span data-sportsprice="@firstItem.SportsActivitiesPrice"> @firstItem.SportsActivitiesPrice</span>)
+								<input type="checkbox" name="name" data-sportsprice="@firstItem.SportsActivitiesPrice" class="ml-2" @(firstItem.SportsActivities ? "checked" : "" ) />
 							</td>
 							<td>
 								Price (USD) <br />
-								<span class="planprice" data-bprice="@item.PlanPrice"> @item.PlanPrice</span>
+								<span class="planprice" data-bprice="@firstItem.PlanPrice"> @firstItem.PlanPrice</span>
 							</td>
 						</tr>
 						<tr class="@((UserRights.Is_Admin ==true)? "":"hidden")">
@@ -127,19 +154,16 @@
 							</td>
 							<td>
 								Discount (USD) <br />
-								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@item.Discount" @((UserRights.Is_Admin == true) ? "" : "readonly")>
+								<input id="discount" type="number" class="form-control discount" name="discount" step="0.01" autocomplete="off" value="@firstItem.Discount" @((UserRights.Is_Admin == true) ? "" : "readonly")>
 							</td>
 							<td>
 								Final (USD) <br />
-								<span id="finalprice" class="finalprice" data-fprice="@item.FinalPrice"> @item.FinalPrice</span>
+								<span id="finalprice" class="finalprice" data-fprice="@firstItem.FinalPrice"> @firstItem.FinalPrice</span>
 							</td>
 						</tr>
 					</tbody>
-
 				</table>
 			}
-
-
 
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
 				<tbody>

@@ -545,10 +545,11 @@ function validateForm(divname, exception) {
     requiredFields.each(function () {
         var field = $(this).val();
 
-        inputValues.push({ val: field }); // to return flag valid
+        //inputValues.push({ val: field }); // to return flag valid
+        inputValues.push({ val: field !== null ? field : '' });
 
         var id = $(this).attr("id");
-        console.log(field, ",", id)
+        /*console.log(field, ",", id)*/
 
         if (field == undefined || field == '') {
             $("#" + id).css('border-color', 'red');

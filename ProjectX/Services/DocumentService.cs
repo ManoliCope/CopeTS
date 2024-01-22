@@ -98,7 +98,6 @@ namespace ProjectX.Services
             //byte[] pdfBytes2 = ConvertHtmlToPDF(htmlContent);
             //byte[] combinedPdf1 = CombinePdfFiles(pdfBytes, pdfBytes2);
             //return combinedPdf1;
-           return pdfBytes;
 
             try
             {

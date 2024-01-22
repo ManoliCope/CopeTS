@@ -282,3 +282,30 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+.benlist ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 13px !important;
+    color: #7d858c;
+}
+
+
+.benlist li {
+    width: 33.33%;
+    box-sizing: border-box;
+    text-align: left;
+    padding: 8px;
+    border: 0.5px solid #edf0f7;
+    font-size: 13px !important;
+    color: #7d858c;
+    /*margin: 5px;*/
+}
+
+    .benlist li b {
+        font-size: 13px !important;
+        color: #454d55 !important;
+    }

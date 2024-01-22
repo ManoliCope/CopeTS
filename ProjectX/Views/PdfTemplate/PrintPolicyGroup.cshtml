@@ -274,38 +274,38 @@
 
 
 			@*@foreach (var beneficiary in Model.PolicyDetails)
-		{
+				{
 
-			<h2 class="underlined-heading">Beneficiary: <span style="padding-left:10px">@bencount.ToString("D2")</span></h2>
-			<table>
-				<tr>
-					<td class="td25"><label for="firstName">First Name:</label></td>
-					<td class="td25"><label id="firstName">@beneficiary.FirstName</label></td>
-					<td class="td25"><label for="residenceCountry">Country of Residence:</label></td>
-					<td class="td25"><label id="residenceCountry">@beneficiary.CountryResidence</label></td>
-				</tr>
-				<tr>
-					<td class="td25"><label for="middleName">Middle Name:</label></td>
-					<td class="td25"><label id="middleName">@beneficiary.MiddleName</label></td>
-					<td class="td25"><label for="nationality">Nationality:</label></td>
-					<td class="td25"><label id="nationality">@beneficiary.Nationality</label></td>
-				</tr>
-				<tr>
-					<td class="td25"><label for="lastName">Last Name:</label></td>
-					<td class="td25"><label id="lastName">@beneficiary.LastName</label></td>
-					<td class="td25"><label for="passportNumber">Passport N.:</label></td>
-					<td class="td25"><label id="passportNumber">@beneficiary.PassportNo</label></td>
-				</tr>
-				<tr>
-					<td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
-					<td class="td25"><label id="dateOfBirth">@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</label></td>
-					<td class="td25"><label for="age">Age:</label></td>
-					<td class="td25"><label id="age">@beneficiary.Age</label></td>
-				</tr>
-			</table>
+					<h2 class="underlined-heading">Beneficiary: <span style="padding-left:10px">@bencount.ToString("D2")</span></h2>
+					<table>
+						<tr>
+							<td class="td25"><label for="firstName">First Name:</label></td>
+							<td class="td25"><label id="firstName">@beneficiary.FirstName</label></td>
+							<td class="td25"><label for="residenceCountry">Country of Residence:</label></td>
+							<td class="td25"><label id="residenceCountry">@beneficiary.CountryResidence</label></td>
+						</tr>
+						<tr>
+							<td class="td25"><label for="middleName">Middle Name:</label></td>
+							<td class="td25"><label id="middleName">@beneficiary.MiddleName</label></td>
+							<td class="td25"><label for="nationality">Nationality:</label></td>
+							<td class="td25"><label id="nationality">@beneficiary.Nationality</label></td>
+						</tr>
+						<tr>
+							<td class="td25"><label for="lastName">Last Name:</label></td>
+							<td class="td25"><label id="lastName">@beneficiary.LastName</label></td>
+							<td class="td25"><label for="passportNumber">Passport N.:</label></td>
+							<td class="td25"><label id="passportNumber">@beneficiary.PassportNo</label></td>
+						</tr>
+						<tr>
+							<td class="td25"><label for="dateOfBirth">Date of Birth:</label></td>
+							<td class="td25"><label id="dateOfBirth">@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</label></td>
+							<td class="td25"><label for="age">Age:</label></td>
+							<td class="td25"><label id="age">@beneficiary.Age</label></td>
+						</tr>
+					</table>
 
-			bencount++;
-		}*@
+					bencount++;
+				}*@
 
 			<div class="benefitidv">
 				<h2 class="underlined-heading">Table of Benefits:</h2>
@@ -314,75 +314,75 @@
 					<tr>
 						<th>Benefits</th>
 						<th>Limits</th>
-						<th>Excess/Deductible</th>
+						@*<th>Excess/Deductible</th>*@
 					</tr>
 					@*max 10 per page*@
 
 					@*<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>*@
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>*@
 
 
 
@@ -393,17 +393,26 @@
 						<tr>
 							<td class="td33">@thislist.B_Title</td>
 							<td class="td33">@thislist.B_Limit</td>
-							<td class="td33">@thislist.B_Limit</td>
+							@*<td class="td33">@thislist.B_Limit</td>*@
 						</tr>
 					}
-					@foreach (var thislist in Model.AdditionalBenefits)
+					@*@foreach (var thislist in Model.AdditionalBenefits)
+						{
+							<tr>
+								<td class="td33">AB - @thislist.Name</td>
+								<td class="td33">@thislist.Price</td>
+							</tr>
+						}*@
+
+					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
 					{
 						<tr>
-							<td class="td33">AB - @thislist.Name</td>
-							<td class="td33">@thislist.Price</td>
-							<td class="td33">@thislist.Price</td>
+							<td class="td33">AB - @group.First().Name</td>
+							<td class="td33">@group.First().Price</td>
 						</tr>
 					}
+
+
 				</table>
 			</div>
 
@@ -435,11 +444,11 @@
 
 						</tr>
 						@*<tr>
-						<td class="td33">Issuing / Gov.fees:</td>
-						<td class="td33">@Model.StampsValue</td>
-						<td class="td33">
-						</td>
-					</tr>*@
+								<td class="td33">Issuing / Gov.fees:</td>
+								<td class="td33">@Model.StampsValue</td>
+								<td class="td33">
+								</td>
+							</tr>*@
 						<tr>
 							<td class="td33">Stamps / Insurance Tax:</td>
 							<td class="td33">@Model.StampsValue</td>
@@ -466,14 +475,17 @@
 			}
 			<div class="box-container">
 				@*<div class="boxholder" style="float:right">
-				<label>Signature</label>
-				<div class="box">
-				</div>
-			</div>*@
+						<label>Signature</label>
+						<div class="box">
+						</div>
+					</div>*@
 				<div class="boxholder" style="float:right">
 					<label>Signature</label>
 					<div>
-						<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						@if (Model.Signature != "")
+						{
+							<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						}
 					</div>
 				</div>
 				<div class="boxholder" style="float:left">

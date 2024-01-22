@@ -65,6 +65,50 @@
 			max-width: 33%;
 		}
 
+
+		.td35 {
+			width: 35%;
+			min-width: 35%;
+			max-width: 35%;
+		}
+
+		.td40 {
+			width: 40%;
+			min-width: 40%;
+			max-width: 40%;
+		}
+
+		.td45 {
+			width: 45%;
+			min-width: 45%;
+			max-width: 45%;
+		}
+
+		.td50 {
+			width: 50%;
+			min-width: 50%;
+			max-width: 50%;
+		}
+
+		.td65 {
+			width: 65%;
+			min-width: 65%;
+			max-width: 65%;
+		}
+
+		.td70 {
+			width: 70%;
+			min-width: 70%;
+			max-width: 70%;
+		}
+
+		.td75 {
+			width: 75%;
+			min-width: 75%;
+			max-width: 75%;
+		}
+
+
 		th {
 			/*background-color: #f2f2f2;*/
 		}
@@ -173,6 +217,15 @@
 			.background-image img {
 				height: 1400px;
 			}
+
+
+		.benefitidv table tr:first-child td:first-child {
+			width: 70%;
+		}
+
+		.benefitidv table tr:first-child td:nth-child(2) {
+			width: 30%;
+		}
 	</style>
 </head>
 <body>
@@ -261,46 +314,46 @@
 					<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
 				</tr>
 				@*<tr>
-				<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-				<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-				<td class="td25"></td>
-				<td class="td25"></td>
-			</tr>*@
+						<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+						<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+						<td class="td25"></td>
+						<td class="td25"></td>
+					</tr>*@
 			</table>
 
 
 			<div class="benefitidv">
 				<h2 class="underlined-heading">Table of Benefits:</h2>
-				<table border="0">
+				<table border="0" style="width:100%">
 					<caption></caption>
 					<tr>
-						<th>Benefits</th>
-						<th>Limits</th>
-						<th>Excess/Deductible</th>
+						<th class="td33">Benefits</th>
+						<th class="td33">Limits</th>
+						@*<th>Excess/Deductible</th>*@
 					</tr>
 					@*max 10 per page*@
 
 
 					@*<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>
-				<tr>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-					<td class="td33">test</td>
-				</tr>*@
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>
+		<tr>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+			<td class="td33">test</td>
+		</tr>*@
 
 
 
@@ -312,15 +365,23 @@
 						<tr>
 							<td class="td33">@thislist.B_Title</td>
 							<td class="td33">@thislist.B_Limit</td>
-							<td class="td33">@thislist.B_Limit</td>
+							@*<td class="td33">@thislist.B_Limit</td>*@
 						</tr>
 					}
-					@foreach (var thislist in Model.AdditionalBenefits)
+					@*@foreach (var thislist in Model.AdditionalBenefits)
 					{
 						<tr>
 							<td class="td33">AB - @thislist.Name</td>
 							<td class="td33">@thislist.Price</td>
-							<td class="td33">@thislist.Price</td>
+						</tr>
+					}*@
+
+
+					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
+					{
+						<tr>
+							<td class="td33">AB - @group.First().Name</td>
+							<td class="td33">@group.First().Price</td>
 						</tr>
 					}
 				</table>
@@ -365,11 +426,11 @@
 
 						</tr>
 						@*<tr>
-						<td class="td33">Issuing / Gov.fees:</td>
-						<td class="td33">@Model.StampsValue</td>
-						<td class="td33">
-						</td>
-					</tr>*@
+								<td class="td33">Issuing / Gov.fees:</td>
+								<td class="td33">@Model.StampsValue</td>
+								<td class="td33">
+								</td>
+							</tr>*@
 						<tr>
 							<td class="td33">Stamps / Insurance Tax:</td>
 							<td class="td33">@Model.StampsValue</td>
@@ -398,14 +459,17 @@
 
 			<div class="box-container">
 				@*<div class="boxholder" style="float:right">
-				<label>Signature</label>
-				<div class="box">
-				</div>
-			</div>*@
+						<label>Signature</label>
+						<div class="box">
+						</div>
+					</div>*@
 				<div class="boxholder" style="float:right">
 					<label>Signature</label>
 					<div>
-						<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						@if (Model.Signature != "")
+						{
+							<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+						}
 					</div>
 				</div>
 				<div class="boxholder" style="float:left">

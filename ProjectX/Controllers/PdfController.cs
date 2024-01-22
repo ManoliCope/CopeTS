@@ -35,62 +35,62 @@ namespace ProjectX.Controllers
         //    return File(pdfFile, "application/octet-stream", "SimplePdf.pdf");
         //}
 
-        public IActionResult Main(int polid)
-        {
-            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
-            string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + polid).Base64Image;
+        //public IActionResult Main(int polid)
+        //{
+        //    var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+        //    string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+        //    string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + polid).Base64Image;
 
-            ProductionPolicy policyreponse = new ProductionPolicy();
-            policyreponse = _productionBusiness.GetPolicy(polid, 0, true);
+        //    ProductionPolicy policyreponse = new ProductionPolicy();
+        //    policyreponse = _productionBusiness.GetPolicy(polid, 0, true);
 
-            int userid = Convert.ToInt16(policyreponse.CreatedById);
+        //    int userid = Convert.ToInt16(policyreponse.CreatedById);
 
-            GetUserReq thisuser = new GetUserReq();
-            thisuser.idUser = userid;
-            var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
+        //    GetUserReq thisuser = new GetUserReq();
+        //    thisuser.idUser = userid;
+        //    var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
 
-            string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty);
+        //    string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty);
 
-            policyreponse.QrCodebit = printingdirection;
+        //    policyreponse.QrCodebit = printingdirection;
 
-            string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
-            string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+        //    string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+        //    string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
 
-            if (prodcutionuser.user.U_PrintLayout != null || prodcutionuser.user.U_PrintLayout != "")
-                policyreponse.Layout = _documentService.ConvertImageToBase64(mainheader);
-            else
-                policyreponse.Layout = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? ""));
-
-
-            if (prodcutionuser.user.U_Signature != null || prodcutionuser.user.U_Signature != "")
-                policyreponse.Signature = _documentService.ConvertImageToBase64(mainfooter);
-            else
-                policyreponse.Signature = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
+        //    if (prodcutionuser.user.U_PrintLayout != null || prodcutionuser.user.U_PrintLayout != "")
+        //        policyreponse.Layout = _documentService.ConvertImageToBase64(mainheader);
+        //    else
+        //        policyreponse.Layout = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? ""));
 
 
+        //    if (prodcutionuser.user.U_Signature != null || prodcutionuser.user.U_Signature != "")
+        //        policyreponse.Signature = _documentService.ConvertImageToBase64(mainfooter);
+        //    else
+        //        policyreponse.Signature = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
 
-            return View("/Views/PdfTemplate/PrintPolicy.cshtml", policyreponse);
-        }
-        public IActionResult Header(int userid)
-        {
-            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
-            GetUserReq thisuser = new GetUserReq();
-            thisuser.idUser = userid;
-            var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
-            ViewData["headerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty));
-            return PartialView("~/Views/PdfTemplate/Printheader.cshtml");
-        }
-        public IActionResult Footer(int userid)
-        {
-            var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
-            GetUserReq thisuser = new GetUserReq();
-            thisuser.idUser = userid;
-            var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
-            ViewData["footerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
-            string testhhh = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
-            return PartialView("~/Views/PdfTemplate/Printfooter.cshtml");
-        }
+
+
+        //    return View("/Views/PdfTemplate/PrintPolicy.cshtml", policyreponse);
+        //}
+        //public IActionResult Header(int userid)
+        //{
+        //    var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+        //    GetUserReq thisuser = new GetUserReq();
+        //    thisuser.idUser = userid;
+        //    var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
+        //    ViewData["headerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty));
+        //    return PartialView("~/Views/PdfTemplate/Printheader.cshtml");
+        //}
+        //public IActionResult Footer(int userid)
+        //{
+        //    var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
+        //    GetUserReq thisuser = new GetUserReq();
+        //    thisuser.idUser = userid;
+        //    var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
+        //    ViewData["footerimg"] = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
+        //    string testhhh = _documentService.ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Footer", prodcutionuser.user.U_Signature ?? string.Empty));
+        //    return PartialView("~/Views/PdfTemplate/Printfooter.cshtml");
+        //}
 
 
         [HttpGet]
