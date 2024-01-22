@@ -78,7 +78,7 @@ function drawtable(data, status) {
     var tableid = '#productiontable' + status;
     var isAdmin = 0;
     var cancelAllow = 0;
-    if (data != undefined) {
+    if (data != undefined && data.length>0) {
          isAdmin = data[0].isAdmin;
          cancelAllow = getCancellationControl(data, status);
     }

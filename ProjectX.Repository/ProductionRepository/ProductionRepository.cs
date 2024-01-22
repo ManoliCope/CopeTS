@@ -68,7 +68,7 @@ namespace ProjectX.Repository.ProductionRepository
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_Get_New", param, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Production_Get", param, commandType: CommandType.StoredProcedure))
                 {
                     resp = result.Read<TR_PolicyHeader>().ToList();
                 }

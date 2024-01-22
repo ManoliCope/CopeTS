@@ -59,7 +59,7 @@ namespace ProjectX.Repository.GeneralRepository
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_data_load_new", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_data_load", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
                 {
                     if (loadDataModelSetup.loadBenefits)
                         resp.benefits = result.Read<LookUpp>().ToList();
