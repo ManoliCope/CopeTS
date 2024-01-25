@@ -37,6 +37,7 @@ namespace ProjectX.Business.Package
             resp.Name = repores.P_Name;
             resp.ZoneID = repores.P_ZoneID;
             resp.Remove_deductable = repores.P_Remove_deductable;
+            resp.Remove_Sports_Activities = repores.P_Remove_Sports_Activities;
             resp.Adult_No = repores.P_Adult_No;
             resp.Children_No = repores.P_Children_No;
             resp.PA_Included = repores.P_PA_Included;

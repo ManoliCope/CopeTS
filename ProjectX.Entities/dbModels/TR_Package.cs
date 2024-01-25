@@ -14,6 +14,7 @@ namespace ProjectX.Entities.dbModels
         public string ZN_Name { get; set; }
 
         public int P_Remove_deductable { get; set; }
+        public int P_Remove_Sports_Activities { get; set; }
         public int P_Adult_No { get; set; }
         public int P_Children_No { get; set; }
         public bool P_PA_Included { get; set; }

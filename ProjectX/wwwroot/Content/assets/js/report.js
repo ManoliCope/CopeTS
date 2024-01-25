@@ -87,11 +87,13 @@ function generateproduction() {
 
 }
 
-function generatecurrencies  () {
+function generatecurrencies() {
+
+    var curr = $('#currencyId').val();
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateCurrencies",
-        //data: { req: request, datefrom: datefrom, dateto: dateto },
+        data: { req: curr },
         xhrFields: {
             responseType: 'blob'
         },

@@ -11,6 +11,7 @@ namespace ProjectX.Entities.bModels
         public int ProductId { get; set; }
         public int ZoneID { get; set; }
         public int Remove_deductable { get; set; }
+        public int Remove_Sports_Activities { get; set; }
         public int Adult_No { get; set; }
         public int Children_No { get; set; }
         public bool PA_Included { get; set; }

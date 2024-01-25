@@ -36,6 +36,7 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@PR_Id", req.ProductId);
             param.Add("@P_ZoneID", req.ZoneID);
             param.Add("@P_Remove_deductable", req.Remove_deductable);
+            param.Add("@P_Remove_Sports_Activities", req.Remove_Sports_Activities);
             param.Add("@P_Adult_No", req.Adult_No);
             param.Add("@P_Children_No", req.Children_No);
             param.Add("@P_PA_Included", req.PA_Included);
@@ -66,6 +67,7 @@ namespace ProjectX.Repository.PackageRepository
             param.Add("@PR_Id", req.ProductId);
             param.Add("@P_ZoneID", req.ZoneID);
             param.Add("@P_Remove_deductable", req.Remove_deductable);
+            param.Add("@P_Remove_Sports_Activities", req.Remove_Sports_Activities);
             param.Add("@P_Adult_No", req.Adult_No);
             param.Add("@P_Children_No", req.Children_No);
             param.Add("@P_PA_Included", req.PA_Included);

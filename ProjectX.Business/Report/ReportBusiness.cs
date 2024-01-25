@@ -36,11 +36,11 @@ namespace ProjectX.Business.Report
             
             return _reportRepository.GenerateBeneficiaries(userid, req);
         }
-        public List<dynamic> GenerateCurrencies(int userid)
+        public List<dynamic> GenerateCurrencies(int userid,int req)
 
         {
             
-            return _reportRepository.GenerateCurrencies(userid);
+            return _reportRepository.GenerateCurrencies(userid,req);
         }
         public List<dynamic> GenerateManualPolicies(int batchid)
 

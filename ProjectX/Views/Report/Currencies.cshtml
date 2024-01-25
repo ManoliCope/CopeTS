@@ -17,26 +17,18 @@
                                 <div class="card m-0" style="box-shadow:none !important">
                                     <div id="searchform" class="card-body ">
                                         <div class="row mb-6">
-                                            @* <div class="col-md-3 mb-lg-0 mb-6" >
-                                                <label>From:</label>
-                                                <input id="datefrom" type="date" class="form-control datatable-input required" value="" >
-                                            </div>
                                             <div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>To:</label>
-                                                <input id="dateto" type="date" class="form-control datatable-input required" value="">
-                                            </div>
-                                              <div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>Status:</label>
-                                                 <select class="form-control" name="prodId" id="prodId" field-name="production" required >
-                                
-                                 @foreach (var thislist in Model.loadedData.productionTabs)
+                                                <label>Currencies:</label>
+                                                 <select class="form-control" name="currencyId" id="currencyId" field-name="currency" required >
+                                 <option value=""> Select Currency</option>
+                                 @foreach (var thislist in Model.loadedData.currencyRate)
 											        {
 											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
 											        }
                                 
 
                             </select>
-                                            </div>*@
+                                            </div>
 
                                         </div>
                                         <div class="row mb-6">

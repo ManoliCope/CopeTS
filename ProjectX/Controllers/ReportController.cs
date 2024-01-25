@@ -115,12 +115,12 @@ namespace ProjectX.Controllers
             });
             return View(response);
         }
-         public ActionResult Currencies()
+        public ActionResult Currencies()
         {
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
-                loadProductionTabs = true
+                loadCurrencyRate = true
             });
             return View(response);
         }
@@ -152,10 +152,10 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerateCurrencies()
+        public IActionResult GenerateCurrencies(int req)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateCurrencies(_user.U_Id);
+            result.reportData = _reportBusiness.GenerateCurrencies(_user.U_Id,req);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         } 

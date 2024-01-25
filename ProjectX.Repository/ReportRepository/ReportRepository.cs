@@ -89,12 +89,13 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateCurrencies(int userid)
+        public List<dynamic> GenerateCurrencies(int userid,int req)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
+            param.Add("@req", req);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

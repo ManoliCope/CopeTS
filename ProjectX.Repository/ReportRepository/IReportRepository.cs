@@ -12,7 +12,7 @@ namespace ProjectX.Repository.ReportRepository
         public List<dynamic> GenerateProduction(productionReport req, int userid);
         public List<dynamic> GenerateBenefits(int userid);
         public List<dynamic> GenerateBeneficiaries(int userid, productionReport req);
-        public List<dynamic> GenerateCurrencies(int userid);
+        public List<dynamic> GenerateCurrencies(int userid, int req);
         public List<dynamic> GenerateManualPolicies(int batchid);
     }
 }

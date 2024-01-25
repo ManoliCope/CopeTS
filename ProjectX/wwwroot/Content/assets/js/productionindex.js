@@ -76,10 +76,12 @@ function drawtable(data, status) {
     if (status == null || status == 'undefined')
         status = 1;
     var tableid = '#productiontable' + status;
-    var isAdmin = 0;
+    var isAdmin = false;
+    var canEdit = false;
     var cancelAllow = 0;
     if (data != undefined && data.length>0) {
-         isAdmin = data[0].isAdmin;
+        isAdmin = data[0].isAdmin;
+        canEdit = data[0].canEdit;
          cancelAllow = getCancellationControl(data, status);
     }
    
@@ -127,24 +129,26 @@ function drawtable(data, status) {
                 title: "Editable",
                 className: "text-center filter",
                 orderable: true,
-                visible: isAdmin == 'True' && (status == 1 || status == 3),
+                visible: (isAdmin == true || canEdit==true) && (status == 1 || status == 3),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
 
                     // if (full.status == 3) {
-                    if (type === 'display' || type === 'filter') {
-                        // Assuming "IsEditable" is a boolean property
-                        if (data) {
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this); triggerclose(this)" checked>`);
-                        }
-                        else
-                            var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this);triggerclose(this)">`);
+                    if (full.status != 4 && full.source!='M') {
+                        if (type === 'display' || type === 'filter') {
+                            // Assuming "IsEditable" is a boolean property
+                            if (data) {
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this); triggerclose(this)" checked>`);
+                            }
+                            else
+                                var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this);triggerclose(this)">`);
 
-                        return checkbox[0].outerHTML;
+                            return checkbox[0].outerHTML;
+                        }
                     }
-                    return data; // For other types, return the original data
+                    //return data; // For other types, return the original data
                     // }
-                    // return '';
+                     return '';
                 }
             },
 
