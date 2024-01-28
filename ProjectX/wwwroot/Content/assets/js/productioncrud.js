@@ -106,9 +106,10 @@ $(document).ready(function () {
     });
 
 
-    $('.trgrthis.isselect2').on('select2:close', function () {
-        getQuotation();
-    });
+    //$('.trgrthis.isselect2').on('select2:close', function () {
+    //    alert('here')
+    //    getQuotation();
+    //});
 
 
     $('#date_of_birth').on('focusout', updateAge);
@@ -277,6 +278,9 @@ function searchbeneficiary() {
 }
 
 function populatebeneficiarydatatable(tablename, data) {
+
+    var isadmin = $(".prodadm").attr("prodadm")
+
     var table = $(tablename).DataTable({
         "data": data,
         "ordering": false,
@@ -367,7 +371,7 @@ function populatebeneficiarydatatable(tablename, data) {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: ismanual != '1',
+                visible: (ismanual != '1' && isadmin == '1'),
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
@@ -532,7 +536,7 @@ function editrow(me) {
     if (rowData.bE_DOB)
         $('#beneficiary-popup #date_of_birth').val(rowData.bE_DOB.split('T')[0]);
 
-   
+
     $('#beneficiary-popup #nationality').val(rowData.bE_Nationalityid);
     $('#beneficiary-popup #countryofresidence').val(rowData.bE_CountryResidenceid);
     if (rowData.bE_Sex == 1) {
@@ -965,7 +969,7 @@ function populateBenefits(thistable, tariffId) {
 
 function recalculateTotalPrice(table) {
 
-   
+
 
     $('.quoatetable').each(function () {
 
@@ -1080,8 +1084,6 @@ function getbeneficiarydetailsbak() {
 
 }
 
-
-
 function getFullNameFromIndex(index) {
     var selectedtype = document.querySelector('input[name="type"]:checked');
     var typeId = selectedtype ? selectedtype.id : '';
@@ -1105,9 +1107,6 @@ function getFullNameFromIndex(index) {
 
 
 
-
-
-
 function getQuotationData() {
     var quotationData = []
 
@@ -1117,13 +1116,8 @@ function getQuotationData() {
     var selectedDuration = $("#duration").val()
     var selectedZone = document.getElementById('zone_id').value;
 
-
-
     var thistable = $('#beneficiary-table').DataTable();
     var thisage = [];
-
-
-
     thistable.rows().every(function (index) {
         var rowData = this.data();
         var dateOfBirth = calculateAge(rowData.bE_DOB); // Assuming dateOfBirth is a property of your row data
@@ -1139,7 +1133,6 @@ function getQuotationData() {
         thisage.push(dateOfBirth);
     });
 
-
     $.ajax({
         url: projectname + '/Production/GetQuotation',
         method: 'POST',
@@ -1147,8 +1140,6 @@ function getQuotationData() {
         success: function (response) {
             //console.log(selectedfieldlist, 'selectedfieldlist')
             //console.log(response, 'quotationData')
-
-
             if (response.quotationResp.length > 0) {
                 for (var i = 0; i < response.quotationResp.length; i++) {
                     //console.log(response.quotationResp[i], 'quotation result')
@@ -1158,17 +1149,15 @@ function getQuotationData() {
                 loadQuotePartialView(response)
             }
             else {
-                $('.quotecontainer').html("<span class='validatemsg'>No Result Found !</span>");
+                $('.quotecontainer').html(`<span class='validatemsg'>${response.validationResp}</span>`);
                 $(".result").removeClass("load")
             }
-
         },
         error: function (xhr, status, error) {
             $(".result").removeClass("load")
             console.log(error);
         }
     });
-
     return quotationData;
 }
 
@@ -1190,7 +1179,7 @@ function loadQuotePartialView(response) {
     var typeId = selectedtype ? selectedtype.id : '';
 
     var newpolicy = 1
-    if ($(".editscreen").attr("pol-id") >0) 
+    if ($(".editscreen").attr("pol-id") > 0)
         newpolicy = 0;
 
     var partialname = 'GetPartialViewQuotation'
@@ -1201,7 +1190,7 @@ function loadQuotePartialView(response) {
     $.ajax({
         url: projectname + '/Production/' + partialname,
         type: 'POST',
-        data: { quotereq: response, isnew:newpolicy },
+        data: { quotereq: response, isnew: newpolicy },
         success: function (data) {
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
@@ -1244,8 +1233,8 @@ function sendDataIssuance() {
         var dataForInsured = {};
 
         if (isFamilyChecked) {
-            var inscount = parseInt($(".inscnt").attr("inscnt")); 
-            for (var i = 0; i < inscount; i ++) {
+            var inscount = parseInt($(".inscnt").attr("inscnt"));
+            for (var i = 0; i < inscount; i++) {
                 dataForInsured = {
                     insured: i + 1,
                     tariff: insuredSection.find(".plans option:selected").attr("data-tariffid"),
