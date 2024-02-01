@@ -1,4 +1,5 @@
 ﻿using ProjectX.Entities.dbModels;
+using ProjectX.Entities.Models.General;
 using ProjectX.Entities.Models.Plan;
 using ProjectX.Entities.Models.Report;
 using System;
@@ -14,5 +15,6 @@ namespace ProjectX.Business.Report
         public List<dynamic> GenerateBeneficiaries(int userid, productionReport req);
         public List<dynamic> GenerateCurrencies(int userid, int req);
         public List<dynamic> GenerateManualPolicies(int batchid);
+        public LoadDataResp getChildren(int userid);
     }
 }

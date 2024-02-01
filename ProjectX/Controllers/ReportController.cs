@@ -168,6 +168,10 @@ namespace ProjectX.Controllers
             return ExporttoExcel(dataTable, "Production");
         }
 
-      
+        public LoadDataResp getChildren(int userid)
+        {
+            return _reportBusiness.getChildren(userid);
+        }
+
     }
 }

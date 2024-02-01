@@ -367,87 +367,16 @@ namespace ProjectX.Entities
         ID = 2
     }
 
-    public enum ProfileTypes
-    {
-        Payer = 1,
-    }
+  
 
-    public enum CaseUpdateActions
-    {
-        Save = 1,
-        Proceed = 2,
-        Close = 3,
-        ReOpen = 4,
-        Cancel = 5
-    }
 
-    public enum CaseStatus
+    public enum ProductionStatus
     {
-        Opened = 1,
-        Inprogress = 2,
-        Outstanding = 3,
-        ReOpened = 4,
-        Closed = 5,
-        AwaitingInvoice = 6,
-        Completed=7
+        All=1,
+        Valid=2,
+        Pending=3,
+        Cancelled=4,
+        Expired=5
     }
-
-    public enum CaseApproval
-    {
-        Pending = 0,
-        Accepted = 1,
-        Rejected = 2,
-        Reimbursement = 3,
-        Cancelled = 5
-    }
-
-    public enum ProfileFeesTypes
-    {
-        PerCase = 1,
-        PerCapita = 2,
-        PerCountry = 3
-    }
-
-    public enum CaseComplexity
-    {
-        Simple = 1,
-        Moderate = 2,
-        Complex = 3
-    }
-
-    public enum CaseEmailOptions
-    {
-        GetApprovalFromPayer = 1,
-    }
-
-    public enum CaseTypes
-    {
-        Expert = 1,
-        Others = 3,
-        Property = 4,
-    }
-
-    public enum Groups
-    {
-        Administrator = 1,
-        Operator = 2,
-        Auditor = 3,
-        Payer = 4,
-        Accountant = 6,
-    }
-
-    public enum TowingStatus
-    {
-        Pending = 1,
-        Arrived = 2,
-        Cancelled = 3,
-    }
-    public enum ExpertStatus
-    {
-        Pending = 1,
-        Arrived = 2,
-        Cancelled = 3,
-    }
-
     
 }

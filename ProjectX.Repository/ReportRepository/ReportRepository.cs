@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using ProjectX.Entities.Models.Report;
+using ProjectX.Entities.Models.General;
 
 namespace ProjectX.Repository.ReportRepository
 {
@@ -122,5 +123,25 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
+
+
+        public LoadDataModel getChildren(int userid)
+        {
+            LoadDataModel resp = new LoadDataModel();
+            //return resp;
+            var param = new DynamicParameters();
+            param.Add("@userid",userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_getChildren", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                {
+                        resp.subagents = result.Read<LookUpp>().ToList();
+                }
+            }
+
+            return resp;
+        }
+
     }
 }
