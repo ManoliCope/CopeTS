@@ -7,6 +7,7 @@ using System.Text;
 using ProjectX.Entities.Resources;
 using ProjectX.Entities;
 using ProjectX.Repository.ReportRepository;
+using ProjectX.Entities.Models.General;
 
 namespace ProjectX.Business.Report
 {
@@ -47,6 +48,12 @@ namespace ProjectX.Business.Report
         {
             
             return _reportRepository.GenerateManualPolicies(batchid);
+        }
+        public LoadDataResp getChildren(int userid)
+        {
+            LoadDataResp response = new LoadDataResp();
+            response.loadedData = _reportRepository.getChildren(userid);
+            return response;
         }
 
     }

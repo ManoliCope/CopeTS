@@ -31,7 +31,7 @@
                                              @*agent report*@
                                               <div class="col-md-3 mb-lg-0 mb-6">
                                                 <label>Agent Report:</label>
-                                                 <select class="form-control" name="agentId" id="agentId" field-name="agent" required >
+                                                 <select class="form-control" name="agentId" id="agentId" field-name="agent" onchange="loadChildren()" required >
                                  <option value=""> Select Agent</option>
                                  @foreach (var thislist in Model.loadedData.agents)
 											        {

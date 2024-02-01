@@ -11,6 +11,11 @@ $(document).ready(function () {
 
 function drawwtable(data, directory) {
     console.log(data)
+    if (data.length > 0) {
+        $('#assignProdBtn').addClass('hidden');
+    } else {
+        $('#assignProdBtn').removeClass('hidden');
+    }
     var table = $('#assprodtable').DataTable({
         "data": data,
         "paging": true,
@@ -44,6 +49,17 @@ function drawwtable(data, directory) {
                 }
             },
             {
+                "title": "Edit",
+                'data': 'u_Id',
+                className: "dt-center editor-edit",
+                "render": function (data, type, full, meta) {
+                    if (full.uP_UploadedFile == null)
+                        return "";
+                    else
+                        return `<a  data-toggle="modal"  data-target="#openAssignProdView" onclick="openEditAssignView(` + full.pR_Id.toString() + `)" class="red-star" ><i class="fas fa-pen"/></a>`;
+                }
+            },
+            {
 
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
@@ -59,9 +75,16 @@ function drawwtable(data, directory) {
     triggerfiltertable(table, "usersProduct")
 }
 
-function openAssignView() {
-
+function openEditAssignView(prId) {
+    
     showresponsemodalbyid('openAssignProdView');
+    $('#productId').val(prId);
+    $("#productId").prop("disabled", true);
+}
+function openAssignView() {
+    showresponsemodalbyid('openAssignProdView');
+    $('#productId')[0].selectedIndex = 0;
+    $("#productId").prop("disabled", false);
 }
 
 $('#saveUsersProd').click(function () {
@@ -182,7 +205,7 @@ function deleteUsersProduct(upid) {
                 showresponsemodal(1, result.statusCode.message)
 
             }
-
+           
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")

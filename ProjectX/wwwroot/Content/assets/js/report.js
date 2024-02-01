@@ -159,3 +159,34 @@ function generatebeneficiaries() {
 
 }
 
+function loadChildren() {
+    var mainUserDropdown = document.getElementById("agentId");
+    var childrenDropdown = document.getElementById("subAgentId");
+    var selectedUserId = mainUserDropdown.value;
+
+    // Clear previous options in children dropdown
+    childrenDropdown.innerHTML = "<option value=''>Select Sub Agent</option>";
+
+    if (selectedUserId) {
+
+        $.ajax({
+            type: 'GET',
+            url: projectname + "/Report/getChildren",
+            data: { userid: selectedUserId },
+            success: function (response) {
+                var children = response.loadedData.subagents;
+                children.forEach(child => {
+                    var option = document.createElement("option");
+                    option.value = child.lK_ID;
+                    option.text = child.lK_TableField;
+                    childrenDropdown.add(option);
+                });
+            },
+            error: function (error) {
+                console.error("Error getting sub agents:", error);
+            }
+        });
+    }
+}
+
+
