@@ -248,7 +248,7 @@
 }
 .multiline-text {
     float: right;
-    white-space: pre-line;
+    /*white-space: pre-line;*/
     font-size: 15px;
     text-align:right
 }

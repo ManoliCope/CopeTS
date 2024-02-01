@@ -58,7 +58,7 @@ namespace ProjectX.Controllers
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
-           
+
             var response = _usersBusiness.GetUsersChildren(_user.U_Id);
             ViewData["userid"] = _user.U_Id.ToString();
             return View(response);
@@ -215,7 +215,8 @@ namespace ProjectX.Controllers
             if (policyid == 0)
                 return RedirectToAction("Index");
 
-            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+            UserRights UserRights = _usersBusiness.GetUserRights(_user.U_Id);
+            ViewData["userrights"] = UserRights;
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -253,6 +254,11 @@ namespace ProjectX.Controllers
                 ViewData["destinationlist"] = destinationlist;
                 ViewData["benefitlist"] = benefitlist;
                 ViewData["isAdmin"] = _user.U_Is_Admin.ToString();
+
+                if ( !policyreponse.IsCanceled && (policyreponse.IsEditable || UserRights.can_edit == true ))
+                    ViewData["canedit"] = "1";
+                else
+                    ViewData["canedit"] = "0";
 
                 return View("details", policyreponse);
             }
@@ -321,14 +327,14 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPartialViewQuotation(ProductionResp quotereq,int isnew)
+        public IActionResult GetPartialViewQuotation(ProductionResp quotereq, int isnew)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             ViewData["isnew"] = isnew;
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
         }
         [HttpPost]
-        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq,int isnew)
+        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq, int isnew)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             ViewData["isnew"] = isnew;

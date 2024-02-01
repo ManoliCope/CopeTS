@@ -36,7 +36,7 @@ namespace ProjectX.Repository.ProductionRepository
             _generalRepository = generalrepository;
         }
 
-        public int GetPolicyID(Guid id,int userid)
+        public int GetPolicyID(Guid id, int userid)
         {
             int PolicyID = 0;
 
@@ -175,31 +175,26 @@ namespace ProjectX.Repository.ProductionRepository
             ProductionResp response = new ProductionResp();
             using (SqlConnection connection = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                //var param = new DynamicParameters();
-                //param.Add("@Zone", req.Zone);
-                //param.Add("@Product", req.Product);
-                //param.Add("@Ages", _generalRepository.ToDataTable(req.Ages));
-                //param.Add("@Durations", _generalRepository.ToDataTable(req.Durations));
-
                 DataTable dataTable = ConvertToDataTable(req);
-
                 var queryParameters = new DynamicParameters(new
                 {
-                    //Zones = req.InsuredQuotations.Select(iq => iq.Zone).ToList(),
-                    //Products = req.InsuredQuotations.Select(iq => iq.Product).ToList(),
-                    //Ages = req.InsuredQuotations.Select(iq => iq.Ages).ToList(),
-                    //Durations = req.InsuredQuotations.Select(iq => iq.Durations).ToList(),
                     QuoteReq = dataTable,
                     IdUser = userid
-
                 });
 
                 var query = "TR_Production_GetQuotation";
-
                 using (SqlMapper.GridReader result = connection.QueryMultiple(query, queryParameters, commandType: CommandType.StoredProcedure))
                 {
-                    response.QuotationResp = result.Read<QuotationResp>().ToList();
-                    response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
+                    response.ValidationResp = result.Read<string>().FirstOrDefault();
+                    if (response.ValidationResp == "Quote")
+                    {
+                        response.QuotationResp = result.Read<QuotationResp>().ToList();
+                        response.AdditionalBenefits = result.Read<TR_Benefit>().ToList();
+                        if (response.QuotationResp.Count == 0)
+                            response.ValidationResp = "No Result Found !";
+                    }
+                    else
+                        response.QuotationResp = new List<QuotationResp>();
                 }
             }
 
@@ -223,7 +218,7 @@ namespace ProjectX.Repository.ProductionRepository
         {
             ProductionSaveResp response = new ProductionSaveResp();
             string thisresult = "";
-            Guid thisresultGuid ;
+            Guid thisresultGuid;
             var query = "";
 
             DataTable Selectediddestinations = new DataTable();
@@ -345,7 +340,7 @@ namespace ProjectX.Repository.ProductionRepository
                         resp.Destinations = result.Read<PolicyDestination>().ToList();
                         var thecurrencyrate = result.Read<CurrResp>();
 
-                        if (thecurrencyrate.Count() == 0 )
+                        if (thecurrencyrate.Count() == 0)
                         {
                             resp.CurrencyRate = new CurrResp();
                             resp.CurrencyRate.Rate = 0;
