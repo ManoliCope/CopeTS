@@ -100,7 +100,7 @@
 													<div class="form-group">
 														<label for="product_id">Product <span class="text-danger">*</span></label>
 														<br />
-														<label class="form-control">@productlist.FirstOrDefault(p => p.PR_Id == Model.ProductID).PR_Title  </label>
+														<label class="form-control">@productlist.FirstOrDefault(p => p.PR_Id == Model.ProductID)?.PR_Title  </label>
 													</div>
 												</div>
 
@@ -108,7 +108,7 @@
 													<div class="form-group">
 														<label for="zone_id">Zone <span class="text-danger">*</span></label>
 														<br />
-														<label class="form-control">@zonelist.FirstOrDefault(p => p.Z_Id == Model.ZoneID).Z_Title </label>
+														<label class="form-control">@zonelist.FirstOrDefault(p => p.Z_Id == Model.ZoneID)?.Z_Title </label>
 													</div>
 												</div>
 											</div>
