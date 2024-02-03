@@ -172,7 +172,7 @@ namespace ProjectX.Controllers
         {
             //user.Id = _user.UserId;
             var user = new UsersSearchReq();
-            user.First_Name = name;
+            user.User_Name = name;
             if (parentid == null)
                 user.Super_Agent_Id = _user.U_Id;
             else
