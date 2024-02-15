@@ -220,7 +220,7 @@ function searchbeneficiary() {
             data: { prefix: query },
             success: function (data) {
 
-                //console.log(data.beneficiary)
+                console.log(data.beneficiary,'searchbenef')
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
@@ -280,6 +280,9 @@ function searchbeneficiary() {
 function populatebeneficiarydatatable(tablename, data) {
 
     var isadmin = $(".prodadm").attr("prodadm")
+    var newpolicy = 1
+    if ($(".editscreen").attr("pol-id") > 0)
+        newpolicy = 0;
 
     var table = $(tablename).DataTable({
         "data": data,
@@ -346,6 +349,7 @@ function populatebeneficiarydatatable(tablename, data) {
                     }
                 }
             },
+          
             {
                 "title": "passport number",
                 "data": "bE_PassportNumber",
@@ -368,10 +372,19 @@ function populatebeneficiarydatatable(tablename, data) {
                 "className": "dt-center"
             },
             {
+                "title": "Age",
+                "data": "bE_DOB",
+                "className": "dt-center",
+                "render": function (data, type, full) {
+                    var dateOfBirth = new Date(full.bE_DOB);
+                   return calculateAge(dateOfBirth)
+                }
+            },
+            {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: (ismanual != '1' && isadmin == '1'),
+                visible: ((ismanual != '1' && isadmin == '1') || newpolicy == 1),
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
@@ -414,21 +427,24 @@ function triggerasdatatable(tablename) {
 }
 
 function addtotable(thisrow, search) {
-
+    console.log(thisrow)
     if (thisrow == undefined) {
         var thissex = 0
+        var sexname 
         if ($('#male').prop('checked')) {
             thissex = 1;
+            sexname = 'Male'
         } else if ($('#female').prop('checked')) {
             thissex = 2;
+            sexname = 'Female'
         }
 
 
         var thisrow =
         {
             "bE_Id": 0,
-            "bE_Sex": 1,
-            "bE_SexName": "Male",
+            "bE_Sex": thissex,
+            "bE_SexName": sexname,
             "bE_FirstName": $("#beneficiary-popup #first_name").val(),
             "bE_MaidenName": '',
             "bE_MiddleName": $("#beneficiary-popup #middle_name").val(),
@@ -438,6 +454,8 @@ function addtotable(thisrow, search) {
             "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
             "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
         }
+
+        console.log(thisrow,'testing')
         var thistable = $('#beneficiary-table').DataTable();
         thistable.row.add(thisrow).draw();
         closepopup()
@@ -524,8 +542,8 @@ function resetbenpopup() {
 function editrow(me) {
     resetbenpopup()
     var benid = $(me).attr("thisid")
-
     var thistable = $('#beneficiary-table').DataTable();
+
     var thistr = $(me).closest('tr')
     var rowData = thistable.row(thistr).data();
 

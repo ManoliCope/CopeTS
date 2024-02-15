@@ -19,6 +19,7 @@ namespace ProjectX.Entities.dbModels
         public DateTime? BE_DOB { get; set; }
         public int BE_Nationalityid { get; set; }
         public int BE_CountryResidenceid { get; set; }
+        public string BE_CreatedbyUser { get; set; }
     }
 
 

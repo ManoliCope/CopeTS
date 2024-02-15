@@ -1,6 +1,7 @@
 ﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
 @{
 	Layout = null;
+	int bencount = 1;
 }
 <!DOCTYPE html>
 <html>
@@ -277,13 +278,13 @@
 					<td class="td25"><label for="expiryDate">Expiry Date:</label></td>
 					<td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd-MM-yyyy")</label></td>
 					<td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
-					<td class="td25"><label id="excessDeductible"> @Model.PolicyDetails.First().DeductiblePrice</label></td>
+					<td class="td25"><label id="excessDeductible">@(Model.PolicyDetails.First().Deductible ? "Included":"Not Included") </label></td>
 				</tr>
 				<tr>
 					<td class="td25"><label for="duration">Duration:</label></td>
 					<td class="td25"><label id="duration">@Model.Duration Days</label></td>
 					<td class="td25"><label for="sportsActivities">Sports Activities:</label></td>
-					<td class="td25"><label id="sportsActivities">@Model.PolicyDetails.First().SportsActivitiesPrice</label></td>
+					<td class="td25"><label id="sportsActivities">@(Model.PolicyDetails.First().SportsActivities ? "Included":"Not Included") </label></td>
 				</tr>
 			</table>
 
@@ -327,7 +328,7 @@
 				<table border="0" style="width:100%">
 					<caption></caption>
 					<tr>
-						<th class="td33">Benefits</th>
+						<th class="td65">Benefits</th>
 						<th class="td33">Limits</th>
 						@*<th>Excess/Deductible</th>*@
 					</tr>
@@ -335,25 +336,25 @@
 
 
 					@*<tr>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-		</tr>
-		<tr>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-		</tr>
-		<tr>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-		</tr>
-		<tr>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-			<td class="td33">test</td>
-		</tr>*@
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>
+						<tr>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+							<td class="td33">test</td>
+						</tr>*@
 
 
 
@@ -363,24 +364,24 @@
 					@foreach (var thislist in Model.Benefits)
 					{
 						<tr>
-							<td class="td33">@thislist.B_Title</td>
+							<td class="td65">@thislist.B_Title</td>
 							<td class="td33">@thislist.B_Limit</td>
 							@*<td class="td33">@thislist.B_Limit</td>*@
 						</tr>
 					}
 					@*@foreach (var thislist in Model.AdditionalBenefits)
-					{
-						<tr>
-							<td class="td33">AB - @thislist.Name</td>
-							<td class="td33">@thislist.Price</td>
-						</tr>
-					}*@
+						{
+							<tr>
+								<td class="td33">AB - @thislist.Name</td>
+								<td class="td33">@thislist.Price</td>
+							</tr>
+						}*@
 
 
 					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
 					{
 						<tr>
-							<td class="td33">AB - @group.First().Name</td>
+							<td class="td65">AB - @group.First().Name</td>
 							<td class="td33">@group.First().Price</td>
 						</tr>
 					}
@@ -408,7 +409,7 @@
 			else if (Model.prttyp == 1)
 			{
 				<h2 class="underlined-heading">Premium Information:</h2>
-				<table>
+				<table style="width:600px">
 					<thead>
 						<tr>
 							<th></th>
@@ -468,13 +469,13 @@
 					<div>
 						@if (Model.Signature != "")
 						{
-							<img width="150" height="150" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
+							<img width="120" height="120" src="data:image/jpeg;base64,@Model.Signature" alt="Signature" />
 						}
 					</div>
 				</div>
 				<div class="boxholder" style="float:left">
 					<div>
-						<img width="150" height="150" src="data:image/jpeg;base64,@Model.QrCodebit" alt="QR Code" />
+						<img width="120" height="120" src="data:image/jpeg;base64,@Model.QrCodebit" alt="QR Code" />
 					</div>
 				</div>
 			</div>

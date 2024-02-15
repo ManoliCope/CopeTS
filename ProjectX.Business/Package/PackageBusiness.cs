@@ -21,7 +21,7 @@ namespace ProjectX.Business.Package
         {
             PackResp response = new PackResp();
             response = _packageRepository.ModifyPackage(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Package");
+            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id > 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Package");
             return response;
         }
         public List<TR_Package> GetPackageList(PackSearchReq req)

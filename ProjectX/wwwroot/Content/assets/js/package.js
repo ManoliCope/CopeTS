@@ -19,7 +19,7 @@ $(document).ready(function () {
     $(".isselect2").select2({
         //tags: true,
         tokenSeparators: [',', ' '],
-       // closeOnSelect: false
+        // closeOnSelect: false
     })
 
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
         deletepkg(this);
     });
 
-   
+
 });
 
 function drawtable(data) {
@@ -136,7 +136,6 @@ function addnew() {
     if (validateForm(".container-fluid")) {
         return;
     }
-
     showloader("load")
 
     var pkgReq = {
@@ -164,18 +163,28 @@ function addnew() {
             removeloader();
             //if (result.statusCode.code == 1 && profile.IdProfile == "0")
             //    gotopage("Profile", "Index");
-
             showresponsemodal(result.statusCode.code, result.statusCode.message)
-            $("#responsemodal button").click(function () {
-                gotopage("package", "Edit", result.id);
-            });
+
+            if (result.statusCode.code == 1)
+                $("#responsemodal button").click(function () {
+                    gotopage("package", "Edit", result.id);
+                });
 
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
         },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
+        error: function (xhr, data) {
+            var errorMessage;
+            if (xhr.responseJSON && xhr.responseJSON.Message) {
+                errorMessage = xhr.responseJSON.Message;
+            } else if (xhr.responseText) {
+                errorMessage = xhr.responseText;
+            } else {
+                errorMessage = 'An error occurred.';
+            }
+            // sql response
+            showresponsemodal("Error", errorMessage)
         }
     });
 }

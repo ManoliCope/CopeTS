@@ -304,7 +304,7 @@
 						</label>
 						<select class="form-control" id="nationality" name="nationality" required>
 							<option value=""> </option>
-							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 							{
 								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
 							}
@@ -316,7 +316,7 @@
 						</label>
 						<select class="form-control" id="countryofresidence" name="countryofresidence" required>
 							<option value=""> </option>
-							@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
+							@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
 							{
 								<option value="@thislist.D_Id"> @thislist.D_Destination</option>
 							}
