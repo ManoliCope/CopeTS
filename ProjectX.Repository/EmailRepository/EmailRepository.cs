@@ -84,66 +84,6 @@ namespace ProjectX.Repository.EmailRepository
         }
 
 
-        //// sending mail from sql
-        //public Exception SendMailNew(string subject, string body, List<MailAttachment> Attachments, string sender, string displayName, string receivers,
-        //    string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail)
-        //{
-        //    Exception _ex = null;
-        //    //System.Net.Mail.MailMessage mailmsg = null;
-        //    //System.Net.Mail.Attachment attachment = null;
-        //    //System.Net.Mail.SmtpClient smtpclient = null;
-
-        //    //mailmsg.Subject = subject;
-        //    //mailmsg.Body = body;
-        //    //mailmsg.IsBodyHtml = true;
-        //    //mailmsg.From = new System.Net.Mail.MailAddress(sender, displayName);
-        //    //mailmsg.Attachments.Add(attachment);
-
-        //    string sqlattachments = string.Empty;
-        //    //if (Attachments != null)
-        //    //{
-        //    //    if (Attachments.Count > 0)
-        //    //    {
-        //    //        foreach (MailAttachment mailAttachment in Attachments)
-        //    //        {
-        //    //            if (!string.IsNullOrEmpty(mailAttachment.FilePath))
-        //    //            {
-        //    //                sqlattachments += new System.Net.Mail.Attachment(mailAttachment.FilePath) + ";";
-        //    //            }
-        //    //        }
-        //    //    }
-        //    //}
-
-      
-        //    //displayName = "";
-
-        //    var param = new DynamicParameters();
-        //    param.Add("@ProfileName", "ProfileThedoctor");
-        //    param.Add("@mailSubject", subject);
-        //    param.Add("@mailmsg", body);
-        //    param.Add("@isbodyhtml", "");
-        //    param.Add("@mailrecipient", receivers);
-        //    param.Add("@mailccrecipient", ccEmail);
-        //    param.Add("@from", sender );
-        //    //param.Add("@from", sender + " " + displayName);
-        //    param.Add("@filenames", sqlattachments);
-
-
-        //    //using (TransactionScope scope = new TransactionScope())
-        //    //{
-        //    using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
-        //    {
-        //        _db.Execute("tr_send_email", param, commandType: CommandType.StoredProcedure);
-        //    }
-        //    //    scope.Complete();
-        //    //}
-
-
-        //    return _ex;
-        //}
-
-
-
         public void SaveEmailLog(EmailLog emailLog, int IdUser)
         {
             var param = new DynamicParameters();
