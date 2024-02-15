@@ -123,7 +123,7 @@ function drawtable(data, status) {
            
             //{ "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
             { "title": "# Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
-            { "title": "Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
+            { "title": "Total $", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
 
             {
                 title: "Editable",
