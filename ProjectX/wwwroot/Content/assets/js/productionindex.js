@@ -165,7 +165,6 @@ function drawtable(data, status) {
                     //}
                     //else
                     var editAllow = getEditableControl(full, status);
-                   
                     //if (full.status == 4 || full.source == 'M') {
                     if (editAllow==0) {
                         icon = "eye";

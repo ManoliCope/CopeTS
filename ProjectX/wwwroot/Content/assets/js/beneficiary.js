@@ -69,6 +69,7 @@ function drawtable(data) {
                     return data;
                 }
             },
+            { "title": "Created By", "className": "text-center filter", "orderable": true, "data": "bE_CreatedbyUser" },
             {
                 "data": "bE_Id",
                 "className": "dt-center editor-edit",
