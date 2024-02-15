@@ -165,7 +165,7 @@ function loadChildren() {
     var selectedUserId = mainUserDropdown.value;
 
     // Clear previous options in children dropdown
-    childrenDropdown.innerHTML = "<option value=''>Select Sub Agent</option>";
+    childrenDropdown.innerHTML = "<option value=''>Loading...</option>";
 
     if (selectedUserId) {
 
@@ -174,6 +174,8 @@ function loadChildren() {
             url: projectname + "/Report/getChildren",
             data: { userid: selectedUserId },
             success: function (response) {
+                childrenDropdown.innerHTML = "<option value=''>Select Sub Agent</option>";
+
                 var children = response.loadedData.subagents;
                 children.forEach(child => {
                     var option = document.createElement("option");
@@ -186,7 +188,9 @@ function loadChildren() {
                 console.error("Error getting sub agents:", error);
             }
         });
-    }
+    } else 
+        childrenDropdown.innerHTML = "<option value=''>Select Sub Agent</option>";
+
 }
 
 
