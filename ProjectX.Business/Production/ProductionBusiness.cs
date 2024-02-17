@@ -55,6 +55,25 @@ namespace ProjectX.Business.Production
             ProductionSaveResp response = new ProductionSaveResp();
             var duplicateBeneficiary = req.beneficiaryData.GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
 
+
+            if (req.Is_Individual && req.beneficiaryDetails.Count > 1)
+            {
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.NotIndividual);
+                return response;
+            }
+
+            if (req.selectedDestinationIds != null && req.selectedDestinationIds.Any())
+            {
+                bool SameDestination = req.beneficiaryData.Any(beneficiary => req.selectedDestinationIds.Contains(beneficiary.countryResidenceid));
+
+                if (SameDestination)
+                {
+                    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.CountryasDestination);
+                    return response;
+                }
+            }
+
+
             if (req.Is_Individual && req.beneficiaryDetails.Count > 1)
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.NotIndividual);
