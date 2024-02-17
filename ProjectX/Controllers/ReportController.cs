@@ -124,6 +124,16 @@ namespace ProjectX.Controllers
             });
             return View(response);
         }
+        public ActionResult Tariff()
+        {
+
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+                loadPackages = true,
+                loadPlans = true
+            });
+            return View(response);
+        }
 
         [HttpPost]
         public IActionResult GenerateProduction(productionReport req)
@@ -156,6 +166,14 @@ namespace ProjectX.Controllers
         {
             GetReportResp result = new GetReportResp();
             result.reportData = _reportBusiness.GenerateCurrencies(_user.U_Id,req);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "Production");
+        } 
+        [HttpPost]
+        public IActionResult GenerateTariff(int plan,int package)
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GenerateTariff(_user.U_Id, plan, package);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         } 

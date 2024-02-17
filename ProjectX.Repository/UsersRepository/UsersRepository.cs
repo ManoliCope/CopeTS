@@ -325,7 +325,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Id", userid);
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
-                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_GetSuperAgentChildren", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_GetSuperAgentChildrenLoad", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
                 {
                         resp = result.Read<LookUpp>().ToList();
                 }

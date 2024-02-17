@@ -134,17 +134,17 @@ namespace ProjectX.Middleware.Jwt
                             }
                         }
 
-                        if (Controller == "avaya")
-                        {
-                            string ParmPath = context.Request.QueryString.Value;
+                        //if (Controller == "avaya")
+                        //{
+                        //    string ParmPath = context.Request.QueryString.Value;
 
-                            if (context.Request.Host.Host.Contains("localhost"))
-                                context.Response.Redirect("/Home" + ParmPath);
-                            else
-                                context.Response.Redirect("/Home" + ParmPath);
+                        //    if (context.Request.Host.Host.Contains("localhost"))
+                        //        context.Response.Redirect("/Home" + ParmPath);
+                        //    else
+                        //        context.Response.Redirect("/Home" + ParmPath);
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
 
 

@@ -15,6 +15,9 @@ $(document).ready(function () {
     $('#generatecurrencies').click(function () {
         generatecurrencies();
     });
+    $('#generatetariff').click(function () {
+        generatetariff();
+    });
 });
 
 function generatebenefits() {
@@ -94,6 +97,35 @@ function generatecurrencies() {
         type: 'POST',
         url: projectname + "/Report/GenerateCurrencies",
         data: { req: curr },
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'report.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
+        },
+        error: function (error) {
+            console.error("Error generating report:", error);
+        }
+    });
+
+}
+function generatetariff() {
+
+    var plan = $('#planId').val();
+    var package = $('#packageId').val();
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Report/GenerateTariff",
+        data: { plan: plan, package: package },
         xhrFields: {
             responseType: 'blob'
         },

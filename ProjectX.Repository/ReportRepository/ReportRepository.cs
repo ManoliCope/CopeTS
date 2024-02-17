@@ -107,6 +107,24 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
+        public List<dynamic> GenerateTariff(int userid,int package, int plan)
+
+        {
+            List<dynamic> response = new List<dynamic>();
+            var param = new DynamicParameters();
+            param.Add("@userid", userid);
+            param.Add("@package", package);
+            param.Add("@plan", plan);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_Tariff", param, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<dynamic>().ToList();
+                }
+            }
+            return response;
+        }
      public List<dynamic> GenerateManualPolicies(int batchid)
 
         {
