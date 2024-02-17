@@ -22,6 +22,7 @@ namespace ProjectX.Entities.dbModels
         public bool IsFamily { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
         public bool IsCanceled { get; set; }
         public decimal InitialPremium { get; set; }
         public decimal AdditionalValue { get; set; }

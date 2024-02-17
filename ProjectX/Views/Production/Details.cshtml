@@ -25,7 +25,7 @@
 						<span>Edit Policy - @Model.Reference</span>
 						<span class="cancelledtitle">@(Model.IsCanceled ? "Cancelled":"") </span>
 						<span class="multiline-text">
-							Created on:   @Model.CreatedOn
+							Created by: @Model.CreatedBy - @Model.CreatedOn
 							@if (Model.IsCanceled)
 							{
 								<br /> <span class="text-danger font-weight-bold">Cancelled on:  @Model.CanceledOn</span>
