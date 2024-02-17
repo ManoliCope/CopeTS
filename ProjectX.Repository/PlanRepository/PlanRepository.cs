@@ -33,6 +33,7 @@ namespace ProjectX.Repository.PlanRepository
             param.Add("@user_id", userid);
             param.Add("@PL_Id", req.id);
             param.Add("@PL_Title", req.title?.Trim());
+            param.Add("@PL_PA_Included", req.pa_included);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 

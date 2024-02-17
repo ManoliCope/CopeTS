@@ -9,5 +9,7 @@ namespace ProjectX.Entities.Models.Plan
     {
         public int id { get; set; }
         public string title { get; set; }
+        public bool pA_Included { get; set; }
+
     }
 }
