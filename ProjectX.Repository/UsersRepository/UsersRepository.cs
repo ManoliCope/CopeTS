@@ -40,7 +40,6 @@ namespace ProjectX.Repository.UsersRepository
             }
             return Userid;
         }
-
         public TR_Users Login(string username, string password)
         {
             TR_Users user = new TR_Users();
@@ -58,7 +57,6 @@ namespace ProjectX.Repository.UsersRepository
             }
             return user;
         }
-
         public UsersResp ModifyUser(UsersReq req, string act, int userid)
         {
             var resp = new UsersResp();

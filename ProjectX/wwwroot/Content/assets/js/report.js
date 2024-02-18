@@ -2,6 +2,7 @@
 var projectname = checkurlserver();
 
 $(document).ready(function () {
+
     $('#generateproduction').click(function () {
         generateproduction();
     });

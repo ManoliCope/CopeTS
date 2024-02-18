@@ -89,8 +89,14 @@ namespace ProjectX.Controllers
             {
                 loadProductionTabs = true,
                 loadSubAgents = true,
-                loadAgents = true
+                loadAgents = true,
+                userid=_user.U_Id
             });
+            if (_user.U_Is_Admin == false)
+            {
+                response.loadedData.agents = response.loadedData.agents.Where(a => a.LK_ID == _user.U_Id).ToList();
+                response.loadedData.subagents = response.loadedData.usersHierarchy.Where(a => a.LK_ID != _user.U_Id).ToList();
+            }
             return View(response);
         }
       
@@ -111,8 +117,14 @@ namespace ProjectX.Controllers
             {
                 loadProductionTabs = true,
                 loadSubAgents = true,
-                loadAgents = true
+                loadAgents = true,
+              userid = _user.U_Id
             });
+            if (_user.U_Is_Admin == false)
+            {
+                response.loadedData.agents = response.loadedData.agents.Where(a => a.LK_ID == _user.U_Id).ToList();
+                response.loadedData.subagents = response.loadedData.usersHierarchy.Where(a => a.LK_ID != _user.U_Id).ToList();
+            }
             return View(response);
         }
         public ActionResult Currencies()
@@ -138,6 +150,7 @@ namespace ProjectX.Controllers
         [HttpPost]
         public IActionResult GenerateProduction(productionReport req)
         {
+           
             GetReportResp result = new GetReportResp();
             result.reportData = _reportBusiness.GenerateProduction(req, _user.U_Id);
             DataTable dataTable = ConvertToDataTable(result.reportData);

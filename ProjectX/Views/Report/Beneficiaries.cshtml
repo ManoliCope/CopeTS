@@ -28,7 +28,11 @@
                                              <div class="col-md-3 mb-lg-0 mb-6" >
                                                 <label>Agent Report:</label>
                                                  <select class="form-control" name="agentId" id="agentId" onchange="loadChildren()" field-name="agent" >
-                                                      <option value=""> Select Agent</option>
+                                                      @if (Model.loadedData.agents.Count > 1)
+                                                    {
+                                                    <option value=""> Select Agent</option>
+                                                        
+                                                    }
                                                       @foreach (var thislist in Model.loadedData.agents)
 											        {
 											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
