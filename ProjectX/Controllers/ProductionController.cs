@@ -188,7 +188,7 @@ namespace ProjectX.Controllers
                 else if (policyreponse.IsGroup)
                     typeid = 3;
 
-                List<TR_Product> productlist = GetProdutctsByType(typeid);
+                List<TR_Product> productlist = GetProdutctsByType(typeid, _user.U_Id);
                 List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
                 List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
                 List<TR_Benefit> benefitlist = GetAdditionalBenbyTariff(policyreponse.PolicyDetails.Select(detail => detail.Tariff).ToList());
@@ -244,7 +244,7 @@ namespace ProjectX.Controllers
                 else if (policyreponse.IsGroup)
                     typeid = 3;
 
-                List<TR_Product> productlist = GetProdutctsByType(typeid);
+                List<TR_Product> productlist = GetProdutctsByType(typeid, policyreponse.CreatedById);
                 List<TR_Zone> zonelist = GetZonesByProduct(policyreponse.ProductID);
                 List<TR_Destinations> destinationlist = GetDestinationByZone(policyreponse.ZoneID);
                 List<TR_Benefit> benefitlist = GetAdditionalBenbyTariff(policyreponse.PolicyDetails.Select(detail => detail.Tariff).ToList());
@@ -297,12 +297,12 @@ namespace ProjectX.Controllers
         }
 
 
-        public List<TR_Product> GetProdutctsByType(int id) //individual,family,group
+        public List<TR_Product> GetProdutctsByType(int id,int createdby) //individual,family,group
         {
             List<TR_Product> response = new List<TR_Product>();
-            return _productionBusiness.GetProductsByType(id, _user.U_Id);
+            return _productionBusiness.GetProductsByType(id, createdby);
         }
-        public List<TR_Zone> GetZonesByProduct(int id) //individual,family,group
+        public List<TR_Zone> GetZonesByProduct(int id) 
         {
             List<TR_Zone> response = new List<TR_Zone>();
             return _productionBusiness.GetZonesByProduct(id);

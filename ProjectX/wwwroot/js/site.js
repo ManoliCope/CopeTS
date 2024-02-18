@@ -1,4 +1,14 @@
 ﻿
+
+$(document).ready(function () {
+    $.extend(true, $.fn.dataTable.defaults, {
+        "pageLength": 25,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]] 
+    });
+});
+
+
+
 //var projectname = checkurlserver();
 //var screentype = $("#rcid").attr("screentype")
 

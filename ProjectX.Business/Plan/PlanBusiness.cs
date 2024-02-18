@@ -35,7 +35,7 @@ namespace ProjectX.Business.Plan
             PlanResp resp = new PlanResp();
             resp.id = repores.PL_Id;
             resp.title = repores.PL_Title;
-           
+            resp.pA_Included = repores.PL_PA_Included;
 
             return resp;
         }

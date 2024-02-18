@@ -23,10 +23,11 @@
 						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 						<span>Edit Policy - @Model.Reference - Manual Production</span>
 						<span class="cancelledtitle">@(Model.IsCanceled ? "Cancelled":"") </span>
-						<span class="multiline-text">Created on:   @Model.CreatedOn
+						<span class="multiline-text">
+							Created by: @Model.CreatedBy - @Model.CreatedOn
 							@if (Model.IsCanceled)
 							{
-								<br /><span class="text-danger font-weight-bold">Cancelled on:  @Model.CanceledOn</span>
+								<br /> <span class="text-danger font-weight-bold">Cancelled on:  @Model.CanceledOn</span>
 							}
 						</span>
 					</h4>

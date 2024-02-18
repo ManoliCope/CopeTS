@@ -39,6 +39,15 @@ function drawtable(data) {
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pL_Id" },
             { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pL_Title" },
+            {
+                "title": "PA Included",
+                "className": "column-pa-included text-center filter",
+                "orderable": true,
+                "data": "pL_PA_Included",
+                "render": function (data) {
+                    return data ? "Yes" : "No";
+                }
+            },
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             {
                 'data': 'pL_Id',
@@ -109,6 +118,8 @@ function addnew() {
     showloader("load")
     var planReq = {
         "title": $("#title").val(),
+        pa_included: $("#pa_included").prop('checked'),
+
     }
 
     $.ajax({
@@ -146,6 +157,7 @@ function edit() {
     var planReq = {
         "id": $("#divinfo").attr("mid"),
         "title": $("#title").val(),
+        pa_included: $("#pa_included").prop('checked'),
     }
 
     $.ajax({

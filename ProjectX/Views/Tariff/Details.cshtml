@@ -23,7 +23,7 @@
 								<div class="row">
 									<div class="form-group mb-3 col-lg-4">
 										<label for="idPackage">Package</label>
-										<select class="form-control" id="idPackage" name="idPackage" required>
+										<select class="form-control isselect2" id="idPackage" name="idPackage" required>
 											<option value="">Select Package</option>
 
 											@foreach (var thislist in filldata.loadedData.packages)
@@ -44,7 +44,7 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="idPackage">Plan</label>
-										<select class="form-control" id="idPlan" name="idPlan" required>
+										<select class="form-control isselect2" id="idPlan" name="idPlan" required>
 											<option value="">Select Plan</option>
 											@foreach (var thislist in filldata.loadedData.plans)
 											{
@@ -83,7 +83,7 @@
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
-										<label for="net_premium_amount">NetP remium Amount</label>
+										<label for="net_premium_amount">Net Premium Amount</label>
 										<input type="number" class="form-control" id="net_premium_amount" name="net_premium_amount" step="0.01" value="@Model.net_premium_amount" required>
 									</div>
 

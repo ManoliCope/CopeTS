@@ -3,7 +3,6 @@ var travelinfo = {}
 var addbenefits = []
 $(document).ready(function () {
     $("#search").click(function () {
-
         //drawtable()
         Search();
     });
@@ -123,7 +122,8 @@ function drawtable(data, status) {
            
             //{ "title": "Nb isCanceled", "className": "text-center filter", "orderable": true, "data": "isCanceled" },
             { "title": "# Clients", "className": "text-center filter", "orderable": true, "data": "nbofclients" },
-            { "title": "Total", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
+            { "title": "Total $", "className": "text-center filter", "orderable": true, "data": "grandTotal" },
+            { "title": "Created by", "className": "text-center filter", "orderable": true, "data": "createdByName" },
 
             {
                 title: "Editable",

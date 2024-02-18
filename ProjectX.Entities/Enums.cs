@@ -55,10 +55,10 @@ namespace ProjectX.Entities
         Backdate = 1202,
         DuplicateBeneficiary = 1203,
         NotIndividual = 1204,
+        CountryasDestination = 1205,
 
 
 
-        NoApprovalNeeded = 1205,
         MedicalReportRequired = 1206,
         NonMedicalCase = 1207,
         CountryRequired = 1208,

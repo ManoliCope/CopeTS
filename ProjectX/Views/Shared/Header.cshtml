@@ -32,7 +32,7 @@
 				<div class="pro-sidebar-logo pt-4">
 					<img class="adminlogo" />
 					@*<img src="Content/assets/images/copeicon.png" alt="Alternate Text" style="width:50px;height:50px" />
-						<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
+					<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
 				</div>
 			}
 			else
@@ -133,28 +133,28 @@
 										</a>
 									</li>
 									@*<li class="menu-item @(controllerName == "currencyrate" ? "active" : "")">
-											<a href="~/currencyrate/">
-												<span class="menu-title">Currency Rates</span>
-											</a>
+										<a href="~/currencyrate/">
+											<span class="menu-title">Currency Rates</span>
+										</a>
 
-										</li>*@
+									</li>*@
 								</ul>
 							</div>
 						</li>
 					}
 
-					@if (isadmin == true || currentUser.U_Agents_Creation == true || currentUser.U_Agents_View== true)
-						{
-					<li class="menu-item @(controllerName == "users" ? "active" : "")">
-						<a href="~/Users/">
-							<span class="menu-icon">
-								<i class="fa fa-users text-gray"></i>
-							</span>
-							<span class="menu-title">Users</span>
-						</a>
+					@if (isadmin == true || currentUser.U_Agents_Creation == true || currentUser.U_Agents_View == true)
+					{
+						<li class="menu-item @(controllerName == "users" ? "active" : "")">
+							<a href="~/Users/">
+								<span class="menu-icon">
+									<i class="fa fa-users text-gray"></i>
+								</span>
+								<span class="menu-title">Users</span>
+							</a>
 
-					</li>
-					 } 
+						</li>
+					}
 					<li class="menu-item @(controllerName == "beneficiary" ? "active" : "")">
 						<a href="~/beneficiary/">
 							<span class="menu-icon">
@@ -165,14 +165,14 @@
 
 					</li>
 					@*<li class="menu-item @(controllerName == "report" ? "active" : "")">
-							<a>
-								<span class="menu-icon">
-									<i class="ri-bar-chart-2-fill"></i>
-								</span>
-								<span class="menu-title">Reports</span>
-							</a>
+						<a>
+							<span class="menu-icon">
+								<i class="ri-bar-chart-2-fill"></i>
+							</span>
+							<span class="menu-title">Reports</span>
+						</a>
 
-						</li>*@
+					</li>*@
 					@if (isadmin == true)
 					{
 
@@ -187,14 +187,14 @@
 						</li>
 					}
 					@*<li class="menu-item @(controllerName == "benefittitle" ? "active" : "")">
-							<a href="~/benefittitle/">
-								<span class="menu-icon">
-									<i class="fa fa-university text-gray"></i>
-								</span>
-								<span class="menu-title">Benefit Title</span>
-							</a>
+						<a href="~/benefittitle/">
+							<span class="menu-icon">
+								<i class="fa fa-university text-gray"></i>
+							</span>
+							<span class="menu-title">Benefit Title</span>
+						</a>
 
-						</li>*@
+					</li>*@
 					<li class="menu-item @(controllerName == "report" ? "active" : "")">
 						<a href="~/report/">
 							<span class="menu-icon">
@@ -205,17 +205,18 @@
 
 					</li>
 					@*<li class="menu-item @(controllerName == "policies" ? "active" : "")">
-							<a>
-								<span class="menu-icon">
-									<i class="fa fa-file"></i>
-								</span>
-								<span class="menu-title">Policies</span>
-							</a>
-						</li>*@
+						<a>
+							<span class="menu-icon">
+								<i class="fa fa-file"></i>
+							</span>
+							<span class="menu-title">Policies</span>
+						</a>
+					</li>*@
 				</ul>
 			</nav>
 		</div>
-		@if (currentUser.U_Is_Admin == false)
+
+		@if (currentUser.U_Is_Admin == false || currentUser.U_Is_Admin is null)
 		{
 			<div class="sidebar-header sidebar-bottom pb-2">
 				<div class="pro-sidebar-logo" style="display:inline-block">
