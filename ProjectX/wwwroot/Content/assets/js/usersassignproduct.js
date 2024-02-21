@@ -5,17 +5,17 @@ var userRights = [];
 
 $(document).ready(function () {
 
-    drawwtable([]);
+   // drawwtable([]);
     Search();
 });
 
 function drawwtable(data, directory) {
     console.log(data)
-    if (data.length > 0) {
-        $('#assignProdBtn').addClass('hidden');
-    } else {
-        $('#assignProdBtn').removeClass('hidden');
-    }
+    //if (data.length > 0) {
+    //    $('#assignProdBtn').addClass('hidden');
+    //} else {
+    //    $('#assignProdBtn').removeClass('hidden');
+    //}
     var table = $('#assprodtable').DataTable({
         "data": data,
         "paging": true,
