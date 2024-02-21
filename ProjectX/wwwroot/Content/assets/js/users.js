@@ -133,8 +133,8 @@ function drawusercredentialstable(data) {
         "destroy": true,
         "columns": [
 
-            { "title": "UserName", "className": "text-center filter", "orderable": true, "data": "u_User_Name" },
             { "title": "Name", "className": "text-center filter", "orderable": true, "data": "u_Full_Name" },
+            { "title": "UserName", "className": "text-center filter", "orderable": true, "data": "u_User_Name" },
             { "title": "Password", "className": "text-center filter", "orderable": true, "data": "u_Password" },
         ],
         orderCellsTop: true,

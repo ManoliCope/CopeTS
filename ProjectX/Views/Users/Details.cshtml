@@ -1,7 +1,6 @@
 ﻿@model ProjectX.Entities.Models.Users.UsersResp
 @{
 	var rights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
-	rights.Is_Admin = false;
 	var userId = ViewData["userid"] as string;
 	var same = ViewData["same"] as string;
 	var filldata = ViewData["loadDataCreate"] as ProjectX.Entities.Models.General.LoadDataResp;
