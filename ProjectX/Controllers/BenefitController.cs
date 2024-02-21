@@ -171,29 +171,33 @@ namespace ProjectX.Controllers
                             if (reader.Depth != 0)
                             {
                                 rowNumber++;
+
                                 try
                                 {
-                                    var ben = new TR_Benefit();
+                                    var verifyrow = reader.GetValue(2);
+                                    if (verifyrow != null)
+                                    {
+                                        var ben = new TR_Benefit();
 
+                                        ben.P_Id = packageid;
+                                        ben.B_Title = reader.GetValue(1).ToString() ?? "";
+                                        ben.B_Limit = reader.GetValue(2).ToString() ?? "";
+                                        //     ben.B_Is_Plus=reader.GetValue(3).ToString()=="yes"?true:false;
+                                        //     ben.B_Additional_Benefits = Convert.ToInt16(reader.GetValue(4));
+                                        //  try
+                                        //  {
+                                        ////      ben.B_Additional_Benefits_Format=(reader.GetValue(5).ToString() == "%") ? 1 : (reader.GetValue(5).ToString() == "#" ? 2 : 0);
 
-                                    ben.P_Id = packageid;
-                                    ben.B_Title= reader.GetValue(1).ToString() ?? "";
-                                    ben.B_Limit = reader.GetValue(2).ToString()??"";
-                                   //     ben.B_Is_Plus=reader.GetValue(3).ToString()=="yes"?true:false;
-                                   //     ben.B_Additional_Benefits = Convert.ToInt16(reader.GetValue(4));
-                                  //  try
-                                  //  {
-                                  ////      ben.B_Additional_Benefits_Format=(reader.GetValue(5).ToString() == "%") ? 1 : (reader.GetValue(5).ToString() == "#" ? 2 : 0);
-
-                                  //  }
-                                  //  catch
-                                  //  {
-                                  //      ben.B_Additional_Benefits_Format = 0;
-                                  //  }
+                                        //  }
+                                        //  catch
+                                        //  {
+                                        //      ben.B_Additional_Benefits_Format = 0;
+                                        //  }
                                         //ben.BT_Id = titleid;
-                                    
 
-                                    benefits.Add(ben);
+
+                                        benefits.Add(ben);
+                                    }
                                 }
                                 catch (Exception ex)
                                 {

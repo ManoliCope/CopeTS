@@ -309,3 +309,7 @@
         font-size: 13px !important;
         color: #454d55 !important;
     }
+
+input[readonly] {
+    cursor: not-allowed; 
+}

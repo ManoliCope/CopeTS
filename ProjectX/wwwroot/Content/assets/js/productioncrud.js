@@ -10,6 +10,8 @@ $(document).ready(function () {
         resetbenpopup()
         triggerbenbtn()
         showresponsemodalbyid('beneficiary-popup', -1)
+        $("#first_name, #middle_name, #last_name").removeAttr("readonly")
+
     })
 
     var polIdValue = $(".editscreen").attr("pol-id");
@@ -220,7 +222,7 @@ function searchbeneficiary() {
             data: { prefix: query },
             success: function (data) {
 
-                console.log(data.beneficiary,'searchbenef')
+                console.log(data.beneficiary, 'searchbenef')
                 var dropdownContent = $('#searchDropdownContent');
                 dropdownContent.empty();
                 if (data.beneficiary.length > 0) {
@@ -349,7 +351,7 @@ function populatebeneficiarydatatable(tablename, data) {
                     }
                 }
             },
-          
+
             {
                 "title": "passport number",
                 "data": "bE_PassportNumber",
@@ -377,7 +379,7 @@ function populatebeneficiarydatatable(tablename, data) {
                 "className": "dt-center",
                 "render": function (data, type, full) {
                     var dateOfBirth = new Date(full.bE_DOB);
-                   return calculateAge(dateOfBirth)
+                    return calculateAge(dateOfBirth)
                 }
             },
             {
@@ -430,7 +432,7 @@ function addtotable(thisrow, search) {
     console.log(thisrow)
     if (thisrow == undefined) {
         var thissex = 0
-        var sexname 
+        var sexname
         if ($('#male').prop('checked')) {
             thissex = 1;
             sexname = 'Male'
@@ -455,7 +457,7 @@ function addtotable(thisrow, search) {
             "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
         }
 
-        console.log(thisrow,'testing')
+        console.log(thisrow, 'testing')
         var thistable = $('#beneficiary-table').DataTable();
         thistable.row.add(thisrow).draw();
         closepopup()
@@ -567,7 +569,8 @@ function editrow(me) {
     triggerbenbtn()
     editedglobalrow = me;
     showresponsemodalbyid('beneficiary-popup', benid)
-
+    if (benid != 0)
+        $("#first_name, #middle_name, #last_name").attr("readonly", "readonly")
 }
 function editnewbeneficiary() {
 
@@ -668,13 +671,13 @@ function settofrom() {
 
         if (this.id === 'from' || this.id === 'to') {
             if (!isNaN(duration) && this.id === 'from') {
-                var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+                var toDate = new Date(fromDate.getTime() + ((duration - 1) * 24 * 60 * 60 * 1000));
                 var formattedToDate = toDate.toISOString().split('T')[0];
                 $('#to').val(formattedToDate);
             }
             else {
                 if (fromDate && toDate && fromDate <= toDate) {
-                    duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                    duration = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24)) + 1;
                     $('#duration').val(duration);
                 } else {
                     $('#duration').val('');
@@ -682,7 +685,7 @@ function settofrom() {
             }
         } else if (this.id === 'duration') {
             if (fromDate && !isNaN(duration)) {
-                var toDate = new Date(fromDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+                var toDate = new Date(fromDate.getTime() + ((duration - 1) * 24 * 60 * 60 * 1000));
                 if (!isNaN(toDate)) {
                     var formattedToDate = toDate.toISOString().split('T')[0];
                     $('#to').val(formattedToDate);
@@ -718,10 +721,11 @@ function populateproducts() {
 
 
 
+        var thisuser = $(".prodadm").attr("pol-ud")
         $.ajax({
             url: projectname + '/Production/GetProdutctsByType',
             method: 'POST',
-            data: { id: type },
+            data: { id: type, createdby: thisuser },
             success: function (response) {
                 $.each(response, function (index, product) {
                     $('#product_id').append('<option value="' + product.pR_Id + '">' + product.pR_Title + '</option>');
