@@ -160,10 +160,10 @@ namespace ProjectX.Controllers
         [Consumes("multipart/form-data")]
 
         public IActionResult exceltotable([FromForm(Name = "files")] IFormFileCollection files, int tarPackageid, int tarPlanid)
-        { 
+        {
             List<TR_Tariff> tariffs = new List<TR_Tariff>();
             List<int> rowsWithError = new List<int>();
-            TariffResp response= new TariffResp();
+            TariffResp response = new TariffResp();
             foreach (IFormFile formFile in files)
             {
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -179,30 +179,35 @@ namespace ProjectX.Controllers
                             if (reader.Depth != 0)
                             {
                                 rowNumber++;
+                                //if (rowNumber > reader.Depth)
+                                //    break; 
                                 try
                                 {
-                                    tariffs.Add(new TR_Tariff
-                                    {
-                                        P_Id = tarPackageid,
-                                        T_Start_Age = Convert.ToInt16(reader.GetValue(1)),
-                                        T_End_Age = Convert.ToInt16(reader.GetValue(2)),
-                                        T_Number_Of_Days = Convert.ToInt16(reader.GetValue(3)),
-                                        T_Price_Amount = Convert.ToDouble(reader.GetValue(4)),
-                                        T_Net_Premium_Amount = Convert.ToDouble(reader.GetValue(5)),
-                                        T_PA_Amount = Convert.ToDouble(reader.GetValue(6)),
-                                        T_Tariff_Starting_Date = Convert.ToDateTime(reader.GetValue(7).ToString()),
-                                        T_Override_Amount = Convert.ToDouble(reader.GetValue(8)),
-                                        PL_Id = tarPlanid
-                                    });
+                                    var verifyrow = reader.GetValue(2);
+                                    if (verifyrow != null)
+                                        tariffs.Add(new TR_Tariff
+                                        {
+                                            P_Id = tarPackageid,
+                                            T_Start_Age = Convert.ToInt16(reader.GetValue(1)),
+                                            T_End_Age = Convert.ToInt16(reader.GetValue(2)),
+                                            T_Number_Of_Days = Convert.ToInt16(reader.GetValue(3)),
+                                            T_Price_Amount = Convert.ToDouble(reader.GetValue(4)),
+                                            T_Net_Premium_Amount = Convert.ToDouble(reader.GetValue(5)),
+                                            T_PA_Amount = Convert.ToDouble(reader.GetValue(6)),
+                                            T_Tariff_Starting_Date = Convert.ToDateTime(reader.GetValue(7).ToString()),
+                                            T_Override_Amount = Convert.ToDouble(reader.GetValue(8)),
+                                            PL_Id = tarPlanid
+                                        });
                                 }
                                 catch (Exception ex)
                                 {
                                     rowsWithError.Add(rowNumber);
                                 }
+
                             }
                         }
                     }
-                     response = _tariffBusiness.ImportDataTariff(tariffs, _user.U_Id);
+                    response = _tariffBusiness.ImportDataTariff(tariffs, _user.U_Id);
                 }
             }
 
