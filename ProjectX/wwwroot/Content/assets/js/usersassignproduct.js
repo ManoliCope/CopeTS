@@ -88,53 +88,56 @@ function openAssignView() {
 }
 
 $('#saveUsersProd').click(function () {
-
-    var thisformData = new FormData();
-    var $fileInput = $('#uploadFile');
-
-    var selectedfiles = Getuploadedpdf($fileInput)
-    if (selectedfiles) {
-        thisformData = selectedfiles;
-        thisformData.append("Action", "Create");
-        thisformData.append("ProductId", $("#productId").val());
-        thisformData.append("IssuingFees", $("#issuingFees").val());
-        thisformData.append("UsersId", $("#assprodtable").attr('userid'));
+    if (validateForm(".openAssignProdView .modal-body")) {
+        return;
     }
-    else
-        return false;
+
+        var thisformData = new FormData();
+        var $fileInput = $('#uploadFile');
+
+        var selectedfiles = Getuploadedpdf($fileInput)
+        if (selectedfiles) {
+            thisformData = selectedfiles;
+            thisformData.append("Action", "Create");
+            thisformData.append("ProductId", $("#productId").val());
+            thisformData.append("IssuingFees", $("#issuingFees").val());
+            thisformData.append("UsersId", $("#assprodtable").attr('userid'));
+        }
+        else
+            return false;
 
 
-    showloader("load");
-    $.ajax({
-        url: projectname + "/Users/assignUsersProduct",
-        data: thisformData,
-        processData: false,
-        contentType: false,
-        type: "POST",
-        success: function (result) {
-            removeloader();
-            console.log(result)
+        showloader("load");
+        $.ajax({
+            url: projectname + "/Users/assignUsersProduct",
+            data: thisformData,
+            processData: false,
+            contentType: false,
+            type: "POST",
+            success: function (result) {
+                removeloader();
+                console.log(result)
 
-            if (result.statusCode.code != 1)
-                showresponsemodal(result.statusCode.code, result.statusCode.message)
-            else {
-                Search();
-                showresponsemodal(1, result.statusCode.message)
+                if (result.statusCode.code != 1)
+                    showresponsemodal(result.statusCode.code, result.statusCode.message)
+                else {
+                    Search();
+                    showresponsemodal(1, result.statusCode.message)
+
+                }
+
+            },
+            failure: function (data, success, failure) {
+                showresponsemodal("Error", "Bad Request")
+
+
+            },
+            error: function (data) {
+                showresponsemodal("Error", "Bad Request")
 
             }
-
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-
-
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-
-        }
-    });
-
+        });
+    
 });
 
 

@@ -8,44 +8,6 @@ $(document).ready(function () {
 });
 
 
-
-//var projectname = checkurlserver();
-//var screentype = $("#rcid").attr("screentype")
-
-//var url_string = window.location.href
-//var url = new URL(url_string);
-//var selectedcid = url.searchParams.get("cid");
-
-
-
-//if ($("#rcid").attr("cid")) {
-//    var caseid = $("#rcid").attr("cid")
-//    gotopage('Case', 'GetGlobalCase', caseid)
-//}
-
-//else if (screentype == "home" & selectedcid != null) {
-//    localStorage.setItem("cid", selectedcid);
-//    gotopage('Case', 'AllCaseSearch')
-//}
-//else {
-//    var url = window.location.pathname;
-//    if (url.toLowerCase().includes('home'))
-//        $("body").find(".defaultscreen:first").click();
-
-//    $('.dropdown-menu-right').on('hide.bs.dropdown', function () {
-//        return false;
-//    });
-
-
-//    togglemenucolor()
-
-//    var avayacid = localStorage.getItem("cid");
-//    if (avayacid) {
-//        triggeravayaselect(avayacid)
-//    }
-//    showavayapopup();
-
-//}
 function deletedatatablerowbyid(idToDelete, conditionFieldName, tablename) {
     //table.rows().eq(0).each(function (index) {
     //    var row = table.row(index);
@@ -127,29 +89,6 @@ function removebtnloader(me) {
     $(me).removeClass("hide").addClass("show");
     $(me).parent().find("#thisloader").removeClass("show").addClass("hide");
 }
-
-//// validating source request if eligable to pass
-//window.addEventListener('message', event => {
-//    $.ajax({
-//        type: 'Get',
-//        url: projectname + '/Navigate/geturl',
-//        success: function (result) {
-//            var url = result.slice(0, -1)
-//            var thisorigin = event.origin;
-//            if (projectname != '')
-//                thisorigin = thisorigin + '/wb'
-
-//            if (thisorigin.startsWith(url)) {
-//                removeloader();
-//                $('#partialscreen .content-page').css("display", "block")
-//            } else {
-//                alert('error')
-
-//                return;
-//            }
-//        }
-//    });
-//});
 
 
 function togglefilter() {
@@ -300,14 +239,6 @@ function showresponsemodalbyid(popupid, thisid, trindex) {
     $(".scrollpartialscreen").scrollTop(0)
 
 }
-
-//$(".loadingthis").on(function () {
-//    $('#cover-spin').show(0)
-
-//    //searchtable();
-//    setTimeout(function () { removeloader(); }, 2000);
-
-//});
 
 
 function resetAllValues(divname) {
@@ -647,35 +578,6 @@ function validateField(divname, classtype, pattern) {
     return valid;
 }
 
-//function avayapopup() {
-//    $("#notifications-bottom-right").html();
-//    var bottom_center = ` <div id="notifications-bottom-right-tab" class="animated bounce">
-//        <div id="notifications-bottom-right-tab-close" class="close">
-//            <span class="iconb" data-icon="&#xe20e;"></span>
-//        </div>
-//        <div id="notifications-bottom-right-tab-right">
-//            <div id="notifications-bottom-right-tab-right-title"><span>New Call</span><br /> Call ID:<br /> 15248</div>
-//            <div id="notifications-bottom-right-tab-right-text">
-//                Caller Phone Number: 03458914
-//<br>
-//<br>
-//27/07/2021 15:30
-//            </div>
-//        </div>
-//    </div >`;
-
-//    $("#notifications-bottom-right").html(bottom_center);
-//    $("#notifications-bottom-right-tab").addClass('animatedbounce');
-//    refresh_close();
-//}
-
-
-//function refresh_close() {
-//    $('.close').click(function () { $(this).parent().fadeOut(200); });
-//}
-
-//refresh_close();
-
 function hideavayapopup() {
     $("#notifications-bottom-right-tab").hide()
 }
@@ -895,32 +797,3 @@ $('#btn-toggle').on('click', function (e) {
 $('.menu-item.sub-menu').on('click', function (e) {
     $('.sidebar-content li *').removeClass('selectedmenu');
 });
-
-
-
-
-////// country flag full use
-//var input = document.querySelector("#testme");
-//window.intlTelInput(input, {
-//    // allowDropdown: false,
-//    // autoHideDialCode: false,
-//    autoPlaceholder: "on",
-//    // dropdownContainer: document.body,
-//    // excludeCountries: ["us"],
-//    // formatOnDisplay: false,
-//    // geoIpLookup: function(callback) {
-//    //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-//    //     var countryCode = (resp && resp.country) ? resp.country : "";
-//    //     callback(countryCode);
-//    //   });
-//    // },
-//    // hiddenInput: "full_number",
-//    // initialCountry: "auto",
-//    // localizedCountries: { 'de': 'Deutschland' },
-//    // nationalMode: false,
-//    onlyCountries: ['lb', 'gb', 'ch', 'ca', 'do'],
-//    // placeholderNumberType: "MOBILE",
-//    preferredCountries: ['lb'],
-//    // separateDialCode: true,
-//    utilsScript: "/countryflags/js/utils.js",
-//});
