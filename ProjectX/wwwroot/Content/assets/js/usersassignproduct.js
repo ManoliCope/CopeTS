@@ -5,7 +5,7 @@ var userRights = [];
 
 $(document).ready(function () {
 
-   // drawwtable([]);
+    // drawwtable([]);
     Search();
 });
 
@@ -76,7 +76,7 @@ function drawwtable(data, directory) {
 }
 
 function openEditAssignView(prId) {
-    
+
     showresponsemodalbyid('openAssignProdView');
     $('#productId').val(prId);
     $("#productId").prop("disabled", true);
@@ -87,57 +87,59 @@ function openAssignView() {
     $("#productId").prop("disabled", false);
 }
 
-$('#saveUsersProd').click(function () {
+$('#saveUsersProd').click(function (event) {
+
     if (validateForm(".openAssignProdView .modal-body")) {
+        event.stopPropagation();
         return;
     }
 
-        var thisformData = new FormData();
-        var $fileInput = $('#uploadFile');
+    var thisformData = new FormData();
+    var $fileInput = $('#uploadFile');
 
-        var selectedfiles = Getuploadedpdf($fileInput)
-        if (selectedfiles) {
-            thisformData = selectedfiles;
-            thisformData.append("Action", "Create");
-            thisformData.append("ProductId", $("#productId").val());
-            thisformData.append("IssuingFees", $("#issuingFees").val());
-            thisformData.append("UsersId", $("#assprodtable").attr('userid'));
-        }
-        else
-            return false;
-
-
-        showloader("load");
-        $.ajax({
-            url: projectname + "/Users/assignUsersProduct",
-            data: thisformData,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            success: function (result) {
-                removeloader();
-                console.log(result)
-
-                if (result.statusCode.code != 1)
-                    showresponsemodal(result.statusCode.code, result.statusCode.message)
-                else {
-                    Search();
-                    showresponsemodal(1, result.statusCode.message)
-
-                }
-
-            },
-            failure: function (data, success, failure) {
-                showresponsemodal("Error", "Bad Request")
+    var selectedfiles = Getuploadedpdf($fileInput)
+    if (selectedfiles) {
+        thisformData = selectedfiles;
+        thisformData.append("Action", "Create");
+        thisformData.append("ProductId", $("#productId").val());
+        thisformData.append("IssuingFees", $("#issuingFees").val());
+        thisformData.append("UsersId", $("#assprodtable").attr('userid'));
+    }
+    else
+        return false;
 
 
-            },
-            error: function (data) {
-                showresponsemodal("Error", "Bad Request")
+    showloader("load");
+    $.ajax({
+        url: projectname + "/Users/assignUsersProduct",
+        data: thisformData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (result) {
+            removeloader();
+            console.log(result)
+
+            if (result.statusCode.code != 1)
+                showresponsemodal(result.statusCode.code, result.statusCode.message)
+            else {
+                Search();
+                showresponsemodal(1, result.statusCode.message)
 
             }
-        });
-    
+
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+
+
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+
+        }
+    });
+
 });
 
 
@@ -208,17 +210,17 @@ function deleteUsersProduct(upid) {
                 showresponsemodal(1, result.statusCode.message)
 
             }
-           
+
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
             removeloader();
         },
-      
+
         error: function (jqXHR, textStatus, errorThrown) {
             //console.log(jqXHR.responseJSON);
             //console.log(jqXHR.responseJSON.Message);
-        
+
 
             // Display an error message
             var errorMessage = jqXHR.responseJSON.Message;
