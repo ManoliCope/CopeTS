@@ -67,10 +67,7 @@ function getEditableControl(data, status) {
 }
 
 function drawtable(data, status) {
-    //console.log(data, 'drawtable')
-    //isEditable
-    //isCancelled
-    //isAdmin
+   
     console.log(data, 'policy data');
     if (status == null || status == 'undefined')
         status = 1;

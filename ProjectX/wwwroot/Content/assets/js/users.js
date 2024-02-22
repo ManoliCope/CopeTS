@@ -35,7 +35,7 @@ $(document).ready(function () {
 function drawtable(data) {
     console.log(data)
     var generate = $('#userstable').attr('generate');
-
+    console.log(generate)
     var table = $('#userstable').DataTable({
         "data": data,
         "paging": true,
@@ -75,7 +75,8 @@ function drawtable(data) {
             },
             {
                 'data': 'u_Id',
-                className: "dt-center editor-edit",
+                "className": "dt-center editor-edit",
+                "visible": generate == '1'  ,
                 "render": function (data, type, full) {
                     if (generate == '1') {
 
@@ -88,6 +89,7 @@ function drawtable(data) {
             }, {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
+                "visible": generate == '1',
                 "render": function (data, type, full) {
                     return `<a  href="#" title="Edit" userid="` + full.u_Guid + `"  class="text-black-50" onclick="gotouser(this)"><i class="fas fa-book"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
@@ -95,6 +97,7 @@ function drawtable(data) {
             }, {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
+                "visible": generate == '1',
                 "render": function (data, type, full) {
                         return `<a  href="#" title="Assign Product" userid="` + full.u_Guid + `"  class="text-black-50" onclick="gotoAssignProduct(this)"><i class="fas fa-briefcase"/></a>`;
                     //return `<a  href="#" title="Register" class="text-black-50" onclick="gotopage('RegisterCall', 'Index', '` + data + `')"><i class="fas fa-book"/></a>`;
@@ -112,6 +115,7 @@ function drawtable(data) {
             , {
                 'data': 'u_Id',
                 className: "dt-center editor-edit",
+                "visible": generate == '1',
                 "render": function (data, type, full, meta) {
                     return `<a  href="#" title="Delete" userid="` + full.u_Id.toString() + `"  class="red-star" onclick="showresponsemodalbyid('confirm-delete-user',${full.u_Id},${meta.row})"><i class="fas fa-trash"/></a>`;
                 }
