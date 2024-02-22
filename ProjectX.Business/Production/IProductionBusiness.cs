@@ -10,7 +10,7 @@ namespace ProjectX.Business.Production
     public interface IProductionBusiness
     {
         public int GetPolicyID(Guid id,int userid);
-        public List<TR_Product> GetProductsByType(int id, int userId);
+        public List<TR_Product> GetProductsByType(int id, int policyid, int userid);
         public List<TR_Zone> GetZonesByProduct(int id);
         public List<TR_Destinations> GetDestinationByZone(int id);
         public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff);

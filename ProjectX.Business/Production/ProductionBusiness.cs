@@ -26,9 +26,9 @@ namespace ProjectX.Business.Production
         {
             _prodRepository = prodRepository;
         }
-        public List<TR_Product> GetProductsByType(int type, int userId)
+        public List<TR_Product> GetProductsByType(int type, int policyid, int userid)
         {
-            return _prodRepository.GetProductsByType(type, userId);
+            return _prodRepository.GetProductsByType(type, policyid, userid);
         }
         public List<TR_Zone> GetZonesByProduct(int type)
         {

@@ -76,13 +76,15 @@ namespace ProjectX.Repository.ProductionRepository
             return resp;
         }
 
-        public List<TR_Product> GetProductsByType(int idType, int userId)
+        public List<TR_Product> GetProductsByType(int idType, int policyid, int userid)
         {
             List<TR_Product> response = new List<TR_Product>();
             //var resp = new TR_Product();
             var param = new DynamicParameters();
             param.Add("@type", idType);
-            param.Add("@userid", userId);
+            param.Add("@userid", userid);
+            
+            param.Add("@policyid", policyid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

@@ -569,7 +569,9 @@ function editrow(me) {
     triggerbenbtn()
     editedglobalrow = me;
     showresponsemodalbyid('beneficiary-popup', benid)
-    if (benid != 0)
+
+    var isadmin = $(".prodadm").attr("isadm")
+    if (benid != 0 && isadmin != 1)
         $("#first_name, #middle_name, #last_name").attr("readonly", "readonly")
 }
 function editnewbeneficiary() {
@@ -719,13 +721,11 @@ function populateproducts() {
         $('#zone_id').empty().append('<option value="">Select Zone</option>').val('').trigger('change');
         $('#product_id,#zone_id').prop('disabled', true);
 
-
-
-        var thisuser = $(".prodadm").attr("pol-ud")
+        var polid = $(".prodadm").attr("pol-id")
         $.ajax({
             url: projectname + '/Production/GetProdutctsByType',
             method: 'POST',
-            data: { id: type, createdby: thisuser },
+            data: { id: type, policyid: polid },
             success: function (response) {
                 $.each(response, function (index, product) {
                     $('#product_id').append('<option value="' + product.pR_Id + '">' + product.pR_Title + '</option>');
