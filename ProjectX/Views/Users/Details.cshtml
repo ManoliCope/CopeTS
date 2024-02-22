@@ -15,7 +15,8 @@
 
 	//var userId= ViewData["userid"] as string;
 	var hide = "";
-	@if (rights.Is_Admin != true && Model.id == Convert.ToInt32(userId) )
+	//@if (rights.Is_Admin != true && Model.id == Convert.ToInt32(userId)  )
+	@if (rights.Is_Admin != true )
 	{
 		hide = "hidden";
 	}
