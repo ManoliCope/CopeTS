@@ -15,7 +15,7 @@
 
 	//var userId= ViewData["userid"] as string;
 	var hide = "";
-	@if (rights.Is_Admin != true || Model.id == Convert.ToInt32(userId))
+	@if (rights.Is_Admin != true && Model.id == Convert.ToInt32(userId) )
 	{
 		hide = "hidden";
 	}
@@ -486,7 +486,7 @@
 
 				@*</div>*@
 				@*<div class="col-md-2 col-sm-6" >*@
-					@if (Model.id != Convert.ToInt32(userId))
+					@if (rights.Is_Admin == true || Model.id != Convert.ToInt32(userId))
 					{
 						@if (Model.id != null && rights.Is_Admin == true || rights.Agents_Creation==true)
 						{

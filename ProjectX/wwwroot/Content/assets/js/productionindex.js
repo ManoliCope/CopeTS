@@ -126,13 +126,13 @@ function drawtable(data, status) {
                 title: "Editable",
                 className: "text-center filter",
                 orderable: true,
-                visible: (isAdmin == true || canEdit==true) && (status == 1 || status == 3),
+                visible: isAdmin == true ||(( canEdit==true) && (status == 1 || status == 3)),
                 data: "isEditable",
                 render: function (data, type, full, meta) {
 
                     // if (full.status == 3) {
-                    if (full.status != 4 && full.source!='M') {
-                        if (type === 'display' || type === 'filter') {
+                    if (isAdmin == true || (full.status != 4 && full.source!='M')) {
+                        if(isAdmin==true|| (type === 'display' || type === 'filter')) {
                             // Assuming "IsEditable" is a boolean property
                             if (data) {
                                 var checkbox = $(`<input id="chckbox` + full.policyID + `" type="checkbox" onclick="responsemodalcheckbox('confirm-edit-approval',${full.policyID},${meta.row},this); triggerclose(this)" checked>`);
@@ -163,7 +163,7 @@ function drawtable(data, status) {
                     //else
                     var editAllow = getEditableControl(full, status);
                     //if (full.status == 4 || full.source == 'M') {
-                    if (editAllow==0) {
+                    if (editAllow==0 && isAdmin==false) {
                         icon = "eye";
                         return `<a   title="View" polid="` + full.policyGuid + `" stat="` + status + `" polstat="` + full.status + `"  src="` + full.source + `" class="text-black-50" onclick="gotopol(this)"><i class="fas fa-${icon}"/></a>`;
                     }
@@ -184,11 +184,11 @@ function drawtable(data, status) {
                 'data': 'policyID',
                 className: "dt-center editor-edit",
                 //visible: isAdmin == 'True' && (status == 1 || status == 3),
-                visible: cancelAllow == 1 || (isAdmin == true && data.source == 'M'),
+                visible: isAdmin == true || (cancelAllow == 1 || (isAdmin == true && data.source == 'M')),
                 "render": function (data, type, full, meta) {   
                     //if (full.status == 3)
                    // var cancelAllow = getCancellationControl(data, status);
-                    if (full.status != 5) {
+                    if (full.status != 5 || isAdmin==true) {
                         if (full.isCanceled) {
 
                             return `<a  title="Activate" prodid="` + full.policyID + `"  class="text-black-50" onclick="changestatus('confirm-delete-production',${full.policyID},${meta.row},${full.isCanceled})" ><i class="fas fa-check green"></i></a>`;
