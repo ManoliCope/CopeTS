@@ -17,6 +17,7 @@
 
 	int isnew = (int)ViewData["isnew"];
 
+
 }
 
 
@@ -153,11 +154,37 @@
 					</tr>
 					<tr class="@previewtotalonly">
 						<td>Tax/VAT</td>
-						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100))</td>
-						@if (UserRights.CurrencySymbol != "USD")
+
+						@if (UserRights.Tax_Type == 1)
 						{
-							<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100)) @UserRights.CurrencySymbol</td>
+							<td id="taxvat" class="text-end" txtp="@UserRights.Tax_Type" vt="@Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0))">
+								@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * (Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0)) / 100)) USD
+							</td>
+
+							@if (UserRights.CurrencySymbol != "USD")
+							{
+								<td id="taxvatforeign" class="text-end" tx="@(UserRights.Tax ?? 0)" vt="@Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0))">
+									@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount * UserRights.CurrencyRate * (Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0)) / 100)) @UserRights.CurrencySymbol
+								</td>
+							}
+
 						}
+						else
+						{
+							<td id="taxvat" class="text-end" txtp="@UserRights.Tax_Type" tx="@(UserRights.Tax ?? 0)" vt="@Convert.ToDecimal(UserRights.VAT ?? 0)">
+								@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => Convert.ToDecimal(UserRights.Tax ?? 0) + (x.PriceAmount * (Convert.ToDecimal(UserRights.VAT ?? 0) / 100))) USD
+							</td>
+
+							@if (UserRights.CurrencySymbol != "USD")
+							{
+								<td id="taxvatforeign" class="text-end" tx="@(UserRights.Tax ?? 0)" vt="@Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0))">
+									@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => UserRights.CurrencyRate * (Convert.ToDecimal(UserRights.Tax ?? 0) + (x.PriceAmount * (Convert.ToDecimal(UserRights.VAT ?? 0) / 100)))) @UserRights.CurrencySymbol
+								</td>
+							}
+						}
+
+
+
 					</tr>
 					<tr class="@previewtotalonly">
 						<td>Stamps</td>

@@ -165,14 +165,31 @@
 							<td id="additiononpremforeign" class="text-end"> @String.Format("{0:0.00}", Model.AdditionalValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol </td>
 						}
 					</tr>
+
+
 					<tr class="@previewtotalonly">
 						<td> Tax / VAT </td>
-						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)"> @Model.TaxVATValue USD </td>
-						@if (Model.CurrencyRate.CurrencySymbol != "USD")
+						@if (UserRights.Tax_Type == 1)
 						{
-							<td id="taxvatforeign" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT)"> @String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol </td>
+							<td id="taxvat" class="text-end" txtp="@UserRights.Tax_Type" vt="@Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0))"> @Model.TaxVATValue USD </td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td id="taxvatforeign" class="text-end"  vt="@Convert.ToDecimal((UserRights.VAT ?? 0) + (UserRights.Tax ?? 0))"> @String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol </td>
+							}
 						}
+						else
+						{
+							<td id="taxvat" class="text-end" txtp="@UserRights.Tax_Type" tx="@(UserRights.Tax ?? 0)" vt="@Convert.ToDecimal(UserRights.VAT)"> @Model.TaxVATValue USD </td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td id="taxvatforeign" class="text-end" tx="@(UserRights.Tax ?? 0)" vt="@Convert.ToDecimal(UserRights.VAT)"> @String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate)) @Model.CurrencyRate.CurrencySymbol </td>
+							}
+						}
+
 					</tr>
+
+
+
 					<tr class="@previewtotalonly">
 						<td> Stamps </td>
 						<td id="stamps" class="text-end" st="@Convert.ToDecimal(UserRights.Stamp)"> @Model.StampsValue USD </td>

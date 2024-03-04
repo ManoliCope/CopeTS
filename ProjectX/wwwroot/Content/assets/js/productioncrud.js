@@ -1034,10 +1034,18 @@ function recalculateTotalPrice(table) {
     var initialPremium = parseFloat($('#initpremtotal').text());
     var additionalValue = parseFloat($('#additiononprem').val());
 
-    var vatperc = parseFloat($('#taxvat').attr("vt"));
-    var stperc = parseFloat($('#stamps').attr("st"));
+    var vattype = parseFloat($('#taxvat').attr("txtp"));
+    if (vattype == 1) {
+        var taxvatperc = parseFloat($('#taxvat').attr("vt"));
+        $('#taxvat').text((initialPremium * (taxvatperc / 100)).toFixed(2) + " USD")
+    }
+    else {
+        var vatperc = parseFloat($('#taxvat').attr("vt"));
+        var taxval = parseFloat($('#taxvat').attr("tx"));
+        $('#taxvat').text(((initialPremium * (vatperc / 100)) + taxval).toFixed(2) + " USD")
+    }
 
-    $('#taxvat').text((initialPremium * (vatperc / 100)).toFixed(2) + " USD")
+    var stperc = parseFloat($('#stamps').attr("st"));
     $('#stamps').text((initialPremium * (stperc / 100)).toFixed(2) + " USD")
     $('#initpremtotal').text(totalinsuredprem.toFixed(2) + " USD");
 
@@ -1055,8 +1063,8 @@ function recalculateTotalPrice(table) {
     if (isNaN(stampsValue))
         stampsValue = 0;
 
-
     var grandTotal = initialPremium + additionalValue + taxVATValue + stampsValue;
+
     $('#grandtotal').text(grandTotal.toFixed(2) + " USD");
 
     var initialPremiumForeign = initialPremium * exchangerate;
@@ -1064,7 +1072,6 @@ function recalculateTotalPrice(table) {
     var taxVATValueForeign = taxVATValue * exchangerate;
     var stampsValueForeign = stampsValue * exchangerate;
     var grandTotalForeign = grandTotal * exchangerate;
-
 
     $('#initpremtotalforeign').text(initialPremiumForeign.toFixed(2) + ' ' + exchangesymbol);
     $('#additiononpremforeign').text(additionalValueForeign.toFixed(2) + ' ' + exchangesymbol);
@@ -1232,6 +1239,7 @@ function loadQuotePartialView(response) {
             })
 
             triggercalculationfields()
+            //recalculateTotalPrice()
             setselectedfields()
             $(".result").removeClass("load")
 

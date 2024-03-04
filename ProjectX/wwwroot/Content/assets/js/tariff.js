@@ -91,7 +91,7 @@ function drawtable(data) {
             { "title": "Start Age", "className": "text-center filter", "orderable": true, "data": "t_Start_Age" },
             { "title": "End Age", "className": "text-center filter", "orderable": true, "data": "t_End_Age" },
             { "title": "Number of Days", "className": "text-center filter", "orderable": true, "data": "t_Number_Of_Days" },
-            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "t_Price_Amount" },
+            { "title": "Amount $", "className": "text-center filter", "orderable": true, "data": "t_Price_Amount" },
             //{ "title": "Net Premium Amount", "className": "text-center filter", "orderable": true, "data": "t_Net_Premium_Amount" },
             //{ "title": "PA Amount", "className": "text-center filter", "orderable": true, "data": "t_PA_Amount" },
             {

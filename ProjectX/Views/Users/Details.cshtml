@@ -186,7 +186,6 @@
 										<input type="number" class="form-control" aria-label="Text input with dropdown button" field-name="tax" id="tax" name="tax" value="@Model.tax">
 										<div class="input-group-prepend">
 											<select class="form-control" id="tax_Type" name="tax_type" field-name="tax_Type">
-												<option>Select Type</option>
 												@foreach (var thislist in filldata.loadedData.format)
 												{
 													@if (thislist.LK_ID == Model.tax_Type)

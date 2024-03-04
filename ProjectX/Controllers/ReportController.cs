@@ -26,10 +26,11 @@ namespace ProjectX.Controllers
         private IJwtBusiness _jwtBusiness;
         private IWebHostEnvironment _env;
 
-        public ReportController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
+        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
             _reportBusiness = reportBusiness;
+            _usersBusiness = usersBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
@@ -38,6 +39,7 @@ namespace ProjectX.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
             return View();
         }
 
