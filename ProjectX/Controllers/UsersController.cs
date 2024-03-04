@@ -274,6 +274,7 @@ namespace ProjectX.Controllers
         public IActionResult AssignProduct(Guid userid)
         {
             int iduser = _usersBusiness.GetUserID(userid);
+            var user = _usersBusiness.GetUser(iduser);
 
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
@@ -281,7 +282,8 @@ namespace ProjectX.Controllers
             });
 
             ViewData["loadData"] = response;
-            ViewData["userid"] = iduser.ToString(); 
+            ViewData["userid"] = iduser.ToString();
+            ViewData["name"] = user.first_Name + " " + user.last_Name;
             return View();
         }
 
