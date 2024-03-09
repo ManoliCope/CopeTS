@@ -26,6 +26,7 @@ namespace ProjectX.Entities.bModels
         public bool loadProductionTabs { get; set; }
         public bool loadAgents { get; set; }
         public bool loadSubAgents { get; set; }
+        public bool loadAssignedUsers { get; set; }
        
         
 

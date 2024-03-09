@@ -1,91 +1,101 @@
-﻿using ProjectX.Entities;
-using ProjectX.Entities.bModels;
+﻿using ProjectX.Business.Caching;
 using ProjectX.Entities.dbModels;
-using ProjectX.Entities.Models.Profile;
-using ProjectX.Entities.Resources;
+using ProjectX.Entities.Models.Emails;
 using ProjectX.Repository.EmailRepository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using Utilities;
+using System.Threading.Tasks;
 
 namespace ProjectX.Business.Email
 {
     public class EmailBusiness : IEmailBusiness
     {
-        IEmailRepository _emailRepository;
+        private IList<TextReplacement> _textReplacements;
+        private IList<EmailTemplate> _emailTemplates;
+        IEmailRepository _emailsRepository;
+        private IDatabaseCaching _databaseCaching;
 
-        public EmailBusiness(IEmailRepository emailRepository)
+
+        public EmailBusiness(IEmailRepository emailsRepository, IDatabaseCaching databaseCaching)
         {
-            _emailRepository = emailRepository;
+            _emailsRepository = emailsRepository;
+            _databaseCaching = databaseCaching;
+            _textReplacements = _databaseCaching.GetTextReplacements();
+            _emailTemplates = _databaseCaching.GetEmailTemplates();
         }
 
-        public bool SendEmail(string subject, string body, List<MailAttachment> attachments, string sender, string displayName, string receivers,
-            string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail, bool IsManual, int IdUser, int IdCase, string LOB)
+        public async void ToSendEmail(object dataObject, string emailTemplateCode)
         {
-            bool isSent = false;
-            try
+            string displayName = string.Empty;
+            string subject = string.Empty;
+            string body = string.Empty;
+            string recipients = string.Empty;
+            string ccrecipients = string.Empty;
+
+            // Assume _emailTemplates is a list of EmailTemplate objects
+            EmailTemplate emailTemplate = _emailTemplates.FirstOrDefault(x => x.Code == emailTemplateCode);
+
+            if (emailTemplate != null)
             {
-                Exception exception = null;
-                string errorMessage = string.Empty;
+                subject = emailTemplate.subject;
+                body = ReplaceBody(dataObject, emailTemplate.body);
+                recipients = emailTemplate.recepients;
+                //ccrecipients ="moussa.basma@securiteassurance.com";
 
-                if (!body.Contains("***"))
+
+                SendMailListRequest request = new SendMailListRequest();
+                SendEmailRequest email = new SendEmailRequest
                 {
-                    if (IsManual)
-                        body = "<p>" + body + "</p>";
-
-                    var emailID = 0;
-                    if (LOB == "TR")
-                    {
-                        emailID = 3;
-                    }
-                    //exception = EmailManager.SendMailNew(subject, body, attachments, sender, displayName, receivers, senderSMTP, senderPort, senderUsername, senderPassword, enableSsl, ccEmail);
-                    exception = _emailRepository.SendMailNew(subject, body, attachments, sender, displayName, receivers, senderSMTP, senderPort, senderUsername, senderPassword, enableSsl, ccEmail,emailID);
-
-                    if (exception == null)
-                        isSent = true;
-                    else
-                        errorMessage = exception.Message;
-                }
-                else
-                    errorMessage = "Invalid email body";
-                
-
-                EmailLog emailLog = new EmailLog
-                {
+                    MailTo = recipients,
+                    //DisplayName = "",
                     Subject = subject,
                     Body = body,
-                    Date = DateTime.Now.Date.ToString("dd-MM-yyyy"),
-                    DisplayName = displayName,
-                    IsSent = isSent,
-                    ErrorMessage = errorMessage,
-                    Recipient = receivers,
-                    Sender = sender,
-                    IsManual = IsManual,
-                    IdCase = IdCase
+                    MailCC = ccrecipients
                 };
-                _emailRepository.SaveEmailLog(emailLog, IdUser);
-            }
-            catch (Exception ex) {
-                string errorMessage = ex.Message;
 
-                EmailLog emailLog = new EmailLog
-                {
-                    Subject = subject,
-                    Body = body,
-                    Date = DateTime.Now.Date.ToString("dd-MM-yyyy"),
-                    DisplayName = displayName,
-                    IsSent = isSent,
-                    ErrorMessage = errorMessage,
-                    Recipient = receivers,
-                    Sender = sender,
-                    IsManual = IsManual,
-                    IdCase = IdCase
-                };
-                _emailRepository.SaveEmailLog(emailLog, IdUser);
+                request.EmailRequestList.Add(email);
+                _emailsRepository.SendEmail(request);
             }
-            return isSent;
+
+            // Reset variables
+            subject = string.Empty;
+            body = string.Empty;
+            recipients = string.Empty;
         }
+        public string ReplaceBody(object dataObject, string body)
+        {
+            foreach (TextReplacement textReplacement in _textReplacements)
+            {
+                switch (textReplacement.Code)
+                {
+                    case "***InvoiceNumber***":
+                        // Assuming dataObject has a property named "InvoiceNumber"
+                        body = body.Replace(textReplacement.Code, dataObject.GetType().GetProperty("invoice_number")?.GetValue(dataObject)?.ToString() ?? "");
+                        break;
+
+                    case "***Supplier***":
+                        // Assuming dataObject has a property named "Supplier"
+                        body = body.Replace(textReplacement.Code, dataObject.GetType().GetProperty("beneficiary")?.GetValue(dataObject)?.ToString() ?? "");
+                        break;
+
+                    case "***Amount***":
+                        // Assuming dataObject has a property named "Amount"
+                        body = body.Replace(textReplacement.Code, dataObject.GetType().GetProperty("total_amount")?.GetValue(dataObject)?.ToString() ?? "");
+                        break;
+
+                    case "***PaymentMode***":
+                        // Assuming dataObject has a property named "PaymentMode"
+                        body = body.Replace(textReplacement.Code, dataObject.GetType().GetProperty("total_amount_currency")?.GetValue(dataObject)?.ToString() ?? "");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            return body;
+        }
+      
     }
 }

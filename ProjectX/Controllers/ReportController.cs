@@ -144,7 +144,9 @@ namespace ProjectX.Controllers
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
-                loadPlans = true
+                loadPlans = true,
+                loadProducts = true,
+                loadAssignedUsers=true
             });
             return View(response);
         }
@@ -185,10 +187,10 @@ namespace ProjectX.Controllers
             return ExporttoExcel(dataTable, "Production");
         } 
         [HttpPost]
-        public IActionResult GenerateTariff(int plan,int package)
+        public IActionResult GenerateTariff(int planid,int packageid,int assignedid, int productid)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateTariff(_user.U_Id, plan, package);
+            result.reportData = _reportBusiness.GenerateTariff(_user.U_Id, planid, packageid, assignedid, productid);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         } 

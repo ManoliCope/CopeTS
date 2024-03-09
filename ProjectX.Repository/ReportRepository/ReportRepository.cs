@@ -107,14 +107,16 @@ namespace ProjectX.Repository.ReportRepository
             }
             return response;
         }
-        public List<dynamic> GenerateTariff(int userid,int package, int plan)
+        public List<dynamic> GenerateTariff(int userid,int packageid, int planid, int assignedid, int productid)
 
         {
             List<dynamic> response = new List<dynamic>();
             var param = new DynamicParameters();
             param.Add("@userid", userid);
-            param.Add("@package", package);
-            param.Add("@plan", plan);
+            param.Add("@packageid", packageid);
+            param.Add("@planid", planid);
+            param.Add("@productid", productid);
+            param.Add("@assignedid", assignedid);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {

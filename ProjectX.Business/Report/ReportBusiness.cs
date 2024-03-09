@@ -43,11 +43,11 @@ namespace ProjectX.Business.Report
             
             return _reportRepository.GenerateCurrencies(userid,req);
         }
-        public List<dynamic> GenerateTariff(int userid,int package, int plan)
+        public List<dynamic> GenerateTariff(int userid,int packageid, int planid, int assignedid, int productid)
 
         {
             
-            return _reportRepository.GenerateTariff(userid, package, plan);
+            return _reportRepository.GenerateTariff(userid, packageid, planid,assignedid,productid);
         }
         public List<dynamic> GenerateManualPolicies(int batchid)
 

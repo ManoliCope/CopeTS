@@ -54,6 +54,7 @@ namespace ProjectX.Repository.GeneralRepository
             param.Add("@loadProductionTabs", loadDataModelSetup.loadProductionTabs);
             param.Add("@loadAgents", loadDataModelSetup.loadAgents);
             param.Add("@loadSubAgents", loadDataModelSetup.loadSubAgents);
+            param.Add("@loadAssignedUsers", loadDataModelSetup.loadAssignedUsers);
 
 
 
@@ -99,6 +100,8 @@ namespace ProjectX.Repository.GeneralRepository
                         resp.subagents = result.Read<LookUpp>().ToList();
                     if (loadDataModelSetup.userid>0)
                         resp.usersHierarchy = result.Read<LookUpp>().ToList();
+                    if (loadDataModelSetup.loadAssignedUsers)
+                        resp.assignedUsers = result.Read<LookUpp>().ToList();
                 }
             }
 
