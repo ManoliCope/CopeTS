@@ -1,0 +1,277 @@
+﻿@model ProjectX.Entities.Models.Production.ProductionPolicy
+@{
+	Layout = null;
+	int bencount = 1;
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0px;
+			padding: 0px;
+			/*padding-top: 80px;*/
+			/*border:2px solid red;*/
+			/*margin: 5px;*/
+		}
+
+		.underlined {
+			display: inline-block;
+			border-bottom: 1px solid;
+			margin-bottom: 3px;
+		}
+
+		.underlined-heading {
+			/*display: inline-block;*/
+			border-bottom: 1px solid;
+			margin-bottom: 3px;
+		}
+
+		h1.mainheader {
+			text-align: center;
+		}
+
+		h2 {
+			margin-bottom: 5px;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 20px;
+			/*border: 0px solid #dddddd;*/
+		}
+
+		th, td {
+			/*border: 0px solid #dddddd;*/
+			padding: 4px;
+			text-align: left;
+		}
+
+			td, td label {
+				font-size: 15px
+			}
+
+
+		.benefitidv tr td {
+			line-height: 0.8
+		}
+
+
+		.td15 {
+			width: 15%;
+			min-width: 15%;
+			max-width: 15%;
+		}
+
+		.td25 {
+			width: 25%;
+			min-width: 25%;
+			max-width: 25%;
+		}
+
+		.td33 {
+			width: 33%;
+			min-width: 33%;
+			max-width: 33%;
+		}
+
+
+		.td35 {
+			width: 35%;
+			min-width: 35%;
+			max-width: 35%;
+		}
+
+		.td40 {
+			width: 40%;
+			min-width: 40%;
+			max-width: 40%;
+		}
+
+		.td45 {
+			width: 45%;
+			min-width: 45%;
+			max-width: 45%;
+		}
+
+		.td50 {
+			width: 50%;
+			min-width: 50%;
+			max-width: 50%;
+		}
+
+		.td65 {
+			width: 65%;
+			min-width: 65%;
+			max-width: 65%;
+		}
+
+		.td70 {
+			width: 70%;
+			min-width: 70%;
+			max-width: 70%;
+		}
+
+		.td75 {
+			width: 75%;
+			min-width: 75%;
+			max-width: 75%;
+		}
+
+		th {
+			/*background-color: #f2f2f2;*/
+		}
+
+		p {
+			margin-bottom: 20px;
+		}
+
+		.clearfix::after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		.headertitle span {
+			font-weight: bold;
+		}
+
+		.headertitle label {
+			font-weight: 400;
+		}
+
+
+		.container {
+			padding-left: 10px;
+			padding-right: 10px;
+			background-color: white;
+			min-height: 1230px;
+			height: 1230px;
+			max-height: 1230px;
+			margin-left: 50px;
+			margin-right: 50px;
+			border: 2px solid transparent;
+			background: transparent;
+			padding-top: 100px;
+		}
+
+		.box-container {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+		}
+
+		.box {
+			width: 150px;
+			height: 60px;
+			border: 1px solid #dddddd;
+			padding: 10px;
+		}
+
+			.box label {
+				display: block;
+				text-align: center;
+				margin-bottom: 50px;
+			}
+
+		.printheader, .printfooter {
+			width: 100%;
+			height: 80px
+		}
+
+		.benefitidv {
+			/*height: 500px*/
+		}
+
+
+		.header {
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 80px;
+			width: 80%;
+		}
+
+
+		.footer {
+			bottom: 0;
+			width: 100%;
+			color: white;
+			text-align: center;
+		}
+
+		body, html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		.page {
+			position: relative;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.background-image {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			background-size: cover;
+			background-position: center;
+		}
+
+			.background-image img {
+				height: 1400px;
+			}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<div class="background-image">
+			<img src="data:image/jpeg;base64,@Model.Layout" alt="Header" />
+		</div>
+
+		<div class="container">
+				<h2 class="underlined-heading">Beneficiary:  Total # of Clients @Model.PolicyDetails.Count()</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>First Name</th>
+							<th>Middle Name</th>
+							<th>Last Name</th>
+							<th>Date of Birth</th>
+							<th>Age</th>
+							<th>Country of Residence</th>
+							<th>Passport N.</th>
+						</tr>
+					</thead>
+					<tbody>
+						@{
+							int count = 1;
+							foreach (var beneficiary in Model.PolicyDetails)
+							{
+								<tr>
+									<td>@count</td>
+									<td>@beneficiary.FirstName</td>
+									<td>@beneficiary.MiddleName</td>
+									<td>@beneficiary.LastName</td>
+									<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
+									<td>@beneficiary.Age</td>
+									<td>@beneficiary.CountryResidence</td>
+									<td>@beneficiary.PassportNo</td>
+								</tr>
+								count++;
+							}
+						}
+					</tbody>
+				</table>
+		</div>
+	</div>
+</body>
+</html>

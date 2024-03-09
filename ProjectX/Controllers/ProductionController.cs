@@ -218,6 +218,7 @@ namespace ProjectX.Controllers
             UserRights UserRights = _usersBusiness.GetUserRights(_user.U_Id);
             ViewData["userrights"] = UserRights;
 
+
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
@@ -255,7 +256,12 @@ namespace ProjectX.Controllers
                 ViewData["benefitlist"] = benefitlist;
                 ViewData["isAdmin"] = _user.U_Is_Admin.ToString();
 
-                if ( !policyreponse.IsCanceled && (policyreponse.IsEditable || UserRights.can_edit == true ))
+
+                UserRights CreatedByUserRights = _usersBusiness.GetUserRights(policyreponse.CreatedById);
+                ViewData["CreatedByuserrights"] = CreatedByUserRights;
+
+
+                if (!policyreponse.IsCanceled && (policyreponse.IsEditable || UserRights.can_edit == true))
                     ViewData["canedit"] = "1";
                 else
                     ViewData["canedit"] = "0";
@@ -297,12 +303,12 @@ namespace ProjectX.Controllers
         }
 
 
-        public List<TR_Product> GetProdutctsByType(int id,int policyid) //individual,family,group
+        public List<TR_Product> GetProdutctsByType(int id, int policyid) //individual,family,group
         {
             List<TR_Product> response = new List<TR_Product>();
             return _productionBusiness.GetProductsByType(id, policyid, _user.U_Id);
         }
-        public List<TR_Zone> GetZonesByProduct(int id) 
+        public List<TR_Zone> GetZonesByProduct(int id)
         {
             List<TR_Zone> response = new List<TR_Zone>();
             return _productionBusiness.GetZonesByProduct(id);
@@ -327,16 +333,38 @@ namespace ProjectX.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPartialViewQuotation(ProductionResp quotereq, int isnew)
+        public IActionResult GetPartialViewQuotation(ProductionResp quotereq, int isnew, int polId)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
+            int createdby = _user.U_Id;
+            if (polId != 0)
+            {
+                var getpolicy = _productionBusiness.GetPolicy(polId, _user.U_Id, false);
+                createdby = getpolicy.CreatedById;
+            }
+
+            UserRights CreatedByUserRights = _usersBusiness.GetUserRights(createdby);
+            ViewData["CreatedByuserrights"] = CreatedByUserRights;
+
             ViewData["isnew"] = isnew;
             return PartialView("~/Views/partialviews/partialquotationlist.cshtml", quotereq);
         }
         [HttpPost]
-        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq, int isnew)
+        public IActionResult GetPartialViewQuotationFamily(ProductionResp quotereq, int isnew, int polId)
         {
             ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
+
+            int createdby = _user.U_Id;
+            if (polId != 0)
+            {
+                var getpolicy = _productionBusiness.GetPolicy(polId, _user.U_Id, false);
+                createdby = getpolicy.CreatedById;
+            }
+
+            UserRights CreatedByUserRights = _usersBusiness.GetUserRights(createdby);
+            ViewData["CreatedByuserrights"] = CreatedByUserRights;
+
             ViewData["isnew"] = isnew;
             return PartialView("~/Views/partialviews/partialquotationlist-family.cshtml", quotereq);
         }

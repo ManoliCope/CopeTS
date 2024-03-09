@@ -22,6 +22,9 @@ namespace ProjectX.Entities.Models.ProductionBatch
         public string Gender { get; set; }
         public string PassportNumber { get; set; }
         public string Nationality { get; set; }
+        public string Country { get; set; }
+        public string Deductible { get; set; }
+        public string SportsActivities { get; set; }
         public decimal PremiumInUSD { get; set; }
         public decimal NetInUSD { get; set; }
         public string Status { get; set; }

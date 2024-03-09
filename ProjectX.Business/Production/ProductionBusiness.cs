@@ -53,7 +53,7 @@ namespace ProjectX.Business.Production
         public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
         {
             ProductionSaveResp response = new ProductionSaveResp();
-            var duplicateBeneficiary = req.beneficiaryData.GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
+            var duplicateBeneficiary = req.beneficiaryData.Where(b => b.insuredId != 0).GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
 
 
             if (req.Is_Individual && req.beneficiaryDetails.Count > 1)

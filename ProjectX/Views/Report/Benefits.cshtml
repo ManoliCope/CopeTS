@@ -2,91 +2,50 @@
 <link href="~/Content/assets/css/registercall.css" rel="stylesheet" asp-append-version="true" />
 
 <div class="content">
-    <div class="container-fluid" style="padding:10px 0">
-        <div class="row ">
-            <div id="calldiv" class="col-lg-12  mb-3">
-                <div class="card h-100 mb-0 pb-1">
-                    <div class="card-body card-body pb-0">
-                        <h4 class="card-title ">
-                            <i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
-                            Benefits Report
-                        </h4>
-                        <hr />
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card m-0" style="box-shadow:none !important">
-                                    <div id="searchform" class="card-body ">
+	<div class="container-fluid" style="padding:10px 0">
+		<div class="row ">
+			<div id="calldiv" class="col-lg-12  mb-3">
+				<div class="card h-100 mb-0 pb-1">
+					<div class="card-body card-body pb-0">
+						<h4 class="card-title ">
+							<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
+							Benefits Report
+						</h4>
+						<hr />
+						<div class="card m-0" style="box-shadow:none !important">
+							<div id="searchform" class="card-body ">
+								<div class="row mb-6">
+									<div class="col-md-3 mb-lg-0 mb-6">
+										<label>Users:</label>
+										<select class="form-control" name="userid" id="userid" field-name="users">
+											@*<option value=""> Select Sub Agent</option>*@
+											@foreach (var thislist in Model.loadedData.usersHierarchy)
+											{
+												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											}
+										</select>
+									</div>
+									<div class="col-md-6 mt-1">
+									</div>
+									<div class="col-md-3 mt-1">
+										<br />
+										<button class="btn bglocalcolor loadingthis" id="generatebenefits" data-toggle="tooltip"
+												data-original-title="Check dates!" style="width:100%">
+											<span>
+												<i class="la la-search"></i>
+												<span>Generate</span>
+											</span>
+										</button>&nbsp;&nbsp;
+									</div>
+								</div>
 
-                                        <div class="row mb-6">
-                                            <div class="col-md-3 mb-lg-0 mb-6" >
-                                                <label>Users:</label>
-                                                <select class="form-control" name="userid" id="userid" field-name="users" >
-                                                     @*<option value=""> Select Sub Agent</option>*@
-                                                     @foreach (var thislist in Model.loadedData.usersHierarchy)
-											        {
-											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											        }
-                                                </select> </div>
-                                             @*<div class="col-md-3 mb-lg-0 mb-6" >
-                                                <label>From:</label>
-                                                <input id="datefrom" type="date" class="form-control datatable-input required" value="" >
-                                            </div>
-                                            <div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>To:</label>
-                                                <input id="dateto" type="date" class="form-control datatable-input required" value="">
-                                            </div>*@
-
-                                        </div>
-
-                                        <div class="row mb-6">
-                                            @*<div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>Status:</label>
-                                                 <select class="form-control" name="benefitId" id="benefitId" field-name="benefits" required >
-                                
-                                 @foreach (var thislist in Model.loadedData.productionTabs)
-											        {
-											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											        }
-                                
-
-                            </select>
-                                            </div>
-                                            <div class="col-md-3 mb-lg-0 mb-6">
-                                               
-                                            </div>*@
-                                         
-                                            <div class="col-md-3 mt-1">
-                                                <div class="row mt-4">
-                                                    <div class="col-md-12">
-                                                        <button class="btn bglocalcolor loadingthis" id="generatebenefits" data-toggle="tooltip"
-                                                                data-original-title="Check dates!" style="width:100%">
-                                                            <span>
-                                                                <i class="la la-search"></i>
-                                                                <span>Generate</span>
-                                                            </span>
-                                                        </button>&nbsp;&nbsp;
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-8">
-                                            <div class="col-lg-9 mb-lg-0 mb-6">
-                                            </div>
-                                            <div class="col-lg-3">
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

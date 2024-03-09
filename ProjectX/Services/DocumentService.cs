@@ -95,9 +95,28 @@ namespace ProjectX.Services
 
             var htmlContent = _razorRendererHelper.RenderPartialToString(partialName, policyreponse);
             byte[] pdfBytes = ConvertHtmlToPDF(htmlContent);
-            //byte[] pdfBytes2 = ConvertHtmlToPDF(htmlContent);
+
+            byte[] pdfBytesBeneficiaries = null;
+            byte[] wBeneficiaryPdf = null;
+
+
+            if (policyreponse.PolicyDetails.Count > 1)
+            {
+                var htmlContentBeneficiaries = _razorRendererHelper.RenderPartialToString("/Views/PdfTemplate/PrintPolicyGroupBeneficiaries.cshtml", policyreponse);
+                pdfBytesBeneficiaries = ConvertHtmlToPDF(htmlContentBeneficiaries);
+
+                wBeneficiaryPdf = CombinePdfFiles(pdfBytes, pdfBytesBeneficiaries);
+            }
+            else
+                wBeneficiaryPdf = pdfBytes;
+
+
             //byte[] combinedPdf1 = CombinePdfFiles(pdfBytes, pdfBytes2);
             //return combinedPdf1;
+
+     
+
+
 
             try
             {
@@ -110,8 +129,8 @@ namespace ProjectX.Services
 
                 var userFullPath = Path.Combine(uploadsDirectory, userid.ToString(), "Conditions", UploadedCondition);
 
-                byte[] combinedPdf = CombinePdfFiles(pdfBytes, userFullPath);
-                return combinedPdf;
+                byte[] combinedPdfs = CombinePdfFiles(wBeneficiaryPdf, userFullPath);
+                return combinedPdfs;
             }
             catch (Exception ex)
             {
@@ -131,11 +150,11 @@ namespace ProjectX.Services
                 };
                 _generalBusiness.LogErrorToDatabase(logData);
 
-                return pdfBytes;
+                return wBeneficiaryPdf;
             }
 
         }
-        public byte[] CombinePdfFiles(byte[] pdfBytes1, byte[] pdfBytes2 )
+        public byte[] CombinePdfFiles(byte[] pdfBytes1, byte[] pdfBytes2)
         {
 
             using (MemoryStream combinedPdfStream = new MemoryStream())

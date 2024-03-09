@@ -8,7 +8,7 @@
 <head>
 	<style>
 		body {
-			font-family: Arial, sans-serif;
+			font-family: Calibri;
 			margin: 0px;
 			padding: 0px;
 			/*padding-top: 80px;*/
@@ -43,6 +43,11 @@
 			/*border: 0px solid #dddddd;*/
 		}
 
+		.benefitidv tr td {
+			line-height: 0.8
+		}
+
+
 		th, td {
 			/*border: 0px solid #dddddd;*/
 			padding: 4px;
@@ -53,8 +58,11 @@
 				font-size: 15px
 			}
 
-
-
+		.td15 {
+			width: 15%;
+			min-width: 15%;
+			max-width: 15%;
+		}
 
 		.td25 {
 			width: 25%;
@@ -97,6 +105,7 @@
 			width: 65%;
 			min-width: 65%;
 			max-width: 65%;
+			line-height: 0.2
 		}
 
 		.td70 {
@@ -110,6 +119,7 @@
 			min-width: 75%;
 			max-width: 75%;
 		}
+
 
 		th {
 			/*background-color: #f2f2f2;*/
@@ -217,8 +227,17 @@
 		}
 
 			.background-image img {
-				height: 1400px;
+				height: 1395px;
 			}
+
+
+		.benefitidv table tr:first-child td:first-child {
+			width: 70%;
+		}
+
+		.benefitidv table tr:first-child td:nth-child(2) {
+			width: 30%;
+		}
 	</style>
 </head>
 <body>
@@ -281,40 +300,7 @@
 			</table>
 
 
-			<h2 class="underlined-heading">Beneficiary:  Total # of Clients @Model.PolicyDetails.Count()</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>First Name</th>
-						<th>Middle Name</th>
-						<th>Last Name</th>
-						<th>Date of Birth</th>
-						<th>Age</th>
-						<th>Country of Residence</th>
-						<th>Passport N.</th>
-					</tr>
-				</thead>
-				<tbody>
-					@{
-						int count = 1;
-						foreach (var beneficiary in Model.PolicyDetails)
-						{
-							<tr>
-								<td>@count</td>
-								<td>@beneficiary.FirstName</td>
-								<td>@beneficiary.MiddleName</td>
-								<td>@beneficiary.LastName</td>
-								<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
-								<td>@beneficiary.Age</td>
-								<td>@beneficiary.CountryResidence</td>
-								<td>@beneficiary.PassportNo</td>
-							</tr>
-							count++;
-						}
-					}
-				</tbody>
-			</table>
+
 
 
 
@@ -352,114 +338,47 @@
 					bencount++;
 				}*@
 
+
 			<div class="benefitidv">
 				<h2 class="underlined-heading">Table of Benefits:</h2>
-				<table border="0">
+				<table border="0" style="width:100%">
 					<caption></caption>
 					<tr>
-						<th class="td65">Benefits</th>
-						<th class="td33">Limits</th>
-						@*<th>Excess/Deductible</th>*@
+						<th class="td35">Benefits</th>
+						<th class="td15">Limits</th>
+						<th class="td35">Benefits</th>
+						<th class="td15">Limits</th>
 					</tr>
-					@*max 10 per page*@
 
-					@*<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>
-						<tr>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-							<td class="td33">test</td>
-						</tr>*@
-
-
-
-
-
-					@foreach (var thislist in Model.Benefits)
+					@for (var i = 0; i < Model.Benefits.Count; i += 2)
 					{
 						<tr>
-							<td class="td65">@thislist.B_Title</td>
-							<td class="td33">@thislist.B_Limit</td>
-							@*<td class="td33">@thislist.B_Limit</td>*@
+							<td class="td35">@Model.Benefits[i].B_Title</td>
+							<td class="td15">@Model.Benefits[i].B_Limit</td>
+							@if (i + 1 < Model.Benefits.Count)
+							{
+								<td class="td35">@Model.Benefits[i + 1].B_Title</td>
+								<td class="td15">@Model.Benefits[i + 1].B_Limit</td>
+							}
+							else
+							{
+								<td class="td35"></td>
+								<td class="td15"></td>
+							}
 						</tr>
 					}
-					@*@foreach (var thislist in Model.AdditionalBenefits)
-						{
-							<tr>
-								<td class="td33">AB - @thislist.Name</td>
-								<td class="td33">@thislist.Price</td>
-							</tr>
-						}*@
 
 					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
 					{
 						<tr>
-							<td class="td65">AB - @group.First().Name</td>
-							<td class="td33">@group.First().Price</td>
+							<td class="td35">AB - @group.First().Name</td>
+							<td class="td15">@group.First().Price</td>
 						</tr>
 					}
 
-
 				</table>
 			</div>
+
 
 			<p>For more specific coverage, please refer to the terms and conditions attached with this certificate.</p>
 
@@ -519,12 +438,7 @@
 				</table>
 			}
 			<div class="box-container">
-				@*<div class="boxholder" style="float:right">
-						<label>Signature</label>
-						<div class="box">
-						</div>
-					</div>*@
-				<div class="boxholder" style="float:right">
+				<div class="boxholder" style="float:right;padding-right:15px">
 					<label>Signature</label>
 					<div>
 						@if (Model.Signature != "")

@@ -136,14 +136,14 @@ function drawtable(data) {
             { "title": "Limit", "className": "text-center filter", "orderable": true, "data": "b_Limit" },
             {
                 "data": 'id',
-                "className": "dt-center editor-edit",
+                "className": "dt-center editor-edit", "width": "20px",
                 "render": function (data, type, full) {
                     return `<a href="#" title="Edit" benid="` + full.b_Id + `" class="text-black-50" onclick="gotoben(this)"><i class="fas fa-edit pr-1"></i></a>`;
                 }
             },
             {
                 "data": 'id',
-                "className": "dt-center editor-edit",
+                "className": "dt-center editor-edit", "width": "20px",
                 "render": function (data, type, full, meta) {
                     return `<a href="#" title="Delete" benid="` + full.b_Id + `" class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.b_Id})"><i class="fas fa-times red"></i></a>`;
                 }

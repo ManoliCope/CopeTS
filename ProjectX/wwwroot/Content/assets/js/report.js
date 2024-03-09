@@ -2,6 +2,12 @@
 var projectname = checkurlserver();
 
 $(document).ready(function () {
+    var today = new Date();
+    var formattedToday = today.toISOString().split('T')[0];
+    $('input[type="date"]').each(function () {
+        // Set the maximum date attribute to today's date
+        $(this).attr("max", formattedToday);
+    });
 
     $('#generateproduction').click(function () {
         generateproduction();

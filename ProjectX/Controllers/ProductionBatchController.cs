@@ -97,8 +97,13 @@ namespace ProjectX.Controllers
                                     Gender = reader.GetValue(11).ToString() ?? "",
                                     PassportNumber = reader.GetValue(12).ToString() ?? "",
                                     Nationality = reader.GetValue(13).ToString() ?? "",
-                                    PremiumInUSD = Convert.ToDecimal(reader.GetValue(14)),
-                                    NetInUSD = Convert.ToDecimal(reader.GetValue(15))
+
+                                    Country = reader.GetValue(14).ToString() ?? "",
+                                    Deductible = reader.GetValue(15).ToString() ?? "",
+                                    SportsActivities = reader.GetValue(16).ToString() ?? "",
+
+                                    PremiumInUSD = Convert.ToDecimal(reader.GetValue(17)),
+                                    NetInUSD = Convert.ToDecimal(reader.GetValue(18))
                                 });
                             }
                         }

@@ -446,6 +446,9 @@ function drawproductionbatchtable(result) {
             { "title": "Gender", "className": "text-center filter", "orderable": true, "data": "gender" },
             { "title": "PassportNumber", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
             { "title": "Nationality", "className": "text-center filter", "orderable": true, "data": "nationality" },
+            { "title": "Country", "className": "text-center filter", "orderable": true, "data": "country" },
+            { "title": "Deductible", "className": "text-center filter", "orderable": true, "data": "deductible" },
+            { "title": "SportsActivities", "className": "text-center filter", "orderable": true, "data": "sportsActivities" },
             { "title": "PremiumInUSD", "className": "text-center filter", "orderable": true, "data": "premiumInUSD" },
             { "title": "NetInUSD", "className": "text-center filter", "orderable": true, "data": "netInUSD" }
             , { "title": "Reason", "className": "text-center filter", "orderable": true, "data": "reason" }

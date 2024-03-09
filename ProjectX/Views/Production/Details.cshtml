@@ -4,7 +4,10 @@
 	var productlist = ViewData["productlist"] as List<ProjectX.Entities.dbModels.TR_Product>;
 	var zonelist = ViewData["zonelist"] as List<ProjectX.Entities.dbModels.TR_Zone>;
 	var destinationlist = ViewData["destinationlist"] as List<ProjectX.Entities.dbModels.TR_Destinations>;
+
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var CreatedByUserRights = ViewData["CreatedByuserrights"] as ProjectX.Entities.Models.Users.UserRights;
+
 	var canedit = ViewData["canedit"] as string;
 	//canedit = "0";
 

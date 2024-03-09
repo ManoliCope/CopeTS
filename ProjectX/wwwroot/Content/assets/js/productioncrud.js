@@ -311,7 +311,7 @@ function populatebeneficiarydatatable(tablename, data) {
                 "className": "dt-center"
             },
             {
-                "title": "middle name",
+                "title": "Middle name",
                 "data": "bE_MiddleName",
                 "className": "dt-center"
             },
@@ -396,7 +396,7 @@ function populatebeneficiarydatatable(tablename, data) {
         ],
         "columnDefs": [
             {
-                "targets": [0, 1, 3, 7, 8, 9, 10],
+                "targets": [0, 1,3, 7, 8, 9, 10],
                 "visible": false,
             }
         ],
@@ -1115,23 +1115,23 @@ function getbeneficiarydetailsbak() {
 
 function getFullNameFromIndex(index) {
     var selectedtype = document.querySelector('input[name="type"]:checked');
-    var typeId = selectedtype ? selectedtype.id : '';
+    //var typeId = selectedtype ? selectedtype.id : '';
 
-    if (typeId === 'is_family' || typeId === 'is_group') {
-        const table = document.querySelector('.beneficiary-table');
-        const rows = table.querySelectorAll('tbody tr');
+    const table = document.querySelector('.beneficiary-table');
+    const rows = table.querySelectorAll('tbody tr');
 
-        if (index >= 0 && index < rows.length) {
-            const row = rows[index];
-            const firstName = row.querySelector('td:first-child').textContent.trim();
-            const lastName = row.querySelector('td:nth-child(2)').textContent.trim();
-            return `${firstName} ${lastName}`;
-        } else {
-            return 'Invalid index';
-        }
+    if (index >= 0 && index < rows.length) {
+        const row = rows[index];
+        const firstName = row.querySelector('td:first-child').textContent.trim();
+        const lastName = row.querySelector('td:nth-child(2)').textContent.trim();
+        return `${firstName} ${lastName}`;
+    } else {
+        return 'Invalid index';
     }
-    else
-        return `${$('.first_name').val()} ${$('.last_name').val()}`;
+    //if (typeId === 'is_family' || typeId === 'is_group') {
+    //}
+    //else
+    //    return `${$('.first_name').val()} ${$('.last_name').val()}`;
 }
 
 
@@ -1207,6 +1207,8 @@ function loadQuotePartialView(response) {
     var selectedtype = document.querySelector('input[name="type"]:checked');
     var typeId = selectedtype ? selectedtype.id : '';
 
+    var policyId = $(".editscreen").attr("pol-id")
+
     var newpolicy = 1
     if ($(".editscreen").attr("pol-id") > 0)
         newpolicy = 0;
@@ -1219,7 +1221,7 @@ function loadQuotePartialView(response) {
     $.ajax({
         url: projectname + '/Production/' + partialname,
         type: 'POST',
-        data: { quotereq: response, isnew: newpolicy },
+        data: { quotereq: response, isnew: newpolicy, polId: policyId },
         success: function (data) {
             $('.quotecontainer').html(data);
             $('.quotecontainer .incdate').html(convertDateFormat(travelinfo.from));
@@ -1239,7 +1241,7 @@ function loadQuotePartialView(response) {
             })
 
             triggercalculationfields()
-            //recalculateTotalPrice()
+            recalculateTotalPrice()
             setselectedfields()
             $(".result").removeClass("load")
 

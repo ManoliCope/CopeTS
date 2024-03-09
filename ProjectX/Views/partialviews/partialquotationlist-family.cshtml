@@ -2,6 +2,7 @@
 @{
 	Layout = null;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var CreatedByUserRights = ViewData["CreatedByuserrights"] as ProjectX.Entities.Models.Users.UserRights;
 
 	var hidepremium = "";
 	if (UserRights.Hide_Premium_Info == true)
@@ -168,6 +169,14 @@
 							<td id="additiononpremforeign" class="text-end">0.00 @UserRights.CurrencySymbol</td>
 						}
 					</tr>
+
+					@{
+						if (isnew != 1)
+						{
+							UserRights = CreatedByUserRights;
+						}
+					}
+
 					<tr class="@previewtotalonly">
 						<td>Tax/VAT</td>
 						<td id="taxvat" class="text-end" vt="@Convert.ToDecimal(UserRights.VAT + UserRights.Commission)">@(Model.QuotationResp.Where(x => x.RowId == 1).First().PriceAmount * (Convert.ToDecimal(UserRights.VAT + UserRights.Commission) / 100))</td>

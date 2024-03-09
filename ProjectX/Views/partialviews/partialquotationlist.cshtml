@@ -2,6 +2,7 @@
 @{
 	Layout = null;
 	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+	var CreatedByUserRights = ViewData["CreatedByuserrights"] as ProjectX.Entities.Models.Users.UserRights;
 
 	var hidepremium = "";
 	if (UserRights.Hide_Premium_Info == true)
@@ -51,8 +52,8 @@
 				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
 					<tbody>
 						<tr class="card-header">
-							<td>Full Name </td>
-							<td colspan="2">@item.Fullname</td>
+							<td>Full Namessss </td>
+							<td colspan="2"> test @item.Fullname</td>
 						</tr>
 						<tr>
 							<td>Plan</td>
@@ -132,6 +133,9 @@
 			}
 
 
+
+
+
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
 				<tbody>
 					<tr class="@shownet @previewtotalonly">
@@ -152,6 +156,14 @@
 							<td id="additiononpremforeign" class="text-end">0.00 @UserRights.CurrencySymbol</td>
 						}
 					</tr>
+
+					@{
+						if (isnew != 1)
+						{
+							UserRights = CreatedByUserRights;
+						}
+					}
+
 					<tr class="@previewtotalonly">
 						<td>Tax/VAT</td>
 
