@@ -106,7 +106,7 @@ $(document).ready(function () {
             getQuotation()
         }
     });
-
+        
 
     //$('.trgrthis.isselect2').on('select2:close', function () {
     //    alert('here')
@@ -119,11 +119,19 @@ $(document).ready(function () {
     $('#printButton').click(function () {
         showresponsemodalbyid('AsAgreed-popup')
     });
+    $('#emailButton').click(function () {
+        showresponsemodalbyid('email-popup')
+    });
 
 
     $('.asagreed button').click(function () {
         popupasagreed(this)
     });
+
+    $(".emailselection").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
 
 });
 
@@ -1442,4 +1450,60 @@ function handlemax(input) {
     if (enteredValue > maxValue) {
         input.value = maxValue.toFixed(2);
     }
+}
+
+$("#btnsendrequestemail").click(function () {
+
+    sendEmail(this);
+})
+
+function sendEmail(me) {
+    var idAction = $(me).attr("IdAction");
+    var files = $("#file-upload").files;
+
+    if (idAction == 3) {
+        if (!validateemailpopup()) {
+            return;
+        }
+        if (validateForm("#request-email")) {
+            return;
+        }
+        var to = $("#emailto").val().join(";");
+        var cc = $("#emailcc").val().join(";");
+        var subject = $("#emailsubject").val();
+        var body = $("#emailbody").val();
+        var withAttachments = $('#withAttachments').is(':checked');
+    }
+
+    var email =
+    {
+        "recipients": to,
+        "ccRecipients": cc,
+        "subject": subject,
+        "body": body,
+        "idCase": $("#calldiv").attr("caseid"),
+        "withAttachments": withAttachments
+    }
+
+    togglebtnloader($(me))
+
+    $.ajax({
+        type: 'Post',
+        url: projectname + "/case/SendEmail",
+        data: {
+            req: email, IdCaseEmailOption: idAction
+        },
+        success: function (result) {
+            showresponsemodal(result.statusCode.code, result.statusCode.message)
+            removebtnloader($(me))
+        },
+        failure: function (data, success, failure) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("Error:" + failure);
+        },
+        error: function (data) {
+            showresponsemodal("Error", "Bad Request")
+            //alert("fail");
+        }
+    });
 }

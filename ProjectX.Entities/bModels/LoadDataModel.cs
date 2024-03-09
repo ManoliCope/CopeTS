@@ -27,6 +27,7 @@ namespace ProjectX.Entities.bModels
         public List<LookUpp> agents { get; set; }
         public List<LookUpp> subagents { get; set; }
         public List<LookUpp> usersHierarchy { get; set; }
+        public List<LookUpp> assignedUsers { get; set; }
         
     }
 }

@@ -17,11 +17,25 @@
                                 <div class="card m-0" style="box-shadow:none !important">
                                     <div id="searchform" class="card-body ">
                                         <div class="row mb-6">
-                                            <div class="col-md-3 mb-lg-0 mb-6">
-                                                <label>Packages:</label>
-                                                 <select class="form-control" name="packageId" id="packageId" field-name="package" required >
-                                 <option value=""> Select Package</option>
-                                 @foreach (var thislist in Model.loadedData.packages)
+                                               <div class="col-md-3 mb-lg-0 mb-6">
+                                                <label>Users:</label>
+                                                 <select class="form-control" name="userId" id="assignedUserId" field-name="user" required >
+                                 <option value=""> Select User</option>
+                                 @foreach (var thislist in Model.loadedData.assignedUsers)
+											        {
+											        	<option prid="@thislist.LK_ParentID" value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                                
+
+                            </select>
+                                            </div>
+                                      
+                                            
+                                               <div class="col-md-3 mb-lg-0 mb-6">
+                                                <label>Products:</label>
+                                                 <select class="form-control" name="productId" id="tproductId" field-name="product" required >
+                                 <option value=""> Select Product</option>
+                                 @foreach (var thislist in Model.loadedData.products)
 											        {
 											        	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
 											        }
@@ -29,9 +43,21 @@
 
                             </select>
                                             </div>
+                                                  <div class="col-md-3 mb-lg-0 mb-6">
+                                                <label>Packages:</label>
+                                                 <select class="form-control" name="packageId" id="tpackageId" field-name="package" required >
+                                 <option value=""> Select Package</option>
+                                 @foreach (var thislist in Model.loadedData.packages)
+											        {
+											        	<option prid="@thislist.LK_ParentID" value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+											        }
+                                
+
+                            </select>
+                                            </div> 
                                              <div class="col-md-3 mb-lg-0 mb-6">
                                                 <label>Plans:</label>
-                                                 <select class="form-control" name="planId" id="planId" field-name="plan" required >
+                                                 <select class="form-control" name="planId" id="tplanId" field-name="plan" required >
                                  <option value=""> Select Plan</option>
                                  @foreach (var thislist in Model.loadedData.plans)
 											        {

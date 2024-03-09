@@ -25,6 +25,33 @@ $(document).ready(function () {
     $('#generatetariff').click(function () {
         generatetariff();
     });
+    $('#assignedUserId').change(function () {
+        var prid = $('#assignedUserId option:selected').attr('prid');
+        $('#tproductId option').each(function () {
+            if ($(this).val() == prid) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+    $('#tproductId').change(function () {
+        var prid = $(this).val();
+        $('#assignedUserId option').each(function () {
+            if ($(this).attr('prid') == prid) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+        $('#tpackageId option').each(function () {
+            if ($(this).attr('prid') == prid) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
 });
 
 function generatebenefits() {
@@ -127,12 +154,14 @@ function generatecurrencies() {
 }
 function generatetariff() {
 
-    var plan = $('#planId').val();
-    var package = $('#packageId').val();
+    var plan = $('#pplanId').val();
+    var package = $('#ppackageId').val();
+    var user = $('#assignedUser').val();
+    var product = $('#pproductId').val();
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateTariff",
-        data: { plan: plan, package: package },
+        data: { planid: plan, packageid: package, assignedid:user,productid:product },
         xhrFields: {
             responseType: 'blob'
         },

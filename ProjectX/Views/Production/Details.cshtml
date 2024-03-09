@@ -366,3 +366,74 @@
 		</div>
 	</div>
 </div>
+
+@*<div id="email-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle"> Send Policy</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body container-fluid asagreed">
+
+				<button type="button" class="btn  bglocalcolor border" prttyp="1" data-dismiss="modal">Send</button>
+			</div>
+		</div>
+	</div>
+</div>*@
+<div class="modal fade" id="email-popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Send Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-1">
+                    <label for="emailto">To</label>
+                    <select id="emailto" class="form-control emailselection" multiple="multiple">
+                    </select>
+
+
+                </div>
+                @*<div class="form-group mb-3 col-lg-4">
+                        <label for="invoiceAmount">Invoice Amount</label>
+                        <input type="text" class="form-control hasnumber" id="invoiceAmount" value="@Model.Case.InvoiceAmount" onfocusout="refreshNetAmount()" required />
+                    </div>*@
+
+                <div class="form-group mb-3">
+                    <label for="emailcc">CC</label>
+                    @*<span class="input-group-text">CC</span>*@
+                    @*<input id="emailcc" type="text" class="form-control hasemail">*@
+                    <select id="emailcc" class="form-control emailselection" multiple="multiple">
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Subject</span>
+                    <input id="emailsubject" type="text" class="form-control" required>
+                </div>
+                <div class="input-group mb-3">
+                    <textarea id="emailbody" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="input-group mb-4">
+
+                    <input id="withAttachments" type="checkbox" class="form-check-input">
+
+                    <label id="withAttachmentsLabel" for="withAttachments">With Attachments</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+
+                @*<label for="withAttachments">With Attachments</label>*@
+                <button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+                <div id="thisloader" class="smloader hide"></div>
+                <button id="btnsendrequestemail" IdAction="3" type="button" class="btn btn-danger">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

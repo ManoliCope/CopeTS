@@ -14,6 +14,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Transactions;
+using ProjectX.Entities.Models.Emails;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace ProjectX.Repository.EmailRepository
 {
@@ -25,6 +28,47 @@ namespace ProjectX.Repository.EmailRepository
         {
             _appSettings = appIdentitySettingsAccessor.Value;
         }
+
+        public SendMailListResponse SendEmail(SendMailListRequest request)
+        {
+            try
+            {
+                var resp = new SendMailListResponse();
+                HttpClient client = new HttpClient();
+                var json = JsonConvert.SerializeObject(new SendMailListRequest()
+                {
+                    ApiKey = _appSettings.EmailXMLSettings.ApiKey,
+                    ProjectId = Convert.ToInt32(_appSettings.EmailXMLSettings.ProjectId),
+                    EmailId = 1,
+                    EmailRequestList = request.EmailRequestList
+                });
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                client.BaseAddress = new Uri("http://172.27.8.219:4027/api/SendBulkEmails");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.PostAsync("", data).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseJsonString = response.Content.ReadAsStringAsync().Result;
+                    if (!string.IsNullOrEmpty(responseJsonString))
+                    {
+                        resp = JsonConvert.DeserializeObject<SendMailListResponse>(responseJsonString);
+                        //if (resp.Status == 1)
+                        //{ 
+
+                        //}
+                    }
+                }
+                return resp;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+        }
+
+
 
         public Exception SendMailNew(string subject, string body, List<MailAttachment> Attachments, string sender, string displayName, string receivers,
        string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail,int emailID)
@@ -201,5 +245,52 @@ namespace ProjectX.Repository.EmailRepository
             public int EmailId { get; set; }
 
         }
-    }
+
+
+
+
+        public async Task SendEmailSMTP(string[] args)
+        {
+            // SMTP server settings
+            string smtpServer = _appSettings.emailSettings.Host;
+            int port = _appSettings.emailSettings.Port; // SMTP port (587 is commonly used for TLS/STARTTLS)
+            string username = _appSettings.emailSettings.Username;
+            string password = _appSettings.emailSettings.Pass;
+
+            // Sender and recipient addresses
+            string senderEmail = _appSettings.emailSettings.Sender;
+            string recipientEmail = "mohammad97tormos@gmail.com";
+
+            // Email content
+            string subject = "Test Email";
+            string body = "This is a test email sent from .NET Core.";
+
+            // Create and configure the SMTP client
+            using (SmtpClient smtpClient = new SmtpClient(smtpServer, port))
+            {
+                smtpClient.EnableSsl = true; // Set to true if your SMTP server requires SSL/TLS
+                smtpClient.Credentials = new NetworkCredential(username, password);
+
+                // Create the email message
+                MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
+                mailMessage.IsBodyHtml = false; // Set to true if your email body is HTML
+
+                try
+                {
+                    // Send the email
+                    await smtpClient.SendMailAsync(mailMessage);
+                    Console.WriteLine("Email sent successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to send email: {ex.Message}");
+                }
+            }
+        }
+    
+
+
+
+
+}
 }
