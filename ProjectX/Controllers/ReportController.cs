@@ -187,10 +187,10 @@ namespace ProjectX.Controllers
             return ExporttoExcel(dataTable, "Production");
         } 
         [HttpPost]
-        public IActionResult GenerateTariff(int planid,int packageid,int assignedid, int productid)
+        public IActionResult GenerateTariff(int planid, int packageid, int assignedid, int productid)
         {
             GetReportResp result = new GetReportResp();
-            result.reportData = _reportBusiness.GenerateTariff(_user.U_Id, planid, packageid, assignedid, productid);
+            result.reportData = _reportBusiness.GenerateTariff(_user.U_Id, packageid, planid, assignedid, productid);
             DataTable dataTable = ConvertToDataTable(result.reportData);
             return ExporttoExcel(dataTable, "Production");
         } 
@@ -206,6 +206,10 @@ namespace ProjectX.Controllers
         public LoadDataResp getChildren(int userid)
         {
             return _reportBusiness.getChildren(userid);
+        }
+         public LoadDataResp getProducts(int userid)
+        {
+            return _reportBusiness.getProducts(userid);
         }
 
     }

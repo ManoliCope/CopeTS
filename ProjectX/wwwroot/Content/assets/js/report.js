@@ -25,25 +25,51 @@ $(document).ready(function () {
     $('#generatetariff').click(function () {
         generatetariff();
     });
+    $('#resettariff').click(function () {
+        resettariff();
+    });
     $('#assignedUserId').change(function () {
-        var prid = $('#assignedUserId option:selected').attr('prid');
-        $('#tproductId option').each(function () {
-            if ($(this).val() == prid) {
-                $(this).show();
-            } else {
-                $(this).hide();
+       // var prid = $('#assignedUserId option:selected').attr('prid');
+        var selectedUserId = $(this).val();
+        var productsDropdown = document.getElementById("tproductId");
+
+        $.ajax({
+            type: 'GET',
+            url: projectname + "/Report/getProducts",
+            data: { userid: selectedUserId },
+            success: function (response) {
+                productsDropdown.innerHTML = "<option value=''>Select Product</option>";
+
+                var products = response.loadedData.products;
+                products.forEach(product => {
+                    var option = document.createElement("option");
+                    option.value = product.lK_ID;
+                    option.text = product.lK_TableField;
+                    productsDropdown.add(option);
+                });
+            },
+            error: function (error) {
+                console.error("Error getting products:", error);
             }
         });
+
+        //$('#tproductId option').each(function () {
+        //    if ($(this).val() == prid) {
+        //        $(this).show();
+        //    } else {
+        //        $(this).hide();
+        //    }
+        //});
     });
     $('#tproductId').change(function () {
         var prid = $(this).val();
-        $('#assignedUserId option').each(function () {
-            if ($(this).attr('prid') == prid) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
+        //$('#assignedUserId option').each(function () {
+        //    if ($(this).attr('prid') == prid) {
+        //        $(this).show();
+        //    } else {
+        //        $(this).hide();
+        //    }
+        //});
         $('#tpackageId option').each(function () {
             if ($(this).attr('prid') == prid) {
                 $(this).show();
@@ -154,10 +180,10 @@ function generatecurrencies() {
 }
 function generatetariff() {
 
-    var plan = $('#pplanId').val();
-    var package = $('#ppackageId').val();
-    var user = $('#assignedUser').val();
-    var product = $('#pproductId').val();
+    var plan = $('#tplanId').val();
+    var package = $('#tpackageId').val();
+    var user = $('#assignedUserId').val();
+    var product = $('#tproductId').val();
     $.ajax({
         type: 'POST',
         url: projectname + "/Report/GenerateTariff",
@@ -259,6 +285,10 @@ function loadChildren() {
     } else 
         childrenDropdown.innerHTML = "<option value=''>Select Sub Agent</option>";
 
+}
+
+function resettariff() {
+    location.reload();
 }
 
 

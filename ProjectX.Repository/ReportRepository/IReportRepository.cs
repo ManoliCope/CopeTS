@@ -15,6 +15,7 @@ namespace ProjectX.Repository.ReportRepository
         public List<dynamic> GenerateCurrencies(int userid, int req);
         public List<dynamic> GenerateManualPolicies(int batchid);
         public LoadDataModel getChildren(int userid);
+        public LoadDataModel getProducts(int userid);
         public List<dynamic> GenerateTariff(int userid, int packageid, int planid, int assignedid, int productid);
     }
 }

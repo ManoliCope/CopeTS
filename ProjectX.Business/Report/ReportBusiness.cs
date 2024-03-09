@@ -47,7 +47,7 @@ namespace ProjectX.Business.Report
 
         {
             
-            return _reportRepository.GenerateTariff(userid, packageid, planid,assignedid,productid);
+            return _reportRepository.GenerateTariff(userid, packageid, planid, assignedid, productid);
         }
         public List<dynamic> GenerateManualPolicies(int batchid)
 
@@ -59,6 +59,12 @@ namespace ProjectX.Business.Report
         {
             LoadDataResp response = new LoadDataResp();
             response.loadedData = _reportRepository.getChildren(userid);
+            return response;
+        }
+           public LoadDataResp getProducts(int userid)
+        {
+            LoadDataResp response = new LoadDataResp();
+            response.loadedData = _reportRepository.getProducts(userid);
             return response;
         }
 

@@ -162,6 +162,23 @@ namespace ProjectX.Repository.ReportRepository
 
             return resp;
         }
+        public LoadDataModel getProducts(int userid)
+        {
+            LoadDataModel resp = new LoadDataModel();
+            //return resp;
+            var param = new DynamicParameters();
+            param.Add("@userid",userid);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("tr_getProducts", param, commandTimeout: null, commandType: CommandType.StoredProcedure))
+                {
+                        resp.products = result.Read<LookUpp>().ToList();
+                }
+            }
+
+            return resp;
+        }
 
     }
 }
