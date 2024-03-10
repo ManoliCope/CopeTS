@@ -395,16 +395,22 @@
 						<tr>
 							<th></th>
 							<th>USD</th>
-							<th>@Model.CurrencyRate.CurrencySymbol</th>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<th>@Model.CurrencyRate.CurrencySymbol</th>
+							}
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="td33">Premium:</td>
 							<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td class="td33">
+									@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
+								</td>
+							}
 
 						</tr>
 						@*<tr>
@@ -413,26 +419,42 @@
 								<td class="td33">
 								</td>
 							</tr>*@
-						<tr>
-							<td class="td33">Stamps / Insurance Tax:</td>
-							<td class="td33">@Model.StampsValue</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
-						</tr>
-						<tr>
-							<td class="td33">VAT:</td>
-							<td class="td33">@Model.TaxVATValue</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
-						</tr>
+						@if (Model.StampsValue > 0)
+						{
+							<tr>
+								<td class="td33">Stamps / Insurance Tax:</td>
+								<td class="td33">@Model.StampsValue</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
+							</tr>
+						}
+						@if (Model.TaxVATValue > 0)
+						{
+
+							<tr>
+								<td class="td33">VAT:</td>
+								<td class="td33">@Model.TaxVATValue</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
+							</tr>
+						}
 						<tr>
 							<td class="td33">Total Premium:</td>
 							<td class="td33">@Model.GrandTotal</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td class="td33">
+									@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
+								</td>
+							}
 						</tr>
 					</tbody>
 				</table>

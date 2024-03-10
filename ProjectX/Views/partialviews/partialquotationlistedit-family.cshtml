@@ -233,13 +233,30 @@
 	</div>
 </div>
 
-@if (!Model.IsCanceled)
-{
-	@if ((Model.IsEditable) || is_admin == "True")
+
+
+<div class="row">
+	@if (!Model.IsCanceled)
 	{
-		<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>
+			@if ((Model.IsEditable) || is_admin == "True")
+			{
+				<div class="col-6">
+					<button id="sendButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Save/Update</button>
+				</div>
+				<div class="col-6">
+					<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>
+				</div>
+			}
+			else
+			{
+				<div class="col-12">
+					<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>
+				</div>
+			}
+		@*<div class="col-12">
+			<button id="emailButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Send Email</button>
+		</div>*@
 	}
 
-	<button id="printButton" class="mt-3 w-100 btn btn-md btn-primary btn-submit">Print</button>
-}
+</div>
 

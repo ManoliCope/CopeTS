@@ -43,8 +43,8 @@
 			/*border: 0px solid #dddddd;*/
 		}
 
-		.benefitidv tr td{
-			line-height:0.8
+		.benefitidv tr td {
+			line-height: 0.8
 		}
 
 
@@ -105,7 +105,7 @@
 			width: 65%;
 			min-width: 65%;
 			max-width: 65%;
-			line-height:0.2
+			line-height: 0.2
 		}
 
 		.td70 {
@@ -326,11 +326,11 @@
 					<td class="td25"><label id="age">@Model.PolicyDetails.First().Age</label></td>
 				</tr>
 				@*<tr>
-				<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
-				<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
-				<td class="td25"></td>
-				<td class="td25"></td>
-			</tr>*@
+						<td class="td25"><label for="telephoneNumber">Telephone N.:</label></td>
+						<td class="td25"><label id="telephoneNumber">Unkonw</label></td>
+						<td class="td25"></td>
+						<td class="td25"></td>
+					</tr>*@
 			</table>
 
 
@@ -376,29 +376,29 @@
 			</div>
 
 			@*<div class="benefitidv">
-				<h2 class="underlined-heading">Table of Benefits:</h2>
-				<table border="0" style="width:100%">
-					<caption></caption>
-					<tr>
-						<th class="td65">Benefits</th>
-						<th class="td33">Limits</th>
-					</tr>
-					@foreach (var thislist in Model.Benefits)
-					{
+					<h2 class="underlined-heading">Table of Benefits:</h2>
+					<table border="0" style="width:100%">
+						<caption></caption>
 						<tr>
-							<td class="td65">@thislist.B_Title</td>
-							<td class="td33">@thislist.B_Limit</td>
+							<th class="td65">Benefits</th>
+							<th class="td33">Limits</th>
 						</tr>
-					}
-					@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
-					{
-						<tr>
-							<td class="td65">AB - @group.First().Name</td>
-							<td class="td33">@group.First().Price</td>
-						</tr>
-					}
-				</table>
-			</div>*@
+						@foreach (var thislist in Model.Benefits)
+						{
+							<tr>
+								<td class="td65">@thislist.B_Title</td>
+								<td class="td33">@thislist.B_Limit</td>
+							</tr>
+						}
+						@foreach (var group in Model.AdditionalBenefits.GroupBy(ab => new { ab.AB_ID, ab.Price, ab.Name }))
+						{
+							<tr>
+								<td class="td65">AB - @group.First().Name</td>
+								<td class="td33">@group.First().Price</td>
+							</tr>
+						}
+					</table>
+				</div>*@
 
 			<p>For more specific coverage, please refer to the terms and conditions attached with this certificate.</p>
 
@@ -426,44 +426,65 @@
 						<tr>
 							<th></th>
 							<th>USD</th>
-							<th>@Model.CurrencyRate.CurrencySymbol</th>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<th>@Model.CurrencyRate.CurrencySymbol</th>
+							}
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="td33">Premium:</td>
 							<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td class="td33">
+									@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
+								</td>
+							}
 
 						</tr>
 						@*<tr>
-						<td class="td33">Issuing / Gov.fees:</td>
-						<td class="td33">@Model.StampsValue</td>
-						<td class="td33">
-						</td>
-					</tr>*@
-						<tr>
-							<td class="td33">Stamps / Insurance Tax:</td>
-							<td class="td33">@Model.StampsValue</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
-						</tr>
-						<tr>
-							<td class="td33">VAT:</td>
-							<td class="td33">@Model.TaxVATValue</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
-						</tr>
+								<td class="td33">Issuing / Gov.fees:</td>
+								<td class="td33">@Model.StampsValue</td>
+								<td class="td33">
+								</td>
+							</tr>*@
+						@if (Model.StampsValue > 0)
+						{
+							<tr>
+								<td class="td33">Stamps / Insurance Tax:</td>
+								<td class="td33">@Model.StampsValue</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", Model.StampsValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
+							</tr>
+						}
+						@if (Model.TaxVATValue > 0)
+						{
+							<tr>
+								<td class="td33">VAT:</td>
+								<td class="td33">@Model.TaxVATValue</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", Model.TaxVATValue * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
+							</tr>
+						}
 						<tr>
 							<td class="td33">Total Premium:</td>
 							<td class="td33">@Model.GrandTotal</td>
-							<td class="td33">
-								@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
-							</td>
+							@if (Model.CurrencyRate.CurrencySymbol != "USD")
+							{
+								<td class="td33">
+									@String.Format("{0:0.00}", Model.GrandTotal * Convert.ToDecimal(Model.CurrencyRate.Rate))
+								</td>
+							}
 						</tr>
 					</tbody>
 				</table>
