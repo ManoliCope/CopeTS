@@ -112,9 +112,9 @@ namespace ProjectX.Services
 
 
             //byte[] combinedPdf1 = CombinePdfFiles(pdfBytes, pdfBytes2);
-            //return combinedPdf1;
+            return wBeneficiaryPdf;
 
-     
+
 
 
 

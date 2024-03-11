@@ -28,6 +28,13 @@
 			margin-bottom: 3px;
 		}
 
+			.underlined-heading span {
+				font-size: 16px;
+				float: right
+			}
+
+
+
 		h1.mainheader {
 			text-align: center;
 		}
@@ -53,76 +60,6 @@
 				font-size: 15px
 			}
 
-
-		.benefitidv tr td {
-			line-height: 0.8
-		}
-
-
-		.td15 {
-			width: 15%;
-			min-width: 15%;
-			max-width: 15%;
-		}
-
-		.td25 {
-			width: 25%;
-			min-width: 25%;
-			max-width: 25%;
-		}
-
-		.td33 {
-			width: 33%;
-			min-width: 33%;
-			max-width: 33%;
-		}
-
-
-		.td35 {
-			width: 35%;
-			min-width: 35%;
-			max-width: 35%;
-		}
-
-		.td40 {
-			width: 40%;
-			min-width: 40%;
-			max-width: 40%;
-		}
-
-		.td45 {
-			width: 45%;
-			min-width: 45%;
-			max-width: 45%;
-		}
-
-		.td50 {
-			width: 50%;
-			min-width: 50%;
-			max-width: 50%;
-		}
-
-		.td65 {
-			width: 65%;
-			min-width: 65%;
-			max-width: 65%;
-		}
-
-		.td70 {
-			width: 70%;
-			min-width: 70%;
-			max-width: 70%;
-		}
-
-		.td75 {
-			width: 75%;
-			min-width: 75%;
-			max-width: 75%;
-		}
-
-		th {
-			/*background-color: #f2f2f2;*/
-		}
 
 		p {
 			margin-bottom: 20px;
@@ -154,7 +91,7 @@
 			margin-right: 50px;
 			border: 2px solid transparent;
 			background: transparent;
-			padding-top: 100px;
+			padding-top: 110px;
 		}
 
 		.box-container {
@@ -163,44 +100,7 @@
 			margin-top: 20px;
 		}
 
-		.box {
-			width: 150px;
-			height: 60px;
-			border: 1px solid #dddddd;
-			padding: 10px;
-		}
 
-			.box label {
-				display: block;
-				text-align: center;
-				margin-bottom: 50px;
-			}
-
-		.printheader, .printfooter {
-			width: 100%;
-			height: 80px
-		}
-
-		.benefitidv {
-			/*height: 500px*/
-		}
-
-
-		.header {
-			top: 0;
-			left: 0;
-			right: 0;
-			height: 80px;
-			width: 80%;
-		}
-
-
-		.footer {
-			bottom: 0;
-			width: 100%;
-			color: white;
-			text-align: center;
-		}
 
 		body, html {
 			height: 100%;
@@ -237,40 +137,65 @@
 		</div>
 
 		<div class="container">
-				<h2 class="underlined-heading">Beneficiary:  Total # of Clients @Model.PolicyDetails.Count()</h2>
-				<table>
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>First Name</th>
-							<th>Middle Name</th>
-							<th>Last Name</th>
-							<th>Date of Birth</th>
-							<th>Age</th>
-							<th>Country of Residence</th>
-							<th>Passport N.</th>
-						</tr>
-					</thead>
-					<tbody>
-						@{
-							int count = 1;
-							foreach (var beneficiary in Model.PolicyDetails)
-							{
-								<tr>
-									<td>@count</td>
-									<td>@beneficiary.FirstName</td>
-									<td>@beneficiary.MiddleName</td>
-									<td>@beneficiary.LastName</td>
-									<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
-									<td>@beneficiary.Age</td>
-									<td>@beneficiary.CountryResidence</td>
-									<td>@beneficiary.PassportNo</td>
-								</tr>
-								count++;
-							}
+			<div class="headertitle">
+				<div style="width: 33.33%; float: left;">
+					&nbsp;
+				</div>
+				<div style="width: 33.33%; float: left; text-align:center">
+					<span>
+						Policy N.: <label id="policyNumber">@Model.Reference</label>
+					</span>
+				</div>
+				<div style="width: 33.33%; float: left;">
+
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+
+			<h2 class="underlined-heading">Beneficiary: <span>Total # of Clients: @Model.PolicyDetails.Count()</span></h2>
+			<table>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>First Name</th>
+						<th>Middle Name</th>
+						<th>Last Name</th>
+						<th>Date of Birth</th>
+						<th>Age</th>
+						<th>Country</th>
+						<th>Passport N.</th>
+						@if (Model.IsGroup)
+						{
+							<th>Sports</th>
+							<th>Deductbile</th>
 						}
-					</tbody>
-				</table>
+					</tr>
+				</thead>
+				<tbody>
+					@{
+						int count = 1;
+						foreach (var beneficiary in Model.PolicyDetails)
+						{
+							<tr>
+								<td>@count</td>
+								<td>@beneficiary.FirstName</td>
+								<td>@beneficiary.MiddleName</td>
+								<td>@beneficiary.LastName</td>
+								<td>@beneficiary.DateOfBirth.ToString("dd-MM-yyyy")</td>
+								<td>@beneficiary.Age</td>
+								<td>@beneficiary.CountryResidence</td>
+								<td>@beneficiary.PassportNo</td>
+								@if (Model.IsGroup)
+								{
+									<td>@(beneficiary.SportsActivities ? "Included":"Not Included")</td>
+									<td>@(beneficiary.Deductible ? "Included":"Not Included")</td>
+								}
+							</tr>
+							count++;
+						}
+					}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>
