@@ -1454,48 +1454,47 @@ function handlemax(input) {
 
 $("#btnsendrequestemail").click(function () {
 
-    sendEmail(this);
+    sendPolicyByEmail(this);
 })
 
-function sendEmail(me) {
-    var idAction = $(me).attr("IdAction");
-    var files = $("#file-upload").files;
-
-    if (idAction == 3) {
-        if (!validateemailpopup()) {
-            return;
-        }
-        if (validateForm("#request-email")) {
-            return;
-        }
-        var to = $("#emailto").val().join(";");
-        var cc = $("#emailcc").val().join(";");
-        var subject = $("#emailsubject").val();
-        var body = $("#emailbody").val();
-        var withAttachments = $('#withAttachments').is(':checked');
-    }
-
-    var email =
-    {
-        "recipients": to,
-        "ccRecipients": cc,
-        "subject": subject,
-        "body": body,
-        "idCase": $("#calldiv").attr("caseid"),
-        "withAttachments": withAttachments
-    }
-
-    togglebtnloader($(me))
-
+function sendPolicyByEmail(me) {
+    showscreenloader("load")
+    var policyId = $(".editscreen").attr("pol-id");
+    var to = $("#emailto").val().join(";");
+    var cc = $("#emailcc").val().join(";");
+    var printType = $('input[type="radio"][name="attachmentType"]:checked').val();
     $.ajax({
         type: 'Post',
-        url: projectname + "/case/SendEmail",
+        url: projectname + "/pdf/getPolicyAttachmentByte",
         data: {
-            req: email, IdCaseEmailOption: idAction
+            ii: policyId, prttyp: printType
         },
         success: function (result) {
-            showresponsemodal(result.statusCode.code, result.statusCode.message)
-            removebtnloader($(me))
+            var attachment = result;
+
+           $.ajax({
+                type: 'Post',
+               url: projectname + "/Production/SendPolicyByEmail",
+                data: {
+                    to: to, cc: cc, attachment: attachment
+                },
+               success: function (result) {
+                  // alert('sent');
+                   removescreenloader();
+                    showresponsemodal(result.statusCode.code, result.statusCode.message)
+                    //removebtnloader($(me))
+                },
+                failure: function (data, success, failure) {
+                    (result.statusCode.code, result.statusCode.message)
+                    //alert("Error:" + failure);
+                },
+                error: function (data) {
+                    showresponsemodal("Error", "Bad Request")
+                    //alert("fail");
+                }
+            });
+
+
         },
         failure: function (data, success, failure) {
             showresponsemodal("Error", "Bad Request")
@@ -1506,4 +1505,40 @@ function sendEmail(me) {
             //alert("fail");
         }
     });
+
+
+
+
+
+    //var idAction = $(me).attr("IdAction");
+    //var files = $("#file-upload").files;
+
+    //if (idAction == 3) {
+    //    if (!validateemailpopup()) {
+    //        return;
+    //    }
+    //    if (validateForm("#request-email")) {
+    //        return;
+    //    }
+
+
+
+      
+    //    //var subject = $("#emailsubject").val();
+    //    //var body = $("#emailbody").val();
+    //    var withAttachments = $('#withAttachments').is(':checked');
+    //}
+
+    //var email =
+    //{
+    //    "recipients": to,
+    //    "ccRecipients": cc,
+    //    "subject": subject,
+    //    "body": body,
+    //    "idCase": $("#calldiv").attr("caseid"),
+    //    "withAttachments": withAttachments
+    //}
+
+    //togglebtnloader($(me))
+
 }

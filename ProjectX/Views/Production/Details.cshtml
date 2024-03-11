@@ -245,6 +245,9 @@
 									<span class="float-left ">
 										Quotation
 									</span>
+									<button class="btn btn-primary btn-circle float-right" id="emailButton">
+										 <i class="fas fa-envelope"></i>
+									 </button>
 								</h4>
 							</div>
 							<div class="card-body result ">
@@ -412,19 +415,31 @@
                     <select id="emailcc" class="form-control emailselection" multiple="multiple">
                     </select>
                 </div>
-                <div class="input-group mb-3">
+              @*  <div class="input-group mb-3">
                     <span class="input-group-text">Subject</span>
                     <input id="emailsubject" type="text" class="form-control" required>
                 </div>
                 <div class="input-group mb-3">
                     <textarea id="emailbody" class="form-control" rows="4" required></textarea>
-                </div>
-                <div class="input-group mb-4">
+                </div>*@
+              @*  <div class="input-group mb-4">
 
                     <input id="withAttachments" type="checkbox" class="form-check-input">
 
                     <label id="withAttachmentsLabel" for="withAttachments">With Attachments</label>
-                </div>
+                </div>*@
+				<div class="form-group mb-3">
+        @*<label>Policy Attachment Type:</label>*@
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="attachmentType" id="withPremium" value="1" checked>
+            <label class="form-check-label" for="withPremium">With Premium</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="attachmentType" id="asAgreed" value="2">
+            <label class="form-check-label" for="asAgreed">As Agreed</label>
+        </div>
+    </div>
+				
             </div>
             <div class="modal-footer">
 

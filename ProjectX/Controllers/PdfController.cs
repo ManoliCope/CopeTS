@@ -113,7 +113,15 @@ namespace ProjectX.Controllers
             var pdfFile = _documentService.GeneratePdfFromRazorView(ii, prttyp, printingdirection, requesturl);
             return File(pdfFile, "application/octet-stream", "PrintPolicy.pdf");
         }
+        public byte[] getPolicyAttachmentByte(int ii, int prttyp)
+        {
+            string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + ii + "&prttyp=" + prttyp).Base64Image;
 
+            var pdfFile = _documentService.GeneratePdfFromRazorView(ii, prttyp, printingdirection, requesturl);
+
+            return pdfFile;
+        }
 
 
         public class QRCodeModel
