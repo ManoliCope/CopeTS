@@ -249,8 +249,9 @@ namespace ProjectX.Repository.EmailRepository
 
 
 
-        public async Task SendEmailSMTP(string[] args)
+        public async Task<bool> SendEmailSMTP(SendEmailRequest request)
         {
+           
             // SMTP server settings
             string smtpServer = _appSettings.emailSettings.Host;
             int port = _appSettings.emailSettings.Port; // SMTP port (587 is commonly used for TLS/STARTTLS)
@@ -259,12 +260,7 @@ namespace ProjectX.Repository.EmailRepository
 
             // Sender and recipient addresses
             string senderEmail = _appSettings.emailSettings.Sender;
-            string recipientEmail = "mohammad97tormos@gmail.com";
-
-            // Email content
-            string subject = "Test Email";
-            string body = "This is a test email sent from .NET Core.";
-
+            
             // Create and configure the SMTP client
             using (SmtpClient smtpClient = new SmtpClient(smtpServer, port))
             {
@@ -272,18 +268,33 @@ namespace ProjectX.Repository.EmailRepository
                 smtpClient.Credentials = new NetworkCredential(username, password);
 
                 // Create the email message
-                MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
-                mailMessage.IsBodyHtml = false; // Set to true if your email body is HTML
+                MailMessage mailMessage = new MailMessage(senderEmail, request.MailTo, request.Subject, request.Body);
+                if(!string.IsNullOrEmpty(request.MailCC))
+                mailMessage.CC.Add(request.MailCC);
+
+                if(request.FileBytes.Count > 0)
+                {
+                    List<byte[]> attachmentDataList = new List<byte[]>(); // Your list of byte arrays containing attachment data
+                    foreach (var attachmentData in request.FileBytes)
+                    {
+
+                        System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(new MemoryStream(attachmentData), "New Policy.pdf");
+                        mailMessage.Attachments.Add(attachment);
+                    }
+                }
+               
+
+                mailMessage.IsBodyHtml = true; // Set to true if your email body is HTML
 
                 try
                 {
                     // Send the email
                     await smtpClient.SendMailAsync(mailMessage);
-                    Console.WriteLine("Email sent successfully.");
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Failed to send email: {ex.Message}");
+                    return false;
                 }
             }
         }

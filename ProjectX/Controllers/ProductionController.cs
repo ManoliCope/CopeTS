@@ -25,6 +25,7 @@ using ProjectX.Repository.UsersRepository;
 using SelectPdf;
 using ProjectX.Entities.Models.Users;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using ProjectX.Business.Email;
 
 namespace ProjectX.Controllers
 {
@@ -33,6 +34,7 @@ namespace ProjectX.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IProductionBusiness _productionBusiness;
         private IGeneralBusiness _generalBusiness;
+        private IEmailBusiness _emailBusiness;
         private readonly TrAppSettings _appSettings;
         private IUsersBusiness _usersBusiness;
         private TR_Users _user;
@@ -40,7 +42,7 @@ namespace ProjectX.Controllers
 
         private IWebHostEnvironment _env;
 
-        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness usersBusiness, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env)
+        public ProductionController(IHttpContextAccessor httpContextAccessor, IOptions<TrAppSettings> appIdentitySettingsAccessor, IUsersBusiness usersBusiness, IProductionBusiness productionBusiness, IGeneralBusiness generalBusiness, IWebHostEnvironment env, IEmailBusiness emailBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _productionBusiness = productionBusiness;
@@ -49,6 +51,7 @@ namespace ProjectX.Controllers
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
+            _emailBusiness = emailBusiness;
         }
 
 
@@ -429,5 +432,35 @@ namespace ProjectX.Controllers
 
             return _productionBusiness.EditableProduction(polId, _user.U_Id, editable);
         }
+        [HttpPost]
+        public async Task<ProductionResp> SendPolicyByEmail(string to, string cc, byte[] attachment)
+        {
+            var result = new ProductionResp();
+
+            try
+            {
+                var policy = new PolicyDetail();
+               var success= await _emailBusiness.SendPolicyByEmail(to, cc, "PolicyNotification", attachment, policy);
+                if (success)
+                {
+                    result.statusCode.code = 1;
+                    result.statusCode.message = "Email Sent Successfully!";
+                }
+                else
+                {
+                    result.statusCode.code = 0;
+                    result.statusCode.message = "Error Sending Email!";
+                }
+                
+            }
+            catch(Exception e)
+            {
+                result.statusCode.code = 0;
+                result.statusCode.message = "Error Sending Email!";
+            }
+            return result;
+
+        }
+
     }
 }

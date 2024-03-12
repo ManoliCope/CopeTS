@@ -14,6 +14,8 @@ namespace ProjectX.Repository.EmailRepository
         SendMailListResponse SendEmail(SendMailListRequest request);
         Exception SendMailNew(string subject, string body, List<MailAttachment> Attachments, string sender, string displayName, string receivers,
           string senderSMTP, int senderPort, string senderUsername, string senderPassword, bool enableSsl, string ccEmail,int emailID);
-    
+        Task<bool> SendEmailSMTP(SendEmailRequest request);
+
+
     }
 }

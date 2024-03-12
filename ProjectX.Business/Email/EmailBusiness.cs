@@ -26,8 +26,9 @@ namespace ProjectX.Business.Email
             _emailTemplates = _databaseCaching.GetEmailTemplates();
         }
 
-        public async void ToSendEmail(object dataObject, string emailTemplateCode)
+        public async void ToSendEmail(object dataObject, string emailTemplateCode,byte[] attachment)
         {
+            //PolicyNotification
             string displayName = string.Empty;
             string subject = string.Empty;
             string body = string.Empty;
@@ -44,6 +45,11 @@ namespace ProjectX.Business.Email
                 recipients = emailTemplate.recepients;
                 //ccrecipients ="moussa.basma@securiteassurance.com";
 
+                var attachmentList =new List<byte[]>();
+                if (emailTemplate.WithAttachment==true)
+                {
+                    attachmentList.Add(attachment);
+                }
 
                 SendMailListRequest request = new SendMailListRequest();
                 SendEmailRequest email = new SendEmailRequest
@@ -52,11 +58,14 @@ namespace ProjectX.Business.Email
                     //DisplayName = "",
                     Subject = subject,
                     Body = body,
-                    MailCC = ccrecipients
+                    MailCC = ccrecipients,
+                    FileBytes= attachmentList
                 };
 
                 request.EmailRequestList.Add(email);
-                _emailsRepository.SendEmail(request);
+                await _emailsRepository.SendEmailSMTP(email);
+
+                //_emailsRepository.SendEmail(request);
             }
 
             // Reset variables
@@ -96,6 +105,63 @@ namespace ProjectX.Business.Email
             }
             return body;
         }
-      
+        //public async void SendPolicyByEmail(int policyId)
+        //{
+            
+                
+        //}
+           public async Task<bool> SendPolicyByEmail(string to,string cc, string emailTemplateCode,byte[] attachment, object? dataObject)
+        {
+            //PolicyNotification
+            string displayName = string.Empty;
+            string subject = string.Empty;
+            string body = string.Empty;
+            string recipients = string.Empty;
+            string ccrecipients = string.Empty;
+            var success = false;
+            // Assume _emailTemplates is a list of EmailTemplate objects
+            EmailTemplate emailTemplate = _emailTemplates.FirstOrDefault(x => x.Code == emailTemplateCode);
+
+            if (emailTemplate != null)
+            {
+                subject = emailTemplate.subject;
+                //body = ReplaceBody(dataObject, emailTemplate.body);
+                body= emailTemplate.body;
+                if(dataObject!=null)
+                    body = ReplaceBody(dataObject, emailTemplate.body);
+
+                recipients = to;
+                ccrecipients = cc;
+                //ccrecipients ="moussa.basma@securiteassurance.com";
+
+                var attachmentList =new List<byte[]>();
+                if (emailTemplate.WithAttachment==true)
+                {
+                    attachmentList.Add(attachment);
+                }
+
+                SendMailListRequest request = new SendMailListRequest();
+                SendEmailRequest email = new SendEmailRequest
+                {
+                    MailTo = recipients,
+                    //DisplayName = "",
+                    Subject = subject,
+                    Body = body,
+                    MailCC = ccrecipients,
+                    FileBytes= attachmentList
+                };
+
+                request.EmailRequestList.Add(email);
+                success= await _emailsRepository.SendEmailSMTP(email);
+
+                //_emailsRepository.SendEmail(request);
+            }
+
+            // Reset variables
+            subject = string.Empty;
+            body = string.Empty;
+            recipients = string.Empty;
+            return success;
+        }
     }
 }
