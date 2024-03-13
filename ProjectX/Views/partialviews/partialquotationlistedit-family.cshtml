@@ -20,9 +20,7 @@
 	if (UserRights.Hide_Premium_Info == true)
 		hidepremium = "hidden";
 
-	var shownet = "";
-	if (UserRights.Preview_Net == false)
-		shownet = "hidden";
+
 
 	var previewtotalonly = "";
 	if (UserRights.Preview_Total_Only == true)
@@ -168,7 +166,7 @@
 
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
 				<tbody>
-					<tr class="@shownet @previewtotalonly">
+					<tr class="@previewtotalonly">
 						<td> Initial Premium </td>
 						<td id="initpremtotal" class="text-end"> @Model.InitialPremium USD </td>
 						@if (Model.CurrencyRate.CurrencySymbol != "USD")

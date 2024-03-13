@@ -5,6 +5,7 @@ var selectedfieldlist = [];
 var editedglobalrow = null;
 var ismanual = 0
 $(document).ready(function () {
+
     $('.togglebenpopup').click(function () {
         $(".btn-beneficiary").attr("thisid", 0)
         resetbenpopup()
