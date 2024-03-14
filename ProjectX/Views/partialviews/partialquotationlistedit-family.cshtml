@@ -137,11 +137,11 @@
 						<tr>
 							<td>
 								Remove Deductible<br />(USD<span data-dedprice="@firstItem.DeductiblePrice"> @firstItem.DeductiblePrice</span>)
-								<input type="checkbox" name="name" data-dedprice="@firstItem.DeductiblePrice" class="ml-2" @(firstItem.Deductible ? "checked" : "" ) />
+								<input type="checkbox" name="name" data-dedprice="@firstItem.DeductiblePrice" class="ml-2" @(firstItem.Deductible ? "checked" : "" ) @(firstItem.DeductiblePrice == 0 ? "disabled readonly":"")/>
 							</td>
 							<td>
 								Add Sports Activities<br />(USD<span data-sportsprice="@firstItem.SportsActivitiesPrice"> @firstItem.SportsActivitiesPrice</span>)
-								<input type="checkbox" name="name" data-sportsprice="@firstItem.SportsActivitiesPrice" class="ml-2" @(firstItem.SportsActivities ? "checked" : "" ) />
+								<input type="checkbox" name="name" data-sportsprice="@firstItem.SportsActivitiesPrice" class="ml-2" @(firstItem.SportsActivities ? "checked" : "" ) @(firstItem.SportsActivitiesPrice == 0 ? "disabled readonly":"")/>
 							</td>
 							<td>
 								Price (USD) <br />

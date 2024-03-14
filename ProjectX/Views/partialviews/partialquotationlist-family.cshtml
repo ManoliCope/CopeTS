@@ -117,11 +117,11 @@
 					<tr>
 						<td>
 							Remove Deductible <br /> (USD <span data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee</span>)
-							<input type="checkbox" name="name" data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee" class="ml-2" />
+							<input type="checkbox" name="name" data-dedprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee" class="ml-2"  @(Model.QuotationResp.Where(x => x.RowId == 1).First().DeductibleFee == 0 ? "disabled readonly":"")/>
 						</td>
 						<td>
 							Add Sports Activities <br /> (USD <span data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee">@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee</span>)
-							<input type="checkbox" name="name" data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee" class="ml-2" />
+							<input type="checkbox" name="name" data-sportsprice="@Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee" class="ml-2" @(Model.QuotationResp.Where(x => x.RowId == 1).First().SportAcitiviesFee == 0 ? "disabled readonly":"")/>
 						</td>
 						<td>
 							Price (USD)	<br />
