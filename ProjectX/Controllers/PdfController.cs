@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
 
         public IActionResult Main(int polid)
         {
-            polid = 639;
+            polid = 647;
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + polid).Base64Image;

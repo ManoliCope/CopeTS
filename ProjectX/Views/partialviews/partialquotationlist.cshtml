@@ -8,10 +8,6 @@
 	if (UserRights.Hide_Premium_Info == true)
 		hidepremium = "hidden";
 
-	var shownet = "";
-	if (UserRights.Preview_Net == false)
-		shownet = "hidden";
-
 	var previewtotalonly = "";
 	if (UserRights.Preview_Total_Only == true)
 		previewtotalonly = "hidden";
@@ -52,8 +48,8 @@
 				<table class="table table-bordered mt-3 quoatetable insured@(item.Insured)" ins="@item.InsuredId" thisrow="@item.Insured">
 					<tbody>
 						<tr class="card-header">
-							<td>Full Namessss </td>
-							<td colspan="2"> test @item.Fullname</td>
+							<td>Full Names </td>
+							<td colspan="2"> @item.Fullname</td>
 						</tr>
 						<tr>
 							<td>Plan</td>
@@ -104,11 +100,11 @@
 						<tr>
 							<td>
 								Remove Deductible <br /> (USD <span data-dedprice="@item.DeductibleFee">@item.DeductibleFee</span>)
-								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2" />
+								<input type="checkbox" name="name" data-dedprice="@item.DeductibleFee" class="ml-2"  @(item.DeductibleFee == 0 ? "disabled readonly":"")/>
 							</td>
 							<td>
 								Add Sports Activities <br /> (USD <span data-sportsprice="@item.SportAcitiviesFee">@item.SportAcitiviesFee</span>)
-								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" />
+								<input type="checkbox" name="name" data-sportsprice="@item.SportAcitiviesFee" class="ml-2" @(item.SportAcitiviesFee == 0 ? "disabled readonly":"")/>
 							</td>
 							<td>
 								Price (USD)	<br />
@@ -138,7 +134,7 @@
 
 			<table class="table table-bordered  mt-3 totaltable @hidepremium">
 				<tbody>
-					<tr class="@shownet @previewtotalonly">
+					<tr class="@previewtotalonly">
 						<td>Initial Premium</td>
 						<td id="initpremtotal" class="text-end">@Model.QuotationResp.Where(x => x.RowId == 1).Sum(x => x.PriceAmount) USD</td>
 						@if (CreatedByUserRights.CurrencySymbol != "USD")

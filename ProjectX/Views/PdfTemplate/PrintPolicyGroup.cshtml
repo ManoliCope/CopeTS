@@ -8,7 +8,7 @@
 <head>
 	<style>
 		body {
-			font-family: Calibri;
+			font-family: Arial, sans-serif;
 			margin: 0px;
 			padding: 0px;
 			/*padding-top: 80px;*/
@@ -47,6 +47,16 @@
 			line-height: 0.8
 		}
 
+		.benefitidv table {
+			border-collapse: collapse;
+			border: 1px solid #999;
+			width: 100%;
+		}
+
+			.benefitidv table th, benefitidv table td {
+				border: 1px solid #999;
+				padding: 8px;
+			}
 
 		th, td {
 			/*border: 0px solid #dddddd;*/
@@ -256,12 +266,12 @@
 						Agent Name: <label id="agentName">@Model.CreatedBy</label>
 					</span>
 				</div>
-				<div style="width: 33.33%; float: left;">
+				<div style="width: 33.33%; float: left; text-align:center">
 					<span>
 						Policy N.: <label id="policyNumber">@Model.Reference</label>
 					</span>
 				</div>
-				<div style="width: 33.33%; float: left;">
+				<div style="width: 33.33%; float: left; text-align:right">
 					<span>
 						Issuing Date: <label id="issuingDate">@Model.CreatedOn.ToString("dd-MM-yyyy")</label>
 					</span>
@@ -288,14 +298,20 @@
 				<tr>
 					<td class="td25"><label for="expiryDate">Expiry Date:</label></td>
 					<td class="td25"><label id="expiryDate">@Model.ToDate.ToString("dd-MM-yyyy")</label></td>
-					<td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
-					<td class="td25"><label id="excessDeductible">@(Model.PolicyDetails.First().Deductible ? "Included":"Not Included") </label></td>
+					@if (Model.IsFamily)
+					{
+						<td class="td25"><label for="excessDeductible">Excess/Deductible:</label></td>
+						<td class="td25"><label id="excessDeductible">@(Model.PolicyDetails.First().Deductible ? "Included":"Not Included") </label></td>
+					}
 				</tr>
 				<tr>
 					<td class="td25"><label for="duration">Duration:</label></td>
 					<td class="td25"><label id="duration">@Model.Duration Days</label></td>
-					<td class="td25"><label for="sportsActivities">Sports Activities:</label></td>
-					<td class="td25"><label id="sportsActivities">@(Model.PolicyDetails.First().SportsActivities ? "Included":"Not Included") </label></td>
+					@if (Model.IsFamily)
+					{
+						<td class="td25"><label for="sportsActivities">Sports Activities:</label></td>
+						<td class="td25"><label id="sportsActivities">@(Model.PolicyDetails.First().SportsActivities ? "Included":"Not Included") </label></td>
+					}
 				</tr>
 			</table>
 
@@ -340,8 +356,8 @@
 
 
 			<div class="benefitidv">
-				<h2 class="underlined-heading">Table of Benefits:</h2>
-				<table border="0" style="width:100%">
+				<h2>Table of Benefits:</h2>
+				<table border="1" style="width:100%">
 					<caption></caption>
 					<tr>
 						<th class="td35">Benefits</th>
@@ -385,12 +401,19 @@
 			@if (Model.prttyp == 2)
 			{
 				<h2 class="underlined-heading">Premium Information:</h2>
-				<h2>Premium Information: As Agreed</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Premium: <span style="padding-left:30px">As Agreed </span></th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
 			}
 			else if (Model.prttyp == 1)
 			{
 				<h2 class="underlined-heading">Premium Information:</h2>
-				<table>
+				<table style="width:600px">
 					<thead>
 						<tr>
 							<th></th>
@@ -402,23 +425,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="td33">Premium:</td>
-							<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-							@if (Model.CurrencyRate.CurrencySymbol != "USD")
-							{
-								<td class="td33">
-									@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-								</td>
-							}
+						@if (Model.StampsValue > 0 || Model.TaxVATValue > 0)
+						{
+							<tr>
+								<td class="td33">Premium:</td>
+								<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
 
-						</tr>
-						@*<tr>
-								<td class="td33">Issuing / Gov.fees:</td>
-								<td class="td33">@Model.StampsValue</td>
-								<td class="td33">
-								</td>
-							</tr>*@
+							</tr>
+						}
 						@if (Model.StampsValue > 0)
 						{
 							<tr>

@@ -8,7 +8,7 @@
 <head>
 	<style>
 		body {
-			font-family: Calibri;
+			font-family: Arial, sans-serif;
 			margin: 0px;
 			padding: 0px;
 			/*padding-top: 80px;*/
@@ -33,6 +33,7 @@
 		}
 
 		h2 {
+			margin-top: 30px;
 			margin-bottom: 5px;
 		}
 
@@ -46,6 +47,26 @@
 		.benefitidv tr td {
 			line-height: 0.8
 		}
+
+		.benefitidv table {
+			border-collapse: collapse;
+			border: 1px solid #999;
+			width: 100%;
+		}
+
+			.benefitidv table th, benefitidv table td {
+				border: 1px solid #999;
+				padding: 8px;
+			}
+
+
+			.benefitidv table tr:nth-child(odd) {
+				/*background-color: #ffffff;*/
+			}
+
+			.benefitidv table tr:nth-child(even) {
+				/*background-color: #f2f2f2;*/ 
+			}
 
 
 		th, td {
@@ -256,12 +277,12 @@
 						Agent Name: <label id="agentName">@Model.CreatedBy</label>
 					</span>
 				</div>
-				<div style="width: 33.33%; float: left;">
+				<div style="width: 33.33%; float: left; text-align:center">
 					<span>
 						Policy N.: <label id="policyNumber">@Model.Reference</label>
 					</span>
 				</div>
-				<div style="width: 33.33%; float: left;">
+				<div style="width: 33.33%; float: left; text-align:right">
 					<span>
 						Issuing Date: <label id="issuingDate">@Model.CreatedOn.ToString("dd-MM-yyyy")</label>
 					</span>
@@ -269,7 +290,7 @@
 				<div style="clear: both;"></div>
 			</div>
 
-			<h2 class="underlined-heading">Policy Information:</h2>
+			<h2 class="underlined-heading" style="margin-top:15px">Policy Information:</h2>
 			<table>
 				<caption></caption>
 				<tr>
@@ -336,8 +357,8 @@
 
 
 			<div class="benefitidv">
-				<h2 class="underlined-heading">Table of Benefits:</h2>
-				<table border="0" style="width:100%">
+				<h2>Table of Benefits:</h2>
+				<table border="1" style="width:100%">
 					<caption></caption>
 					<tr>
 						<th class="td35">Benefits</th>
@@ -433,23 +454,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="td33">Premium:</td>
-							<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
-							@if (Model.CurrencyRate.CurrencySymbol != "USD")
-							{
-								<td class="td33">
-									@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
-								</td>
-							}
+						@if (Model.StampsValue > 0 || Model.TaxVATValue > 0)
+						{
+							<tr>
+								<td class="td33">Premium:</td>
+								<td class="td33">@(Model.InitialPremium + Model.AdditionalValue)</td>
+								@if (Model.CurrencyRate.CurrencySymbol != "USD")
+								{
+									<td class="td33">
+										@String.Format("{0:0.00}", (Model.InitialPremium + Model.AdditionalValue) * Convert.ToDecimal(Model.CurrencyRate.Rate))
+									</td>
+								}
 
-						</tr>
-						@*<tr>
-								<td class="td33">Issuing / Gov.fees:</td>
-								<td class="td33">@Model.StampsValue</td>
-								<td class="td33">
-								</td>
-							</tr>*@
+							</tr>
+						}
+
 						@if (Model.StampsValue > 0)
 						{
 							<tr>
@@ -489,7 +508,6 @@
 					</tbody>
 				</table>
 			}
-
 
 			<div class="box-container">
 				<div class="boxholder" style="float:right;padding-right:15px">

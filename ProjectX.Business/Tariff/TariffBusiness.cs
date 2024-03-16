@@ -21,9 +21,13 @@ namespace ProjectX.Business.Tariff
         {
             TariffResp response = new TariffResp();
             response = _tariffRepository.ModifyTariff(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Tariff");
+
+            if (act == "Delete" && response.id == -1)
+                response.statusCode.message = "Tariff Linked!";
+            else
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Tariff");
+
             return response;
-           
         }
         public List<TR_Tariff> GetTariffList(TariffSearchReq req)
         {
@@ -45,14 +49,14 @@ namespace ProjectX.Business.Tariff
             resp.Override_Amount = repores.T_Override_Amount;
             resp.planId = repores.PL_Id;
             resp.package = repores.P_Name;
-            resp.plan= repores.PL_Name;
+            resp.plan = repores.PL_Name;
 
             return resp;
-           
+
         }
         public TariffResp ImportDataTariff(List<TR_Tariff> tariffs, int userid)
         {
-            return _tariffRepository.ImportDataTariff( tariffs,userid);
+            return _tariffRepository.ImportDataTariff(tariffs, userid);
         }
 
 

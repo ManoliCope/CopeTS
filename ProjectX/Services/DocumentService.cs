@@ -110,14 +110,8 @@ namespace ProjectX.Services
             else
                 wBeneficiaryPdf = pdfBytes;
 
-
             //byte[] combinedPdf1 = CombinePdfFiles(pdfBytes, pdfBytes2);
-            //return combinedPdf1;
-
-     
-
-
-
+            //return wBeneficiaryPdf;
             try
             {
                 var response = new UsProSearchResp();
