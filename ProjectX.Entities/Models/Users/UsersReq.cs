@@ -57,6 +57,7 @@ namespace ProjectX.Entities.Models.Users
         public bool? Hide_Premium_Info { get; set; }
         public bool? Active { get; set; }
         public bool? Is_Admin { get; set; }
+        public bool? Prepaid_Account { get; set; }
 
         public bool? have_Parents { get; set; }
         //public int? Parent_Id { get; set; }

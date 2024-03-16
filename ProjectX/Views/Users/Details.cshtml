@@ -446,6 +446,14 @@
 									</label>
 								</div>
 							</div>
+							<div class="col-md-12">
+										<div class="form-check-inline ">
+											<label class="custom-control custom-checkbox">
+												<input type="checkbox" name="prepaidAccount" field-name="prepaid_Account" id="prepaidAccount" @(Model.prepaid_Account.HasValue && (bool)Model.prepaid_Account ? "checked" : "")>
+												<label class="form-control-label" for="prepaidAccount">Prepaid Account</label>
+											</label>
+										</div>
+									</div>
 							@*<div class="col-md-12">
 									<div class="form-check-inline ">
 										<label class="custom-control custom-checkbox">

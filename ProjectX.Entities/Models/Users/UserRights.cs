@@ -34,5 +34,6 @@ namespace ProjectX.Entities.Models.Users
         public decimal? CurrencyRate { get; set; }
         public bool? can_edit { get; set; }
         public bool? can_cancel { get; set; }
+        public bool? prepaid_Account { get; set; }
     }
 }

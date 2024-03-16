@@ -378,5 +378,12 @@ namespace ProjectX.Entities
         Cancelled=4,
         Expired=5
     }
+    public enum PrepaidAccountActions
+    {
+        Deposit=1,
+        Withdrawal=2,
+        Purchase=3,
+        Returned=4
+    }
     
 }

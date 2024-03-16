@@ -64,6 +64,8 @@ namespace ProjectX.Entities.Models.Users
         public string logo { get; set; }
         public string printlayout { get; set; }
         public string signature { get; set; }
+        public bool? prepaid_Account { get; set; }
+
 
     }
 }

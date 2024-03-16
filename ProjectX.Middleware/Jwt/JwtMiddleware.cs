@@ -120,6 +120,9 @@ namespace ProjectX.Middleware.Jwt
                                     context.Items["Userid"] = user.U_Id;
                                     context.Items["Userguid"] = user.U_Guid;
                                     context.Items["Username"] = user.U_First_Name + " " + user.U_Last_Name;
+                                    context.Items["hasAccount"] = user.U_Prepaid_Account;
+                                    if(user.U_Prepaid_Account==true)
+                                        context.Items["userBalance"] = user.U_User_Balance;
                                 }
                                 else
                                 {

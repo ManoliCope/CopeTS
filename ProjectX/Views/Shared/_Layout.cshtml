@@ -122,6 +122,10 @@
 	{
 		<link href="~/Content/assets/css/report.css" rel="stylesheet" asp-append-version="true" />
 	}
+	else if (controllerName == "prepaidaccounts")
+	{
+		<link href="~/Content/assets/css/prepaidaccounts.css" rel="stylesheet" asp-append-version="true" />
+	}
 	else
 	{
 
@@ -151,8 +155,17 @@
 					</div>*@
 
 				<div class="top-nav">
+					<div class="container mw-100">
+  <div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-6">
+						@if(Convert.ToBoolean(Context.Items["hasAccount"])==true){
 
-					<ul class="nav-list">
+					<h5 class="float-left balancetxt">Balance: @Context.Items["userBalance"]</h5>
+						
+						}</div>
+					 <div class="col-sm-4 float-right">	<ul class="nav-list">
+						
 						<li>
 							<b class="welcometxt">Welcome, @Context.Items["Username"]!</b>
 
@@ -184,7 +197,11 @@
 								</div>
 							</div>
 						</li>
-					</ul>
+					</ul></div>
+						
+				
+				</div>
+				</div>
 				</div>
 
 				<main class="content p-0">
@@ -332,6 +349,11 @@
 	{
 		
 		<script src="~/Content/assets/js/report.js" asp-append-version="true"></script>
+	}
+	else if (controllerName == "prepaidaccounts")
+	{
+		
+		<script src="~/Content/assets/js/prepaidaccounts.js" asp-append-version="true"></script>
 	}
 
 

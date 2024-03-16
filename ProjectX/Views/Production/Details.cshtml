@@ -245,9 +245,13 @@
 									<span class="float-left ">
 										Quotation
 									</span>
-									<button class="btn btn-primary btn-circle float-right" id="emailButton">
+									@if (UserRights.Is_Admin==true)
+									{
+										<button class="btn btn-primary btn-circle float-right" id="emailButton">
 										 <i class="fas fa-envelope"></i>
 									 </button>
+									}
+									
 								</h4>
 							</div>
 							<div class="card-body result ">

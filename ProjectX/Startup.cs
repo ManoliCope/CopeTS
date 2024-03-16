@@ -51,6 +51,8 @@ using ProjectX.Services;
 using Microsoft.Extensions.FileProviders;
 using ProjectX.Repository.ProductionBatch;
 using ProjectX.Repository.ProductionBatchRepository;
+using ProjectX.Business.PrepaidAccounts;
+using ProjectX.Repository.PrepaidAccountsRepository;
 
 public class Startup
 {
@@ -169,6 +171,10 @@ public class Startup
 
         services.AddSingleton<IProductionBatchBusiness, ProductionBatchBusiness>();
         services.AddSingleton<IProductionBatchRepository, ProductionBatchRepository>();
+
+        services.AddSingleton<IPrepaidAccountsBusiness, PrepaidAccountsBusiness>();
+        services.AddSingleton<IPrepaidAccountsRepository, PrepaidAccountsRepository>();
+
 
 
         services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));

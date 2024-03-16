@@ -901,6 +901,11 @@ table td a {
     margin-bottom: 4px;
     display: block
 }
+.balancetxt {
+    color: gre;
+    margin-bottom: 4px;
+    display: block
+}
 
 .selectedmenu{
     display:block !important; 

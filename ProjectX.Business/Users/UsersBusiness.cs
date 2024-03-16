@@ -107,6 +107,7 @@ namespace ProjectX.Business.Users
             resp.printlayout = repores.U_PrintLayout;
             resp.signature = repores.U_Signature;
             resp.manual_production = repores.U_Manual_Production;
+            resp.prepaid_Account = repores.U_Prepaid_Account;
             
             resp.Guid = repores.U_Guid;
 
@@ -163,6 +164,7 @@ namespace ProjectX.Business.Users
                     Currency = users.U_Currency,
                     CurrencySymbol = users.U_CurrencySymbol,
                     CurrencyRate = users.U_CurrencyRate
+                    
                 };
             }
             else
@@ -194,7 +196,9 @@ namespace ProjectX.Business.Users
                     can_edit = users.U_Can_Edit,
                     Currency = users.U_Currency,
                     CurrencySymbol = users.U_CurrencySymbol,
-                    CurrencyRate = users.U_CurrencyRate
+                    CurrencyRate = users.U_CurrencyRate,
+                    prepaid_Account = users.U_Prepaid_Account
+
                 };
             }
              

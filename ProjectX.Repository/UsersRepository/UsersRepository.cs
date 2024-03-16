@@ -118,6 +118,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Can_edit", req.Can_edit);
             param.Add("@U_Can_cancel", req.Can_cancel);
             param.Add("@U_Manual_Production", req.Manual_Production);
+            param.Add("@U_Prepaid_Account", req.Prepaid_Account);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
