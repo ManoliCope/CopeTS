@@ -110,7 +110,7 @@ namespace ProjectX.Business.Email
             
                 
         //}
-           public async Task<bool> SendPolicyByEmail(string to,string cc, string emailTemplateCode,byte[] attachment, object? dataObject)
+           public async Task<bool> SendPolicyByEmail(string to,string cc, string emailTemplateCode,byte[] attachment, Entities.Models.Production.PolicyDetail? dataObject,int userID)
         {
             //PolicyNotification
             string displayName = string.Empty;
@@ -127,8 +127,8 @@ namespace ProjectX.Business.Email
                 subject = emailTemplate.subject;
                 //body = ReplaceBody(dataObject, emailTemplate.body);
                 body= emailTemplate.body;
-                if(dataObject!=null)
-                    body = ReplaceBody(dataObject, emailTemplate.body);
+                //if(dataObject!=null)
+                //    body = ReplaceBody(dataObject, emailTemplate.body);
 
                 recipients = to;
                 ccrecipients = cc;
@@ -148,8 +148,12 @@ namespace ProjectX.Business.Email
                     Subject = subject,
                     Body = body,
                     MailCC = ccrecipients,
-                    FileBytes= attachmentList
+                    FileBytes= attachmentList,
+                    UserID = userID
+                    
                 };
+                if (dataObject != null)
+                    email.PolicyId = dataObject.PolicyID;
 
                 request.EmailRequestList.Add(email);
                 success= await _emailsRepository.SendEmailSMTP(email);

@@ -65,6 +65,7 @@ namespace ProjectX.Entities.Models.Users
         public string printlayout { get; set; }
         public string signature { get; set; }
         public bool? prepaid_Account { get; set; }
+        public int Can_Inherit { get; set; }
 
 
     }

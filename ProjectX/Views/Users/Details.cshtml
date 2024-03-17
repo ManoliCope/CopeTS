@@ -297,7 +297,7 @@
 									<input class="form-control" field-name="vat" type="number" min="0" max="99" name="vat" id="vat" @*oninput="this.value = Math.abs(this.value)"*@ value="@Model.vat">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-4 @hide">
 								<div class="form-group">
 									<label class="form-control-label" for="maxAdditionalFees">Max Additional Fees</label>
 									<input class="form-control" field-name="max_Additional_Fees" type="number" min="0" name="maxAdditionalFees" id="maxAdditionalFees" value="@Model.max_Additional_Fees">

@@ -16,6 +16,6 @@ namespace ProjectX.Entities.dbModels
         public bool IsSent { get; set; }
         public string ErrorMessage { get; set; }
         public bool IsManual { get; set; }
-        public int IdCase { get; set; }
+        public int IdPolicy { get; set; }
     }
 }

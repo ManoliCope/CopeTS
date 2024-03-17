@@ -140,7 +140,7 @@ namespace ProjectX.Repository.EmailRepository
             param.Add("@ErrorMessage", emailLog.ErrorMessage);
             param.Add("@IsManual", emailLog.IsManual);
             param.Add("@IdUser", IdUser);
-            param.Add("@IdCase", emailLog.IdCase);
+            param.Add("@IdPolicy", emailLog.IdPolicy);
             using (TransactionScope scope = new TransactionScope())
             {
                 using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
@@ -290,10 +290,33 @@ namespace ProjectX.Repository.EmailRepository
                 {
                     // Send the email
                     await smtpClient.SendMailAsync(mailMessage);
+                    var emailLog = new EmailLog
+                    {
+                        Sender=senderEmail,
+                        Recipient=request.MailTo,
+                        Subject=request.Subject,
+                        Body=request.Body,
+                        IdPolicy= request.PolicyId??0,
+                        IsSent=true,
+                       DisplayName=request.DisplayName??""
+                    };
+                    SaveEmailLog(emailLog, request.UserID);
                     return true;
                 }
                 catch (Exception ex)
                 {
+                    var emailLog = new EmailLog
+                    {
+                        Sender = senderEmail,
+                        Recipient = request.MailTo,
+                        Subject = request.Subject,
+                        Body = request.Body,
+                        IdPolicy = request.PolicyId ?? 0,
+                        IsSent = false,
+                        DisplayName = request.DisplayName ?? "",
+                        ErrorMessage = ex.Message
+                    };
+                    SaveEmailLog(emailLog, request.UserID);
                     return false;
                 }
             }

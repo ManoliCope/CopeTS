@@ -433,14 +433,15 @@ namespace ProjectX.Controllers
             return _productionBusiness.EditableProduction(polId, _user.U_Id, editable);
         }
         [HttpPost]
-        public async Task<ProductionResp> SendPolicyByEmail(string to, string cc, byte[] attachment)
+        public async Task<ProductionResp> SendPolicyByEmail(string to, string cc, byte[] attachment,int policyId)
         {
             var result = new ProductionResp();
 
             try
             {
                 var policy = new PolicyDetail();
-               var success= await _emailBusiness.SendPolicyByEmail(to, cc, "PolicyNotification", attachment, policy);
+                policy.PolicyID = policyId;
+               var success= await _emailBusiness.SendPolicyByEmail(to, cc, "PolicyNotification", attachment, policy,_user.U_Id);
                 if (success)
                 {
                     result.statusCode.code = 1;

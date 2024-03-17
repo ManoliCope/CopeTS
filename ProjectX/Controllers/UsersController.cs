@@ -137,12 +137,12 @@ namespace ProjectX.Controllers
         [HttpPost]
         public UsersResp createNewUser(UsersReq req)
         {
-            var haveParent = true;
+            //var haveParent = true;
             var response = new UsersResp();
             if (req.Super_Agent_Id == null)
             {
                 req.Super_Agent_Id = _user.U_Id;
-                haveParent = false;
+                //haveParent = false;
             }
                
             if (req.Active == null)
@@ -150,11 +150,10 @@ namespace ProjectX.Controllers
             if (req != null)
             {
                 response = _usersBusiness.ModifyUser(req, "Create", _user.U_Id);
-                //copy attachments related to the parent if it's not an admin
-                if (haveParent == true && _user.U_Is_Admin == false)
+                if (response.Can_Inherit>0)
                 {
                     var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
-                    _usersBusiness.CopyParentAttachments(_user.U_Id, response.id, uploadsDirectory);
+                    _usersBusiness.CopyParentAttachments(req.Super_Agent_Id??0, response.id, uploadsDirectory);
                 }
                     
             }

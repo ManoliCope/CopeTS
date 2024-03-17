@@ -1477,7 +1477,7 @@ function sendPolicyByEmail(me) {
                 type: 'Post',
                url: projectname + "/Production/SendPolicyByEmail",
                 data: {
-                    to: to, cc: cc, attachment: attachment
+                    to: to, cc: cc, attachment: attachment, policyId: policyId
                 },
                success: function (result) {
                   // alert('sent');

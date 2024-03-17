@@ -7,6 +7,7 @@ namespace ProjectX.Entities.Models.Emails
     public class SendEmailRequest
 
     {
+        public int UserID { get; set; }
         public int? PolicyId { get; set; }
 
         public string MailTo { get; set; }

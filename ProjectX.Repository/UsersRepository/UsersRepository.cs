@@ -62,6 +62,7 @@ namespace ProjectX.Repository.UsersRepository
             var resp = new UsersResp();
             int statusCode = 0;
             int idOut = 0;
+            int canInherit = 0;
             var param = new DynamicParameters();
             param.Add("@action", act);
             param.Add("@user_id", userid);
@@ -121,6 +122,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_Prepaid_Account", req.Prepaid_Account);
             param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
             param.Add("@Returned_ID", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            param.Add("@Can_Inherit", 0, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
 
 
@@ -134,11 +136,13 @@ namespace ProjectX.Repository.UsersRepository
 
                     statusCode = param.Get<int>("@Status");
                     idOut = param.Get<int>("@Returned_ID");
+                    canInherit = param.Get<int>("@Can_Inherit");
                 }
             }
             
             resp.statusCode.code = statusCode;
             resp.id = idOut;
+            resp.Can_Inherit = canInherit;
             return resp;
         }
         public UsersSearchResp GetUsersList(UsersSearchReq req)
