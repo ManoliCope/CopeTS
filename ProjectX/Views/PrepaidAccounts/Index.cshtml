@@ -1,127 +1,130 @@
 ﻿@model ProjectX.Entities.Models.General.LoadDataResp
 
 <div class="content">
-    <!-- Start Content-->
-    <div class="row page-title">
-        <div class="col-md-12">
-           
-           @* <a class="btn bglocalcolor float-right addnewbtn" href="~/currencyrate/create/">
-                <i class="fas fa-plus-circle"></i> Add
-            </a>*@
-            <h4 class="mb-0 mt-0 float-left">Prepaid Accounts</h4>
+	<!-- Start Content-->
+	<div class="row page-title">
+		<div class="col-md-12">
+
+			@* <a class="btn bglocalcolor float-right addnewbtn" href="~/currencyrate/create/">
+					<i class="fas fa-plus-circle"></i> Add
+				</a>*@
+			<h4 class="mb-0 mt-0 float-left">Prepaid Accounts</h4>
 
 
 
 
-        </div>
-    </div>
-    <div class="container-fluid " style="padding:10px 0">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div id="searchform" class="card-body">
-                        <div>
-                            <div class="row mb-6">
-                                <div class="col-md-3 mb-lg-0 mb-6">
-										<label>Users:</label>
-										<select class="form-control" name="userId" id="userId" field-name="user" onchange="loadUserPreBalance()" required>
+		</div>
+	</div>
+	<div class="container-fluid " style="padding:10px 0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div id="searchform" class="card-body">
+						<div>
+							<div class="row mb-6">
+								<div class="col-md-3 mb-lg-0 mb-6">
+									<label>Users:</label>
+									<select class="form-control" name="userId" id="userId" field-name="user" onchange="loadUserPreBalance()" required>
 										<option value=""> Select User</option>
-											@foreach (var thislist in Model.loadedData.users)
-											{
-												<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-											}
+										@foreach (var thislist in Model.loadedData.users)
+										{
+											<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
+										}
 
 
-										</select>
+									</select>
+								</div>
+								<div class="col-lg-2">
+								</div>
+								<div class="col-lg-4">
+									<h4 class="currentAmount"> <span id="currentAmount"></span></h4>
+								</div>
+								@* <div class="col-lg-2">
+									</div>*@
+								<div class="col-lg-3">
+									<div class="row mt-4">
+										<div class="col-sm-6">
+
+										</div>
+										<div class="col-sm-6">
+											<button class="btn btn-info hidden" id="editAmountBtn" style="width:100%">
+												<span>
+													<i class="la la-close"></i>
+													<span>New</span>
+												</span>
+											</button>
+										</div>
 									</div>
-                                <div class="col-lg-2">
-                                    </div>
-                                <div class="col-lg-4">
-                                  <h4 class="currentAmount"> <span id="currentAmount"></span></h4> 
-                                </div>
-                               @* <div class="col-lg-2">
-                                    </div>*@
-                                <div class="col-lg-3">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6">
-                                           
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <button class="btn btn-info hidden" id="editAmountBtn" style="width:100%">
-                                                <span>
-                                                    <i class="la la-close"></i>
-                                                    <span>Edit Amount</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="row tablediv">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="transactionstable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
-                        </table>
+		<div class="row tablediv">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<table id="transactionstable" class="table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered" style="width:100%; ">
+						</table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="confirm-email-approval" class="modal fade" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this record?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
-                <div id="thisloader" class="smloader hide"></div>
-                <button id="confirmdeletebtn"  type="button" class="btn btn-danger">Proceed</button>
-            </div>
-        </div>
-    </div>
-</div>
-@*<script src="~/countryflags/js/intlTelInput.js"></script>
-    <script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>*@
-    <div id="edit-balance" class="modal fade" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Edit Balance:</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-                 
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this record?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="confirmdeletebtn" type="button" class="btn btn-danger">Proceed</button>
+			</div>
+		</div>
+	</div>
+</div>
+@*<script src="~/countryflags/js/intlTelInput.js"></script>
+	<script src="~/Content/assets/js/profile.js" asp-append-version="true"></script>*@
+<div id="edit-balance" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Edit Balance</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
 			</div>
 
 			<div class="modal-body container-fluid ">
-               <h4>Current Balance: <span id="currAmount"></span></h4>
-                <div class="col-md-12 mb-lg-0 mb-6">
-										<input type="number" class="form-control" name="newAmount" id="newAmount" field-name="newAmount"  required/>
+				<h4>Current Balance: <span id="currAmount"></span></h4>
+				<div class="row">
+					<div class="col-md-12 mb-2">
+						<input type="number" class="form-control" name="newAmount" id="newAmount" field-name="newAmount" required />
+					</div>
+					<div class="col-md-6 ">
+					</div>
+					<div class="col-md-6  text-right">
+						<button type="button" class="btn  bglocalcolor border editbalance" typ="1" data-dismiss="modal">Deposit</button>
+						<button type="button" class="btn  bglocalcolor border editbalance" typ="2" data-dismiss="modal">Withdrawal</button>
+					</div>
+				</div>
 
-									</div>
-                   @*<div class="col-md-12 mb-lg-0 mb-6">*@
-                       <button type="button" class="btn  bglocalcolor border editbalance" typ="1" data-dismiss="modal">Deposit</button>
-				       <button type="button" class="btn  bglocalcolor border editbalance" typ="2" data-dismiss="modal">Withdrawal</button>
-                   @*</div>*@
-				
 			</div>
 		</div>
 	</div>

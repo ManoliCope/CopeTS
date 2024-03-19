@@ -56,10 +56,10 @@ namespace ProjectX.Entities
         DuplicateBeneficiary = 1203,
         NotIndividual = 1204,
         CountryasDestination = 1205,
+        InsufficientFunds = 1206,
 
 
 
-        MedicalReportRequired = 1206,
         NonMedicalCase = 1207,
         CountryRequired = 1208,
         AlreadyApproved = 1209,
