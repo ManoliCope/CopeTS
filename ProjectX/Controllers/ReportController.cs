@@ -99,6 +99,10 @@ namespace ProjectX.Controllers
                 response.loadedData.agents = response.loadedData.agents.Where(a => a.LK_ID == _user.U_Id).ToList();
                 response.loadedData.subagents = response.loadedData.usersHierarchy.Where(a => a.LK_ID != _user.U_Id).ToList();
             }
+            if (response.loadedData.agents.Count() == 0)
+            {
+                response.loadedData.agents = response.loadedData.usersHierarchy.Where(a=>a.LK_ID==_user.U_Id).ToList();
+            }
             return View(response);
         }
       
@@ -122,10 +126,15 @@ namespace ProjectX.Controllers
                 loadAgents = true,
               userid = _user.U_Id
             });
-            if (_user.U_Is_Admin == false)
+            if (_user.U_Is_Admin != true)
             {
                 response.loadedData.agents = response.loadedData.agents.Where(a => a.LK_ID == _user.U_Id).ToList();
                 response.loadedData.subagents = response.loadedData.usersHierarchy.Where(a => a.LK_ID != _user.U_Id).ToList();
+            }
+
+            if (response.loadedData.agents.Count() == 0)
+            {
+                response.loadedData.agents = response.loadedData.usersHierarchy.Where(a => a.LK_ID == _user.U_Id).ToList();
             }
             return View(response);
         }
