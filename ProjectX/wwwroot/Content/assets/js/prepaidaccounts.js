@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     
     $('#editAmountBtn').click(function () {
+        resetAmountPopup();
         showresponsemodalbyid('edit-balance')
         
     });
@@ -14,8 +15,12 @@ $(document).ready(function () {
    
 });
 function editAmount(me) {
+    if (validateForm("#edit-balance .container-fluid")) {
+        return;
+    }
     showloader("load");
-    var type = $(me).attr("typ");
+    /*var type = $(me).attr("typ");*/
+    var type = 0;
     var amount = $('#newAmount').val();
     var userid = $('#userId').val();
     $.ajax({
@@ -125,3 +130,9 @@ function loadUserPreBalance() {
     });
 }
 
+function resetAmountPopup() {
+    $('#newAmount').val('');
+}
+function validateAccountPopup() {
+
+}
