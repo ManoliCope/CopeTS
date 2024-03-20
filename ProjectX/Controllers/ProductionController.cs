@@ -392,7 +392,7 @@ namespace ProjectX.Controllers
                 return response;
             }
 
-            return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id);
+            return _productionBusiness.SaveIssuance(IssuanceReq, _user.U_Id, _user);
         }
 
 

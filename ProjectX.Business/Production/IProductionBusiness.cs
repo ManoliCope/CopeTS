@@ -1,4 +1,5 @@
-﻿using ProjectX.Entities.dbModels;
+﻿using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
+using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Product;
 using ProjectX.Entities.Models.Production;
 using System;
@@ -15,7 +16,7 @@ namespace ProjectX.Business.Production
         public List<TR_Destinations> GetDestinationByZone(int id);
         public List<TR_Benefit> GetAdditionalBenbyTariff(List<int> Tariff);
         public ProductionResp getProductionDetails(List<ProductionReq> req,int userid);
-        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid);
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid, TR_Users _user);
         public ProductionPolicy GetPolicy(int IdPolicy, int userid,bool isprint);
         public List<TR_PolicyHeader> GetPoliciesList(ProductionSearchReq req, int userid);
         public List<TR_Beneficiary> GetPolicyBeneficiaries(int id, int userid);
