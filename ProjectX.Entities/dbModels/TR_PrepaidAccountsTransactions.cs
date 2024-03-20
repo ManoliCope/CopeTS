@@ -11,7 +11,7 @@ namespace ProjectX.Entities.dbModels
         public int PAT_Id { get; set; }
         public int? PA_Id { get; set; }
         public int? PAT_Action { get; set; }
-        public string? PAT_ActionNames { get; set; }
+        public string? PAT_ActionName { get; set; }
         public double? PAT_Amount { get; set; }
         public string? PAT_Details { get; set; }
         public DateTime? PAT_CreationDate { get; set; }
