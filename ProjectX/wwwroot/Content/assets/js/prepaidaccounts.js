@@ -54,9 +54,9 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "", "className": "text-center filter", "orderable": true, "data": "paT_Id", "visible": false},
-            { "title": "Action", "className": "text-center filter", "orderable": true, "data": "paT_Action" },
-            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "paT_Amount" },
+            //{ "title": "Action", "className": "text-center filter", "orderable": true, "data": "paT_Action" },
             { "title": "Details", "className": "text-center filter", "orderable": true, "data": "paT_Details" },
+            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "paT_ActionName" },
             { "title": "Date", "className": "text-center filter", "orderable": true, "data": "paT_CreationDate" },
            
         ], order: [[0, "desc"]],
