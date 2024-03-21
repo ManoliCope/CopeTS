@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     
     $('#editAmountBtn').click(function () {
-        resetAmountPopup();
+        //resetAmountPopup();
         showresponsemodalbyid('edit-balance')
         
     });
@@ -109,8 +109,8 @@ function loadUserPreBalance() {
                 showresponsemodal("error", result.statusCode.message)
             else {
                 $('#editAmountBtn').removeClass('hidden');
-                $('#currentAmount').text('Current Balance: ' + result.pA_Amount);
-                $('#currAmount').text(result.pA_Amount);
+                $('#currentAmount').text('Current Balance: ' + result.pA_Amount + " USD");
+                $('#currAmount').text(result.pA_Amount + " USD");
                 $(result.preAccTransactions).each(function (index, transaction) {
                     transaction.paT_CreationDate = formatDate(transaction.paT_CreationDate);
 

@@ -433,15 +433,22 @@ namespace ProjectX.Controllers
             return _productionBusiness.EditableProduction(polId, _user.U_Id, editable);
         }
         [HttpPost]
-        public async Task<ProductionResp> SendPolicyByEmail(string to, string cc, byte[] attachment,int policyId)
+        public async Task<ProductionResp> SendPolicyByEmail(string to, string cc, byte[] attachment, int policyId)
         {
             var result = new ProductionResp();
 
             try
             {
+                if (to == "" || to == null)
+                {
+                    result.statusCode.code = 0;
+                    result.statusCode.message = "Error Sending Email!";
+                    return result;
+                }
+
                 var policy = new PolicyDetail();
                 policy.PolicyID = policyId;
-               var success= await _emailBusiness.SendPolicyByEmail(to, cc, "PolicyNotification", attachment, policy,_user.U_Id);
+                var success = await _emailBusiness.SendPolicyByEmail(to, cc, "PolicyNotification", attachment, policy, _user.U_Id);
                 if (success)
                 {
                     result.statusCode.code = 1;
@@ -452,9 +459,9 @@ namespace ProjectX.Controllers
                     result.statusCode.code = 0;
                     result.statusCode.message = "Error Sending Email!";
                 }
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 result.statusCode.code = 0;
                 result.statusCode.message = "Error Sending Email!";
