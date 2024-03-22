@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     
     $('#editAmountBtn').click(function () {
+        //resetAmountPopup();
         showresponsemodalbyid('edit-balance')
         
     });
@@ -14,8 +15,12 @@ $(document).ready(function () {
    
 });
 function editAmount(me) {
+    if (validateForm("#edit-balance .container-fluid")) {
+        return;
+    }
     showloader("load");
-    var type = $(me).attr("typ");
+    /*var type = $(me).attr("typ");*/
+    var type = 0;
     var amount = $('#newAmount').val();
     var userid = $('#userId').val();
     $.ajax({
@@ -54,9 +59,9 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "", "className": "text-center filter", "orderable": true, "data": "paT_Id", "visible": false},
-            { "title": "Action", "className": "text-center filter", "orderable": true, "data": "paT_Action" },
-            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "paT_Amount" },
+            //{ "title": "Action", "className": "text-center filter", "orderable": true, "data": "paT_Action" },
             { "title": "Details", "className": "text-center filter", "orderable": true, "data": "paT_Details" },
+            { "title": "Amount", "className": "text-center filter", "orderable": true, "data": "paT_ActionName" },
             { "title": "Date", "className": "text-center filter", "orderable": true, "data": "paT_CreationDate" },
            
         ], order: [[0, "desc"]],
@@ -104,8 +109,8 @@ function loadUserPreBalance() {
                 showresponsemodal("error", result.statusCode.message)
             else {
                 $('#editAmountBtn').removeClass('hidden');
-                $('#currentAmount').text('Current Balance: ' + result.pA_Amount);
-                $('#currAmount').text(result.pA_Amount);
+                $('#currentAmount').text('Current Balance: ' + result.pA_Amount + " USD");
+                $('#currAmount').text(result.pA_Amount + " USD");
                 $(result.preAccTransactions).each(function (index, transaction) {
                     transaction.paT_CreationDate = formatDate(transaction.paT_CreationDate);
 
@@ -125,3 +130,9 @@ function loadUserPreBalance() {
     });
 }
 
+function resetAmountPopup() {
+    $('#newAmount').val('');
+}
+function validateAccountPopup() {
+
+}

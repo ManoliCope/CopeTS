@@ -50,12 +50,30 @@ namespace ProjectX.Business.Production
 
             return ProductionDetails;
         }
-        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid)
+        public ProductionSaveResp SaveIssuance(IssuanceReq req, int userid, TR_Users _user)
         {
             ProductionSaveResp response = new ProductionSaveResp();
-            var duplicateBeneficiary = req.beneficiaryData.Where(b => b.insuredId != 0).GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
 
+            if (req.policyId != 0)
+            {
+                ProductionPolicy prevPolicy = _prodRepository.GetPolicy(req.policyId, userid, false);
+                decimal balance = req.GrandTotal - prevPolicy.GrandTotal;
 
+                if (_user.U_Prepaid_Account == true && balance > (decimal)(_user.U_User_Balance ?? 0))
+                {
+                    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InsufficientFunds);
+                    return response;
+                }
+            }
+            else
+            {
+                if (_user.U_Prepaid_Account == true && req.GrandTotal > (decimal)(_user.U_User_Balance ?? 0))
+                {
+                    response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.InsufficientFunds);
+                    return response;
+                }
+            }
+        
             if (req.Is_Individual && req.beneficiaryDetails.Count > 1)
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.NotIndividual);
@@ -80,6 +98,7 @@ namespace ProjectX.Business.Production
                 return response;
             }
 
+            var duplicateBeneficiary = req.beneficiaryData.Where(b => b.insuredId != 0).GroupBy(b => b.insuredId).FirstOrDefault(g => g.Count() > 1);
             if (duplicateBeneficiary != null)
             {
                 response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.DuplicateBeneficiary);

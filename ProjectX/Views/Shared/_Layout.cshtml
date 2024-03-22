@@ -45,13 +45,13 @@
 
 	<link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />
 	<link href="~/Content/assets/css/Responsepopup.css" rel="stylesheet" asp-append-version="true" />
-	<link href="~/Content/assets/css/layoutstyle.css" rel="stylesheet" asp-append-version="true"/>
+	<link href="~/Content/assets/css/layoutstyle.css" rel="stylesheet" asp-append-version="true" />
 
 
 	@if (controllerName == "login")
 	{
 		@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">*@
-		<link href="~/Content/assets/css/login.css" rel="stylesheet" asp-append-version="true"/>
+		<link href="~/Content/assets/css/login.css" rel="stylesheet" asp-append-version="true" />
 	}
 	else
 	{
@@ -156,22 +156,19 @@
 					</div>*@
 
 				<div class="top-nav">
-					<div class="container mw-100">
-  <div class="row">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-6">
-						@if(Convert.ToBoolean(Context.Items["hasAccount"])==true){
 
-					<h5 class="float-left balancetxt">Balance: @Context.Items["userBalance"]</h5>
-						
-						}</div>
-					 <div class="col-sm-4 float-right">	<ul class="nav-list">
-						
+					<ul class="nav-list">
+
 						<li>
 							<b class="welcometxt">Welcome, @Context.Items["Username"]!</b>
 
-
 						</li>
+						@if (Convert.ToBoolean(Context.Items["hasAccount"]) == true)
+						{
+							<li>
+								<b class="balancetxt">Balance: @Context.Items["userBalance"] USD</b>
+							</li>
+						}	
 						<li>
 							<a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
 								<i class="ri-menu-line ri-xl"></i>
@@ -198,11 +195,7 @@
 								</div>
 							</div>
 						</li>
-					</ul></div>
-						
-				
-				</div>
-				</div>
+					</ul>
 				</div>
 
 				<main class="content p-0">
@@ -336,7 +329,7 @@
 	}
 	else if (controllerName == "productionbatch")
 	{
-		<script src="~/Content/assets/js/productionbatch.js" asp-append-version="true" ></script>
+		<script src="~/Content/assets/js/productionbatch.js" asp-append-version="true"></script>
 	}
 	else if (controllerName == "beneficiary")
 	{
@@ -349,12 +342,12 @@
 	}
 	else if (controllerName == "report")
 	{
-		
+
 		<script src="~/Content/assets/js/report.js" asp-append-version="true"></script>
 	}
 	else if (controllerName == "prepaidaccounts")
 	{
-		
+
 		<script src="~/Content/assets/js/prepaidaccounts.js" asp-append-version="true"></script>
 	}
 

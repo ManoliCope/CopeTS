@@ -29,9 +29,18 @@ namespace ProjectX.Business.PrepaidAccounts
         }
         public PreAccResp EditBalance(int createdBy,int action,float amount, int userid)
         {
+            if(amount>=0 && action==0)
+                action=1;
+            else if(amount<0 && action == 0)
+            {
+                action=2;
+                amount *= -1;
+            }
+
             return _prepaidAccountsRepository.EditBalance(createdBy, action, amount,userid);
         }
 
 
     }
 }
+

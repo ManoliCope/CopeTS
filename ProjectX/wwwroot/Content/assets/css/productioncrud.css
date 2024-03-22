@@ -313,3 +313,14 @@
 input[readonly] {
     cursor: not-allowed; 
 }
+
+#emailButton .fa-envelope {
+    font-size: 20px;
+    margin-top: -2px;
+    margin-left: -1px;
+}
+
+
+#email-popup .modal-dialog {
+    top: 1% !important;
+}

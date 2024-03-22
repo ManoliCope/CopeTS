@@ -107,7 +107,7 @@ $(document).ready(function () {
             getQuotation()
         }
     });
-        
+
 
     //$('.trgrthis.isselect2').on('select2:close', function () {
     //    alert('here')
@@ -405,7 +405,7 @@ function populatebeneficiarydatatable(tablename, data) {
         ],
         "columnDefs": [
             {
-                "targets": [0, 1,3, 7, 8, 9, 10],
+                "targets": [0, 1, 3, 7, 8, 9, 10],
                 "visible": false,
             }
         ],
@@ -1459,10 +1459,21 @@ $("#btnsendrequestemail").click(function () {
 })
 
 function sendPolicyByEmail(me) {
-    showscreenloader("load")
+   togglebtnloader(me)
+
     var policyId = $(".editscreen").attr("pol-id");
     var to = $("#emailto").val().join(";");
     var cc = $("#emailcc").val().join(";");
+
+    if (to == '' && cc == '') {
+        $("#emailto, #emailcc" ).css('border-color', 'red');
+        $("#emailto, #emailcc").parent().find(".select2-container").addClass("select2-borderred");
+        return;
+    } else {
+        $("#emailto, #emailcc").css('border-color', '#e2e7f1');
+        $("#emailto, #emailcc").parent().find(".select2-container").removeClass("select2-borderred");
+    }
+
     var printType = $('input[type="radio"][name="attachmentType"]:checked').val();
     $.ajax({
         type: 'Post',
@@ -1473,17 +1484,15 @@ function sendPolicyByEmail(me) {
         success: function (result) {
             var attachment = result;
 
-           $.ajax({
+            $.ajax({
                 type: 'Post',
-               url: projectname + "/Production/SendPolicyByEmail",
+                url: projectname + "/Production/SendPolicyByEmail",
                 data: {
                     to: to, cc: cc, attachment: attachment, policyId: policyId
                 },
-               success: function (result) {
-                  // alert('sent');
-                   removescreenloader();
+                success: function (result) {
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
-                    //removebtnloader($(me))
+                    removebtnloader($(me))
                 },
                 failure: function (data, success, failure) {
                     (result.statusCode.code, result.statusCode.message)
@@ -1524,7 +1533,7 @@ function sendPolicyByEmail(me) {
 
 
 
-      
+
     //    //var subject = $("#emailsubject").val();
     //    //var body = $("#emailbody").val();
     //    var withAttachments = $('#withAttachments').is(':checked');

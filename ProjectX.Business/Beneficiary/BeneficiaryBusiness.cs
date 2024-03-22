@@ -1,11 +1,8 @@
-﻿using ProjectX.Entities.dbModels;
+﻿using ProjectX.Entities;
+using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Beneficiary;
-using ProjectX.Repository.BeneficiaryRepository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ProjectX.Entities.Resources;
-using ProjectX.Entities;
+using ProjectX.Repository.BeneficiaryRepository;
 
 namespace ProjectX.Business.Beneficiary
 {
@@ -21,7 +18,10 @@ namespace ProjectX.Business.Beneficiary
         {
             BeneficiaryResp response = new BeneficiaryResp();
             response = _beneficiaryRepository.ModifyBeneficiary(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Plan");
+            if (act == "Delete")
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Delete, "Beneficiary");
+            else
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Beneficiary");
             return response;
 
         }
