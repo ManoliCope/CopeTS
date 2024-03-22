@@ -1,0 +1,53 @@
+﻿<div class="modal fade" id="import-beneficiaries" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered " role="document">
+		<div class="modal-content" style="margin-bottom: 200px;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle"> Import Beneficiaries </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"> &times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<div id="divinfo" class="col-lg-12">
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<a id="downloadLink" class="mr-auto pt-1 float-left" href="/Samplefile/beneficiaries.xlsx" download>
+								Sample File <i class="fa fa-download"></i>
+							</a>
+						</div>
+						<div class="form-group col-lg-6">
+							<label for="validationCustom02" hidden>&nbsp;</label>
+
+							<button id="importupload" type="button" class="btn btn-primary btn-block bglocalcolor " onclick="importupload(this)">
+								<span>
+									Select File
+								</span>
+							</button>
+							<div id="thisloader" class="smloader hide"></div>
+							<input type="file" class="file-upload" style="display: none" multiple />
+						</div>
+
+						<div class="form-group mb-1 col-lg-12">
+						</div>
+						<div class="form-group mb-1 col-lg-12 ">
+							<br />
+							<label class="importresponse text-danger "></label>
+						</div>
+
+						<div id="divbeneficiariestable" class="form-group mb-1 col-lg-12">
+							<table id="beneficiariestable" class="scrolly table dt-responsive nowrap table compact table-hover table-flush table-striped table-bordered mb-0 ">
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" hidden>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="beneficiariesimport" class="btn btn-primary w-100 bglocalcolor mb-1" type="submit" onclick="importbeneficiariesbulk()">
+					<span> Import </span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

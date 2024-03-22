@@ -12,6 +12,7 @@ using ProjectX.Entities.Resources;
 using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 namespace ProjectX.Controllers
 {
@@ -173,6 +174,65 @@ namespace ProjectX.Controllers
             BeneficiaryResp response = new BeneficiaryResp();
             response = _beneficiaryBusiness.GetBeneficiary(id, _user.U_Id);
             return response;
+        }
+
+        public IActionResult OpenPopUpImportBeneficiaries()
+        {
+            return PartialView("~/Views/Shared/PopUpImportBeneficiaries.cshtml");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public List<ImportBeneficiariesReq> exceltotable([FromForm(Name = "files")] IFormFileCollection files)
+        {
+            List<ImportBeneficiariesReq> beneficiaries = new List<ImportBeneficiariesReq>();
+
+            foreach (IFormFile formFile in files)
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = new System.IO.MemoryStream())
+                {
+
+                    formFile.CopyTo(stream);
+                    stream.Position = 0;
+                    using (var reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream))
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.Depth != 0)
+                            {
+                                beneficiaries.Add(new ImportBeneficiariesReq
+                                {
+									FirstName = reader.IsDBNull(0) ? "" : (reader.GetValue(0)?.ToString() ?? ""),
+                                    MiddleName = reader.IsDBNull(1) ? "" : (reader.GetValue(1)?.ToString() ?? ""),
+                                    LastName = reader.IsDBNull(2) ? "" : (reader.GetValue(2)?.ToString() ?? ""),
+                                    PassportNumber = reader.IsDBNull(3) ? "" : (reader.GetValue(3)?.ToString() ?? ""),
+                                    DateOfBirth = reader.IsDBNull(4) ? DateTime.Today : Convert.ToDateTime(reader.GetValue(4)),
+                                    Nationality = reader.IsDBNull(5) ? "" : (reader.GetValue(5)?.ToString() ?? ""),
+                                    CountryResidence = reader.IsDBNull(6) ? "" : (reader.GetValue(6)?.ToString() ?? ""),
+                                    Gender = reader.IsDBNull(7) ? "" : (reader.GetValue(7)?.ToString() ?? "")
+								});
+                            }
+                        }
+                    }
+                }
+            }
+            return beneficiaries;
+        }
+
+        public BeneficiariesBatchSaveResp importBeneficiaries(string importedbatch)
+        {
+            BeneficiariesBatchSaveReq reqq = new BeneficiariesBatchSaveReq();
+            List<ImportBeneficiariesReq> beneficiariesBatchDetailsList = DeserializeJsonString(importedbatch);
+            reqq.beneficiaries = beneficiariesBatchDetailsList;
+            reqq.userid = _user.U_Id;
+
+            return _beneficiaryBusiness.SaveBeneficiariesBatch(reqq);
+        }
+
+        public List<ImportBeneficiariesReq> DeserializeJsonString(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<List<ImportBeneficiariesReq>>(jsonString);
         }
 
     }

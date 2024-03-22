@@ -56,5 +56,9 @@ namespace ProjectX.Business.Beneficiary
         {
             return _beneficiaryRepository.SearchBeneficiaryPref(prefix, userid);
         }
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req)
+        {
+            return _beneficiaryRepository.SaveBeneficiariesBatch(req);
+        }
     }
 }

@@ -29,7 +29,7 @@ $(document).ready(function () {
 });
 
 function drawtable(data) {
-    console.log(data)
+    //console.log(data)
     var table = $('#beneficiarytable').DataTable({
         "data": data,
         dom: 'Bfrtip',
