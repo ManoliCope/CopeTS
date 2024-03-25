@@ -234,8 +234,10 @@ namespace ProjectX.Business.Users
         }
         public void CopyParentAttachments(int parentId, int childId,string uploadsDirectory)
         {
-            var parentPath = Path.Combine(uploadsDirectory, parentId.ToString(), "Conditions");
-            var childPath = Path.Combine(uploadsDirectory, childId.ToString(), "Conditions");
+            //var parentPath = Path.Combine(uploadsDirectory, parentId.ToString(), "Conditions");
+            //var childPath = Path.Combine(uploadsDirectory, childId.ToString(), "Conditions");
+            var parentPath = Path.Combine(uploadsDirectory, parentId.ToString());
+            var childPath = Path.Combine(uploadsDirectory, childId.ToString());
             if (Directory.Exists(parentPath))
             {
                 // Create the destination directory if it doesn't exist
@@ -243,20 +245,20 @@ namespace ProjectX.Business.Users
                 {
                     Directory.CreateDirectory(childPath);
                 }
-
+                CopyFolders(parentPath, childPath);
                 // Get all files in the source directory
-                string[] files = Directory.GetFiles(parentPath);
+                //string[] files = Directory.GetFiles(parentPath);
 
-                // Copy each file to the destination directory
-                foreach (string filePath in files)
-                {
-                    string fileName = Path.GetFileName(filePath);
-                    string destinationFilePath = Path.Combine(childPath, fileName);
+                //// Copy each file to the destination directory
+                //foreach (string filePath in files)
+                //{
+                //    string fileName = Path.GetFileName(filePath);
+                //    string destinationFilePath = Path.Combine(childPath, fileName);
 
-                    // Copy the file
-                    File.Copy(filePath, destinationFilePath, true); // Set the third parameter to 'true' to overwrite existing files
-                   
-                }
+                //    // Copy the file
+                //    File.Copy(filePath, destinationFilePath, true); // Set the third parameter to 'true' to overwrite existing files
+
+            //}
 
                 
             }
@@ -264,6 +266,44 @@ namespace ProjectX.Business.Users
             //{
             //    Console.WriteLine("Source directory does not exist.");
             //}
+        }
+        static void CopyFolders(string sourceDir, string destinationDir)
+        {
+            // Check if the source directory exists
+            if (!Directory.Exists(sourceDir))
+            {
+                Console.WriteLine("Source directory does not exist.");
+                return;
+            }
+
+            // Create the destination directory if it doesn't exist
+            if (!Directory.Exists(destinationDir))
+            {
+                Directory.CreateDirectory(destinationDir);
+            }
+
+            // Get DirectoryInfo object for source directory
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
+
+            // Copy subdirectories
+            foreach (DirectoryInfo dir in sourceDirInfo.GetDirectories())
+            {
+                // Construct the destination subdirectory path
+                string destSubDir = Path.Combine(destinationDir, dir.Name);
+
+                // Recursively copy the subdirectory
+                CopyFolders(dir.FullName, destSubDir);
+            }
+
+            // Copy files from source directory to destination directory
+            foreach (FileInfo file in sourceDirInfo.GetFiles())
+            {
+                // Construct the destination file path
+                string destFile = Path.Combine(destinationDir, file.Name);
+
+                // Copy the file to the destination directory
+                file.CopyTo(destFile, true);
+            }
         }
     }
 }
