@@ -12,6 +12,7 @@ using ProjectX.Entities.Models.Report;
 using System.Data;
 using System.Text;
 using ClosedXML.Excel;
+using ProjectX.Business.PrepaidAccounts;
 
 namespace ProjectX.Controllers
 {
@@ -25,8 +26,10 @@ namespace ProjectX.Controllers
         private TR_Users _user;
         private IJwtBusiness _jwtBusiness;
         private IWebHostEnvironment _env;
+        private IPrepaidAccountsBusiness _prepaidAccountsBusiness;
 
-        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
+
+        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env, IPrepaidAccountsBusiness prepaidAccountsBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
             _reportBusiness = reportBusiness;
@@ -35,6 +38,7 @@ namespace ProjectX.Controllers
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
+            _prepaidAccountsBusiness = prepaidAccountsBusiness;
 
         }
         public IActionResult Index()
@@ -160,6 +164,18 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
+        public ActionResult PrepaidAccounts()
+        {
+
+            var availableUsers = _prepaidAccountsBusiness.GetAvailableUsers(_user.U_Id);
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+
+            });
+            response.loadedData.users = availableUsers.users;
+
+            return View(response);
+        }
         [HttpPost]
         public IActionResult GenerateProduction(productionReport req)
         {
@@ -220,6 +236,13 @@ namespace ProjectX.Controllers
         {
             return _reportBusiness.getProducts(userid);
         }
-
+[HttpPost]
+        public IActionResult GeneratePrepaidAccounts(int userid,DateTime? datefrom,DateTime? dateto)
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GeneratePrepaidAccounts(_user.U_Id,userid,datefrom,dateto);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "PrepaidAccounts");
+        } 
     }
 }

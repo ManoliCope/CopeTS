@@ -179,6 +179,23 @@ namespace ProjectX.Repository.ReportRepository
 
             return resp;
         }
+        public List<dynamic> GeneratePrepaidAccounts(int U_Id, int userid, DateTime? datefrom, DateTime? dateto)
+        {
+            List<dynamic> response = new List<dynamic>();
+            var param = new DynamicParameters();
+            param.Add("@U_Id", U_Id);
+            param.Add("@userid", userid);
+            param.Add("@datefrom", datefrom);
+            param.Add("@dateto", dateto);
 
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_Report_PrepaidAccounts", param, commandType: CommandType.StoredProcedure))
+                {
+                    response = result.Read<dynamic>().ToList();
+                }
+            }
+            return response;
+        }
     }
 }
