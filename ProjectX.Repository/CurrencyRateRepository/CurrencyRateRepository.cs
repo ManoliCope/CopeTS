@@ -75,6 +75,23 @@ namespace ProjectX.Repository.CurrencyRateRepository
 
             return resp;
         }
+
+
+        public List<TR_CurrencyRate> GetCurrencyRateListbyUserid(int Userid)
+        {
+            var resp = new List<TR_CurrencyRate>();
+            var param = new DynamicParameters();
+            param.Add("@U_Id", Userid);
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+                using (SqlMapper.GridReader result = _db.QueryMultiple("TR_CurrencyRate_Get_byUserid", param, commandType: CommandType.StoredProcedure))
+                {
+                    resp = result.Read<TR_CurrencyRate>().ToList();
+                }
+            }
+
+            return resp;
+        }
         public TR_CurrencyRate GetCurrencyRate(int IdCurrencyRate)
         {
             var resp = new TR_CurrencyRate();

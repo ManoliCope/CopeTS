@@ -12,6 +12,7 @@ namespace ProjectX.Entities.Models.ProductionBatch
         public string Type { get; set; }
         public string Plan { get; set; }
         public string Zone { get; set; }
+        public string Product { get; set; }
         public int Days { get; set; }
         public DateTime StartDate { get; set; }
         public string FirstName { get; set; }

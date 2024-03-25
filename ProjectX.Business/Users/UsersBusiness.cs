@@ -35,7 +35,6 @@ namespace ProjectX.Business.Users
 
         public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
-
             return _usersRepository.GetUsersList(req);
         }
         public LoginResp Login(LoginReq Req)
