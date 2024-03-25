@@ -10,6 +10,7 @@ namespace ProjectX.Business.CurrencyRate
     {
         public CurrResp ModifyCurrencyRate(CurrReq req, string act, int userid);
         public List<TR_CurrencyRate> GetCurrencyRateList(CurrSearchReq req);
+        public List<TR_CurrencyRate> GetCurrencyRateListbyUserid(int userid);
         public CurrResp GetCurrencyRate(int IdPlan);
     }
 }

@@ -62,6 +62,7 @@ namespace ProjectX.Entities.Models.Users
         public float? Max_Additional_Fees { get; set; }
         public DateTime Creation_Date { get; set; }
         public string logo { get; set; }
+        public bool? without_parent { get; set; }
 
 
     }

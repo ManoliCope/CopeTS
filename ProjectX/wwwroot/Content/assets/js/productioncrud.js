@@ -395,7 +395,8 @@ function populatebeneficiarydatatable(tablename, data) {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: ((ismanual != '1' && isadmin == '1') || newpolicy == 1),
+                visible: (ismanual != '1' || newpolicy == 1),
+                //visible: ((ismanual != '1' && isadmin == '1') || newpolicy == 1),
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';

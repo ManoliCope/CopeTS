@@ -12,6 +12,8 @@ using ProjectX.Entities.Models.Report;
 using System.Data;
 using System.Text;
 using ClosedXML.Excel;
+using ProjectX.Business.CurrencyRate;
+using ProjectX.Entities.Models.CurrencyRate;
 
 namespace ProjectX.Controllers
 {
@@ -25,10 +27,12 @@ namespace ProjectX.Controllers
         private TR_Users _user;
         private IJwtBusiness _jwtBusiness;
         private IWebHostEnvironment _env;
+        private ICurrencyRateBusiness _currencyBusiness;
 
-        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
+        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, ICurrencyRateBusiness currBusiness,  IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
         {
             _httpContextAccessor = httpContextAccessor;
+            _currencyBusiness = currBusiness;
             _reportBusiness = reportBusiness;
             _usersBusiness = usersBusiness;
             _generalBusiness = generalBusiness;
@@ -140,16 +144,11 @@ namespace ProjectX.Controllers
         }
         public ActionResult Currencies()
         {
-
-            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
-            {
-                loadCurrencyRate = true
-            });
-            return View(response);
+            var currencylist = _currencyBusiness.GetCurrencyRateListbyUserid(_user.U_Id);
+            return View(currencylist);
         }
         public ActionResult Tariff()
         {
-
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,

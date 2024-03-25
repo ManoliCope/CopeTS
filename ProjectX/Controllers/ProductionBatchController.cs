@@ -39,7 +39,7 @@ namespace ProjectX.Controllers
         public ProductionBatchSearchResp Search(ProductionBatchSearchReq req)
         {
             ProductionBatchSearchResp response = new ProductionBatchSearchResp();
-            response.productionbatch = _productionBatchBusiness.GetProductionBatchList(req);
+            response.productionbatch = _productionBatchBusiness.GetProductionBatchList(req, _user.U_Id);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");
 
             return response;
@@ -87,23 +87,24 @@ namespace ProjectX.Controllers
                                     Type = reader.GetValue(1).ToString() ?? "",
                                     Plan = reader.GetValue(2).ToString() ?? "",
                                     Zone = reader.GetValue(3).ToString() ?? "",
-                                    Days = Convert.ToInt16(reader.GetValue(4)),
-                                    StartDate = Convert.ToDateTime(reader.GetValue(5)),
-                                    FirstName = reader.GetValue(6).ToString() ?? "",
-                                    MiddleName = reader.GetValue(7).ToString() ?? "",
-                                    LastName = reader.GetValue(8).ToString() ?? "",
-                                    DateOfBirth = Convert.ToDateTime(reader.GetValue(9)),
-                                    Age = Convert.ToInt16(reader.GetValue(10)),
-                                    Gender = reader.GetValue(11).ToString() ?? "",
-                                    PassportNumber = reader.GetValue(12).ToString() ?? "",
-                                    Nationality = reader.GetValue(13).ToString() ?? "",
+                                    Product = reader.GetValue(4).ToString() ?? "",
+                                    Days = Convert.ToInt16(reader.GetValue(5)),
+                                    StartDate = Convert.ToDateTime(reader.GetValue(6)),
+                                    FirstName = reader.GetValue(7).ToString() ?? "",
+                                    MiddleName = reader.GetValue(8).ToString() ?? "",
+                                    LastName = reader.GetValue(9).ToString() ?? "",
+                                    DateOfBirth = Convert.ToDateTime(reader.GetValue(10)),
+                                    Age = Convert.ToInt16(reader.GetValue(11)),
+                                    Gender = reader.GetValue(12).ToString() ?? "",
+                                    PassportNumber = reader.GetValue(13).ToString() ?? "",
+                                    Nationality = reader.GetValue(14).ToString() ?? "",
 
-                                    Country = reader.GetValue(14).ToString() ?? "",
-                                    Deductible = reader.GetValue(15).ToString() ?? "",
-                                    SportsActivities = reader.GetValue(16).ToString() ?? "",
+                                    Country = reader.GetValue(15).ToString() ?? "",
+                                    Deductible = reader.GetValue(16).ToString() ?? "",
+                                    SportsActivities = reader.GetValue(17).ToString() ?? "",
 
-                                    PremiumInUSD = Convert.ToDecimal(reader.GetValue(17)),
-                                    NetInUSD = Convert.ToDecimal(reader.GetValue(18))
+                                    PremiumInUSD = Convert.ToDecimal(reader.GetValue(18)),
+                                    NetInUSD = Convert.ToDecimal(reader.GetValue(19))
                                 });
                             }
                         }

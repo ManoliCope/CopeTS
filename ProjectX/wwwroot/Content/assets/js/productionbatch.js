@@ -14,9 +14,9 @@ $(document).ready(function () {
         resetAllValues(divname);
         resetdatatable("#plantable");
     });
-    $("#create").click(function () {
-        addnew();
-    });
+    //$("#create").click(function () {
+    //    addnew();
+    //});
     $("#edit").click(function () {
         edit();
     });
@@ -118,41 +118,41 @@ function Search() {
     });
 }
 
-function addnew() {
-    if (validateForm(".container-fluid")) {
-        return;
-    }
+//function addnew() {
+//    if (validateForm(".container-fluid")) {
+//        return;
+//    }
 
-    showloader("load")
-    var planReq = {
-        "title": $("#title").val(),
-    }
+//    showloader("load")
+//    var planReq = {
+//        "title": $("#title").val(),
+//    }
 
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: projectname + "/Plan/CreatePlan",
-        data: { req: planReq },
-        success: function (result) {
-            console.log(result)
-            removeloader();
-            //if (result.statusCode.code == 1 && profile.IdProfile == "0")
-            //    gotopage("Profile", "Index");
+//    $.ajax({
+//        type: 'post',
+//        dataType: 'json',
+//        url: projectname + "/Plan/CreatePlan",
+//        data: { req: planReq },
+//        success: function (result) {
+//            console.log(result)
+//            removeloader();
+//            //if (result.statusCode.code == 1 && profile.IdProfile == "0")
+//            //    gotopage("Profile", "Index");
 
-            showresponsemodal(result.statusCode.code, result.statusCode.message)
-            $("#responsemodal button").click(function () {
-                gotopage("plan", "Edit", result.id);
-            });
+//            showresponsemodal(result.statusCode.code, result.statusCode.message)
+//            $("#responsemodal button").click(function () {
+//                gotopage("plan", "Edit", result.id);
+//            });
 
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-        }
-    });
-}
+//        },
+//        failure: function (data, success, failure) {
+//            showresponsemodal("Error", "Bad Request")
+//        },
+//        error: function (data) {
+//            showresponsemodal("Error", "Bad Request")
+//        }
+//    });
+//}
 
 function deletebatch(me) {
     if (validateForm(".container-fluid")) {
@@ -420,7 +420,6 @@ function importadherents() {
     });
 }
 function drawproductionbatchtable(result) {
-    console.log(result);
     var table = $('#productionbatchtable').DataTable({
         "data": result,
         "paging": true,
@@ -436,6 +435,7 @@ function drawproductionbatchtable(result) {
             { "title": "Type", "className": "text-center filter", "orderable": true, "data": "type" },
             { "title": "Plan", "className": "text-center filter", "orderable": true, "data": "plan" },
             { "title": "Zone", "className": "text-center filter", "orderable": true, "data": "zone" },
+            { "title": "Product", "className": "text-center filter", "orderable": true, "data": "product" },
             { "title": "Days", "className": "text-center filter", "orderable": true, "data": "days" },
             { "title": "StartDate", "className": "text-center filter", "orderable": true, "data": "startDate" },
             { "title": "FirstName", "className": "text-center filter", "orderable": true, "data": "firstName" },

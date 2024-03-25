@@ -69,12 +69,13 @@ namespace ProjectX.Repository.ProductionBatchRepository
         //    resp.id = idOut;
         //    return resp;
         //}
-        public List<TR_ProductionBatch> GetProductionBatchList(ProductionBatchSearchReq req)
+        public List<TR_ProductionBatch> GetProductionBatchList(ProductionBatchSearchReq req , int userid)
         {
             var resp = new List<TR_ProductionBatch>();
 
             var param = new DynamicParameters();
 
+            param.Add("@Userid", userid);
             param.Add("@PB_Id", req.id);
             param.Add("@PB_Title", req.title);
 

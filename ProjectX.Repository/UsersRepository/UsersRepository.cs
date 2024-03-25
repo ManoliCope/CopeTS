@@ -148,7 +148,6 @@ namespace ProjectX.Repository.UsersRepository
         public UsersSearchResp GetUsersList(UsersSearchReq req)
         {
             var resp = new UsersSearchResp();
-
             var param = new DynamicParameters();
 
             param.Add("@U_Id", req.Id);
@@ -158,8 +157,7 @@ namespace ProjectX.Repository.UsersRepository
             param.Add("@U_User_Name", req.User_Name);
             param.Add("@U_Email", req.Email);
             param.Add("@U_Super_Agent_Id", req.Super_Agent_Id);
-
-
+            param.Add("@without_parent", req.without_parent);
 
             using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
             {
