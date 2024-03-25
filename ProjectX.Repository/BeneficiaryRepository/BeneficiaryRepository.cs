@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using ProjectX.Entities.Models.Beneficiary;
+using System.Reflection;
 
 namespace ProjectX.Repository.BeneficiaryRepository
 {
@@ -119,6 +120,65 @@ namespace ProjectX.Repository.BeneficiaryRepository
             }
 
             return resp;
+        }
+
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req)
+        {
+            int statusCode = 0;
+            var resp = new BeneficiariesBatchSaveResp();
+            var param = new DynamicParameters();
+            var batches = ConvertToDataTable(req.beneficiaries);
+
+            var ttt = batches.AsTableValuedParameter("TR_ImportBeneficiaries_Req");
+
+            param.Add("@userid", req.userid);
+            param.Add("@BenefList", batches.AsTableValuedParameter("TR_ImportBeneficiaries_Req"));
+            param.Add("@Status", statusCode, dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+
+            using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+            {
+
+                using (_db = new SqlConnection(_appSettings.connectionStrings.ccContext))
+                {
+                    using (SqlMapper.GridReader result = _db.QueryMultiple("TR_ImportBeneficiaries", param, commandType: CommandType.StoredProcedure))
+                    {
+                        resp.beneficiaries = result.Read<ImportBeneficiariesReq>().ToList();
+                        statusCode = param.Get<int>("@Status");
+                    }
+                    resp.statusCode.code = statusCode;
+                }
+            }
+
+            return resp;
+        }
+
+        public static DataTable ConvertToDataTable<T>(IEnumerable<T> list)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Get all the public properties of the class using reflection
+            PropertyInfo[] propertyInfos = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // Create data columns for the DataTable using the property names and types
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                dataTable.Columns.Add(propertyInfo.Name, propertyInfo.PropertyType);
+            }
+
+            // Add data rows to the DataTable
+            foreach (T item in list)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                foreach (PropertyInfo propertyInfo in propertyInfos)
+                {
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item);
+                }
+
+                dataTable.Rows.Add(dataRow);
+            }
+
+            return dataTable;
         }
     }
 }
