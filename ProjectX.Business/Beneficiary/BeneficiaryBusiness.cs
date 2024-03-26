@@ -56,9 +56,9 @@ namespace ProjectX.Business.Beneficiary
         {
             return _beneficiaryRepository.SearchBeneficiaryPref(prefix, userid);
         }
-        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req)
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req, int isProduction)
         {
-            return _beneficiaryRepository.SaveBeneficiariesBatch(req);
+            return _beneficiaryRepository.SaveBeneficiariesBatch(req, isProduction);
         }
     }
 }

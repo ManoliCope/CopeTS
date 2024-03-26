@@ -7,7 +7,7 @@ namespace ProjectX.Entities.Models.Beneficiary
 {
     public class BeneficiariesBatchSaveResp : GlobalResponse
     {
-        public List<ImportBeneficiariesReq> beneficiaries { get; set; }
+        public List<ImportBeneficiariesResp> beneficiaries { get; set; }
 
     }
 

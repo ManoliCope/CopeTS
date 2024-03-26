@@ -13,7 +13,7 @@ namespace ProjectX.Business.Beneficiary
         public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req, int userid);
         public BeneficiaryResp GetBeneficiary(int IdBeneficiary, int userid);
         public BeneficiarySearchResp SearchBeneficiaryPref(string prefix, int userid);
-        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req);
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req, int isProduction);
 
     }
 }

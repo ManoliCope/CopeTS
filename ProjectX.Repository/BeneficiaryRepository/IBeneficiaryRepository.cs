@@ -13,6 +13,6 @@ namespace ProjectX.Repository.BeneficiaryRepository
         public List<TR_Beneficiary> GetBeneficiaryList(BeneficiarySearchReq req, int userid);
         public TR_Beneficiary GetBeneficiary(int IdBeneficiary, int userid); //test
         public BeneficiarySearchResp SearchBeneficiaryPref(string prefix, int userid);
-        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req);
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req, int isProduction);
     }
 }

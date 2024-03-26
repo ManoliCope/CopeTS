@@ -206,33 +206,34 @@
             background-color: #f1f1f1;
         }
 
-.togglebenpopup {
+.togglebenpopup, .togglebenefimport {
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    width: 60px;
+    width: 80px;
     float: right;
-    font-size:14px;
-    height:25px;
+    font-size: 14px;
+    height: 25px;
     /*margin-top:10px*/
 }
 
 
-.togglebenpopup .fa{
-    font-size: 12px !important;
-}
+    .togglebenpopup .fa, .togglebenefimport .fa {
+        font-size: 12px !important;
+    }
 
 
 
-.togglebenpopup:hover {
-  color:white !important
-}
+    .togglebenpopup:hover, togglebenefimport:hover {
+        color: white !important
+    }
 
 .borderless-input {
     border: none;
     outline: none;
     width: 100%
 }
+
 .cancelledtitle {
     color: red !important;
     font-weight: bold !important;
@@ -244,13 +245,14 @@
     padding-left: 10px;
     font-size: 15px;
     float: right;
-    display:block;
+    display: block;
 }
+
 .multiline-text {
     float: right;
     /*white-space: pre-line;*/
     font-size: 15px;
-    text-align:right
+    text-align: right
 }
 
 
@@ -259,14 +261,14 @@
     padding: 0.6rem;
 }
 
-.card-body h3 {
-    margin: 0 !important
-}
+    .card-body h3 {
+        margin: 0 !important
+    }
 
 
-.card-body hr {
-    margin-top: 0.5rem;
-}
+    .card-body hr {
+        margin-top: 0.5rem;
+    }
 
 .form-group {
     margin-bottom: 0.5rem;
@@ -278,10 +280,10 @@
     padding-top: 25px;
 }
 
-#AsAgreed-popup .modal-body.asagreed button {
-    margin-left: 15px;
-    margin-right: 15px;
-}
+    #AsAgreed-popup .modal-body.asagreed button {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 
 .benlist ul {
     list-style-type: none;
@@ -311,7 +313,7 @@
     }
 
 input[readonly] {
-    cursor: not-allowed; 
+    cursor: not-allowed;
 }
 
 #emailButton .fa-envelope {
