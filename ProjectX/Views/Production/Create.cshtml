@@ -143,9 +143,13 @@
 												<button class="btn btn-md btn-third btn-block text-center togglebenpopup">
 													<i class="fa fa-plus" aria-hidden="true"></i> New
 												</button>
-												<button class="btn btn-md btn-third text-center mr-1 togglebenefimport" onclick="openimportpopup(1)">
-													<i class="fa fa-plus-circle" aria-hidden="true"></i> Import
-												</button>
+												@if (UserRights.Is_Admin == true)
+												{
+													<button class="btn btn-md btn-third text-center mr-1 togglebenefimport" onclick="openimportpopup(1)">
+														<i class="fa fa-plus-circle" aria-hidden="true"></i> Import
+													</button>
+												}
+
 												<hr>
 												<div class="row thisbeneficiary">
 													<div class="col-md-12">
