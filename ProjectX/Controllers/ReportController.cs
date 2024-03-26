@@ -12,6 +12,9 @@ using ProjectX.Entities.Models.Report;
 using System.Data;
 using System.Text;
 using ClosedXML.Excel;
+using ProjectX.Business.CurrencyRate;
+using ProjectX.Entities.Models.CurrencyRate;
+using ProjectX.Business.PrepaidAccounts;
 
 namespace ProjectX.Controllers
 {
@@ -25,16 +28,21 @@ namespace ProjectX.Controllers
         private TR_Users _user;
         private IJwtBusiness _jwtBusiness;
         private IWebHostEnvironment _env;
+        private ICurrencyRateBusiness _currencyBusiness;
+        private IPrepaidAccountsBusiness _prepaidAccountsBusiness;
 
-        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env)
+
+        public ReportController(IHttpContextAccessor httpContextAccessor, IUsersBusiness usersBusiness, ICurrencyRateBusiness currBusiness, IOptions<TrAppSettings> appIdentitySettingsAccessor, IGeneralBusiness generalBusiness, IReportBusiness reportBusiness, IWebHostEnvironment env, IPrepaidAccountsBusiness prepaidAccountsBusiness)
         {
             _httpContextAccessor = httpContextAccessor;
+            _currencyBusiness = currBusiness;
             _reportBusiness = reportBusiness;
             _usersBusiness = usersBusiness;
             _generalBusiness = generalBusiness;
             _appSettings = appIdentitySettingsAccessor.Value;
             _user = (TR_Users)httpContextAccessor.HttpContext.Items["User"];
             _env = env;
+            _prepaidAccountsBusiness = prepaidAccountsBusiness;
 
         }
         public IActionResult Index()
@@ -140,16 +148,11 @@ namespace ProjectX.Controllers
         }
         public ActionResult Currencies()
         {
-
-            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
-            {
-                loadCurrencyRate = true
-            });
-            return View(response);
+            var currencylist = _currencyBusiness.GetCurrencyRateListbyUserid(_user.U_Id);
+            return View(currencylist);
         }
         public ActionResult Tariff()
         {
-
             LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
             {
                 loadPackages = true,
@@ -160,6 +163,18 @@ namespace ProjectX.Controllers
             return View(response);
         }
 
+        public ActionResult PrepaidAccounts()
+        {
+
+            var availableUsers = _prepaidAccountsBusiness.GetAvailableUsers(_user.U_Id);
+            LoadDataResp response = _generalBusiness.loadData(new Entities.bModels.LoadDataModelSetup
+            {
+
+            });
+            response.loadedData.users = availableUsers.users;
+
+            return View(response);
+        }
         [HttpPost]
         public IActionResult GenerateProduction(productionReport req)
         {
@@ -220,6 +235,13 @@ namespace ProjectX.Controllers
         {
             return _reportBusiness.getProducts(userid);
         }
-
+[HttpPost]
+        public IActionResult GeneratePrepaidAccounts(int userid,DateTime? datefrom,DateTime? dateto)
+        {
+            GetReportResp result = new GetReportResp();
+            result.reportData = _reportBusiness.GeneratePrepaidAccounts(_user.U_Id,userid,datefrom,dateto);
+            DataTable dataTable = ConvertToDataTable(result.reportData);
+            return ExporttoExcel(dataTable, "PrepaidAccounts");
+        } 
     }
 }

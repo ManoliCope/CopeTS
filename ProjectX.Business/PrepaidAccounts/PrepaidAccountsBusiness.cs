@@ -34,7 +34,7 @@ namespace ProjectX.Business.PrepaidAccounts
             else if(amount<0 && action == 0)
             {
                 action=2;
-                amount *= -1;
+                //amount *= -1;
             }
 
             return _prepaidAccountsRepository.EditBalance(createdBy, action, amount,userid);

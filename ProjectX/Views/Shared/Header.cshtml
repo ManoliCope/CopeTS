@@ -32,7 +32,7 @@
 				<div class="pro-sidebar-logo pt-4">
 					<img class="adminlogo" />
 					@*<img src="Content/assets/images/copeicon.png" alt="Alternate Text" style="width:50px;height:50px" />
-					<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
+						<img src="/Content/assets/images/copelogo.png" alt="Alternate Text" />*@
 				</div>
 			}
 			else
@@ -74,11 +74,14 @@
 										<span class="menu-title">Creation</span>
 									</a>
 								</li>
-								<li class="menu-item @(controllerName == "productionbatch" && actionName == "index" ? "active" : "")">
-									<a href="~/productionbatch/">
-										<span class="menu-title">Manual Production</span>
-									</a>
-								</li>
+								@if (isadmin == true || currentUser.U_Manual_Production == true)
+								{
+									<li class="menu-item @(controllerName == "productionbatch" && actionName == "index" ? "active" : "")">
+										<a href="~/productionbatch/">
+											<span class="menu-title">Manual Production</span>
+										</a>
+									</li>
+								}
 							</ul>
 						</div>
 					</li>
@@ -133,11 +136,11 @@
 										</a>
 									</li>
 									@*<li class="menu-item @(controllerName == "currencyrate" ? "active" : "")">
-										<a href="~/currencyrate/">
-											<span class="menu-title">Currency Rates</span>
-										</a>
+											<a href="~/currencyrate/">
+												<span class="menu-title">Currency Rates</span>
+											</a>
 
-									</li>*@
+										</li>*@
 								</ul>
 							</div>
 						</li>
@@ -165,14 +168,14 @@
 
 					</li>
 					@*<li class="menu-item @(controllerName == "report" ? "active" : "")">
-						<a>
-							<span class="menu-icon">
-								<i class="ri-bar-chart-2-fill"></i>
-							</span>
-							<span class="menu-title">Reports</span>
-						</a>
+							<a>
+								<span class="menu-icon">
+									<i class="ri-bar-chart-2-fill"></i>
+								</span>
+								<span class="menu-title">Reports</span>
+							</a>
 
-					</li>*@
+						</li>*@
 					@if (isadmin == true)
 					{
 
@@ -185,7 +188,7 @@
 							</a>
 
 						</li>
-				
+
 
 						<li class="menu-item @(controllerName == "prepaidaccounts" ? "active" : "")">
 							<a href="~/prepaidaccounts/">
@@ -198,14 +201,14 @@
 						</li>
 					}
 					@*<li class="menu-item @(controllerName == "benefittitle" ? "active" : "")">
-						<a href="~/benefittitle/">
-							<span class="menu-icon">
-								<i class="fa fa-university text-gray"></i>
-							</span>
-							<span class="menu-title">Benefit Title</span>
-						</a>
+							<a href="~/benefittitle/">
+								<span class="menu-icon">
+									<i class="fa fa-university text-gray"></i>
+								</span>
+								<span class="menu-title">Benefit Title</span>
+							</a>
 
-					</li>*@
+						</li>*@
 					<li class="menu-item @(controllerName == "report" ? "active" : "")">
 						<a href="~/report/">
 							<span class="menu-icon">
@@ -216,13 +219,13 @@
 
 					</li>
 					@*<li class="menu-item @(controllerName == "policies" ? "active" : "")">
-						<a>
-							<span class="menu-icon">
-								<i class="fa fa-file"></i>
-							</span>
-							<span class="menu-title">Policies</span>
-						</a>
-					</li>*@
+							<a>
+								<span class="menu-icon">
+									<i class="fa fa-file"></i>
+								</span>
+								<span class="menu-title">Policies</span>
+							</a>
+						</li>*@
 				</ul>
 			</nav>
 		</div>

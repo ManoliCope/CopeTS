@@ -78,6 +78,9 @@ $(document).ready(function () {
             }
         });
     });
+    $('#generatepreaccounts').click(function () {
+        generatepreaccounts();
+    });
 });
 
 function generatebenefits() {
@@ -291,4 +294,33 @@ function resettariff() {
     location.reload();
 }
 
+function generatepreaccounts() {
+    var selectedOption = $('#userId').find('option:selected');
+    var users = selectedOption.val();
+    var username = selectedOption.text();
+    var datefrom = $("#datefrom").val();
+    var dateto = $("#dateto").val();
+    $.ajax({
+        type: 'POST',
+        url: projectname + "/Report/GeneratePrepaidAccounts",
+        data: { userid: users,datefrom:datefrom,dateto:dateto },
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
+            var blobUrl = URL.createObjectURL(blob);
+
+            var link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'Prepaid Account Report - '+username+'.xlsx';
+            link.click();
+
+            URL.revokeObjectURL(blobUrl);
+        },
+        error: function (error) {
+            console.error("Error generating report:", error);
+        }
+    });
+}

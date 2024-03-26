@@ -28,6 +28,10 @@ namespace ProjectX.Business.CurrencyRate
         public List<TR_CurrencyRate> GetCurrencyRateList(CurrSearchReq req)
         {
             return _currRepository.GetCurrencyRateList(req);
+        }  
+        public List<TR_CurrencyRate> GetCurrencyRateListbyUserid(int userid)
+        {
+            return _currRepository.GetCurrencyRateListbyUserid(userid);
         }
         public CurrResp GetCurrencyRate(int IdCurr)
         {

@@ -10,7 +10,7 @@ namespace ProjectX.Repository.ProductionBatchRepository
     public interface IProductionBatchRepository
     {
         //public ZoneResp ModifyZone(ZoneReq req, string act, int userid);
-        public List<TR_ProductionBatch> GetProductionBatchList(ProductionBatchSearchReq req);
+        public List<TR_ProductionBatch> GetProductionBatchList(ProductionBatchSearchReq req, int userid);
         public TR_ProductionBatch GetProductionBatch(int batchid);
         public ProductionBatchSaveResp SaveProductionBatch(ProductionBatchSaveReq req);
     }

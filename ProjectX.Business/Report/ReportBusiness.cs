@@ -67,6 +67,10 @@ namespace ProjectX.Business.Report
             response.loadedData = _reportRepository.getProducts(userid);
             return response;
         }
+        public List<dynamic> GeneratePrepaidAccounts(int U_Id,int userid, DateTime? datefrom, DateTime? dateto)
+        {
+            return _reportRepository.GeneratePrepaidAccounts(U_Id,userid,datefrom,dateto);
+        }
 
     }
 }

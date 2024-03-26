@@ -328,9 +328,6 @@ function generateAuditTravelCasesReport() {
 
 }
 
-
-
-
 function generateprdbordreport() {
     if (validatefilterreport("#searchform")) {
         $("#generateprdbordreport").tooltip('toggle');

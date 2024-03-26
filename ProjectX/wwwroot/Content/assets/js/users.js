@@ -15,12 +15,12 @@ $(document).ready(function () {
     //else
 
     if ($('#userstable').length) {
-        Search();
+        Search(false);
     }
     resetPassScreen();
 
     $("#searchprofile").click(function () {
-        Search();
+        Search(false);
     });
     $("#confirmdeleteuser").click(function () {
         deleteuser(this)
@@ -284,7 +284,7 @@ $("#kt_reset").click(function () {
     var dropdown = $('.select2-hidden-accessible');
     dropdown.val(null).trigger('change');
 });
-function Search() {
+function Search(without_parent) {
     var filter = {};
     var name = $('#prname').val();
 
@@ -292,13 +292,12 @@ function Search() {
     sessionStorage.removeItem('parid');
 
     filter.Last_Name = $('#prname').val();
-    console.log(filter)
+    //console.log(filter)
     showloader("load")
-
     $.ajax({
         type: 'GET',
         url: projectname + "/Users/Search",
-        data: { name: name, parentid: parentid },
+        data: { name: name, parentid: parentid, flagwithoutparent: without_parent },
         success: function (result) {
             removeloader();
             if (result.statusCode.code != 1)
@@ -476,7 +475,7 @@ function showChildren(me) {
     var parentid = $(me).attr('userid');
     sessionStorage.setItem('parid', parentid);
     //window.location.href = '/users/createuser';
-    Search();
+    Search(true);
 }
 function resetPassScreen() {
     var pass = JSON.parse(sessionStorage.getItem('pass'));

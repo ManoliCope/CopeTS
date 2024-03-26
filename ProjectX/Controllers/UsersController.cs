@@ -167,7 +167,7 @@ namespace ProjectX.Controllers
 
         }
         [HttpGet]
-        public UsersSearchResp Search(string name, int? parentid)
+        public UsersSearchResp Search(string name, int? parentid,bool flagwithoutparent)
         {
             //user.Id = _user.UserId;
             var user = new UsersSearchReq();
@@ -176,6 +176,9 @@ namespace ProjectX.Controllers
                 user.Super_Agent_Id = _user.U_Id;
             else
                 user.Super_Agent_Id = parentid;
+
+            user.without_parent = flagwithoutparent;
+
             var response = new UsersSearchResp();
             response = _usersBusiness.GetUsersList(user);
             response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, user.Id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Case");

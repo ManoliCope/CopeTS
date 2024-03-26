@@ -17,5 +17,6 @@ namespace ProjectX.Repository.ReportRepository
         public LoadDataModel getChildren(int userid);
         public LoadDataModel getProducts(int userid);
         public List<dynamic> GenerateTariff(int userid, int packageid, int planid, int assignedid, int productid);
+        public List<dynamic> GeneratePrepaidAccounts(int U_Id, int userid, DateTime? datefrom, DateTime? dateto);
     }
 }

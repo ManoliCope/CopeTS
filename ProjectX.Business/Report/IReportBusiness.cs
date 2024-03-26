@@ -18,6 +18,7 @@ namespace ProjectX.Business.Report
         public LoadDataResp getChildren(int userid);
         public LoadDataResp getProducts(int userid);
         public List<dynamic> GenerateTariff(int userid, int packageid, int planid, int assignedid, int productid);
+        public List<dynamic> GeneratePrepaidAccounts(int U_Id, int userid, DateTime? datefrom, DateTime? dateto);
 
     }
 }
