@@ -45,7 +45,6 @@ function importbeneficiariesbulk() {
         $(".importresponse").text("")
 
     var isProduction = $("#import-beneficiaries").attr("isProduction")
-    console.log("isProduction", isProduction)
 
     var table = $('#beneficiariestable').DataTable();
     var importedbatch = []
@@ -236,7 +235,6 @@ function drawbeneficiariestable(result) {
 }
 function addProductionBeneficiaries(data) {
     var thistable = $('#beneficiary-table').DataTable();
-
     data.beneficiaries.forEach(function (item) {
         var thissex = item.gender === "M" ? 1 : 2;
         var thissexname = item.gender === "M" ? "Male" : "Female";
@@ -252,12 +250,13 @@ function addProductionBeneficiaries(data) {
             "bE_DOB": item.dateOfBirth.split('T')[0],
             "bE_PassportNumber": item.passportNumber,
             "bE_Nationalityid": item.nationalityId,
-            "bE_CountryResidenceid": item.countryResidenceId
+            "bE_CountryResidenceid": item.countryResidenceId,
+            "bE_RemoveDeductible": item.removeDeductible,
+            "bE_SportsActivities": item.addSportsActivities
         };
-         
-        thistable.row($(editedglobalrow).closest("tr")).data(thisrow).draw();
+
+        thistable.row.add(thisrow).draw();
     });
 
-    return
     getQuotation()
 }
