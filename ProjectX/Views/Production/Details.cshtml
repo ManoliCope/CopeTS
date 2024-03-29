@@ -18,7 +18,7 @@
 	}
 }
 
-<div class="content editscreen prodadm" pgtype="view" pol-src="0" pol-ud="@Model.CreatedById"  pol-id="@Model.PolicyID" prodadm="@canedit" isadm="@(UserRights.Is_Admin==true?"1":"0")">
+<div class="content editscreen prodadm" pgtype="view" pol-src="0" pol-ud="@Model.CreatedById" pol-id="@Model.PolicyID" prodadm="@canedit" isadm="@(UserRights.Is_Admin==true?"1":"0")">
 	<div class="container-fluid" style="padding:10px 0">
 		<div class="row" data-select2-id="20">
 			<div class="col-12">
@@ -26,7 +26,7 @@
 					<h4 class="card-title ">
 						<i class="fa fa-arrow-alt-circle-left pointercursor" onclick="history.back()"></i>
 						<span>Edit Policy - @Model.Reference</span>
-						<span class="cancelledtitle">@(Model.IsCanceled ? "Cancelled":"") </span>
+						<span class="cancelledtitle">@(Model.IsCanceled ? "Cancelled" : "") </span>
 						<span class="multiline-text">
 							Created by: @Model.CreatedBy - @Model.CreatedOn
 							@if (Model.IsCanceled)
@@ -121,13 +121,13 @@
 												</div>
 											</div>
 											@*<div class="row">
-													<div class="col-md-8">
-														<div class="form-group">
-															<label for="notes">Notes</label>
-															<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
-														</div>
-													</div>
-												</div>*@
+											<div class="col-md-8">
+											<div class="form-group">
+											<label for="notes">Notes</label>
+											<textarea class="form-control" rows="4" id="notes" name="notes"></textarea>
+											</div>
+											</div>
+											</div>*@
 										</div>
 									</div>
 								</div>
@@ -146,6 +146,12 @@
 												<button class="btn btn-md btn-third btn-block text-left togglebenpopup">
 													<i class="fa fa-plus" aria-hidden="true"></i> New
 												</button>
+												@if (UserRights.Is_Admin == true)
+												{
+													<button class="btn btn-md btn-third text-center mr-1 togglebenefimport" onclick="openimportpopup(1)">
+														<i class="fa fa-plus-circle" aria-hidden="true"></i> Import
+													</button>
+												}
 											}
 											<hr>
 											<div class="row thisbeneficiary">
@@ -189,12 +195,12 @@
 																<select class="form-control isselect2 " id="destination_id" name="destination_id" multiple>
 																	@*<option value="">Select Destinations</option>*@
 																	@*@foreach (var thislist in filldata.loadedData.destinations.OrderBy(d => d.D_Destination).ToList())
-																		{
-																			if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
-																			{
-																				<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
-																			}
-																		}*@
+																	{
+																	if (Model.Destinations.Any(dest => dest.DestinationID == thislist.D_Id))
+																	{
+																	<option value="@thislist.D_Id" cid="@thislist.D_IdContinent" selected> @thislist.D_Destination</option>
+																	}
+																	}*@
 
 																	@foreach (var thislist in destinationlist.OrderBy(d => d.D_Destination).ToList())
 																	{
@@ -245,13 +251,13 @@
 									<span class="float-left ">
 										Quotation
 									</span>
-									@if (UserRights.Is_Admin==true)
+									@if (UserRights.Is_Admin == true)
 									{
 										<button class="btn btn-primary btn-circle float-right" id="emailButton">
-										 <i class="fas fa-envelope"></i>
-									 </button>
+											<i class="fas fa-envelope"></i>
+										</button>
 									}
-									
+
 								</h4>
 							</div>
 							<div class="card-body result ">
@@ -274,6 +280,8 @@
 		</div>
 	</div>
 </div>
+
+<div id="partialContainer"></div>
 
 <div id="beneficiary-popup" class="modal fade" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -344,9 +352,10 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-
+					<div>
+						<input id="hiddenFields" hidden />
+					</div>
 				</div>
-
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
@@ -391,68 +400,68 @@
 	</div>
 </div>*@
 <div class="modal fade" id="email-popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Send Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group mb-1">
-                    <label for="emailto">To</label>
-                    <select id="emailto" class="form-control emailselection" multiple="multiple">
-                    </select>
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Send Email</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group mb-1">
+					<label for="emailto">To</label>
+					<select id="emailto" class="form-control emailselection" multiple="multiple">
+					</select>
 
 
-                </div>
-                @*<div class="form-group mb-3 col-lg-4">
-                        <label for="invoiceAmount">Invoice Amount</label>
-                        <input type="text" class="form-control hasnumber" id="invoiceAmount" value="@Model.Case.InvoiceAmount" onfocusout="refreshNetAmount()" required />
-                    </div>*@
+				</div>
+				@*<div class="form-group mb-3 col-lg-4">
+				<label for="invoiceAmount">Invoice Amount</label>
+				<input type="text" class="form-control hasnumber" id="invoiceAmount" value="@Model.Case.InvoiceAmount" onfocusout="refreshNetAmount()" required />
+				</div>*@
 
-                <div class="form-group mb-3">
-                    <label for="emailcc">CC</label>
-                    @*<span class="input-group-text">CC</span>*@
-                    @*<input id="emailcc" type="text" class="form-control hasemail">*@
-                    <select id="emailcc" class="form-control emailselection" multiple="multiple">
-                    </select>
-                </div>
-              @*  <div class="input-group mb-3">
-                    <span class="input-group-text">Subject</span>
-                    <input id="emailsubject" type="text" class="form-control" required>
-                </div>
-                <div class="input-group mb-3">
-                    <textarea id="emailbody" class="form-control" rows="4" required></textarea>
-                </div>*@
-              @*  <div class="input-group mb-4">
-
-                    <input id="withAttachments" type="checkbox" class="form-check-input">
-
-                    <label id="withAttachmentsLabel" for="withAttachments">With Attachments</label>
-                </div>*@
 				<div class="form-group mb-3">
-        @*<label>Policy Attachment Type:</label>*@
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="attachmentType" id="withPremium" value="1" checked>
-            <label class="form-check-label" for="withPremium">With Premium</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="attachmentType" id="asAgreed" value="2">
-            <label class="form-check-label" for="asAgreed">As Agreed</label>
-        </div>
-    </div>
-				
-            </div>
-            <div class="modal-footer">
+					<label for="emailcc">CC</label>
+					@*<span class="input-group-text">CC</span>*@
+					@*<input id="emailcc" type="text" class="form-control hasemail">*@
+					<select id="emailcc" class="form-control emailselection" multiple="multiple">
+					</select>
+				</div>
+				@*  <div class="input-group mb-3">
+				<span class="input-group-text">Subject</span>
+				<input id="emailsubject" type="text" class="form-control" required>
+				</div>
+				<div class="input-group mb-3">
+				<textarea id="emailbody" class="form-control" rows="4" required></textarea>
+				</div>*@
+				@*  <div class="input-group mb-4">
+
+				<input id="withAttachments" type="checkbox" class="form-check-input">
+
+				<label id="withAttachmentsLabel" for="withAttachments">With Attachments</label>
+				</div>*@
+				<div class="form-group mb-3">
+					@*<label>Policy Attachment Type:</label>*@
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="attachmentType" id="withPremium" value="1" checked>
+						<label class="form-check-label" for="withPremium">With Premium</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="attachmentType" id="asAgreed" value="2">
+						<label class="form-check-label" for="asAgreed">As Agreed</label>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
 
 
-                @*<label for="withAttachments">With Attachments</label>*@
-                <button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
-                <div id="thisloader" class="smloader hide"></div>
-                <button id="btnsendrequestemail" IdAction="3" type="button" class="btn btn-danger">Send</button>
-            </div>
-        </div>
-    </div>
+				@*<label for="withAttachments">With Attachments</label>*@
+				<button type="button" class="btn  bglocalcolor border" data-dismiss="modal">Close</button>
+				<div id="thisloader" class="smloader hide"></div>
+				<button id="btnsendrequestemail" IdAction="3" type="button" class="btn btn-danger">Send</button>
+			</div>
+		</div>
+	</div>
 </div>

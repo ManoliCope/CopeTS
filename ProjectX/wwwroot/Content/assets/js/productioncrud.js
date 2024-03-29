@@ -289,7 +289,6 @@ function searchbeneficiary() {
 }
 
 function populatebeneficiarydatatable(tablename, data) {
-
     var isadmin = $(".prodadm").attr("prodadm")
     var newpolicy = 1
     if ($(".editscreen").attr("pol-id") > 0)
@@ -317,7 +316,11 @@ function populatebeneficiarydatatable(tablename, data) {
             {
                 "title": "First Name",
                 "data": "bE_FirstName",
-                "className": "dt-center"
+                "className": "dt-center",
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).attr('Remove-Deductible', rowData.bE_RemoveDeductible);
+                    $(td).attr('Sports-Activities', rowData.bE_SportsActivities);
+                }
             },
             {
                 "title": "Middle name",
@@ -403,10 +406,21 @@ function populatebeneficiarydatatable(tablename, data) {
                     return editButton + ' ' + deleteButton;
                 }
             },
+            {
+                "title": "Remove Deductible",
+                "data": "bE_RemoveDeductible",
+                "className": "dt-center"
+            },
+            {
+                "title": "Add Sports Activities",
+                "data": "bE_SportsActivities",
+                "className": "dt-center"
+            },
         ],
         "columnDefs": [
             {
-                "targets": [0, 1, 3, 7, 8, 9, 10],
+                //, 13, 14
+                "targets": [0, 1, 3, 7, 8, 9, 10, 13, 14],
                 "visible": false,
             }
         ],
@@ -425,7 +439,13 @@ function triggerasdatatable(tablename) {
             data: { id: polid },
             success: function (response) {
 
+                response.forEach((item, index) => {
+                    item.bE_RemoveDeductible = null
+                    item.bE_SportsActivities = null
+                });
+
                 //console.log(response,'table data')
+
                 populatebeneficiarydatatable(tablename, response)
             },
             error: function (xhr, status, error) {
@@ -439,7 +459,6 @@ function triggerasdatatable(tablename) {
 }
 
 function addtotable(thisrow, search) {
-    console.log(thisrow)
     if (thisrow == undefined) {
         var thissex = 0
         var sexname
@@ -464,7 +483,9 @@ function addtotable(thisrow, search) {
             "bE_DOB": $("#beneficiary-popup #date_of_birth").val(),
             "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
             "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
-            "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
+            "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val(),
+            "bE_RemoveDeductible": null,
+            "bE_SportsActivities": null
         }
 
         console.log(thisrow, 'testing')
@@ -478,6 +499,10 @@ function addtotable(thisrow, search) {
 
         if (search) {
             var thistable = $('#beneficiary-table').DataTable();
+
+            thisrow.bE_RemoveDeductible = null
+            thisrow.bE_SportsActivities = null
+
             thistable.row.add(thisrow).draw();
         }
         else {
@@ -493,7 +518,9 @@ function addtotable(thisrow, search) {
                 "bE_DOB": thisrow.dateOfBirth,
                 "bE_PassportNumber": thisrow.passportNumber,
                 "bE_Nationalityid": thisrow.Nationalityid,
-                "bE_CountryResidenceid": thisrow.CountryResidenceid
+                "bE_CountryResidenceid": thisrow.CountryResidenceid,
+                "bE_RemoveDeductible": null,
+                "bE_SportsActivities": null
             }
             var row = thistable.row("#" + editedrow.bE_Id);
             thistable.row($(editedglobalrow).closest("tr")).data(editedrow).draw();
@@ -545,6 +572,8 @@ function resetbenpopup() {
     $('#beneficiary-popup #countryofresidence').val('');
     $('#male').prop('checked', true);
     $('#female').prop('checked', false);
+    $('#beneficiary-popup #hiddenFields').removeAttr('remove-deductible');
+    $('#beneficiary-popup #hiddenFields').removeAttr('sports-activities');
 
     var allfields = $('#beneficiary-popup .modal-body :input');
     allfields.each(function () {
@@ -576,6 +605,10 @@ function editrow(me) {
     }
 
     $(".btn-beneficiary").attr("thisid", benid)
+
+    $('#beneficiary-popup #hiddenFields').attr('remove-deductible', rowData.bE_RemoveDeductible);
+    $('#beneficiary-popup #hiddenFields').attr('sports-activities', rowData.bE_SportsActivities);
+
     triggerbenbtn()
     editedglobalrow = me;
     showresponsemodalbyid('beneficiary-popup', benid)
@@ -585,7 +618,6 @@ function editrow(me) {
         $("#first_name, #middle_name, #last_name").attr("readonly", "readonly")
 }
 function editnewbeneficiary() {
-
     var thissex = 0
     var thissexname = "male"
     if ($('#male').prop('checked')) {
@@ -609,7 +641,9 @@ function editnewbeneficiary() {
         "bE_DOB": $("#beneficiary-popup #date_of_birth").val(),
         "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
         "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
-        "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val()
+        "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val(),
+        "bE_RemoveDeductible": $("#beneficiary-popup #hiddenFields").attr('remove-deductible'),
+        "bE_SportsActivities": $("#beneficiary-popup #hiddenFields").attr('sports-activities')
     }
     var thistable = $('#beneficiary-table').DataTable();
     thistable.row($(editedglobalrow).closest("tr")).data(thisrow).draw();
@@ -1148,7 +1182,39 @@ function getFullNameFromIndex(index) {
     //    return `${$('.first_name').val()} ${$('.last_name').val()}`;
 }
 
+function getDataFromIndex(index, field) {
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    //var typeId = selectedtype ? selectedtype.id : '';
 
+    const table = document.querySelector('.beneficiary-table');
+    const rows = table.querySelectorAll('tbody tr');
+
+    if (index >= 0 && index < rows.length) {
+        const row = rows[index];
+
+        if (field == 'fullname') {
+            const firstName = row.querySelector('td:first-child').textContent.trim();
+            const lastName = row.querySelector('td:nth-child(2)').textContent.trim();
+            return `${firstName} ${lastName}`;
+        }
+        else if (field == 'RemoveDeductible') {
+            //const RemoveDeductible = row.querySelector('td.remove-ded') ? row.querySelector('td.remove-ded').textContent.trim() : '';
+            const RemoveDeductible = row.querySelector('td:first-child').getAttribute('Remove-Deductible');
+            return `${RemoveDeductible}`;
+        }
+        else if (field == 'AddSportsActivities') {
+            //const AddSportsActivities = row.querySelector('td.sports-act') ? row.querySelector('td.sports-act').textContent.trim() : '';
+            const AddSportsActivities = row.querySelector('td:first-child').getAttribute('Sports-Activities');
+            return `${AddSportsActivities}`;
+        }
+    } else {
+        return 'Invalid index';
+    }
+    //if (typeId === 'is_family' || typeId === 'is_group') {
+    //}
+    //else
+    //    return `${$('.first_name').val()} ${$('.last_name').val()}`;
+}
 
 function getQuotationData() {
     var quotationData = []
@@ -1186,9 +1252,13 @@ function getQuotationData() {
             if (response.quotationResp.length > 0) {
                 for (var i = 0; i < response.quotationResp.length; i++) {
                     //console.log(response.quotationResp[i], 'quotation result')
-                    response.quotationResp[i].fullname = getFullNameFromIndex(response.quotationResp[i].insured - 1);
+                    response.quotationResp[i].fullname = getDataFromIndex(response.quotationResp[i].insured - 1, 'fullname');
+                    response.quotationResp[i].RemoveDeductible = getDataFromIndex(response.quotationResp[i].insured - 1, 'RemoveDeductible');
+                    response.quotationResp[i].AddSportsActivities = getDataFromIndex(response.quotationResp[i].insured - 1, 'AddSportsActivities');
                 }
                 addbenefits = response.additionalBenefits
+
+                //console.log('response', response)
                 loadQuotePartialView(response)
             }
             else {
@@ -1256,7 +1326,7 @@ function loadQuotePartialView(response) {
 
             triggercalculationfields()
             recalculateTotalPrice()
-            setselectedfields()
+            setselectedfields(response.quotationResp)
             $(".result").removeClass("load")
 
         },
@@ -1431,10 +1501,12 @@ function getselectedfields() {
         variableFields['additiononprem'] = parseFloat($(".result").find('#additiononprem').val());
         selectedfieldlist.push(variableFields);
     });
+
+    //console.log('selectedfieldlist',selectedfieldlist)
 }
 
 
-function setselectedfields() {
+function setselectedfields(beneficiaries) {
     selectedfieldlist.forEach((item, index) => {
         const table = $(`.quoatetable[ins="${item.insuredId}"]`);
         table.find('.form-control.plans').val(item.planId);
@@ -1447,6 +1519,49 @@ function setselectedfields() {
         recalculateTotalPrice(table);
     });
 
+    var selectedtype = document.querySelector('input[name="type"]:checked');
+    var typeId = selectedtype ? selectedtype.id : '';
+
+    if (typeId === 'is_family') { //For the family, check if all the beneficiaries have the flags in order to tick the checkboxes.
+        const table = $(`.quoatetable`);
+        console.log('table', table)
+
+        const RemoveDeductibleForAll = beneficiaries.every(beneficiary => beneficiary.RemoveDeductible === "Y");
+        console.log('RemoveDeductibleForAll', RemoveDeductibleForAll)
+        var checkbox = table.find('input[data-dedprice]');
+        if (!checkbox.prop('disabled')) {
+            checkbox.prop('checked', RemoveDeductibleForAll);
+        }
+
+        const SportsActivitiesForAll = beneficiaries.every(beneficiary => beneficiary.AddSportsActivities === "Y");
+        console.log('SportsActivitiesForAll', SportsActivitiesForAll)
+
+        checkbox = table.find('input[data-sportsprice]');
+        if (!checkbox.prop('disabled')) {
+            checkbox.prop('checked', SportsActivitiesForAll);
+        }
+
+        recalculateTotalPrice(table);
+    }
+    else {
+        beneficiaries.forEach((item, index) => {
+            //console.log('fullname', item.fullname)
+
+            const table = $(`.quoatetable.insured${item.insured}`);
+
+            var checkbox = table.find('input[data-dedprice]');
+            if (!checkbox.prop('disabled')) {
+                checkbox.prop('checked', item.RemoveDeductible === 'Y');
+            }
+
+            checkbox = table.find('input[data-sportsprice]');
+            if (!checkbox.prop('disabled')) {
+                checkbox.prop('checked', item.AddSportsActivities === 'Y');
+            }
+
+            recalculateTotalPrice(table);
+        });
+    }
 }
 
 function handlemax(input) {
@@ -1464,14 +1579,14 @@ $("#btnsendrequestemail").click(function () {
 })
 
 function sendPolicyByEmail(me) {
-   togglebtnloader(me)
+    togglebtnloader(me)
 
     var policyId = $(".editscreen").attr("pol-id");
     var to = $("#emailto").val().join(";");
     var cc = $("#emailcc").val().join(";");
 
     if (to == '' && cc == '') {
-        $("#emailto, #emailcc" ).css('border-color', 'red');
+        $("#emailto, #emailcc").css('border-color', 'red');
         $("#emailto, #emailcc").parent().find(".select2-container").addClass("select2-borderred");
         return;
     } else {
