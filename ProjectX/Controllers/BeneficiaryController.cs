@@ -53,7 +53,6 @@ namespace ProjectX.Controllers
 			});
 
 			ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
-
 			return View(response);
 		}
 
@@ -106,8 +105,9 @@ namespace ProjectX.Controllers
 			});
 
 			ViewData["filldata"] = filldata;
+            ViewData["userrights"] = _usersBusiness.GetUserRights(_user.U_Id);
 
-			BeneficiaryResp response = new BeneficiaryResp();
+            BeneficiaryResp response = new BeneficiaryResp();
 			response = _beneficiaryBusiness.GetBeneficiary(id, _user.U_Id);
 			return View("details", response);
 		}

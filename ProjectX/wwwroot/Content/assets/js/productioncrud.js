@@ -395,8 +395,8 @@ function populatebeneficiarydatatable(tablename, data) {
                 "title": "Actions",
                 "data": null,
                 "className": "dt-center",
-                visible: (ismanual != '1' || newpolicy == 1),
-                //visible: ((ismanual != '1' && isadmin == '1') || newpolicy == 1),
+                //visible: (ismanual != '1' || newpolicy == 1),
+                visible: ((ismanual != '1' && isadmin == '1') || newpolicy == 1),
                 "render": function (data, type, full, meta) {
                     var editButton = '<button type="button" thisid="' + full.bE_Id + '" class="btn btn-sm" onclick="editrow(this)"><i class="fas fa-edit" style="color: gray"></i></button>';
                     var deleteButton = '<button type="button" class="btn btn-sm" onclick="removerow(this)"><i class="fas fa-trash" style="color: red"></i></button>';
@@ -647,24 +647,28 @@ function editbeneficiary(me) {
         "Nationalityid": $("#beneficiary-popup #nationality").val(),
     };
 
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: projectname + "/Beneficiary/EditBeneficiary",
-        data: { req: beneficiaryReq },
-        success: function (result) {
-            addtotable(beneficiaryReq)
-            removebtnloader(me)
-            removeloader();
+    addtotable(beneficiaryReq)
+    removebtnloader(me)
+    removeloader();
 
-        },
-        failure: function (data, success, failure) {
-            showresponsemodal("Error", "Bad Request")
-        },
-        error: function (data) {
-            showresponsemodal("Error", "Bad Request")
-        }
-    });
+    //$.ajax({
+    //    type: 'post',
+    //    dataType: 'json',
+    //    url: projectname + "/Beneficiary/EditBeneficiary",
+    //    data: { req: beneficiaryReq },
+    //    success: function (result) {
+    //        addtotable(beneficiaryReq)
+    //        removebtnloader(me)
+    //        removeloader();
+
+    //    },
+    //    failure: function (data, success, failure) {
+    //        showresponsemodal("Error", "Bad Request")
+    //    },
+    //    error: function (data) {
+    //        showresponsemodal("Error", "Bad Request")
+    //    }
+    //});
 }
 
 function removerow(me) {

@@ -77,6 +77,8 @@ namespace ProjectX.Services
 
             string mainheader = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "backcope.jpg");
             string mainfooter = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "copelogo.png");
+            string cancelled = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "Cancelled.png");
+            policyreponse.Cancelled = ConvertImageToBase64(cancelled);
 
             if (prodcutionuser.user.U_PrintLayout != null && prodcutionuser.user.U_PrintLayout != "")
                 policyreponse.Layout = ConvertImageToBase64(Path.Combine(uploadsDirectory, userid.ToString(), "Layout", prodcutionuser.user.U_PrintLayout ?? ""));
