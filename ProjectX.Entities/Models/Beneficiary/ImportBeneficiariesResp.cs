@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProjectX.Entities.Models.Beneficiary
 {
-	public class ImportBeneficiariesReq
+	public class ImportBeneficiariesResp
 	{
 		public string FirstName { get; set; }
 		public string MiddleName { get; set; }
@@ -19,5 +19,7 @@ namespace ProjectX.Entities.Models.Beneficiary
 		public string AddSportsActivities { get; set; }
 		public string Status { get; set; }
 		public string Reason { get; set; }
+		public string NationalityId { get; set; }
+		public string CountryResidenceId { get; set; }
 	}
 }

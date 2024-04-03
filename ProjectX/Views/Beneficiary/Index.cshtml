@@ -1,17 +1,22 @@
 ﻿@model ProjectX.Entities.Models.General.LoadDataResp
-
+@{
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
+}
 
 <div class="content">
 	<!-- Start Content-->
 	<div class="row page-title">
-		<div class="col-md-11">
+		<div class="col-md-10">
 			<h4 class="mb-0 mt-0 float-left mr-4">Beneficiaries</h4>
-			<a class="btn bglocalcolor float-left addnewbtn text-white m-0" data-toggle="modal" data-target="#import-beneficiaries" style="width:150px" onclick="openimportpopup()">
-				<i class="fas fa-plus-circle"></i> Import
-			</a>
-		</div>
-		<div class="col-md-1">
-			<a class="btn bglocalcolor float-right addnewbtn" href="~/beneficiary/create/">
+			@if (UserRights.Is_Admin == true)
+			{
+				<a class="btn bglocalcolor float-left addnewbtn text-white importbtn" data-toggle="modal" data-target="#import-beneficiaries" onclick="openimportpopup(0)" href="">
+					<i class="fas fa-plus-circle"></i> Import
+				</a>
+			}
+		</div> 
+		<div class="col-md-2">
+			<a class="btn bglocalcolor float-right addnewbtn addbtn" href="~/beneficiary/create/">
 				<i class="fas fa-plus-circle"></i> Add
 			</a>
 		</div>

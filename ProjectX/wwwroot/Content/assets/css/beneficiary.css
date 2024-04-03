@@ -1,1 +1,23 @@
-﻿
+﻿.importbtn {
+    width: 150px;
+}
+
+.addbtn {
+    width: 150px;
+}
+
+@media (max-width:768px) {
+    .importbtn {
+        margin-bottom: 15px;
+        margin-top: 3px;
+        width: 100%;
+    }
+
+    .addbtn {
+        width: 100%;
+    }
+}
+
+input[readonly] {
+    cursor: not-allowed;
+}

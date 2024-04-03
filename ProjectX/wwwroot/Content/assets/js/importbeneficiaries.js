@@ -1,6 +1,6 @@
 ﻿var projectname = checkurlserver();
 
-function openimportpopup() {
+function openimportpopup(isProduction) {
     $("#partialContainer").html("");
 
     $.ajax({
@@ -13,6 +13,13 @@ function openimportpopup() {
             $("#divbeneficiariestable").attr("hidden", "hidden")
             $("#import-beneficiaries").find(".modal-footer").attr("hidden", "hidden")
             $("#import-beneficiaries .modal-dialog").removeClass("modal-lg")
+
+            $("#import-beneficiaries").attr("isProduction", isProduction)
+
+            if (isProduction == 1)
+                $("#downloadLink").attr("href", "/Samplefile/ProductionBeneficiaries.xlsx")
+            else
+                $("#downloadLink").attr("href", "/Samplefile/beneficiaries.xlsx")
 
             showresponsemodalbyid('import-beneficiaries');
         },
@@ -37,23 +44,29 @@ function importbeneficiariesbulk() {
     else
         $(".importresponse").text("")
 
+    var isProduction = $("#import-beneficiaries").attr("isProduction")
+
     var table = $('#beneficiariestable').DataTable();
     var importedbatch = []
     importedbatch = table.data().toArray();
-    console.log(importedbatch)
 
     var stringifiedreq = JSON.stringify(importedbatch);
 
     $.ajax({
         type: 'POST',
         url: projectname + "/Beneficiary/importBeneficiaries",
-        data: { importedbatch: stringifiedreq },
+        data: { importedbatch: stringifiedreq, isProduction: isProduction },
         success: function (result) {
-            console.log(result)
-
             if (result.statusCode.code == 1) {
-                showresponsemodal(result.statusCode.code, result.statusCode.message)
-                Search()
+
+                if (isProduction == 0) {
+                    showresponsemodal(result.statusCode.code, result.statusCode.message)
+                    Search()
+                }
+                else {
+                    closepopup()
+                    addProductionBeneficiaries(result)
+                }
                 $(".modal-footer").removeClass("hidden")
             }
             else {
@@ -98,13 +111,17 @@ function importbeneficiaries(me) {
     else
         return false;
 
+    var isProduction = $("#import-beneficiaries").attr("isProduction")
+    thisformData.append('isProduction', isProduction);
+
     $.ajax({
+        type: "POST",
         url: projectname + '/Beneficiary/exceltotable',
         data: thisformData,
         processData: false,
         contentType: false,
-        type: "POST",
         success: function (result) {
+
             $("#import-beneficiaries .modal-dialog").addClass("modal-lg")
             $("#divbeneficiariestable").removeAttr("hidden")
             drawbeneficiariestable(result)
@@ -178,6 +195,8 @@ function GetBeneficiaries(me) {
     }
 }
 function drawbeneficiariestable(result) {
+    var isProduction = $("#import-beneficiaries").attr("isProduction")
+
     var table = $('#beneficiariestable').DataTable({
         "data": result,
         "paging": true,
@@ -189,14 +208,21 @@ function drawbeneficiariestable(result) {
         "destroy": true,
         "lengthMenu": [[5, -1], [5, "All"]],
         "columns": [
-            { "title": "FirstName", "className": "text-center filter", "orderable": true, "data": "firstName" },
-            { "title": "MiddleName", "className": "text-center filter", "orderable": true, "data": "middleName" },
-            { "title": "LastName", "className": "text-center filter", "orderable": true, "data": "lastName" },
-            { "title": "PassportNumber", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
-            { "title": "DateOfBirth", "className": "text-center filter", "orderable": true, "data": "dateOfBirth" },
+            { "title": "First Name", "className": "text-center filter", "orderable": true, "data": "firstName" },
+            { "title": "Middle Name", "className": "text-center filter", "orderable": true, "data": "middleName" },
+            { "title": "Last Name", "className": "text-center filter", "orderable": true, "data": "lastName" },
+            { "title": "Passport Number", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
+            {
+                "title": "Date Of Birth", "className": "text-center filter", "orderable": true, "data": "dateOfBirth",
+                "render": function (data, type, full, meta) {
+                    return data.split('T')[0]
+                }
+            },
             { "title": "Nationality", "className": "text-center filter", "orderable": true, "data": "nationality" },
-            { "title": "CountryOfResidence", "className": "text-center filter", "orderable": true, "data": "countryResidence" },
+            { "title": "Country Of Residence", "className": "text-center filter", "orderable": true, "data": "countryResidence" },
             { "title": "Gender", "className": "text-center filter", "orderable": true, "data": "gender" },
+            { "title": "Remove Deductible", "className": "text-center filter", "orderable": true, "data": "removeDeductible", visible: isProduction == 1 },
+            { "title": "Add Sports Activities", "className": "text-center filter", "orderable": true, "data": "addSportsActivities", visible: isProduction == 1 },
             { "title": "Reason", "className": "text-center filter", "orderable": true, "data": "reason" },
             { "visible": false, "data": "status" }
 
@@ -211,4 +237,31 @@ function drawbeneficiariestable(result) {
         }
     });
 
-} 
+}
+function addProductionBeneficiaries(data) {
+    var thistable = $('#beneficiary-table').DataTable();
+    data.beneficiaries.forEach(function (item) {
+        var thissex = item.gender === "M" ? 1 : 2;
+        var thissexname = item.gender === "M" ? "Male" : "Female";
+
+        var thisrow = {
+            "bE_Id": 0,
+            "bE_Sex": thissex,
+            "bE_SexName": thissexname,
+            "bE_FirstName": item.firstName,
+            "bE_MaidenName": '',
+            "bE_MiddleName": item.middleName,
+            "bE_LastName": item.lastName,
+            "bE_DOB": item.dateOfBirth.split('T')[0],
+            "bE_PassportNumber": item.passportNumber,
+            "bE_Nationalityid": item.nationalityId,
+            "bE_CountryResidenceid": item.countryResidenceId,
+            "bE_RemoveDeductible": item.removeDeductible,
+            "bE_SportsActivities": item.addSportsActivities
+        };
+
+        thistable.row.add(thisrow).draw();
+    });
+
+    getQuotation()
+}

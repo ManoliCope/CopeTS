@@ -37,7 +37,7 @@ namespace ProjectX.Controllers
 
         public IActionResult Main(int polid)
         {
-            polid = 647;
+            polid = 141;
             var uploadsDirectory = _appSettings.UploadUsProduct.UploadsDirectory;
             string requesturl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             string printingdirection = _documentService.GenerateQRCodeImage(requesturl + "/Pdf/GeneratePdfFromRazorView?ii=" + polid).Base64Image;
@@ -50,6 +50,10 @@ namespace ProjectX.Controllers
             GetUserReq thisuser = new GetUserReq();
             thisuser.idUser = userid;
             var prodcutionuser = _usersBusiness.GetUserAuth(thisuser);
+
+            string cancelled = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "assets", "images", "Cancelled.png");
+            policyreponse.Cancelled = _documentService.ConvertImageToBase64(cancelled);
+
 
             string test = Path.Combine(uploadsDirectory, userid.ToString(), "Header", prodcutionuser.user.U_PrintLayout ?? string.Empty);
 

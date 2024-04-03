@@ -90,7 +90,7 @@ function drawtable(data, status) {
         "destroy": true,
         "order": [[1, 'desc']],
         "columns": [
-            { "title": "Reference", "className": "text-center filter", "orderable": true, "data": "reference" },
+            { "title": "Reference", "className": "text-center filter truncatetd", "orderable": true, "data": "reference" },
             {
                 "title": "Production Date", "className": "text-center filter", "orderable": true, "data": "createdOn",
                 "render": function (data, type, row) {
@@ -103,7 +103,7 @@ function drawtable(data, status) {
                     return data;
                 }
             },
-            { "title": "Client Name", "className": "text-center filter", "orderable": true, "data": "mainname" },
+            { "title": "Client Name", "className": "text-center filter truncatetd", "orderable": true, "data": "mainname" },
             {
                 "title": "Inception", "className": "text-center filter", "orderable": true, "data": "fromdate",
                 "render": function (data, type, row) {

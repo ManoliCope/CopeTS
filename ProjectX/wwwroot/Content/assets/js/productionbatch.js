@@ -39,14 +39,16 @@ function drawtable(data) {
         "columns": [
             /*{ "title": "ID", "className": "text-center filter", "orderable": true, "data": "pB_Id" },*/
             { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pB_Title" },
+            { "title": "Created by", "className": "text-center filter", "orderable": true, "data": "u_CreatedBy" },
             {
                 "title": "Creation Date", "className": "text-center filter", "orderable": true, "data": "pB_CreationDate",
                 "render": function (data, type, row) {
-                    var date = new Date(data);
-                    var formattedDate = formatDate_DdMmYyyy(date);
-                    return formattedDate;
-
-                    return data;
+                    if (type === 'sort' || type === 'type') {
+                        return new Date(data);
+                    } else {
+                        var date = new Date(data);
+                        return formatDate_DdMmYyyy(date);
+                    }
                 }
             },
             {
@@ -56,26 +58,10 @@ function drawtable(data) {
                     return `<a  title="Show Policies" productiontitle="` + full.pB_Title + `" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="getAPoliciesByBatchId(this)" ><i class="fas fa-eye "></i></a>`;
 
                 }
-            }
-
-            //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
-            //{
-            //    'data': 'pB_Id',
-            //    className: "dt-center editor-edit",
-            //    "render": function (data, type, full) {
-            //        return `<a title="Edit" planid="` + full.pB_Id + `"  class="text-black-50" onclick="gotoplan(this)"><i class="fas fa-edit pr-1"></i></a>`;
-            //    }
-            //},
-            //{
-            //    'data': 'pB_Id',
-            //    className: "dt-center editor-edit",
-            //    "render": function (data, type, full, meta) {
-            //        return `<a  title="Delete" productionbatchid="` + full.pB_Id + `"  class="text-black-50" onclick="showresponsemodalbyid('confirm-email-approval',${full.pB_Id},${meta.row})" ><i class="fas fa-times red"></i></a>`;
-
-
-            //    }
-            //}
+            },
+       
         ],
+        "order": [[2, 'desc']] ,
         orderCellsTop: true,
         fixedHeader: true
     });

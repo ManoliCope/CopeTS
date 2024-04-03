@@ -899,11 +899,32 @@ table td a {
 .welcometxt {
     color: var(--third-color);
     margin-bottom: 4px;
-    display: block
+    display: block;
+    text-align:right;
 }
+
+@media (max-width: 450px) {
+    .welcometxt {
+        color: var(--third-color);
+        margin-bottom: 4px;
+        display: block;
+        font-size: 10px;
+        text-align: right;
+    }
+}
+
 .balancetxt {
     margin-bottom: 4px;
     display: block
+}
+
+@media (max-width: 450px) {
+    .balancetxt {
+        margin-bottom: 4px;
+        display: block;
+        font-size: 10px;
+        text-align: right;
+    }
 }
 
 .selectedmenu{

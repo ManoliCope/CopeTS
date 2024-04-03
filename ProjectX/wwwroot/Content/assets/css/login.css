@@ -1,9 +1,9 @@
 ﻿body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background: url(/Content/assets/images/mainimg.jpg) fixed;
+    background: url(/Content/assets/images/cover-3.png) fixed;
     background-size: cover;
-    background-position: center bottom -30px;
+    background-position: center ;
 }
 
 
@@ -77,18 +77,18 @@ input[type="password"] {
 
 @media (min-width: 769px) and (max-width: 992px) {
     .container-fluid {
-        margin-left: 25%;
+        margin-left: -22%;
     }
 }
 
 @media (min-width: 993px) and (max-width: 1200px) {
     .container-fluid {
-        margin-left: 28%;
+        margin-left: -21%;
     }
 }
 
 @media (min-width: 1201px) {
     .container-fluid {
-        margin-left: 30%;
+        margin-left: -20%;
     }
 }

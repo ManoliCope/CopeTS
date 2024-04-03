@@ -43,6 +43,7 @@ namespace ProjectX.Entities.Models.Production
         public string QrCodebit { get; set; }
         public string Layout { get; set; }
         public string Signature { get; set; }
+        public string Cancelled { get; set; }
         public int prttyp { get; set; }
     }
 

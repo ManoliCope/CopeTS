@@ -1,6 +1,9 @@
-﻿using ProjectX.Entities;
+﻿using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
+using ProjectX.Business.Users;
+using ProjectX.Entities;
 using ProjectX.Entities.dbModels;
 using ProjectX.Entities.Models.Beneficiary;
+using ProjectX.Entities.Models.Users;
 using ProjectX.Entities.Resources;
 using ProjectX.Repository.BeneficiaryRepository;
 
@@ -9,13 +12,26 @@ namespace ProjectX.Business.Beneficiary
     public class BeneficiaryBusiness : IBeneficiaryBusiness
     {
         IBeneficiaryRepository _beneficiaryRepository;
+        IUsersBusiness _usersBusiness;
 
-        public BeneficiaryBusiness(IBeneficiaryRepository beneficiaryRepository)
+        public BeneficiaryBusiness(IBeneficiaryRepository beneficiaryRepository, IUsersBusiness usersBusiness)
         {
             _beneficiaryRepository = beneficiaryRepository;
+			_usersBusiness = usersBusiness;
         }
         public BeneficiaryResp ModifyBeneficiary(BeneficiaryReq req, string act, int userid)
         {
+            TR_Beneficiary oldbeneficiary = new TR_Beneficiary();
+            oldbeneficiary = _beneficiaryRepository.GetBeneficiary(req.Id, userid);
+
+            UserRights thisuser = _usersBusiness.GetUserRights(userid);
+            if (thisuser.Is_Admin == false)
+            {
+                req.FirstName = oldbeneficiary.BE_FirstName;
+                req.MiddleName = oldbeneficiary.BE_MiddleName;
+                req.LastName = oldbeneficiary.BE_LastName;
+            }
+
             BeneficiaryResp response = new BeneficiaryResp();
             response = _beneficiaryRepository.ModifyBeneficiary(req, act, userid);
             if (act == "Delete")
@@ -56,9 +72,9 @@ namespace ProjectX.Business.Beneficiary
         {
             return _beneficiaryRepository.SearchBeneficiaryPref(prefix, userid);
         }
-        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req)
+        public BeneficiariesBatchSaveResp SaveBeneficiariesBatch(BeneficiariesBatchSaveReq req, int isProduction)
         {
-            return _beneficiaryRepository.SaveBeneficiariesBatch(req);
+            return _beneficiaryRepository.SaveBeneficiariesBatch(req, isProduction);
         }
     }
 }

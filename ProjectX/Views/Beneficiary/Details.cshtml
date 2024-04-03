@@ -1,7 +1,7 @@
 ﻿@model ProjectX.Entities.Models.Beneficiary.BeneficiaryResp
 @{
 	var filldata = ViewData["filldata"] as ProjectX.Entities.Models.General.LoadDataResp;
-
+	var UserRights = ViewData["userrights"] as ProjectX.Entities.Models.Users.UserRights;
 }
 
 
@@ -22,12 +22,12 @@
 								<div class="row">
 									<div class="form-group mb-3 col-lg-4">
 										<label for="firstName">First Name</label>
-										<input type="text" class="form-control" id="firstName" name="firstName" value="@Model.FirstName" required>
+										<input type="text" class="form-control" id="firstName" name="firstName" value="@Model.FirstName" required @(UserRights.Is_Admin == false ? "readonly":"")>
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="middleName">Middle Name</label>
-										<input type="text" class="form-control" id="middleName" name="middleName" value="@Model.MiddleName">
+										<input type="text" class="form-control" id="middleName" name="middleName" value="@Model.MiddleName" @(UserRights.Is_Admin == false ? "readonly":"")>
 									</div>
 									@*<div class="form-group mb-3 col-lg-4">
 											<label for="middleName">Maiden Name</label>
@@ -36,7 +36,7 @@
 
 									<div class="form-group mb-3 col-lg-4">
 										<label for="lastName">Last Name</label>
-										<input type="text" class="form-control" id="lastName" name="lastName" value="@Model.LastName" required>
+										<input type="text" class="form-control" id="lastName" name="lastName" value="@Model.LastName" required @(UserRights.Is_Admin == false ? "readonly":"")> 
 									</div>
 
 									<div class="form-group mb-3 col-lg-4">
