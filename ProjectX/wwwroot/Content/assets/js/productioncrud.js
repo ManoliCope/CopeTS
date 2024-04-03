@@ -1467,8 +1467,9 @@ function sendPolicyByEmail(me) {
     var cc = $("#emailcc").val().join(";");
 
     if (to == '' && cc == '') {
-        $("#emailto, #emailcc" ).css('border-color', 'red');
-        $("#emailto, #emailcc").parent().find(".select2-container").addClass("select2-borderred");
+        $("#emailto" ).css('border-color', 'red');
+        $("#emailto").parent().find(".select2-container").addClass("select2-borderred");
+        removebtnloader($(me));
         return;
     } else {
         $("#emailto, #emailcc").css('border-color', '#e2e7f1');

@@ -247,84 +247,88 @@ namespace ProjectX.Repository.EmailRepository
         }
 
 
-
-
         public async Task<bool> SendEmailSMTP(SendEmailRequest request)
         {
-           
             // SMTP server settings
             string smtpServer = _appSettings.emailSettings.Host;
             int port = _appSettings.emailSettings.Port; // SMTP port (587 is commonly used for TLS/STARTTLS)
             string username = _appSettings.emailSettings.Username;
             string password = _appSettings.emailSettings.Pass;
 
-            // Sender and recipient addresses
+            // Sender address
             string senderEmail = _appSettings.emailSettings.Sender;
-            
+
+            // Split email addresses by ';'
+            string[] toEmails = request.MailTo.Split(';');
+            string[] ccEmails = !string.IsNullOrEmpty(request.MailCC) ? request.MailCC.Split(';') : new string[0];
+
             // Create and configure the SMTP client
             using (SmtpClient smtpClient = new SmtpClient(smtpServer, port))
             {
                 smtpClient.EnableSsl = true; // Set to true if your SMTP server requires SSL/TLS
                 smtpClient.Credentials = new NetworkCredential(username, password);
 
-                // Create the email message
-                MailMessage mailMessage = new MailMessage(senderEmail, request.MailTo, request.Subject, request.Body);
-                if(!string.IsNullOrEmpty(request.MailCC))
-                mailMessage.CC.Add(request.MailCC);
-
-                if(request.FileBytes.Count > 0)
+                // Loop through each recipient email address
+                foreach (string toEmail in toEmails)
                 {
-                    List<byte[]> attachmentDataList = new List<byte[]>(); // Your list of byte arrays containing attachment data
-                    foreach (var attachmentData in request.FileBytes)
+                    // Create the email message for each recipient
+                    MailMessage mailMessage = new MailMessage(senderEmail, toEmail.Trim(), request.Subject, request.Body);
+                    if (ccEmails.Length > 0)
                     {
+                        foreach (string ccEmail in ccEmails)
+                        {
+                            mailMessage.CC.Add(ccEmail.Trim());
+                        }
+                    }
 
-                        System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(new MemoryStream(attachmentData), "New Policy.pdf");
-                        mailMessage.Attachments.Add(attachment);
+                    if (request.FileBytes.Count > 0)
+                    {
+                        // Attachments
+                        foreach (var attachmentData in request.FileBytes)
+                        {
+                            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(new MemoryStream(attachmentData), "New Policy.pdf");
+                            mailMessage.Attachments.Add(attachment);
+                        }
+                    }
+
+                    mailMessage.IsBodyHtml = true; // Set to true if your email body is HTML
+
+                    try
+                    {
+                        // Send the email
+                        await smtpClient.SendMailAsync(mailMessage);
+                        var emailLog = new EmailLog
+                        {
+                            Sender = senderEmail,
+                            Recipient = toEmail.Trim(),
+                            Subject = request.Subject,
+                            Body = request.Body,
+                            IdPolicy = request.PolicyId ?? 0,
+                            IsSent = true,
+                            DisplayName = request.DisplayName ?? ""
+                        };
+                        SaveEmailLog(emailLog, request.UserID);
+                    }
+                    catch (Exception ex)
+                    {
+                        var emailLog = new EmailLog
+                        {
+                            Sender = senderEmail,
+                            Recipient = toEmail.Trim(),
+                            Subject = request.Subject,
+                            Body = request.Body,
+                            IdPolicy = request.PolicyId ?? 0,
+                            IsSent = false,
+                            DisplayName = request.DisplayName ?? "",
+                            ErrorMessage = ex.Message
+                        };
+                        SaveEmailLog(emailLog, request.UserID);
+                        return false;
                     }
                 }
-               
-
-                mailMessage.IsBodyHtml = true; // Set to true if your email body is HTML
-
-                try
-                {
-                    // Send the email
-                    await smtpClient.SendMailAsync(mailMessage);
-                    var emailLog = new EmailLog
-                    {
-                        Sender=senderEmail,
-                        Recipient=request.MailTo,
-                        Subject=request.Subject,
-                        Body=request.Body,
-                        IdPolicy= request.PolicyId??0,
-                        IsSent=true,
-                       DisplayName=request.DisplayName??""
-                    };
-                    SaveEmailLog(emailLog, request.UserID);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    var emailLog = new EmailLog
-                    {
-                        Sender = senderEmail,
-                        Recipient = request.MailTo,
-                        Subject = request.Subject,
-                        Body = request.Body,
-                        IdPolicy = request.PolicyId ?? 0,
-                        IsSent = false,
-                        DisplayName = request.DisplayName ?? "",
-                        ErrorMessage = ex.Message
-                    };
-                    SaveEmailLog(emailLog, request.UserID);
-                    return false;
-                }
             }
+
+            return true;
         }
-    
-
-
-
-
-}
+    }
 }
