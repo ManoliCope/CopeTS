@@ -43,7 +43,6 @@ namespace ProjectX.Business.Email
                 subject = emailTemplate.subject;
                 body = ReplaceBody(dataObject, emailTemplate.body);
                 recipients = emailTemplate.recepients;
-                //ccrecipients ="moussa.basma@securiteassurance.com";
 
                 var attachmentList =new List<byte[]>();
                 if (emailTemplate.WithAttachment==true)
@@ -129,7 +128,7 @@ namespace ProjectX.Business.Email
                 body= emailTemplate.body;
                 //if(dataObject!=null)
                 //    body = ReplaceBody(dataObject, emailTemplate.body);
-
+                //recipients = string.Join(';', recipients, to);
                 recipients = to;
                 ccrecipients = cc;
                 //ccrecipients ="moussa.basma@securiteassurance.com";

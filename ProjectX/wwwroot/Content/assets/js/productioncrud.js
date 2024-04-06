@@ -642,9 +642,10 @@ function editnewbeneficiary() {
         "bE_PassportNumber": $("#beneficiary-popup #passport_no").val(),
         "bE_Nationalityid": $("#beneficiary-popup #nationality").val(),
         "bE_CountryResidenceid": $("#beneficiary-popup #countryofresidence").val(),
-        "bE_RemoveDeductible": $("#beneficiary-popup #hiddenFields").attr('remove-deductible'),
-        "bE_SportsActivities": $("#beneficiary-popup #hiddenFields").attr('sports-activities')
+        "bE_RemoveDeductible": ($("#beneficiary-popup #hiddenFields").attr('remove-deductible') !== undefined) ? $("#beneficiary-popup #hiddenFields").attr('remove-deductible') : null,
+        "bE_SportsActivities": ($("#beneficiary-popup #hiddenFields").attr('sports-activities') !== undefined) ? $("#beneficiary-popup #hiddenFields").attr('sports-activities') : null
     }
+
     var thistable = $('#beneficiary-table').DataTable();
     thistable.row($(editedglobalrow).closest("tr")).data(thisrow).draw();
     //var allRows = thistable.rows().data()
@@ -1588,6 +1589,9 @@ function sendPolicyByEmail(me) {
     if (to == '' && cc == '') {
         $("#emailto, #emailcc").css('border-color', 'red');
         $("#emailto, #emailcc").parent().find(".select2-container").addClass("select2-borderred");
+        $("#emailto" ).css('border-color', 'red');
+        $("#emailto").parent().find(".select2-container").addClass("select2-borderred");
+        removebtnloader($(me));
         return;
     } else {
         $("#emailto, #emailcc").css('border-color', '#e2e7f1');

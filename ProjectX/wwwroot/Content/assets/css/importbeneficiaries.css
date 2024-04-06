@@ -196,21 +196,21 @@
     vertical-align: middle;
     width: 60px;
     float: right;
-    font-size:14px;
-    height:25px;
+    font-size: 14px;
+    height: 25px;
     /*margin-top:10px*/
 }
 
 
-.togglebenpopup .fa{
-    font-size: 12px !important;
-}
+    .togglebenpopup .fa {
+        font-size: 12px !important;
+    }
 
 
 
-.togglebenpopup:hover {
-  color:white !important
-}
+    .togglebenpopup:hover, .togglebenefimport:hover {
+        color: white !important
+    }
 
 .borderless-input {
     border: none;
@@ -224,14 +224,14 @@
     padding: 0.6rem;
 }
 
-.card-body h3 {
-    margin: 0 !important
-}
+    .card-body h3 {
+        margin: 0 !important
+    }
 
 
-.card-body hr {
-    margin-top: 0.5rem;
-}
+    .card-body hr {
+        margin-top: 0.5rem;
+    }
 
 .form-group {
     margin-bottom: 0.5rem;
@@ -239,7 +239,7 @@
 
 
 
-#import-beneficiaries{
+#import-beneficiaries {
     /*margin-left:230px;*/
 }
 
@@ -257,13 +257,13 @@
 
 
     #import-beneficiaries.modal {
-      height:unset !important
+        height: unset !important
     }
 
-#downloadLink, #downloadLink  i{
+#downloadLink, #downloadLink i {
     font-size: 14px !important;
     background: transparent;
-    color:black;
+    color: black;
 }
 
 

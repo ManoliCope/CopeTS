@@ -208,16 +208,21 @@ function drawbeneficiariestable(result) {
         "destroy": true,
         "lengthMenu": [[5, -1], [5, "All"]],
         "columns": [
-            { "title": "FirstName", "className": "text-center filter", "orderable": true, "data": "firstName" },
-            { "title": "MiddleName", "className": "text-center filter", "orderable": true, "data": "middleName" },
-            { "title": "LastName", "className": "text-center filter", "orderable": true, "data": "lastName" },
-            { "title": "PassportNumber", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
-            { "title": "DateOfBirth", "className": "text-center filter", "orderable": true, "data": "dateOfBirth" },
+            { "title": "First Name", "className": "text-center filter", "orderable": true, "data": "firstName" },
+            { "title": "Middle Name", "className": "text-center filter", "orderable": true, "data": "middleName" },
+            { "title": "Last Name", "className": "text-center filter", "orderable": true, "data": "lastName" },
+            { "title": "Passport Number", "className": "text-center filter", "orderable": true, "data": "passportNumber" },
+            {
+                "title": "Date Of Birth", "className": "text-center filter", "orderable": true, "data": "dateOfBirth",
+                "render": function (data, type, full, meta) {
+                    return data.split('T')[0]
+                }
+            },
             { "title": "Nationality", "className": "text-center filter", "orderable": true, "data": "nationality" },
-            { "title": "CountryOfResidence", "className": "text-center filter", "orderable": true, "data": "countryResidence" },
+            { "title": "Country Of Residence", "className": "text-center filter", "orderable": true, "data": "countryResidence" },
             { "title": "Gender", "className": "text-center filter", "orderable": true, "data": "gender" },
-            { "title": "RemoveDeductible", "className": "text-center filter", "orderable": true, "data": "removeDeductible", visible: isProduction == 1 },
-            { "title": "AddSportsActivities", "className": "text-center filter", "orderable": true, "data": "addSportsActivities", visible: isProduction == 1 },
+            { "title": "Remove Deductible", "className": "text-center filter", "orderable": true, "data": "removeDeductible", visible: isProduction == 1 },
+            { "title": "Add Sports Activities", "className": "text-center filter", "orderable": true, "data": "addSportsActivities", visible: isProduction == 1 },
             { "title": "Reason", "className": "text-center filter", "orderable": true, "data": "reason" },
             { "visible": false, "data": "status" }
 
