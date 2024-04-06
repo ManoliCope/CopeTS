@@ -22,7 +22,11 @@ namespace ProjectX.Business.Product
         {
             ProdResp response = new ProdResp();
             response = _prodRepository.ModifyProduct(req, act, userid);
-            response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Product");
+
+            if (act == "Delete" && response.id == -1)
+                response.statusCode.message = "Product Linked!";
+            else
+                response.statusCode = ResourcesManager.getStatusCode(Languages.english, StatusCodeValues.success, req.id == 0 ? SuccessCodeValues.Add : SuccessCodeValues.Update, "Product");
             return response;
         }
         public List<TR_Product> GetProductList(ProdSearchReq req)

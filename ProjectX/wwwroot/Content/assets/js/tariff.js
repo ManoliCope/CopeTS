@@ -289,8 +289,7 @@ function deletetariff(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#tarifftable').length > 0) {
-                    var myTable = $('#tarifftable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid, "t_Id", "tarifftable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }

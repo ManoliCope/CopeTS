@@ -55,11 +55,29 @@
 														<div class="col-lg-3 mb-lg-0 mb-6">
 															<label>Agents:</label>
 															<select class=" form-control" required @disable id="agentid1">
-																<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																<optgroup label="Main User">
+																	<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
+																</optgroup>
+																@{
+																	var groupedChildren = children.GroupBy(c => c.LK_ParentID);
+																	foreach (var group in groupedChildren)
+																	{
+																		var groupName = group.First().LK_ParentName;
+																		<optgroup label="@groupName">
+																			@foreach (var item in group)
+																			{
+																				<option value="@item.LK_ID">@item.LK_TableField</option>
+																			}
+																		</optgroup>
+																	}
+																}
+
+
+																@*<option value="@mainuser.LK_ID">@mainuser.LK_TableField</option>
 																@foreach (var thislist in children)
 																{
 																	<option value="@thislist.LK_ID"> @thislist.LK_TableField</option>
-																}
+																}*@
 															</select>
 														</div>
 														<div class="col-lg-2 mb-lg-0 mb-6">

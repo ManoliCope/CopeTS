@@ -930,3 +930,10 @@ table td a {
 .selectedmenu{
     display:block !important; 
 }
+
+.truncatetd {
+    max-width: 250px;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

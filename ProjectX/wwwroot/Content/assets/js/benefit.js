@@ -131,8 +131,8 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "b_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "b_Title" },
-            { "title": "Package", "className": "text-center filter", "orderable": true, "data": "p_Name" },
+            { "title": "Title", "className": "text-center filter truncatetd ", "orderable": true, "data": "b_Title" },
+            { "title": "Package", "className": "text-center filter truncatetd", "orderable": true, "data": "p_Name" },
             { "title": "Limit", "className": "text-center filter", "orderable": true, "data": "b_Limit" },
             {
                 "data": 'id',

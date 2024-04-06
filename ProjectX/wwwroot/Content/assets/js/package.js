@@ -50,9 +50,9 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "ID", "className": "column-name text-center filter", "orderable": true, "data": "p_Id" },
-            { "title": "Name", "className": "column-name text-center filter", "orderable": true, "data": "p_Name" },
+            { "title": "Name", "className": "column-name text-center filter truncatetd", "orderable": true, "data": "p_Name" },
             { "title": "Product", "className": "column-cob text-center filter", "orderable": true, "data": "pR_Name" },
-            { "title": "Zone", "className": "column-cob-id text-center filter", "orderable": true, "data": "zN_Name" },
+            { "title": "Zone", "className": "column-cob-id text-center filter truncatetd", "orderable": true, "data": "zN_Name" },
             { "title": "Remove Deductible", "className": "column-remove-deductible text-center filter", "orderable": true, "data": "p_Remove_deductable" },
             //{ "title": "Adult Number", "className": "column-adult-no text-center filter", "orderable": true, "data": "p_Adult_No" },
             //{ "title": "Children Number", "className": "column-children-no text-center filter", "orderable": true, "data": "p_Children_No" },
@@ -250,8 +250,7 @@ function deletepkg(me) {
 
             if (result.statusCode.code == 1) {
                 if ($('#packagetable').length > 0) {
-                    var myTable = $('#packagetable').DataTable();
-                    myTable.row(rowindex).remove().draw();
+                    deletedatatablerowbyid(thisid, "p_Id", "packagetable")
                     removebtnloader(me);
                     showresponsemodal(result.statusCode.code, result.statusCode.message)
                 }

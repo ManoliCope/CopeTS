@@ -49,7 +49,7 @@ function drawtable(data) {
         "destroy": true,
         "columns": [
             { "title": "ID", "className": "text-center filter", "orderable": true, "data": "pR_Id" },
-            { "title": "Title", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
+            { "title": "Title", "className": "text-center truncatetd filter", "orderable": true, "data": "pR_Title" },
             //{ "title": "Description", "className": "text-center filter", "orderable": true, "data": "pR_Title" },
             { "title": "Family", "className": "text-center filter", "orderable": true, "data": "pR_Is_Family" },
             {

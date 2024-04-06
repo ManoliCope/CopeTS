@@ -127,6 +127,10 @@ namespace ProjectX.Repository.TariffRepository
                     idOut = param.Get<int>("@Returned_ID");
                 }
                 resp.statusCode.code = statusCode;
+
+                if(statusCode == 0)
+                    resp.statusCode.message = "Tariff already exists";
+
                 resp.id = idOut;
                 return resp;
             }
