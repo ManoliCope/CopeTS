@@ -51,6 +51,7 @@ using ProjectX.Services;
 using Microsoft.Extensions.FileProviders;
 using ProjectX.Repository.ProductionBatch;
 using ProjectX.Repository.ProductionBatchRepository;
+using ProjectX.Repository.ContextRepository;
 using ProjectX.Business.PrepaidAccounts;
 using ProjectX.Repository.PrepaidAccountsRepository;
 
@@ -174,6 +175,8 @@ public class Startup
 
         services.AddSingleton<IPrepaidAccountsBusiness, PrepaidAccountsBusiness>();
         services.AddSingleton<IPrepaidAccountsRepository, PrepaidAccountsRepository>();
+
+        services.AddSingleton<TravelContext>();
 
 
 

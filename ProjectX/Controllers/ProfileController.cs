@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 
 namespace ProjectX.Controllers
 {
-    //Testing Github and DevOps
+
     public class ProfileController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

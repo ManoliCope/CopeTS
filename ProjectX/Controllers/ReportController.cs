@@ -235,7 +235,7 @@ namespace ProjectX.Controllers
         {
             return _reportBusiness.getProducts(userid);
         }
-[HttpPost]
+        [HttpPost]
         public IActionResult GeneratePrepaidAccounts(int userid,DateTime? datefrom,DateTime? dateto)
         {
             GetReportResp result = new GetReportResp();
